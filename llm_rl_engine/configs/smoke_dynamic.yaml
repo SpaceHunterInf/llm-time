@@ -1,0 +1,17 @@
+experiment_name: smoke_dynamic
+horizon: 40
+n_episodes: 10
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+environments:
+  - name: ReversalBandit
+    n_arms: 4
+    reversal_schedule: fixed_hidden_time
+    reversal_time_range: [15, 25]
+
+agents:
+  - name: random
+  - name: ucb
+  - name: sliding_window_ucb
+    window: 10
+  - name: oracle

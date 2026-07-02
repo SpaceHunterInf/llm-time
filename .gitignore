@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+llm_rl_engine.egg-info/
+.pytest_cache/
+terminals/
+.ruff_cache/
+.mypy_cache/
+runs/
+
+.env
+.env.*
+!.env.example

@@ -1,0 +1,23 @@
+You are an agent in a reinforcement-learning environment.
+Your goal is to maximize cumulative reward over this episode.
+
+Task:
+{task_description}
+
+Action space:
+{action_space}
+
+History:
+{raw_history}
+
+Current observation:
+{observation}
+
+Return exactly one JSON object with this schema:
+{{
+  "action": <your action object>,
+  "confidence": <number from 0 to 1>,
+  "rationale": <string explaining your choice>
+}}
+
+Do not include markdown fences or any text outside the JSON object.

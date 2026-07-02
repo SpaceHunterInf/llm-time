@@ -1,0 +1,20 @@
+experiment_name: smoke_static
+horizon: 20
+n_episodes: 5
+seeds: [0, 1, 2, 3, 4]
+
+environments:
+  - name: NumberGuess
+    target_min: 0
+    target_max: 100
+    feedback: exact_comparison
+  - name: StationaryBandit
+    n_arms: 4
+    alpha: 1
+    beta: 1
+
+agents:
+  - name: random
+  - name: greedy
+  - name: ucb
+  - name: thompson_sampling
