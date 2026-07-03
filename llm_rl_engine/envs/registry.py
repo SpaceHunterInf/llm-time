@@ -6,11 +6,13 @@ from llm_rl_engine.envs.base import Env
 from llm_rl_engine.envs.bandits import (
     DriftingBandit,
     PeriodicBandit,
+    PhaseLockedBandit,
     ReversalBandit,
     StationaryBandit,
 )
 from llm_rl_engine.envs.number_guess import NumberGuess
 from llm_rl_engine.envs.pendulum_gate import PendulumGate
+from llm_rl_engine.envs.traffic_light_gate import TrafficLightGate
 
 ENV_REGISTRY: dict[str, type] = {
     "NumberGuess": NumberGuess,
@@ -18,7 +20,9 @@ ENV_REGISTRY: dict[str, type] = {
     "ReversalBandit": ReversalBandit,
     "PeriodicBandit": PeriodicBandit,
     "DriftingBandit": DriftingBandit,
+    "PhaseLockedBandit": PhaseLockedBandit,
     "PendulumGate": PendulumGate,
+    "TrafficLightGate": TrafficLightGate,
 }
 
 
@@ -34,7 +38,9 @@ def _normalize_kwargs(name: str, kwargs: dict[str, Any]) -> dict[str, Any]:
     range_fields = {
         "ReversalBandit": ["reversal_time_range"],
         "PeriodicBandit": ["period_range", "amplitude_range", "base_range"],
-        "PendulumGate": ["period_range"],
+        "PendulumGate": ["period_range", "phase_shift_time_range", "phase_shift_delta_range"],
+        "TrafficLightGate": ["period_range", "phase_shift_time_range", "phase_shift_delta_range"],
+        "PhaseLockedBandit": ["period_range"],
     }
     for field in range_fields.get(name, []):
         if field in out and isinstance(out[field], list):

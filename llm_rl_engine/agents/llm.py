@@ -133,7 +133,7 @@ class LLMAgent(Agent):
         env_name = task_spec.get("name", "")
         if env_name == "NumberGuess":
             self._invalid_action = {"guess": task_spec.get("target_min", 0)}
-        elif env_name == "PendulumGate":
+        elif env_name in ("PendulumGate", "TrafficLightGate"):
             self._invalid_action = {"action": "wait"}
 
     def act(self, observation: Observation, history: list[dict[str, Any]]) -> Action:

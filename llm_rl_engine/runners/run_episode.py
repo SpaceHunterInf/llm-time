@@ -55,6 +55,9 @@ def run_episode(
     records: list[TrajectoryRecord] = []
 
     for _t in range(horizon):
+        if isinstance(agent, OracleAgent):
+            agent.set_oracle(env.oracle())
+
         step_info: dict[str, Any] = {}
         if hasattr(agent, "act_with_info"):
             action, info = agent.act_with_info(obs, history)

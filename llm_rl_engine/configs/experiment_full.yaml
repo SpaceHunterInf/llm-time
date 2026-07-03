@@ -27,6 +27,10 @@ environments:
   - name: PendulumGate
     period_range: [8, 16]
     max_lives: 3
+    dt: 0.6
+    episode_max_time_s: 30.0
+    phase_shift_time_range: [10, 20]
+    phase_shift_delta_range: [0.785, 3.14159]
 
 agents:
   - name: random

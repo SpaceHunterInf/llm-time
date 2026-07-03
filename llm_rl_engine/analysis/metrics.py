@@ -43,6 +43,8 @@ def compute_episode_metrics(trajectory: Trajectory) -> dict[str, Any]:
         metrics.update(_bandit_metrics(trajectory, oracle, env_name))
     elif env_name == "PendulumGate":
         metrics.update(_pendulum_metrics(trajectory, oracle))
+    elif env_name == "TrafficLightGate":
+        metrics.update(_traffic_light_metrics(trajectory, oracle))
 
     metrics["regret"] = _compute_regret(trajectory, oracle, env_name)
     return metrics
@@ -99,17 +101,47 @@ def _bandit_metrics(
     return metrics
 
 
+def _traffic_light_metrics(trajectory: Trajectory, oracle: dict[str, Any]) -> dict[str, Any]:
+    success = any(r.private_info.get("event") == "success" for r in trajectory.records)
+    go_attempts = sum(1 for r in trajectory.records if r.action.get("action") == "go")
+    unsafe = sum(1 for r in trajectory.records if r.private_info.get("unsafe"))
+    shift_time = oracle.get("phase_shift_time")
+    return {
+        "success": success,
+        "go_attempts": go_attempts,
+        "unsafe_goes": unsafe,
+        "final_lives": oracle.get("lives"),
+        "phase_shift_time": shift_time,
+        "phase_shifted": oracle.get("phase_shifted"),
+    }
+
+
 def _pendulum_metrics(trajectory: Trajectory, oracle: dict[str, Any]) -> dict[str, Any]:
     success = any(r.private_info.get("event") == "success" for r in trajectory.records)
     cross_attempts = sum(
         1 for r in trajectory.records if r.action.get("action") == "cross"
     )
     unsafe = sum(1 for r in trajectory.records if r.private_info.get("unsafe"))
+    shift_time = oracle.get("phase_shift_time")
+    recovery_delay = None
+    if shift_time is not None:
+        post_shift = [
+            r
+            for r in trajectory.records
+            if (r.observation.get("public_state") or {}).get("time_s", 0) >= shift_time
+        ]
+        for i, rec in enumerate(post_shift):
+            if rec.action.get("action") == "cross":
+                recovery_delay = i + 1
+                break
     return {
         "success": success,
         "cross_attempts": cross_attempts,
         "unsafe_crosses": unsafe,
         "final_lives": oracle.get("lives"),
+        "phase_shift_time": shift_time,
+        "phase_shifted": oracle.get("phase_shifted"),
+        "recovery_delay_after_shift": recovery_delay,
     }
 
 
@@ -145,6 +177,10 @@ def _fallback_probs(
         history = oracle.get("prob_history", [])
         idx = max(0, min(rec.step - 1, len(history) - 1))
         return history[idx] if history else oracle.get("probs", [])
+    if env_name == "PhaseLockedBandit":
+        history = oracle.get("prob_history", [])
+        idx = max(0, min(rec.step - 1, len(history) - 1))
+        return history[idx] if history else oracle.get("current_probs", [])
     return oracle.get("current_probs") or oracle.get("probs", [])
 
 

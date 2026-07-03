@@ -11,7 +11,9 @@ ENV_DESCRIPTIONS = {
     "ReversalBandit": "Bandit where the best arm flips at a hidden time.",
     "PeriodicBandit": "Bandit with sinusoidal reward probabilities over time.",
     "DriftingBandit": "Bandit where probabilities drift via a random walk.",
-    "PendulumGate": "Time a safe crossing past a hidden swinging pendulum.",
+    "PendulumGate": "Time a safe crossing using continuous pendulum position/velocity observations.",
+    "TrafficLightGate": "Cross on green while a hidden cyclic traffic light runs.",
+    "PhaseLockedBandit": "Bandit arms profitable only during narrow rotating phase windows.",
 }
 
 

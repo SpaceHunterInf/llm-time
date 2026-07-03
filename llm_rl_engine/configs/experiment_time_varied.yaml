@@ -1,0 +1,40 @@
+experiment_name: benchmark_time_varied
+horizon: 50
+n_episodes: 5
+seeds: [0, 1, 2, 3, 4]
+llm_parallel_workers: 5
+generate_plots: true
+
+environments:
+  - name: PeriodicBandit
+    n_arms: 4
+    shared_period: true
+    period_range: [8, 16]
+    amplitude_range: [0.15, 0.35]
+    base_range: [0.25, 0.65]
+  - name: DriftingBandit
+    n_arms: 4
+    sigma: 0.03
+  - name: PendulumGate
+    period_range: [8, 16]
+    max_lives: 3
+    dt: 0.6
+    episode_max_time_s: 30.0
+    phase_shift_time_range: [10, 20]
+    phase_shift_delta_range: [0.785, 3.14159]
+
+agents:
+  - name: random
+  - name: greedy
+  - name: ucb
+    environments: [PeriodicBandit, DriftingBandit]
+  - name: thompson_sampling
+    environments: [PeriodicBandit, DriftingBandit]
+  - name: sliding_window_ucb
+    window: 10
+    environments: [PeriodicBandit, DriftingBandit]
+  - name: oracle
+  - name: llm_raw_history
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1

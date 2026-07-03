@@ -12,6 +12,7 @@ BANDIT_ENV_NAMES = (
     "ReversalBandit",
     "PeriodicBandit",
     "DriftingBandit",
+    "PhaseLockedBandit",
 )
 
 
@@ -398,3 +399,101 @@ class DriftingBandit(_BanditBase):
             noise = self._rng.gauss(0, self.sigma)
             self._probs[i] = min(0.95, max(0.05, self._probs[i] + noise))
         self._prob_history.append(list(self._probs))
+
+
+class PhaseLockedBandit(_BanditBase):
+    """Dynamic task: each arm is profitable only during a narrow phase window."""
+
+    def __init__(
+        self,
+        n_arms: int = 4,
+        shared_period: bool = True,
+        period_range: tuple[int, int] = (12, 20),
+        active_threshold: float = 0.5,
+        active_prob: float = 0.85,
+        inactive_prob: float = 0.05,
+        invalid_penalty: float = -0.1,
+    ) -> None:
+        super().__init__(n_arms=n_arms, invalid_penalty=invalid_penalty)
+        self.shared_period = shared_period
+        self.period_range = period_range
+        self.active_threshold = active_threshold
+        self.active_prob = active_prob
+        self.inactive_prob = inactive_prob
+        self._phases: list[float] = []
+        self._periods: list[int] = []
+        self._prob_history: list[list[float]] = []
+
+    @property
+    def metadata(self) -> dict[str, Any]:
+        return {
+            "name": "PhaseLockedBandit",
+            "description": (
+                f"A multi-armed bandit with {self.n_arms} arms. Each arm is "
+                "rewarding only during a narrow hidden phase window that rotates "
+                "over time. Infer which arm is in-phase and exploit it before "
+                "the window moves."
+            ),
+            "action_space": self.action_space.description,
+            "n_arms": self.n_arms,
+            "shared_period": self.shared_period,
+        }
+
+    def reset(self, seed: int | None = None) -> Observation:
+        if seed is not None:
+            self._rng.seed(seed)
+        lo_p, hi_p = self.period_range
+        shared = self._rng.randint(lo_p, hi_p)
+        self._periods = [
+            shared if self.shared_period else self._rng.randint(lo_p, hi_p)
+            for _ in range(self.n_arms)
+        ]
+        self._phases = [self._rng.uniform(0, 2 * math.pi) for _ in range(self.n_arms)]
+        self._step = 0
+        self._last_action = None
+        self._last_reward = None
+        self._done = False
+        self._refresh_probs()
+        self._prob_history = [list(self._probs)]
+        return self._make_observation(
+            f"Episode started. Choose an arm from 0 to {self.n_arms - 1}."
+        )
+
+    def step(self, action: Action) -> StepResult:
+        arm, err = self._validate_arm(action)
+        if arm is None:
+            return self._invalid_step(err or "Invalid arm.")
+        _, result = self._pull_arm(arm)
+        return result
+
+    def oracle(self) -> dict[str, Any]:
+        active_arms = [i for i in range(self.n_arms) if self._arm_active(i, self._step)]
+        return {
+            "phases": list(self._phases),
+            "periods": list(self._periods),
+            "active_threshold": self.active_threshold,
+            "active_prob": self.active_prob,
+            "inactive_prob": self.inactive_prob,
+            "current_probs": list(self._probs),
+            "prob_history": list(self._prob_history),
+            "best_arm": self._best_arm(),
+            "active_arms": active_arms,
+            "step": self._step,
+        }
+
+    def _arm_active(self, arm: int, t: int) -> bool:
+        period = max(self._periods[arm], 1)
+        val = math.sin(2 * math.pi * t / period + self._phases[arm])
+        return val >= self.active_threshold
+
+    def _prob_formula(self, arm: int, t: int) -> float:
+        return self.active_prob if self._arm_active(arm, t) else self.inactive_prob
+
+    def _refresh_probs(self) -> None:
+        t = max(self._step, 0)
+        self._probs = [self._prob_formula(i, t) for i in range(self.n_arms)]
+
+    def _on_pre_step(self) -> None:
+        self._refresh_probs()
+        if self._step > 0:
+            self._prob_history.append(list(self._probs))

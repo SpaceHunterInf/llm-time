@@ -27,7 +27,9 @@ class RandomAgent(Agent):
             hi = self._task_spec.get("target_max", 100)
             return {"guess": self._rng.randint(lo, hi)}
         if env_name == "PendulumGate":
-            return {"action": self._rng.choice(["wait", "observe", "cross"])}
+            return {"action": self._rng.choice(["wait", "cross"])}
+        if env_name == "TrafficLightGate":
+            return {"action": self._rng.choice(["wait", "go"])}
         n_arms = self._task_spec.get("n_arms", 4)
         return {"arm": self._rng.randint(0, n_arms - 1)}
 
@@ -50,6 +52,8 @@ class GreedyAgent(Agent):
             return self._number_guess_act(history)
         if env_name == "PendulumGate":
             return self._pendulum_act(observation, history)
+        if env_name == "TrafficLightGate":
+            return self._traffic_light_act(observation)
         return self._bandit_act(history)
 
     def _number_guess_act(self, history: list[dict[str, Any]]) -> Action:
@@ -73,14 +77,17 @@ class GreedyAgent(Agent):
     def _pendulum_act(
         self, observation: Observation, history: list[dict[str, Any]]
     ) -> Action:
-        if len(history) < 3:
-            return {"action": "observe"}
-        last = history[-1]
-        hint = (last.get("public_info") or {}).get("hint") or (
-            last.get("observation", {}).get("public_state", {}).get("pendulum_position_hint")
-        )
-        if hint == "center":
+        danger = self._task_spec.get("danger_window", 0.35)
+        state = observation.get("public_state", {})
+        position = state.get("position")
+        if position is not None and abs(position) < danger:
             return {"action": "cross"}
+        return {"action": "wait"}
+
+    def _traffic_light_act(self, observation: Observation) -> Action:
+        color = observation.get("public_state", {}).get("light_color")
+        if color == "green":
+            return {"action": "go"}
         return {"action": "wait"}
 
     def _bandit_act(self, history: list[dict[str, Any]]) -> Action:
@@ -265,8 +272,12 @@ class OracleAgent(Agent):
             return {"arm": self._oracle.get("best_arm", 0)}
         if env_name == "PendulumGate":
             if self._oracle.get("in_danger_now"):
-                return {"action": "observe" if self._step < 5 else "wait"}
+                return {"action": "wait"}
             return {"action": "cross"}
+        if env_name == "TrafficLightGate":
+            if self._oracle.get("safe_to_go"):
+                return {"action": "go"}
+            return {"action": "wait"}
         return {"arm": 0}
 
 
