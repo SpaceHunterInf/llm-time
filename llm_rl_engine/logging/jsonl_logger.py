@@ -54,6 +54,15 @@ class JSONLLogger:
             "raw_response": record.raw_response,
             "parsed_response": record.parsed_response,
             "parse_error": record.parse_error,
+            "token_usage": (
+                {
+                    "input_tokens": record.token_usage.input_tokens,
+                    "output_tokens": record.token_usage.output_tokens,
+                    "total_tokens": record.token_usage.total_tokens,
+                }
+                if record.token_usage
+                else None
+            ),
         }
         with self.trajectories_path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(entry, default=str) + "\n")

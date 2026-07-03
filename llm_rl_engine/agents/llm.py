@@ -3,26 +3,39 @@ from __future__ import annotations
 import json
 import os
 import re
+import threading
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
 
 from llm_rl_engine.agents.base import Agent, AgentStepInfo
-from llm_rl_engine.types import Action, Observation
+from llm_rl_engine.types import Action, Observation, TokenUsage
 
 PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
 
+_CLIENT_LOCK = threading.Lock()
+_CLIENT_CACHE: dict[str, Any] = {}
+
+
+@dataclass
+class GenerationResult:
+    text: str
+    input_tokens: int = 0
+    output_tokens: int = 0
+    total_tokens: int = 0
+
 
 class ModelClient(Protocol):
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str) -> GenerationResult:
         ...
 
 
 class GeminiClient:
-    """Google Gemini API client. Set GEMINI_API_KEY env var before use."""
+    """Google Gemini API client. Set GEMINI_API_KEY in .env or environment."""
 
     def __init__(
         self,
-        model: str = "gemini-2.0-flash",
+        model: str = "gemini-3.5-flash",
         temperature: float = 0.0,
         api_key: str | None = None,
     ) -> None:
@@ -30,20 +43,35 @@ class GeminiClient:
         self.temperature = temperature
         self.api_key = api_key or os.environ.get("GEMINI_API_KEY", "")
 
-    def generate(self, prompt: str) -> str:
+    def _get_client(self):
+        from google import genai
+
+        with _CLIENT_LOCK:
+            if self.api_key not in _CLIENT_CACHE:
+                _CLIENT_CACHE[self.api_key] = genai.Client(api_key=self.api_key)
+            return _CLIENT_CACHE[self.api_key]
+
+    def generate(self, prompt: str) -> GenerationResult:
         if not self.api_key:
             raise RuntimeError(
-                "GEMINI_API_KEY is not set. Export your API key before running LLM agents."
+                "GEMINI_API_KEY is not set. Add it to .env or export it before running."
             )
-        import google.generativeai as genai
-
-        genai.configure(api_key=self.api_key)
-        model = genai.GenerativeModel(self.model)
-        response = model.generate_content(
-            prompt,
+        client = self._get_client()
+        interaction = client.interactions.create(
+            model=self.model,
+            input=prompt,
             generation_config={"temperature": self.temperature},
         )
-        return response.text or ""
+        usage = getattr(interaction, "usage", None)
+        input_tokens = int(getattr(usage, "total_input_tokens", 0) or 0)
+        output_tokens = int(getattr(usage, "total_output_tokens", 0) or 0)
+        total_tokens = int(getattr(usage, "total_tokens", 0) or (input_tokens + output_tokens))
+        return GenerationResult(
+            text=interaction.output_text or "",
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            total_tokens=total_tokens,
+        )
 
 
 def extract_json_object(text: str) -> dict[str, Any]:
@@ -105,6 +133,8 @@ class LLMAgent(Agent):
         env_name = task_spec.get("name", "")
         if env_name == "NumberGuess":
             self._invalid_action = {"guess": task_spec.get("target_min", 0)}
+        elif env_name == "PendulumGate":
+            self._invalid_action = {"action": "wait"}
 
     def act(self, observation: Observation, history: list[dict[str, Any]]) -> Action:
         action, _ = self.act_with_info(observation, history)
@@ -127,9 +157,14 @@ class LLMAgent(Agent):
                         + last_error
                         + "\nReturn exactly one valid JSON object."
                     )
-                raw = self.model_client.generate(current_prompt)
-                info.raw_response = raw
-                parsed = extract_json_object(raw)
+                result = self.model_client.generate(current_prompt)
+                info.raw_response = result.text
+                info.token_usage = TokenUsage(
+                    input_tokens=result.input_tokens,
+                    output_tokens=result.output_tokens,
+                    total_tokens=result.total_tokens,
+                )
+                parsed = extract_json_object(result.text)
                 info.parsed_response = parsed
                 action = parsed.get("action", parsed)
                 if not isinstance(action, dict):
@@ -139,6 +174,7 @@ class LLMAgent(Agent):
             except Exception as exc:
                 last_error = str(exc)
                 info.parse_error = last_error
+                info.raw_response = info.raw_response or last_error
 
         return dict(self._invalid_action), info
 
@@ -193,11 +229,16 @@ LLM_AGENT_NAMES = {
 }
 
 
+def is_llm_agent_config(config: dict[str, Any]) -> bool:
+    name = config.get("name", "")
+    return name.startswith("llm") or name in LLM_AGENT_NAMES
+
+
 def make_llm_agent(config: dict[str, Any]) -> LLMAgent:
     name = config.get("name", "llm_raw_history")
     prompt_mode = config.get("prompt_mode") or LLM_AGENT_NAMES.get(name, "raw_history")
     client = GeminiClient(
-        model=config.get("model", "gemini-2.0-flash"),
+        model=config.get("model", "gemini-3.5-flash"),
         temperature=config.get("temperature", 0.0),
         api_key=config.get("api_key"),
     )

@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from llm_rl_engine.envs.bandits import BANDIT_ENV_NAMES
 from llm_rl_engine.types import Trajectory
 
 
@@ -15,12 +16,22 @@ def compute_episode_metrics(trajectory: Trajectory) -> dict[str, Any]:
     )
     parse_errors = sum(1 for r in trajectory.records if r.parse_error)
 
+    input_tokens = sum(
+        (r.token_usage.input_tokens if r.token_usage else 0) for r in trajectory.records
+    )
+    output_tokens = sum(
+        (r.token_usage.output_tokens if r.token_usage else 0) for r in trajectory.records
+    )
+
     metrics: dict[str, Any] = {
         "cumulative_reward": cumulative,
         "n_steps": len(trajectory.records),
         "invalid_action_rate": invalid_count / max(len(trajectory.records), 1),
         "parse_error_rate": parse_errors / max(len(trajectory.records), 1),
         "reward_per_step": rewards,
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "total_tokens": input_tokens + output_tokens,
     }
 
     env_name = trajectory.metadata.get("name", "")
@@ -28,8 +39,10 @@ def compute_episode_metrics(trajectory: Trajectory) -> dict[str, Any]:
 
     if env_name == "NumberGuess":
         metrics.update(_number_guess_metrics(trajectory, oracle))
-    elif env_name in ("StationaryBandit", "ReversalBandit"):
+    elif env_name in BANDIT_ENV_NAMES:
         metrics.update(_bandit_metrics(trajectory, oracle, env_name))
+    elif env_name == "PendulumGate":
+        metrics.update(_pendulum_metrics(trajectory, oracle))
 
     metrics["regret"] = _compute_regret(trajectory, oracle, env_name)
     return metrics
@@ -44,7 +57,9 @@ def _number_guess_metrics(trajectory: Trajectory, oracle: dict[str, Any]) -> dic
             steps_to_target = i + 1
             break
     final_guess = trajectory.records[-1].action.get("guess") if trajectory.records else None
-    final_error = abs(final_guess - target) if final_guess is not None and target is not None else None
+    final_error = (
+        abs(final_guess - target) if final_guess is not None and target is not None else None
+    )
     return {
         "steps_to_target": steps_to_target,
         "final_error": final_error,
@@ -72,23 +87,36 @@ def _bandit_metrics(
         tau = oracle.get("tau")
         if tau is not None:
             post_records = [r for r in trajectory.records if r.step >= tau]
-            if post_records and best_arm is not None:
-                post_best = oracle.get("post_probs", [])
-                if post_best:
-                    new_best = max(range(len(post_best)), key=lambda i: post_best[i])
-                    switch_delay = None
-                    for i, rec in enumerate(post_records):
-                        if rec.action.get("arm") == new_best:
-                            switch_delay = i + 1
-                            break
-                    metrics["switch_delay"] = switch_delay
+            post_best = oracle.get("post_probs", [])
+            if post_records and post_best:
+                new_best = max(range(len(post_best)), key=lambda i: post_best[i])
+                switch_delay = None
+                for i, rec in enumerate(post_records):
+                    if rec.action.get("arm") == new_best:
+                        switch_delay = i + 1
+                        break
+                metrics["switch_delay"] = switch_delay
     return metrics
+
+
+def _pendulum_metrics(trajectory: Trajectory, oracle: dict[str, Any]) -> dict[str, Any]:
+    success = any(r.private_info.get("event") == "success" for r in trajectory.records)
+    cross_attempts = sum(
+        1 for r in trajectory.records if r.action.get("action") == "cross"
+    )
+    unsafe = sum(1 for r in trajectory.records if r.private_info.get("unsafe"))
+    return {
+        "success": success,
+        "cross_attempts": cross_attempts,
+        "unsafe_crosses": unsafe,
+        "final_lives": oracle.get("lives"),
+    }
 
 
 def _compute_regret(
     trajectory: Trajectory, oracle: dict[str, Any], env_name: str
 ) -> float | None:
-    if env_name not in ("StationaryBandit", "ReversalBandit"):
+    if env_name not in BANDIT_ENV_NAMES:
         return None
 
     regret = 0.0
@@ -96,17 +124,28 @@ def _compute_regret(
         arm = rec.action.get("arm")
         if arm is None:
             continue
-        if env_name == "ReversalBandit":
-            tau = oracle.get("tau", 0)
-            probs = oracle.get("pre_probs", []) if rec.step < tau else oracle.get("post_probs", [])
-        else:
-            probs = oracle.get("probs", [])
+        probs = rec.private_info.get("step_probs")
+        if not probs:
+            probs = _fallback_probs(rec, oracle, env_name)
         if not probs:
             continue
         best_prob = max(probs)
         arm_prob = probs[arm] if arm < len(probs) else 0.0
         regret += best_prob - arm_prob
     return regret
+
+
+def _fallback_probs(
+    rec: Any, oracle: dict[str, Any], env_name: str
+) -> list[float]:
+    if env_name == "ReversalBandit":
+        tau = oracle.get("tau", 0)
+        return oracle.get("pre_probs", []) if rec.step < tau else oracle.get("post_probs", [])
+    if env_name == "DriftingBandit":
+        history = oracle.get("prob_history", [])
+        idx = max(0, min(rec.step - 1, len(history) - 1))
+        return history[idx] if history else oracle.get("probs", [])
+    return oracle.get("current_probs") or oracle.get("probs", [])
 
 
 def compute_run_metrics(summaries: list[dict[str, Any]]) -> dict[str, Any]:
@@ -124,6 +163,8 @@ def compute_run_metrics(summaries: list[dict[str, Any]]) -> dict[str, Any]:
         "mean_invalid_action_rate": _safe_mean(
             [s.get("metrics", {}).get("invalid_action_rate") for s in summaries]
         ),
+        "total_input_tokens": sum(s.get("metrics", {}).get("input_tokens", 0) for s in summaries),
+        "total_output_tokens": sum(s.get("metrics", {}).get("output_tokens", 0) for s in summaries),
     }
 
 

@@ -101,12 +101,10 @@ class NumberGuess(Env):
             reward = self._compute_dense_reward(guess)
 
         self._last_reward = reward
-        public_state = {"feedback": feedback}
-        if self.feedback == "distance_bucket":
-            public_state["distance_bucket"] = self._distance_bucket(guess)
+        public_state = self._build_feedback_state(guess, feedback)
 
         obs = self._make_observation(
-            f"Your guess was {guess}. Feedback: {feedback}.",
+            public_state["hint"],
             public_state=public_state,
         )
         return StepResult(
@@ -124,6 +122,29 @@ class NumberGuess(Env):
             span = max(self.target_max - self.target_min, 1)
             return -abs(guess - self._target) / span
         return 0.0
+
+    def _build_feedback_state(self, guess: int, feedback: str) -> dict[str, Any]:
+        state: dict[str, Any] = {
+            "last_guess": guess,
+            "feedback": feedback,
+        }
+        if feedback == "too_low":
+            state["comparison"] = "target_is_higher"
+            state["hint"] = (
+                f"You guessed {guess}. The target is larger (higher) than your guess."
+            )
+        elif feedback == "too_high":
+            state["comparison"] = "target_is_lower"
+            state["hint"] = (
+                f"You guessed {guess}. The target is smaller (lower) than your guess."
+            )
+        else:
+            state["comparison"] = "correct"
+            state["hint"] = f"Correct! You guessed {guess}."
+
+        if self.feedback == "distance_bucket":
+            state["distance_bucket"] = self._distance_bucket(guess)
+        return state
 
     def _distance_bucket(self, guess: int) -> str:
         dist = abs(guess - self._target)

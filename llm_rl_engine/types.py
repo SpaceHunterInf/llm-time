@@ -16,6 +16,13 @@ class StepResult:
 
 
 @dataclass
+class TokenUsage:
+    input_tokens: int = 0
+    output_tokens: int = 0
+    total_tokens: int = 0
+
+
+@dataclass
 class TrajectoryRecord:
     step: int
     observation: Observation
@@ -28,6 +35,7 @@ class TrajectoryRecord:
     raw_response: str | None = None
     parsed_response: dict[str, Any] | None = None
     parse_error: str | None = None
+    token_usage: TokenUsage | None = None
 
 
 @dataclass

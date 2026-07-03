@@ -1,5 +1,5 @@
 experiment_name: smoke_dynamic
-horizon: 40
+horizon: 50
 n_episodes: 10
 seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 

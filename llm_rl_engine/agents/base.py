@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any
 
-from llm_rl_engine.types import Action, Observation
+from llm_rl_engine.types import Action, Observation, TokenUsage
 
 
 @dataclass
@@ -15,6 +15,7 @@ class AgentStepInfo:
     raw_response: str | None = None
     parsed_response: dict[str, Any] | None = None
     parse_error: str | None = None
+    token_usage: TokenUsage | None = None
 
 
 class Agent(ABC):

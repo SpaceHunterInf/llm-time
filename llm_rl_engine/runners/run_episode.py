@@ -32,6 +32,7 @@ def make_record(
         raw_response=agent_info.get("raw_response"),
         parsed_response=agent_info.get("parsed_response"),
         parse_error=agent_info.get("parse_error"),
+        token_usage=agent_info.get("token_usage"),
     )
 
 
@@ -62,6 +63,7 @@ def run_episode(
                 "raw_response": info.raw_response,
                 "parsed_response": info.parsed_response,
                 "parse_error": info.parse_error,
+                "token_usage": info.token_usage,
             }
         else:
             action = agent.act(obs, history)

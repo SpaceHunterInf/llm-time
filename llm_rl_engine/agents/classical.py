@@ -5,6 +5,7 @@ import random
 from typing import Any
 
 from llm_rl_engine.agents.base import Agent
+from llm_rl_engine.envs.bandits import BANDIT_ENV_NAMES
 from llm_rl_engine.types import Action, Observation
 
 
@@ -25,6 +26,8 @@ class RandomAgent(Agent):
             lo = self._task_spec.get("target_min", 0)
             hi = self._task_spec.get("target_max", 100)
             return {"guess": self._rng.randint(lo, hi)}
+        if env_name == "PendulumGate":
+            return {"action": self._rng.choice(["wait", "observe", "cross"])}
         n_arms = self._task_spec.get("n_arms", 4)
         return {"arm": self._rng.randint(0, n_arms - 1)}
 
@@ -45,25 +48,40 @@ class GreedyAgent(Agent):
         env_name = self._task_spec.get("name", "")
         if env_name == "NumberGuess":
             return self._number_guess_act(history)
+        if env_name == "PendulumGate":
+            return self._pendulum_act(observation, history)
         return self._bandit_act(history)
 
     def _number_guess_act(self, history: list[dict[str, Any]]) -> Action:
         lo = self._task_spec.get("target_min", 0)
         hi = self._task_spec.get("target_max", 100)
-        if not history:
-            return {"guess": (lo + hi) // 2}
+        for rec in history:
+            action = rec.get("action", {})
+            info = rec.get("public_info", {}) or rec.get("private_info", {})
+            guess = action.get("guess")
+            feedback = info.get("feedback")
+            if guess is None or feedback is None:
+                continue
+            if feedback == "too_low":
+                lo = max(lo, guess + 1)
+            elif feedback == "too_high":
+                hi = min(hi, guess - 1)
+            elif feedback == "correct":
+                return {"guess": guess}
+        return {"guess": (lo + hi) // 2}
+
+    def _pendulum_act(
+        self, observation: Observation, history: list[dict[str, Any]]
+    ) -> Action:
+        if len(history) < 3:
+            return {"action": "observe"}
         last = history[-1]
-        action = last.get("action", {})
-        info = last.get("private_info", {}) or last.get("public_info", {})
-        guess = action.get("guess")
-        feedback = info.get("feedback")
-        if guess is None or feedback is None:
-            return {"guess": (lo + hi) // 2}
-        if feedback == "too_low":
-            return {"guess": min(hi, guess + max(1, (hi - guess) // 2))}
-        if feedback == "too_high":
-            return {"guess": max(lo, guess - max(1, (guess - lo) // 2))}
-        return {"guess": guess}
+        hint = (last.get("public_info") or {}).get("hint") or (
+            last.get("observation", {}).get("public_state", {}).get("pendulum_position_hint")
+        )
+        if hint == "center":
+            return {"action": "cross"}
+        return {"action": "wait"}
 
     def _bandit_act(self, history: list[dict[str, Any]]) -> Action:
         n_arms = self._task_spec.get("n_arms", 4)
@@ -240,11 +258,15 @@ class OracleAgent(Agent):
         env_name = self._task_spec.get("name", "")
         if env_name == "NumberGuess":
             return {"guess": self._oracle.get("target", 0)}
-        if env_name in ("StationaryBandit", "ReversalBandit"):
+        if env_name in BANDIT_ENV_NAMES:
             probs = self._oracle.get("current_probs") or self._oracle.get("probs", [])
             if probs:
                 return {"arm": max(range(len(probs)), key=lambda i: probs[i])}
             return {"arm": self._oracle.get("best_arm", 0)}
+        if env_name == "PendulumGate":
+            if self._oracle.get("in_danger_now"):
+                return {"action": "observe" if self._step < 5 else "wait"}
+            return {"action": "cross"}
         return {"arm": 0}
 
 

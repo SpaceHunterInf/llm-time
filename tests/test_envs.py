@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from llm_rl_engine.envs.bandits import ReversalBandit, StationaryBandit
+from llm_rl_engine.envs.bandits import DriftingBandit, PeriodicBandit, ReversalBandit, StationaryBandit
 from llm_rl_engine.envs.number_guess import NumberGuess
 
 
@@ -16,9 +16,28 @@ def test_number_guess_seed_reproducibility():
 def test_number_guess_no_target_leak():
     env = NumberGuess()
     env.reset(seed=0)
+    target = env.oracle()["target"]
     obs = env.step({"guess": 50}).observation
-    assert "target" not in str(obs)
-    assert "target" not in obs.get("public_state", {})
+    assert target not in obs.get("public_state", {}).values()
+    assert str(target) not in obs.get("message", "")
+
+
+def test_number_guess_comparison_feedback():
+    env = NumberGuess(target_min=0, target_max=100)
+    env.reset(seed=0)
+    target = env.oracle()["target"]
+    low_guess = max(0, target - 10)
+    obs = env.step({"guess": low_guess}).observation
+    if low_guess < target:
+        assert obs["public_state"]["feedback"] == "too_low"
+        assert obs["public_state"]["comparison"] == "target_is_higher"
+        assert "larger" in obs["public_state"]["hint"].lower()
+    high_guess = min(100, target + 10)
+    obs2 = env.step({"guess": high_guess}).observation
+    if high_guess > target:
+        assert obs2["public_state"]["feedback"] == "too_high"
+        assert obs2["public_state"]["comparison"] == "target_is_lower"
+        assert "smaller" in obs2["public_state"]["hint"].lower()
 
 
 def test_stationary_bandit_valid_action():
@@ -27,6 +46,21 @@ def test_stationary_bandit_valid_action():
     result = env.step({"arm": 2})
     assert result.reward in (0.0, 1.0)
     assert result.observation["public_state"]["chosen_arm"] == 2
+
+
+def test_periodic_bandit_registered_probs_in_oracle():
+    env = PeriodicBandit(n_arms=2)
+    env.reset(seed=3)
+    oracle = env.oracle()
+    assert "periods" in oracle
+    assert len(oracle["current_probs"]) == 2
+
+
+def test_drifting_bandit_history_grows():
+    env = DriftingBandit(n_arms=2)
+    env.reset(seed=2)
+    env.step({"arm": 0})
+    assert len(env.oracle()["prob_history"]) >= 1
 
 
 def test_reversal_bandit_reverses():

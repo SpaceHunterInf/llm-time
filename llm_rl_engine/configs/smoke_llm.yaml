@@ -1,5 +1,5 @@
 experiment_name: smoke_llm_gemini
-horizon: 10
+horizon: 50
 n_episodes: 2
 seeds: [0, 1]
 
@@ -8,10 +8,10 @@ environments:
     n_arms: 4
   - name: ReversalBandit
     n_arms: 4
-    reversal_time_range: [5, 8]
+    reversal_time_range: [15, 35]
 
 agents:
   - name: llm_raw_history
-    model: gemini-2.0-flash
+    model: gemini-3.5-flash
     temperature: 0
     max_retries: 1
