@@ -119,20 +119,25 @@ class LLMAgent(Agent):
         prompt_mode: str = "raw_history",
         max_retries: int = 1,
         invalid_action: Action | None = None,
+        task_description_override: str | None = None,
     ) -> None:
         self.name = name
         self.model_client = model_client or GeminiClient()
         self.prompt_mode = prompt_mode
         self.max_retries = max_retries
+        self.task_description_override = task_description_override
         self._task_spec: dict[str, Any] = {}
         self._template = self._load_template(prompt_mode)
         self._invalid_action = invalid_action or {"arm": 0}
 
     def reset(self, task_spec: dict[str, Any], seed: int | None = None) -> None:
-        self._task_spec = task_spec
-        env_name = task_spec.get("name", "")
+        # Copy so per-agent description overrides do not mutate env metadata.
+        self._task_spec = dict(task_spec)
+        if self.task_description_override is not None:
+            self._task_spec["description"] = self.task_description_override
+        env_name = self._task_spec.get("name", "")
         if env_name == "NumberGuess":
-            self._invalid_action = {"guess": task_spec.get("target_min", 0)}
+            self._invalid_action = {"guess": self._task_spec.get("target_min", 0)}
         elif env_name in ("PendulumGate", "TrafficLightGate"):
             self._invalid_action = {"action": "wait"}
 
@@ -242,9 +247,17 @@ def make_llm_agent(config: dict[str, Any]) -> LLMAgent:
         temperature=config.get("temperature", 0.0),
         api_key=config.get("api_key"),
     )
+    # Prefer explicit task_description; accept description_mode for StagedBandit ablations.
+    override = config.get("task_description")
+    if override is None and config.get("description_mode") is not None:
+        from llm_rl_engine.envs.staged_bandit import staged_bandit_description
+
+        n_arms = int(config.get("n_arms", 4))
+        override = staged_bandit_description(n_arms, str(config["description_mode"]))
     return LLMAgent(
         name=name,
         model_client=client,
         prompt_mode=prompt_mode,
         max_retries=config.get("max_retries", 1),
+        task_description_override=override,
     )

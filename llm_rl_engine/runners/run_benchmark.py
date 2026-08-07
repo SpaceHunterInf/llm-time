@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from tqdm import tqdm
+
 from llm_rl_engine.agents.classical import make_classical_agent
 from llm_rl_engine.agents.llm import LLM_AGENT_NAMES, is_llm_agent_config, make_llm_agent
 from llm_rl_engine.analysis.metrics import compute_episode_metrics, compute_run_metrics
@@ -97,6 +99,12 @@ def _is_llm_job(job: BenchmarkJob) -> bool:
     return is_llm_agent_config(job.agent_cfg)
 
 
+def _job_label(job: BenchmarkJob) -> str:
+    agent = job.agent_cfg.get("name", "?")
+    env = job.env_cfg.get("name", "?")
+    return f"{agent}/{env}/s{job.seed}"
+
+
 def run_benchmark(
     config_path: str | Path,
     output_dir: str | Path = "runs",
@@ -112,19 +120,37 @@ def run_benchmark(
     llm_jobs = [j for j in jobs if _is_llm_job(j)]
     classical_jobs = [j for j in jobs if not _is_llm_job(j)]
 
+    print(
+        f"[benchmark] {experiment_name}\n"
+        f"  run_dir   : {logger.directory}\n"
+        f"  horizon   : {horizon}\n"
+        f"  jobs      : {len(classical_jobs)} classical, {len(llm_jobs)} LLM "
+        f"(workers={llm_workers}), total={len(jobs)}",
+        flush=True,
+    )
+
     results: list[BenchmarkJobResult] = []
 
-    for job in classical_jobs:
+    for job in tqdm(
+        classical_jobs,
+        desc="Classical episodes",
+        unit="ep",
+        disable=len(classical_jobs) == 0,
+    ):
         results.append(_run_job(job, horizon))
 
     if llm_jobs:
         with ThreadPoolExecutor(max_workers=max(1, llm_workers)) as pool:
             futures = {pool.submit(_run_job, job, horizon): job for job in llm_jobs}
-            for future in as_completed(futures):
-                results.append(future.result())
+            with tqdm(total=len(llm_jobs), desc="LLM episodes", unit="ep") as pbar:
+                for future in as_completed(futures):
+                    job = futures[future]
+                    results.append(future.result())
+                    pbar.set_postfix_str(_job_label(job), refresh=False)
+                    pbar.update(1)
 
     all_summaries: list[dict[str, Any]] = []
-    for result in results:
+    for result in tqdm(results, desc="Logging trajectories", unit="ep"):
         for record in result.trajectory.records:
             logger.log_step(
                 result.trajectory, record, result.env_name, prompt_mode=result.prompt_mode
@@ -141,6 +167,7 @@ def run_benchmark(
             }
         )
 
+    print("[benchmark] Aggregating metrics…", flush=True)
     run_metrics = _aggregate_summaries(all_summaries)
 
     llm_model = _infer_llm_model(config)
@@ -158,8 +185,10 @@ def run_benchmark(
     token_path.write_text(json.dumps(token_report, indent=2, default=str), encoding="utf-8")
 
     if generate_plots:
+        print("[benchmark] Generating plots…", flush=True)
         generate_run_plots(logger.directory, run_metrics, token_report)
 
+    print(f"[benchmark] Done → {logger.directory}", flush=True)
     return logger.directory
 
 

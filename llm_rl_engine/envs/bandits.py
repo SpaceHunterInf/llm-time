@@ -13,6 +13,8 @@ BANDIT_ENV_NAMES = (
     "PeriodicBandit",
     "DriftingBandit",
     "PhaseLockedBandit",
+    "StagedBandit",
+    "ExploitDecayBandit",
 )
 
 

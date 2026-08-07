@@ -41,6 +41,10 @@ def compute_episode_metrics(trajectory: Trajectory) -> dict[str, Any]:
         metrics.update(_number_guess_metrics(trajectory, oracle))
     elif env_name in BANDIT_ENV_NAMES:
         metrics.update(_bandit_metrics(trajectory, oracle, env_name))
+        if env_name == "StagedBandit":
+            metrics.update(_staged_bandit_metrics(trajectory, oracle))
+        if env_name == "ExploitDecayBandit":
+            metrics.update(_exploit_decay_metrics(trajectory, oracle))
     elif env_name == "PendulumGate":
         metrics.update(_pendulum_metrics(trajectory, oracle))
     elif env_name == "TrafficLightGate":
@@ -99,6 +103,187 @@ def _bandit_metrics(
                         break
                 metrics["switch_delay"] = switch_delay
     return metrics
+
+
+def _staged_bandit_metrics(
+    trajectory: Trajectory, oracle: dict[str, Any]
+) -> dict[str, Any]:
+    """Stage-level reward, recovery delay, and overcommit after regime changes."""
+    stage_length = int(oracle.get("stage_length") or 30)
+    n_stages = int(oracle.get("n_stages") or 1)
+    records = trajectory.records
+    W = 5
+    W_oc = 10
+    K_rec = 3
+
+    stage_rewards: list[float] = []
+    stage_regrets: list[float] = []
+    recovery_delays: list[int | None] = []
+    overcommit_rates: list[float | None] = []
+    post_change_mean_rewards: list[float | None] = []
+
+    prev_end_best: int | None = None
+    for s in range(n_stages):
+        stage_recs = [
+            r
+            for r in records
+            if r.private_info.get("stage_index", r.step // stage_length) == s
+        ]
+        if not stage_recs:
+            # Fallback: partition by step index
+            stage_recs = [
+                r
+                for r in records
+                if s * stage_length <= r.step < (s + 1) * stage_length
+            ]
+
+        stage_rewards.append(sum(r.reward for r in stage_recs))
+        stage_regret = 0.0
+        for r in stage_recs:
+            arm = r.action.get("arm")
+            probs = r.private_info.get("step_probs") or []
+            if arm is None or not probs:
+                continue
+            stage_regret += max(probs) - (probs[arm] if arm < len(probs) else 0.0)
+        stage_regrets.append(stage_regret)
+
+        if s == 0:
+            recovery_delays.append(None)
+            overcommit_rates.append(None)
+            post_change_mean_rewards.append(None)
+        else:
+            post = stage_recs[:W]
+            post_change_mean_rewards.append(
+                sum(r.reward for r in post) / max(len(post), 1) if post else None
+            )
+            recovery_delays.append(_recovery_delay(stage_recs, K_rec))
+            if prev_end_best is not None and stage_recs:
+                window = stage_recs[:W_oc]
+                over = sum(
+                    1 for r in window if r.action.get("arm") == prev_end_best
+                )
+                overcommit_rates.append(over / max(len(window), 1))
+            else:
+                overcommit_rates.append(None)
+
+        if stage_recs:
+            last_probs = stage_recs[-1].private_info.get("step_probs") or []
+            if last_probs:
+                prev_end_best = max(range(len(last_probs)), key=lambda i: last_probs[i])
+            else:
+                prev_end_best = stage_recs[-1].private_info.get("best_arm")
+        else:
+            prev_end_best = None
+
+    families = [
+        (p or {}).get("family")
+        for p in (oracle.get("stage_params") or [])
+    ]
+    return {
+        "n_stages": n_stages,
+        "stage_length": stage_length,
+        "stage_families": families,
+        "stage_rewards": stage_rewards,
+        "stage_regrets": stage_regrets,
+        "recovery_delay": recovery_delays,
+        "overcommit_rate": overcommit_rates,
+        "post_change_mean_reward": post_change_mean_rewards,
+        "mean_recovery_delay": _safe_mean(
+            [d for d in recovery_delays if d is not None]
+        ),
+        "mean_overcommit_rate": _safe_mean(
+            [r for r in overcommit_rates if r is not None]
+        ),
+    }
+
+
+def _exploit_decay_metrics(
+    trajectory: Trajectory, oracle: dict[str, Any]
+) -> dict[str, Any]:
+    """Overmine after alpha death and recovery onto the new alpha."""
+    records = trajectory.records
+    W = 10
+    K_rec = 3
+
+    death_indices = [
+        i for i, r in enumerate(records) if r.private_info.get("alpha_died")
+    ]
+    death_steps = [records[i].step for i in death_indices]
+
+    overmine_rates: list[float | None] = []
+    recovery_delays: list[int | None] = []
+    post_death_rewards: list[float | None] = []
+
+    for di in death_indices:
+        death_rec = records[di]
+        old_alpha = death_rec.private_info.get("alpha_arm")
+        if old_alpha is None:
+            old_alpha = death_rec.action.get("arm")
+        new_alpha = death_rec.private_info.get("alpha_arm_after")
+        post = records[di + 1 :]
+
+        window = post[:W]
+        if old_alpha is not None and window:
+            over = sum(1 for r in window if r.action.get("arm") == old_alpha)
+            overmine_rates.append(over / len(window))
+        else:
+            overmine_rates.append(None)
+
+        delay: int | None = None
+        streak = 0
+        for i, r in enumerate(post):
+            target = new_alpha
+            if target is None:
+                probs = r.private_info.get("step_probs") or []
+                if probs:
+                    target = max(range(len(probs)), key=lambda j: probs[j])
+            if target is not None and r.action.get("arm") == target:
+                streak += 1
+                if streak >= K_rec:
+                    delay = i - K_rec + 2  # 1-based index of streak start within post
+                    break
+            else:
+                streak = 0
+        recovery_delays.append(delay)
+
+        if window:
+            post_death_rewards.append(sum(r.reward for r in window) / len(window))
+        else:
+            post_death_rewards.append(None)
+
+    valid_om = [x for x in overmine_rates if x is not None]
+    valid_rec = [x for x in recovery_delays if x is not None]
+    valid_pr = [x for x in post_death_rewards if x is not None]
+    return {
+        "n_alpha_deaths": int(oracle.get("n_alpha_deaths") or len(death_steps)),
+        "alpha_death_steps": death_steps,
+        "overmine_rate_after_death": overmine_rates,
+        "recovery_delay_after_death": recovery_delays,
+        "post_death_mean_reward": post_death_rewards,
+        "mean_overmine_rate": sum(valid_om) / len(valid_om) if valid_om else None,
+        "mean_recovery_delay": sum(valid_rec) / len(valid_rec) if valid_rec else None,
+        "mean_post_death_reward": sum(valid_pr) / len(valid_pr) if valid_pr else None,
+    }
+
+
+def _recovery_delay(stage_recs: list[Any], k_rec: int = 3) -> int | None:
+    """First offset (1-based) where agent matches oracle best for k_rec consecutive steps."""
+    if not stage_recs:
+        return None
+    matches: list[bool] = []
+    for r in stage_recs:
+        arm = r.action.get("arm")
+        best = r.private_info.get("best_arm")
+        probs = r.private_info.get("step_probs") or []
+        if best is None and probs:
+            best = max(range(len(probs)), key=lambda i: probs[i])
+        matches.append(arm is not None and best is not None and arm == best)
+
+    for d in range(len(matches)):
+        window = matches[d : d + k_rec]
+        if len(window) == k_rec and all(window):
+            return d + 1
+    return None
 
 
 def _traffic_light_metrics(trajectory: Trajectory, oracle: dict[str, Any]) -> dict[str, Any]:
@@ -177,7 +362,7 @@ def _fallback_probs(
         history = oracle.get("prob_history", [])
         idx = max(0, min(rec.step - 1, len(history) - 1))
         return history[idx] if history else oracle.get("probs", [])
-    if env_name == "PhaseLockedBandit":
+    if env_name in ("PhaseLockedBandit", "StagedBandit", "ExploitDecayBandit"):
         history = oracle.get("prob_history", [])
         idx = max(0, min(rec.step - 1, len(history) - 1))
         return history[idx] if history else oracle.get("current_probs", [])

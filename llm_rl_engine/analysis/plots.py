@@ -14,6 +14,8 @@ ENV_DESCRIPTIONS = {
     "PendulumGate": "Time a safe crossing using continuous pendulum position/velocity observations.",
     "TrafficLightGate": "Cross on green while a hidden cyclic traffic light runs.",
     "PhaseLockedBandit": "Bandit arms profitable only during narrow rotating phase windows.",
+    "StagedBandit": "Bandit with hard-cut stage changes across reward families.",
+    "ExploitDecayBandit": "Exploiting the current best arm degrades it until a new alpha spawns.",
 }
 
 
@@ -46,7 +48,9 @@ def generate_run_plots(
 
         _plot_reward_bars(episodes, run_metrics, plots_dir, plt, np)
         _plot_cumulative_reward_curves(episodes, plots_dir, plt, np)
+        _plot_multi_agent_reward_vs_time(episodes, plots_dir, plt, np)
         _plot_arm_choices(episodes, plots_dir, plt, np)
+        _plot_staged_reward_vs_time(episodes, plots_dir, plt, np)
         if token_report:
             _plot_token_usage(token_report, plots_dir, plt)
     except ImportError:
@@ -122,9 +126,286 @@ def _plot_cumulative_reward_curves(episodes, plots_dir, plt, np) -> None:
         plt.close(fig)
 
 
+_AGENT_COLORS = {
+    "oracle": "#2ca02c",
+    "llm_raw_history": "#d62728",
+    "llm_blind": "#d62728",
+    "llm_aware": "#e377c2",
+    "llm_minimal": "#bcbd22",
+    "greedy": "#1f77b4",
+    "sliding_window_ucb": "#ff7f0e",
+    "ucb": "#9467bd",
+    "thompson_sampling": "#8c564b",
+    "random": "#7f7f7f",
+}
+
+
+def _plot_multi_agent_reward_vs_time(episodes, plots_dir, plt, np) -> None:
+    """Overlay agents: smoothed instantaneous reward + cumulative reward vs time.
+
+    Used for non-staged bandits (ExploitDecay, PhaseLocked, etc.) so LLM vs
+    classical comparison is visible in one figure — not only per-agent curves.
+    """
+    envs = sorted({k[1] for k in episodes})
+    # StagedBandit has its own dedicated figure.
+    envs = [e for e in envs if e != "StagedBandit"]
+    if not envs:
+        return
+
+    window = 5
+    for env_name in envs:
+        by_agent: dict[str, list[list[dict[str, Any]]]] = defaultdict(list)
+        for (agent, env, _seed, _ep), steps in episodes.items():
+            if env == env_name:
+                by_agent[agent].append(steps)
+        if not by_agent:
+            continue
+
+        # Prefer a canonical agent order for legend readability
+        preferred = [
+            "oracle",
+            "llm_raw_history",
+            "llm_blind",
+            "llm_aware",
+            "llm_minimal",
+            "sliding_window_ucb",
+            "ucb",
+            "thompson_sampling",
+            "greedy",
+            "random",
+        ]
+        agents = [a for a in preferred if a in by_agent] + sorted(
+            a for a in by_agent if a not in preferred
+        )
+
+        fig, axes = plt.subplots(2, 1, figsize=(11, 8), sharex=True)
+        ax_inst, ax_cum = axes
+
+        # Oracle expected reward envelope from step_probs (any agent logs them)
+        sample_eps = next(iter(by_agent.values()))
+        max_len = max(len(ep) for ep in sample_eps)
+        orc_mat = []
+        for ep in sample_eps:
+            orc = [
+                max((r.get("private_info") or {}).get("step_probs") or [float("nan")])
+                for r in ep
+            ]
+            if len(orc) < max_len:
+                orc = orc + [orc[-1]] * (max_len - len(orc)) if orc else [float("nan")] * max_len
+            orc_mat.append(orc)
+        mean_orc = np.nanmean(np.array(orc_mat, dtype=float), axis=0)
+        ax_inst.plot(
+            mean_orc,
+            label="oracle E[r*]",
+            color="#2ca02c",
+            linestyle="--",
+            linewidth=1.6,
+            alpha=0.9,
+        )
+
+        kernel = np.ones(window) / window
+        for agent in agents:
+            ep_list = by_agent[agent]
+            max_len_a = max(len(ep) for ep in ep_list)
+            rew_mat = []
+            cum_mat = []
+            for ep in ep_list:
+                rews = [float(r["reward"]) for r in ep]
+                if len(rews) < max_len_a:
+                    rews = rews + [0.0] * (max_len_a - len(rews))
+                rew_mat.append(rews)
+                cum_mat.append(list(np.cumsum(rews)))
+            mean_rew = np.mean(np.array(rew_mat, dtype=float), axis=0)
+            mean_cum = np.mean(np.array(cum_mat, dtype=float), axis=0)
+            smooth = np.convolve(mean_rew, kernel, mode="same")
+            color = _AGENT_COLORS.get(agent)
+            lw = 2.4 if agent.startswith("llm") or agent == "oracle" else 1.8
+            ax_inst.plot(smooth, label=f"{agent} (roll-{window})", color=color, linewidth=lw)
+            ax_cum.plot(mean_cum, label=agent, color=color, linewidth=lw)
+
+        # ExploitDecay: mark mean alpha-death times if present
+        if env_name == "ExploitDecayBandit":
+            death_positions: list[int] = []
+            for ep in sample_eps:
+                for r in ep:
+                    if (r.get("private_info") or {}).get("alpha_died"):
+                        death_positions.append(int(r.get("step", 0)))
+            if death_positions:
+                # histogram of death steps → vertical lines at unique common bins
+                for t in sorted(set(death_positions)):
+                    ax_inst.axvline(t, color="#aaa", linestyle=":", linewidth=0.8, alpha=0.35)
+                    ax_cum.axvline(t, color="#aaa", linestyle=":", linewidth=0.8, alpha=0.35)
+                ax_inst.plot([], [], color="#aaa", linestyle=":", label="α death (any seed)")
+
+        ax_inst.set_ylabel(f"Reward (rolling mean, w={window})")
+        ax_inst.set_title(f"{env_name} — reward vs time (mean over seeds)")
+        ax_inst.legend(loc="upper right", fontsize=8, ncol=2)
+        ax_inst.grid(alpha=0.3)
+
+        ax_cum.set_xlabel("Step")
+        ax_cum.set_ylabel("Cumulative reward")
+        ax_cum.set_title(f"{env_name} — cumulative reward vs time")
+        ax_cum.legend(loc="upper left", fontsize=8, ncol=2)
+        ax_cum.grid(alpha=0.3)
+
+        fig.tight_layout()
+        safe = env_name.replace(" ", "_")
+        fig.savefig(plots_dir / f"reward_vs_time_{safe}.png", dpi=140)
+        plt.close(fig)
+
+
+def _plot_staged_reward_vs_time(episodes, plots_dir, plt, np) -> None:
+    """Primary StagedBandit figure: smoothed reward vs time with stage bands."""
+    staged = {
+        k: steps
+        for k, steps in episodes.items()
+        if k[1] == "StagedBandit"
+    }
+    if not staged:
+        return
+
+    # Group by agent
+    by_agent: dict[str, list[list[dict[str, Any]]]] = defaultdict(list)
+    for (agent, _env, _seed, _ep), steps in staged.items():
+        by_agent[agent].append(steps)
+
+    # Collect stage boundaries / families from any episode
+    sample = next(iter(staged.values()))
+    boundaries = []
+    families: list[str] = []
+    stage_length = 30
+    for row in sample:
+        info = row.get("private_info") or {}
+        if "stage_end" in info and info["stage_end"] not in boundaries:
+            if info.get("stage_index", 0) > 0:
+                boundaries.append(info.get("stage_start", 0))
+        if info.get("stage_family") and info["stage_family"] not in families:
+            # rebuild ordered later
+            pass
+        if info.get("stage_end"):
+            stage_length = max(stage_length, info["stage_end"] // max(info.get("stage_index", 0) + 1, 1))
+
+    # Ordered stage labels from first seed timeline
+    stage_labels: list[tuple[int, int, str]] = []
+    seen_stages: set[int] = set()
+    for row in sample:
+        info = row.get("private_info") or {}
+        s_idx = info.get("stage_index")
+        if s_idx is None or s_idx in seen_stages:
+            continue
+        seen_stages.add(s_idx)
+        start = info.get("stage_start", s_idx * stage_length)
+        end = info.get("stage_end", (s_idx + 1) * stage_length)
+        fam = info.get("stage_family", f"stage{s_idx}")
+        stage_labels.append((start, end, f"S{s_idx}:{fam}"))
+
+    if not stage_labels and sample:
+        max_step = max(r["step"] for r in sample) + 1
+        n_est = max(1, (max_step + stage_length - 1) // stage_length)
+        stage_labels = [
+            (s * stage_length, (s + 1) * stage_length, f"S{s}")
+            for s in range(n_est)
+        ]
+
+    colors = _AGENT_COLORS
+
+    fig, ax = plt.subplots(figsize=(11, 5))
+    window = 5
+
+    # Oracle expected-reward envelope from any agent's logged step_probs
+    envelope_src = next(iter(by_agent.values()))
+    max_len_env = max(len(ep) for ep in envelope_src)
+    oracle_mat = []
+    for ep in envelope_src:
+        orc = [
+            max((r.get("private_info") or {}).get("step_probs") or [float("nan")])
+            for r in ep
+        ]
+        if len(orc) < max_len_env:
+            orc = orc + [orc[-1]] * (max_len_env - len(orc)) if orc else [float("nan")] * max_len_env
+        oracle_mat.append(orc)
+    mean_orc = np.nanmean(np.array(oracle_mat, dtype=float), axis=0)
+    ax.plot(
+        mean_orc,
+        label="oracle E[r*]",
+        color="#2ca02c",
+        linestyle="--",
+        linewidth=1.8,
+        alpha=0.95,
+    )
+
+    for agent, ep_list in sorted(by_agent.items()):
+        max_len = max(len(ep) for ep in ep_list)
+        reward_mat = []
+        for ep in ep_list:
+            rews = [r["reward"] for r in ep]
+            if len(rews) < max_len:
+                rews = rews + [rews[-1]] * (max_len - len(rews)) if rews else [0.0] * max_len
+            reward_mat.append(rews)
+
+        mean_rew = np.nanmean(np.array(reward_mat, dtype=float), axis=0)
+        kernel = np.ones(window) / window
+        smooth = np.convolve(mean_rew, kernel, mode="same")
+        color = colors.get(agent, None)
+        ax.plot(smooth, label=f"{agent} (roll-{window})", color=color, linewidth=2)
+
+    # Stage bands
+    band_colors = ["#e8f4ea", "#e8eef8", "#f8efe8", "#f3e8f8"]
+    for i, (start, end, label) in enumerate(stage_labels):
+        ax.axvspan(start, end, color=band_colors[i % len(band_colors)], alpha=0.45, zorder=0)
+        mid = (start + end) / 2
+        ymin, ymax = ax.get_ylim()
+        ax.text(mid, ymax * 0.02 + ymin * 0.98, label, ha="center", va="top", fontsize=9)
+
+    for start, _end, _label in stage_labels[1:]:
+        ax.axvline(start, color="#333", linestyle=":", linewidth=1, alpha=0.7)
+
+    ax.set_title("StagedBandit — smoothed reward vs time (mean over seeds)")
+    ax.set_xlabel("Step")
+    ax.set_ylabel(f"Reward (rolling mean, w={window})")
+    ax.legend(loc="upper right", fontsize=8)
+    ax.grid(alpha=0.3)
+    fig.tight_layout()
+    fig.savefig(plots_dir / "staged_reward_vs_time.png", dpi=140)
+    plt.close(fig)
+
+    # Per-agent single-seed detail for LLM if present
+    llm_eps = [(k, v) for k, v in staged.items() if k[0] == "llm_raw_history"]
+    for (agent, env, seed, ep_id), steps in llm_eps[:3]:
+        fig, ax = plt.subplots(figsize=(10, 4))
+        rewards = [s["reward"] for s in steps]
+        expected = [
+            max((s.get("private_info") or {}).get("step_probs") or [0.0]) for s in steps
+        ]
+        arms = [s["action"].get("arm") for s in steps]
+        t = np.arange(len(steps))
+        ax.plot(t, expected, "g--", label="oracle E[r*]", alpha=0.8)
+        if len(rewards) >= window:
+            smooth = np.convolve(rewards, np.ones(window) / window, mode="same")
+            ax.plot(t, smooth, "r-", label=f"LLM roll-{window}")
+        ax.scatter(t, rewards, c="#d62728", s=12, alpha=0.35, label="LLM reward")
+        for i, (start, end, label) in enumerate(stage_labels):
+            ax.axvspan(start, min(end, len(steps)), color=band_colors[i % len(band_colors)], alpha=0.35, zorder=0)
+            ax.axvline(start, color="#333", linestyle=":", linewidth=1, alpha=0.6)
+        ax.set_title(f"LLM seed {seed} — reward vs time ({env})")
+        ax.set_xlabel("Step")
+        ax.set_ylabel("Reward")
+        ax.legend(fontsize=8)
+        ax.grid(alpha=0.3)
+        fig.tight_layout()
+        fig.savefig(plots_dir / f"staged_llm_seed{seed}_e{ep_id}.png", dpi=130)
+        plt.close(fig)
+
+
 def _plot_arm_choices(episodes, plots_dir, plt, np) -> None:
     bandit_envs = {
-        "StationaryBandit", "ReversalBandit", "PeriodicBandit", "DriftingBandit"
+        "StationaryBandit",
+        "ReversalBandit",
+        "PeriodicBandit",
+        "DriftingBandit",
+        "PhaseLockedBandit",
+        "StagedBandit",
+        "ExploitDecayBandit",
     }
     for (agent, env, seed, ep_id), steps in episodes.items():
         if env not in bandit_envs:
