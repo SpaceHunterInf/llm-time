@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Protocol
 
 from llm_rl_engine.agents.base import Agent, AgentStepInfo
+from llm_rl_engine.agents.history_views import render_interface_blocks
 from llm_rl_engine.types import Action, Observation, TokenUsage
 
 PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
@@ -120,12 +121,20 @@ class LLMAgent(Agent):
         max_retries: int = 1,
         invalid_action: Action | None = None,
         task_description_override: str | None = None,
+        interface: str = "raw",
+        history_tail: int = 10,
+        stats_last_k: int = 5,
+        recency_window: int = 10,
     ) -> None:
         self.name = name
         self.model_client = model_client or GeminiClient()
         self.prompt_mode = prompt_mode
         self.max_retries = max_retries
         self.task_description_override = task_description_override
+        self.interface = (interface or "raw").lower().strip()
+        self.history_tail = int(history_tail)
+        self.stats_last_k = int(stats_last_k)
+        self.recency_window = int(recency_window)
         self._task_spec: dict[str, Any] = {}
         self._template = self._load_template(prompt_mode)
         self._invalid_action = invalid_action or {"arm": 0}
@@ -184,10 +193,20 @@ class LLMAgent(Agent):
         return dict(self._invalid_action), info
 
     def _build_prompt(self, observation: Observation, history: list[dict[str, Any]]) -> str:
+        n_arms = int(self._task_spec.get("n_arms", 4))
+        stats, hist = render_interface_blocks(
+            history,
+            n_arms=n_arms,
+            interface=self.interface,
+            history_tail=self.history_tail,
+            stats_last_k=self.stats_last_k,
+            recency_window=self.recency_window,
+        )
         return self._template.format(
             task_description=self._task_spec.get("description", ""),
             action_space=self._task_spec.get("action_space", ""),
-            raw_history=render_history(history),
+            stats=stats,
+            raw_history=hist,
             observation=render_observation(observation),
         )
 
@@ -195,6 +214,9 @@ class LLMAgent(Agent):
         template_map = {
             "raw_history": "raw_history.txt",
             "heuristic_before_action": "heuristic_before_action.txt",
+            "hypothesis_loop": "hypothesis_loop.txt",
+            "hypothesis_taught_detect": "hypothesis_taught_detect.txt",
+            "hypothesis_taught_surprise": "hypothesis_taught_surprise.txt",
         }
         filename = template_map.get(mode, "raw_history.txt")
         path = PROMPTS_DIR / filename
@@ -230,6 +252,12 @@ Return exactly one JSON object with this schema:
 LLM_AGENT_NAMES = {
     "llm_raw_history": "raw_history",
     "llm_heuristic_before_action": "heuristic_before_action",
+    "llm_hypothesis": "hypothesis_loop",
+    "llm_hyp_raw": "hypothesis_loop",
+    "llm_hyp_stats": "hypothesis_loop",
+    "llm_hyp_sr": "hypothesis_loop",
+    "llm_hyp_taught_detect": "hypothesis_taught_detect",
+    "llm_hyp_taught_surprise": "hypothesis_taught_surprise",
     "llm": "raw_history",
 }
 
@@ -254,10 +282,20 @@ def make_llm_agent(config: dict[str, Any]) -> LLMAgent:
 
         n_arms = int(config.get("n_arms", 4))
         override = staged_bandit_description(n_arms, str(config["description_mode"]))
+    hyp_modes = (
+        "hypothesis_loop",
+        "hypothesis_taught_detect",
+        "hypothesis_taught_surprise",
+    )
+    default_interface = "stats_plus_recent" if prompt_mode in hyp_modes else "raw"
     return LLMAgent(
         name=name,
         model_client=client,
         prompt_mode=prompt_mode,
         max_retries=config.get("max_retries", 1),
         task_description_override=override,
+        interface=str(config.get("interface", default_interface)),
+        history_tail=int(config.get("history_tail", 10)),
+        stats_last_k=int(config.get("stats_last_k", 5)),
+        recency_window=int(config.get("recency_window", 10)),
     )

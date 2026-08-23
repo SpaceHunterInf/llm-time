@@ -130,27 +130,9 @@ def run_benchmark(
     )
 
     results: list[BenchmarkJobResult] = []
-
-    for job in tqdm(
-        classical_jobs,
-        desc="Classical episodes",
-        unit="ep",
-        disable=len(classical_jobs) == 0,
-    ):
-        results.append(_run_job(job, horizon))
-
-    if llm_jobs:
-        with ThreadPoolExecutor(max_workers=max(1, llm_workers)) as pool:
-            futures = {pool.submit(_run_job, job, horizon): job for job in llm_jobs}
-            with tqdm(total=len(llm_jobs), desc="LLM episodes", unit="ep") as pbar:
-                for future in as_completed(futures):
-                    job = futures[future]
-                    results.append(future.result())
-                    pbar.set_postfix_str(_job_label(job), refresh=False)
-                    pbar.update(1)
-
     all_summaries: list[dict[str, Any]] = []
-    for result in tqdm(results, desc="Logging trajectories", unit="ep"):
+
+    def _log_result(result: BenchmarkJobResult) -> None:
         for record in result.trajectory.records:
             logger.log_step(
                 result.trajectory, record, result.env_name, prompt_mode=result.prompt_mode
@@ -166,6 +148,28 @@ def run_benchmark(
                 "metrics": result.metrics,
             }
         )
+
+    for job in tqdm(
+        classical_jobs,
+        desc="Classical episodes",
+        unit="ep",
+        disable=len(classical_jobs) == 0,
+    ):
+        result = _run_job(job, horizon)
+        results.append(result)
+        _log_result(result)
+
+    if llm_jobs:
+        with ThreadPoolExecutor(max_workers=max(1, llm_workers)) as pool:
+            futures = {pool.submit(_run_job, job, horizon): job for job in llm_jobs}
+            with tqdm(total=len(llm_jobs), desc="LLM episodes", unit="ep") as pbar:
+                for future in as_completed(futures):
+                    job = futures[future]
+                    result = future.result()
+                    results.append(result)
+                    _log_result(result)
+                    pbar.set_postfix_str(_job_label(job), refresh=False)
+                    pbar.update(1)
 
     print("[benchmark] Aggregating metrics…", flush=True)
     run_metrics = _aggregate_summaries(all_summaries)

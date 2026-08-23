@@ -1,0 +1,35 @@
+# P1: mixed families sin → constant → linear (cross-family headline)
+experiment_name: benchmark_staged_mixed_p1
+horizon: 90
+n_episodes: 5
+seeds: [0, 1, 2, 3, 4]
+llm_parallel_workers: 5
+generate_plots: true
+
+environments:
+  - name: StagedBandit
+    n_arms: 4
+    stage_length: 30
+    force_distinct_best_arms: true
+    strong_p: 0.85
+    weak_p: 0.20
+    period_range: [8, 16]
+    description_mode: blind
+    stages:
+      - family: sinusoidal
+      - family: constant
+      - family: linear
+        linear_variant: ramp_up
+
+agents:
+  - name: random
+  - name: greedy
+  - name: ucb
+  - name: thompson_sampling
+  - name: sliding_window_ucb
+    window: 10
+  - name: oracle
+  - name: llm_raw_history
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1

@@ -45,6 +45,8 @@ def compute_episode_metrics(trajectory: Trajectory) -> dict[str, Any]:
             metrics.update(_staged_bandit_metrics(trajectory, oracle))
         if env_name == "ExploitDecayBandit":
             metrics.update(_exploit_decay_metrics(trajectory, oracle))
+        if _has_hypothesis_fields(trajectory):
+            metrics.update(_hypothesis_loop_metrics(trajectory, oracle))
     elif env_name == "PendulumGate":
         metrics.update(_pendulum_metrics(trajectory, oracle))
     elif env_name == "TrafficLightGate":
@@ -367,6 +369,164 @@ def _fallback_probs(
         idx = max(0, min(rec.step - 1, len(history) - 1))
         return history[idx] if history else oracle.get("current_probs", [])
     return oracle.get("current_probs") or oracle.get("probs", [])
+
+
+def _has_hypothesis_fields(trajectory: Trajectory) -> bool:
+    for rec in trajectory.records:
+        parsed = rec.parsed_response or {}
+        if isinstance(parsed.get("hypothesis"), dict):
+            return True
+    return False
+
+
+def _parse_hypothesis(rec: Any) -> tuple[int | None, bool | None, float | None]:
+    parsed = rec.parsed_response or {}
+    raw_h = parsed.get("hypothesis")
+    h = raw_h if isinstance(raw_h, dict) else {}
+    best = h.get("best_arm")
+    try:
+        best_i = int(best) if best is not None else None
+    except (TypeError, ValueError):
+        best_i = None
+    stable = h.get("stable")
+    if isinstance(stable, bool):
+        stable_b: bool | None = stable
+    else:
+        stable_b = None
+    conf = parsed.get("confidence")
+    try:
+        conf_f = float(conf) if conf is not None else None
+    except (TypeError, ValueError):
+        conf_f = None
+    return best_i, stable_b, conf_f
+
+
+def _true_best_from_record(rec: Any, oracle: dict[str, Any]) -> int | None:
+    probs = rec.private_info.get("step_probs") if rec.private_info else None
+    if not probs:
+        history = oracle.get("prob_history") or []
+        idx = max(0, min(int(rec.step), len(history) - 1)) if history else 0
+        probs = history[idx] if history else oracle.get("current_probs")
+    if probs:
+        return max(range(len(probs)), key=lambda i: probs[i])
+    params = oracle.get("stage_params") or []
+    L = int(oracle.get("stage_length") or 30)
+    s = min(int(rec.step) // max(L, 1), max(len(params) - 1, 0))
+    if params and "best" in params[s]:
+        return int(params[s]["best"])
+    return oracle.get("best_arm")
+
+
+def _first_consecutive_match(flags: list[bool], k: int) -> int | None:
+    """1-based start index of first k consecutive True, or None."""
+    if k <= 0:
+        return None
+    run = 0
+    for i, ok in enumerate(flags):
+        if ok:
+            run += 1
+            if run >= k:
+                return i - k + 2
+        else:
+            run = 0
+    return None
+
+
+def _hypothesis_loop_metrics(
+    trajectory: Trajectory, oracle: dict[str, Any], k_lock: int = 3
+) -> dict[str, Any]:
+    """Lock / falsify / re-lock and confidence calibration vs oracle best arm."""
+    records = trajectory.records
+    L = int(oracle.get("stage_length") or 0)
+    params = oracle.get("stage_params") or []
+    n_stages = int(oracle.get("n_stages") or (len(params) if params else 1))
+    if L <= 0:
+        L = max(len(records), 1)
+        n_stages = 1
+
+    stage_true: list[int | None] = []
+    if params:
+        stage_true = [p.get("best") for p in params]
+    else:
+        stage_true = [None] * n_stages
+
+    lock_times: list[int | None] = []
+    falsify_delays: list[int | None] = []
+    relock_times: list[int | None] = []
+    hyp_correct: list[int] = []
+    conf_pairs: list[tuple[float, bool]] = []
+
+    for s in range(n_stages):
+        start = s * L
+        end = min((s + 1) * L, len(records))
+        recs = records[start:end]
+        true_best = stage_true[s] if s < len(stage_true) else None
+        flags: list[bool] = []
+        for rec in recs:
+            h_best, _stable, conf = _parse_hypothesis(rec)
+            tb = true_best
+            if tb is None:
+                tb = _true_best_from_record(rec, oracle)
+            ok = h_best is not None and tb is not None and h_best == tb
+            flags.append(ok)
+            hyp_correct.append(1 if ok else 0)
+            if conf is not None:
+                conf_pairs.append((max(0.0, min(1.0, conf)), ok))
+
+        lock = _first_consecutive_match(flags, k_lock)
+        lock_times.append(lock)
+        if s == 0:
+            falsify_delays.append(None)
+            relock_times.append(None)
+            continue
+
+        old_best = stage_true[s - 1] if s - 1 < len(stage_true) else None
+        delay: int | None = None
+        for i, rec in enumerate(recs):
+            h_best, stable, _conf = _parse_hypothesis(rec)
+            left = h_best is not None and old_best is not None and h_best != old_best
+            unstable = stable is False
+            if left or unstable:
+                delay = i + 1
+                break
+        falsify_delays.append(delay)
+        relock_times.append(lock)
+
+    n_hyp_steps = max(len(hyp_correct), 1)
+    bins = [0.2, 0.4, 0.6, 0.8, 1.01]
+    cal: list[dict[str, float]] = []
+    for i, hi in enumerate(bins):
+        lo = 0.0 if i == 0 else bins[i - 1]
+        group = [(c, ok) for c, ok in conf_pairs if lo <= c < hi]
+        if not group:
+            continue
+        cal.append(
+            {
+                "lo": lo,
+                "hi": min(hi, 1.0),
+                "n": float(len(group)),
+                "mean_confidence": sum(c for c, _ in group) / len(group),
+                "accuracy": sum(1 for _, ok in group if ok) / len(group),
+            }
+        )
+
+    valid_lock = [x for x in lock_times if x is not None]
+    valid_f = [x for x in falsify_delays if x is not None]
+    valid_r = [x for x in relock_times if x is not None]
+    return {
+        "hypothesis_correct_rate": sum(hyp_correct) / n_hyp_steps,
+        "lock_time": lock_times,
+        "falsification_delay": falsify_delays,
+        "relock_time": relock_times,
+        "mean_lock_time": sum(valid_lock) / len(valid_lock) if valid_lock else None,
+        "mean_falsification_delay": sum(valid_f) / len(valid_f) if valid_f else None,
+        "mean_relock_time": sum(valid_r) / len(valid_r) if valid_r else None,
+        "mean_confidence": (
+            sum(c for c, _ in conf_pairs) / len(conf_pairs) if conf_pairs else None
+        ),
+        "confidence_calibration": cal,
+        "k_lock": k_lock,
+    }
 
 
 def compute_run_metrics(summaries: list[dict[str, Any]]) -> dict[str, Any]:

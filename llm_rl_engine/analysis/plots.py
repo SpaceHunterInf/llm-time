@@ -51,6 +51,7 @@ def generate_run_plots(
         _plot_multi_agent_reward_vs_time(episodes, plots_dir, plt, np)
         _plot_arm_choices(episodes, plots_dir, plt, np)
         _plot_staged_reward_vs_time(episodes, plots_dir, plt, np)
+        _plot_hypothesis_loop(episodes, plots_dir, plt, np)
         if token_report:
             _plot_token_usage(token_report, plots_dir, plt)
     except ImportError:
@@ -395,6 +396,95 @@ def _plot_staged_reward_vs_time(episodes, plots_dir, plt, np) -> None:
         fig.tight_layout()
         fig.savefig(plots_dir / f"staged_llm_seed{seed}_e{ep_id}.png", dpi=130)
         plt.close(fig)
+
+
+def _plot_hypothesis_loop(episodes, plots_dir, plt, np) -> None:
+    """Hypothesis correctness over time + confidence reliability (LLM only)."""
+    hyp_eps: dict[str, list[list[dict[str, Any]]]] = defaultdict(list)
+    for (agent, _env, _seed, _ep), steps in episodes.items():
+        if any(isinstance((s.get("parsed_response") or {}).get("hypothesis"), dict) for s in steps):
+            hyp_eps[agent].append(steps)
+    if not hyp_eps:
+        return
+
+    fig, axes = plt.subplots(2, 1, figsize=(11, 8), sharex=False)
+    ax_h, ax_c = axes
+    window = 5
+    kernel = np.ones(window) / window
+
+    for agent, ep_list in sorted(hyp_eps.items()):
+        max_len = max(len(ep) for ep in ep_list)
+        mat = []
+        for ep in ep_list:
+            flags = []
+            for s in ep:
+                h = (s.get("parsed_response") or {}).get("hypothesis") or {}
+                h_best = h.get("best_arm") if isinstance(h, dict) else None
+                probs = (s.get("private_info") or {}).get("step_probs") or []
+                true_best = max(range(len(probs)), key=lambda i: probs[i]) if probs else None
+                flags.append(1.0 if h_best is not None and true_best is not None and int(h_best) == true_best else 0.0)
+            if len(flags) < max_len:
+                flags = flags + [flags[-1] if flags else 0.0] * (max_len - len(flags))
+            mat.append(flags)
+        mean = np.mean(np.array(mat, dtype=float), axis=0)
+        smooth = np.convolve(mean, kernel, mode="same")
+        color = _AGENT_COLORS.get(agent)
+        ax_h.plot(smooth, label=agent, color=color, linewidth=2)
+
+    ax_h.set_ylim(-0.05, 1.05)
+    ax_h.set_xlabel("Step")
+    ax_h.set_ylabel("P(hypothesis = true best)")
+    ax_h.set_title("Hypothesis lock vs oracle best arm (mean over seeds)")
+    ax_h.legend(fontsize=8)
+    ax_h.grid(alpha=0.3)
+
+    # Reliability: pool all hypothesis steps
+    pairs: list[tuple[float, float]] = []
+    for ep_list in hyp_eps.values():
+        for ep in ep_list:
+            for s in ep:
+                parsed = s.get("parsed_response") or {}
+                h = parsed.get("hypothesis") or {}
+                if not isinstance(h, dict):
+                    continue
+                try:
+                    conf = float(parsed.get("confidence"))
+                    h_best = int(h.get("best_arm"))
+                except (TypeError, ValueError):
+                    continue
+                probs = (s.get("private_info") or {}).get("step_probs") or []
+                if not probs:
+                    continue
+                true_best = max(range(len(probs)), key=lambda i: probs[i])
+                pairs.append((conf, 1.0 if h_best == true_best else 0.0))
+    if pairs:
+        edges = np.linspace(0, 1, 6)
+        xs, ys, ns = [], [], []
+        for i in range(len(edges) - 1):
+            lo, hi = edges[i], edges[i + 1]
+            grp = [p for p in pairs if lo <= p[0] < hi or (i == len(edges) - 2 and p[0] == 1.0)]
+            if not grp:
+                continue
+            xs.append(sum(p[0] for p in grp) / len(grp))
+            ys.append(sum(p[1] for p in grp) / len(grp))
+            ns.append(len(grp))
+        ax_c.plot([0, 1], [0, 1], linestyle="--", color="#888", label="perfect calibration")
+        ax_c.plot(xs, ys, marker="o", color="#d62728", label="empirical")
+        for x, y, n in zip(xs, ys, ns):
+            ax_c.annotate(str(n), (x, y), textcoords="offset points", xytext=(4, 4), fontsize=8)
+        ax_c.set_xlim(0, 1)
+        ax_c.set_ylim(0, 1)
+        ax_c.set_xlabel("Reported confidence")
+        ax_c.set_ylabel("Hypothesis accuracy")
+        ax_c.set_title("Confidence calibration")
+        ax_c.legend(fontsize=8)
+        ax_c.grid(alpha=0.3)
+    else:
+        ax_c.set_visible(False)
+
+    fig.tight_layout()
+    fig.savefig(plots_dir / "hypothesis_loop.png", dpi=140)
+    plt.close(fig)
 
 
 def _plot_arm_choices(episodes, plots_dir, plt, np) -> None:

@@ -1,0 +1,47 @@
+# Shard B of n=20: seeds 10–19. Pair with n20_a. Same agents as experiment_p0_hypothesis_n20.yaml.
+experiment_name: benchmark_p0_hypothesis_n20_b
+horizon: 90
+n_episodes: 10
+seeds: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+llm_parallel_workers: 8
+generate_plots: true
+
+environments:
+  - name: StagedBandit
+    n_arms: 4
+    stage_length: 30
+    force_distinct_best_arms: true
+    strong_p: 0.85
+    weak_p: 0.20
+    description_mode: blind
+    stages:
+      - family: constant
+      - family: constant
+      - family: constant
+
+agents:
+  - name: random
+  - name: greedy
+  - name: ucb
+  - name: sliding_window_ucb
+    window: 10
+  - name: oracle
+
+  - name: llm_hyp_raw
+    prompt_mode: hypothesis_loop
+    interface: raw
+    n_arms: 4
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1
+
+  - name: llm_hyp_taught_detect
+    prompt_mode: hypothesis_taught_detect
+    interface: stats_plus_recent
+    history_tail: 10
+    recency_window: 10
+    stats_last_k: 5
+    n_arms: 4
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1

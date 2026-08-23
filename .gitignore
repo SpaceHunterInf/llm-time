@@ -12,3 +12,7 @@ runs/
 .env
 .env.*
 !.env.example
+
+# Local Grok / MCP clutter
+agent-tools/
+mcps/

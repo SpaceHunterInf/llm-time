@@ -1,0 +1,62 @@
+# Prompt ablation on P0 dynamics (3x constant, H=90).
+# Same env physics; only the LLM task description changes.
+#
+# Conditions:
+#   llm_blind  — stationary MAB wording (NO regime-change hint)  [fair default]
+#   llm_aware  — explicitly tells agent regimes will change      [prior P0/P1/P2]
+#   llm_minimal — bare "maximize reward" instruction
+#
+# Prior staged runs (P0/P1/P2) used the aware description unintentionally.
+experiment_name: benchmark_staged_p0_prompt_ablation
+horizon: 90
+n_episodes: 5
+seeds: [0, 1, 2, 3, 4]
+llm_parallel_workers: 5
+generate_plots: true
+
+environments:
+  - name: StagedBandit
+    n_arms: 4
+    stage_length: 30
+    force_distinct_best_arms: true
+    strong_p: 0.85
+    weak_p: 0.20
+    # Env metadata default is blind; LLM agents override via description_mode.
+    description_mode: blind
+    stages:
+      - family: constant
+      - family: constant
+      - family: constant
+
+agents:
+  - name: random
+  - name: greedy
+  - name: ucb
+  - name: thompson_sampling
+  - name: sliding_window_ucb
+    window: 10
+  - name: oracle
+
+  - name: llm_blind
+    prompt_mode: raw_history
+    description_mode: blind
+    n_arms: 4
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1
+
+  - name: llm_aware
+    prompt_mode: raw_history
+    description_mode: aware
+    n_arms: 4
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1
+
+  - name: llm_minimal
+    prompt_mode: raw_history
+    description_mode: minimal
+    n_arms: 4
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1
