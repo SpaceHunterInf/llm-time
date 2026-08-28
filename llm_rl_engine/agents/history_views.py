@@ -6,6 +6,7 @@ They must not include true p, best_arm, or regime labels.
 from __future__ import annotations
 
 import json
+import math
 from typing import Any
 
 INTERFACE_MODES = ("raw", "stats", "stats_plus_recent")
@@ -88,6 +89,101 @@ def render_bandit_stats(
     if not history:
         lines.append("(no pulls yet)")
     return "\n".join(lines)
+
+
+def _reward_as_success(reward: Any) -> float | None:
+    try:
+        value = float(reward)
+    except (TypeError, ValueError):
+        return None
+    if value in (0.0, 1.0):
+        return value
+    return 1.0 if value > 0.5 else 0.0
+
+
+def last_declared_best_arm(history: list[dict[str, Any]]) -> int | None:
+    for rec in reversed(history):
+        parsed = rec.get("parsed_response") or {}
+        hyp = parsed.get("hypothesis") if isinstance(parsed, dict) else None
+        if not isinstance(hyp, dict) or "best_arm" not in hyp:
+            continue
+        try:
+            return int(hyp["best_arm"])
+        except (TypeError, ValueError):
+            continue
+    return None
+
+
+def binomial_cdf_le(successes: int, n: int, p: float) -> float:
+    """P(X <= successes) for X ~ Binomial(n, p)."""
+    if n <= 0:
+        return float("nan")
+    p = min(max(float(p), 1e-9), 1.0 - 1e-9)
+    s = max(0, min(int(successes), n))
+    q = 1.0 - p
+    total = 0.0
+    for k in range(s + 1):
+        total += math.comb(n, k) * (p**k) * (q ** (n - k))
+    return min(1.0, max(0.0, total))
+
+
+def _fmt_p(p: float) -> str:
+    if p != p:  # NaN
+        return "n/a"
+    if p < 1e-4:
+        return f"{p:.2e}"
+    return f"{p:.4f}"
+
+
+def render_hypothesis_check(
+    history: list[dict[str, Any]],
+    last_k: int = 5,
+    n_arms: int | None = None,
+) -> str:
+    """How surprising the last-k pulls of the declared H arm are under its lifetime mean.
+
+    Uses only (arm, reward) plus the agent's last declared best_arm. No hidden p.
+    One-sided: P(this many successes or fewer | Bernoulli(lifetime mean)).
+    """
+    last_k = max(int(last_k), 1)
+    arm = last_declared_best_arm(history)
+    if arm is None:
+        return "(no prior declared hypothesis)"
+    if n_arms is not None and not (0 <= arm < int(n_arms)):
+        return f"(last declared best_arm={arm} is outside the action space)"
+
+    pulls: list[float] = []
+    for rec in history:
+        pulled = _arm_from_action(rec.get("action"))
+        if pulled != arm:
+            continue
+        success = _reward_as_success(rec.get("reward"))
+        if success is None:
+            continue
+        pulls.append(success)
+
+    n_all = len(pulls)
+    if n_all == 0:
+        return f"last hypothesis: arm {arm}\n(no pulls of that arm yet)"
+
+    p_hat = sum(pulls) / n_all
+    recent = pulls[-last_k:]
+    n_rec = len(recent)
+    s_rec = int(round(sum(recent)))
+    p_value = binomial_cdf_le(s_rec, n_rec, p_hat)
+    tail = ",".join(str(int(x)) for x in recent)
+    return "\n".join(
+        [
+            f"last hypothesis: arm {arm}",
+            f"p_hat (lifetime mean of that arm): {p_hat:.3f}  (n={n_all})",
+            f"last {n_rec} pulls of that arm: {tail}  ({s_rec}/{n_rec} successes)",
+            (
+                "P(this many successes or fewer | Bernoulli(p_hat)): "
+                f"{_fmt_p(p_value)}"
+            ),
+            "A small value means those recent pulls are surprising under the lifetime mean.",
+        ]
+    )
 
 
 def render_interface_blocks(

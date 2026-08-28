@@ -8,7 +8,12 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LLM_AGENTS = ["llm_hyp_raw", "llm_hyp_taught_detect", "llm_hyp_taught_surprise"]
+LLM_AGENTS = [
+    "llm_hyp_raw",
+    "llm_hyp_taught_detect",
+    "llm_hyp_taught_surprise",
+    "llm_hyp_surprise_stat",
+]
 
 
 def mean(xs):
@@ -62,7 +67,8 @@ def main() -> None:
             },
         )
     )
-    rows.extend(_load("runs/*p0_hypothesis_surprise*", {"llm_hyp_taught_surprise"}))
+    rows.extend(_load("runs/*p0_hypothesis_surprise_[ab]", {"llm_hyp_taught_surprise"}))
+    rows.extend(_load("runs/*p0_hypothesis_surprise_stat*", {"llm_hyp_surprise_stat"}))
     if not rows:
         print("no run")
         return
@@ -73,6 +79,7 @@ def main() -> None:
 
     agents = [
         "oracle",
+        "llm_hyp_surprise_stat",
         "llm_hyp_taught_surprise",
         "llm_hyp_taught_detect",
         "llm_hyp_raw",
@@ -137,9 +144,13 @@ def main() -> None:
                     n_l2_ok += 1
         print(f"  {a:24} fals {n_f_ok}/{n_f}  lock1 {n_l1_ok}/{n_l1}  lock2 {n_l2_ok}/{n_l2}")
 
-    if "llm_hyp_raw" in by and "llm_hyp_taught_surprise" in by:
+    if "llm_hyp_raw" in by:
         raw = {e["seed"]: e["cumulative_reward"] for e in by["llm_hyp_raw"]}
-        for other in ["llm_hyp_taught_detect", "llm_hyp_taught_surprise"]:
+        for other in [
+            "llm_hyp_taught_detect",
+            "llm_hyp_taught_surprise",
+            "llm_hyp_surprise_stat",
+        ]:
             if other not in by:
                 continue
             o = {e["seed"]: e["cumulative_reward"] for e in by[other]}

@@ -1,0 +1,45 @@
+You are an agent in a reinforcement-learning environment.
+Your goal is to maximize cumulative reward over this episode.
+
+Task:
+{task_description}
+
+Action space:
+{action_space}
+
+Sufficient statistics (engine-computed from your past pulls only):
+{stats}
+
+Hypothesis check (engine-computed from your last declared hypothesis and your pulls only; not hidden p):
+{hypothesis_check}
+
+History:
+{raw_history}
+
+Current observation:
+{observation}
+
+Each step, state your current hypothesis about which arm is best, how confident you are, the heuristic you are using to choose, and the action.
+Do not assume the engine has told you hidden probabilities.
+
+Belief-revision rule (follow this):
+- Your hypothesis is a model of which arm is best right now.
+- Confidence should track how well that model predicts the most recent pulls of that arm, not how large n is.
+- If those recent pulls are surprising under the hypothesis, set hypothesis.stable to false, lower confidence, and try a different arm until a new hypothesis fits.
+- Use the hypothesis-check probability: a small value is evidence against the current hypothesis.
+
+Return exactly one JSON object with this schema:
+{{
+  "hypothesis": {{
+    "type": "best_arm",
+    "best_arm": <integer arm index>,
+    "stable": <true if you think this hypothesis still holds, else false>
+  }},
+  "confidence": <number from 0 to 1>,
+  "heuristic": <"exploit_best" or "epsilon_greedy" or "round_robin" or "custom">,
+  "heuristic_text": <short string describing your choice rule>,
+  "action": <your action object, e.g. {{"arm": 0}}>,
+  "rationale": <string>
+}}
+
+Do not include markdown fences or any text outside the JSON object.

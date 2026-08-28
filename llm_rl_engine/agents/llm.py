@@ -9,7 +9,10 @@ from pathlib import Path
 from typing import Any, Protocol
 
 from llm_rl_engine.agents.base import Agent, AgentStepInfo
-from llm_rl_engine.agents.history_views import render_interface_blocks
+from llm_rl_engine.agents.history_views import (
+    render_hypothesis_check,
+    render_interface_blocks,
+)
 from llm_rl_engine.types import Action, Observation, TokenUsage
 
 PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
@@ -125,6 +128,7 @@ class LLMAgent(Agent):
         history_tail: int = 10,
         stats_last_k: int = 5,
         recency_window: int = 10,
+        include_hypothesis_check: bool = False,
     ) -> None:
         self.name = name
         self.model_client = model_client or GeminiClient()
@@ -135,6 +139,7 @@ class LLMAgent(Agent):
         self.history_tail = int(history_tail)
         self.stats_last_k = int(stats_last_k)
         self.recency_window = int(recency_window)
+        self.include_hypothesis_check = bool(include_hypothesis_check)
         self._task_spec: dict[str, Any] = {}
         self._template = self._load_template(prompt_mode)
         self._invalid_action = invalid_action or {"arm": 0}
@@ -202,12 +207,18 @@ class LLMAgent(Agent):
             stats_last_k=self.stats_last_k,
             recency_window=self.recency_window,
         )
+        check = (
+            render_hypothesis_check(history, last_k=self.stats_last_k, n_arms=n_arms)
+            if self.include_hypothesis_check
+            else "(not provided)"
+        )
         return self._template.format(
             task_description=self._task_spec.get("description", ""),
             action_space=self._task_spec.get("action_space", ""),
             stats=stats,
             raw_history=hist,
             observation=render_observation(observation),
+            hypothesis_check=check,
         )
 
     def _load_template(self, mode: str) -> str:
@@ -217,6 +228,7 @@ class LLMAgent(Agent):
             "hypothesis_loop": "hypothesis_loop.txt",
             "hypothesis_taught_detect": "hypothesis_taught_detect.txt",
             "hypothesis_taught_surprise": "hypothesis_taught_surprise.txt",
+            "hypothesis_taught_surprise_stat": "hypothesis_taught_surprise_stat.txt",
         }
         filename = template_map.get(mode, "raw_history.txt")
         path = PROMPTS_DIR / filename
@@ -258,6 +270,7 @@ LLM_AGENT_NAMES = {
     "llm_hyp_sr": "hypothesis_loop",
     "llm_hyp_taught_detect": "hypothesis_taught_detect",
     "llm_hyp_taught_surprise": "hypothesis_taught_surprise",
+    "llm_hyp_surprise_stat": "hypothesis_taught_surprise_stat",
     "llm": "raw_history",
 }
 
@@ -286,8 +299,12 @@ def make_llm_agent(config: dict[str, Any]) -> LLMAgent:
         "hypothesis_loop",
         "hypothesis_taught_detect",
         "hypothesis_taught_surprise",
+        "hypothesis_taught_surprise_stat",
     )
     default_interface = "stats_plus_recent" if prompt_mode in hyp_modes else "raw"
+    include_check = config.get("include_hypothesis_check")
+    if include_check is None:
+        include_check = prompt_mode == "hypothesis_taught_surprise_stat"
     return LLMAgent(
         name=name,
         model_client=client,
@@ -298,4 +315,5 @@ def make_llm_agent(config: dict[str, Any]) -> LLMAgent:
         history_tail=int(config.get("history_tail", 10)),
         stats_last_k=int(config.get("stats_last_k", 5)),
         recency_window=int(config.get("recency_window", 10)),
+        include_hypothesis_check=bool(include_check),
     )

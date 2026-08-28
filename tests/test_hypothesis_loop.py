@@ -1,6 +1,11 @@
 from __future__ import annotations
 
-from llm_rl_engine.agents.history_views import render_bandit_stats, render_interface_blocks
+from llm_rl_engine.agents.history_views import (
+    binomial_cdf_le,
+    render_bandit_stats,
+    render_hypothesis_check,
+    render_interface_blocks,
+)
 from llm_rl_engine.agents.llm import make_llm_agent
 from llm_rl_engine.analysis.metrics import _hypothesis_loop_metrics, compute_episode_metrics
 from llm_rl_engine.types import TokenUsage, Trajectory, TrajectoryRecord
@@ -78,6 +83,65 @@ def test_taught_surprise_prompt_is_meta_not_detect():
     assert "collaps" not in template
     assert "regime" not in template
     assert "detection rule" not in template
+
+
+def test_hypothesis_check_five_zeros_is_surprising():
+    assert abs(binomial_cdf_le(0, 5, 0.8) - (0.2**5)) < 1e-12
+    history = []
+    for _ in range(20):
+        history.append(
+            {
+                "action": {"arm": 3},
+                "reward": 1.0,
+                "parsed_response": {"hypothesis": {"best_arm": 3, "stable": True}},
+            }
+        )
+    for _ in range(5):
+        history.append(
+            {
+                "action": {"arm": 3},
+                "reward": 0.0,
+                "parsed_response": {"hypothesis": {"best_arm": 3, "stable": True}},
+            }
+        )
+    text = render_hypothesis_check(history, last_k=5, n_arms=4)
+    assert "arm 3" in text
+    assert "0/5" in text
+    # p_hat = 20/25 = 0.8; P(X=0 | n=5, p=0.8) = 0.2^5 = 0.00032
+    assert "0.0003" in text
+    assert "regime" not in text.lower()
+    assert "0.85" not in text
+
+
+def test_surprise_stat_prompt_includes_check_not_detect():
+    agent = make_llm_agent(
+        {
+            "name": "llm_hyp_surprise_stat",
+            "prompt_mode": "hypothesis_taught_surprise_stat",
+            "interface": "stats_plus_recent",
+            "n_arms": 4,
+        }
+    )
+    agent.reset({"name": "StagedBandit", "n_arms": 4, "description": "bandit", "action_space": "arm"})
+    empty = agent._build_prompt({"step": 0, "message": "start"}, [])
+    assert "Hypothesis check" in empty
+    assert "(no prior declared hypothesis)" in empty
+    template = agent._template.lower()
+    assert "mean_w" not in template
+    assert "collaps" not in template
+    assert "regime" not in template
+    assert "detection rule" not in template
+    history = [
+        {
+            "step": 0,
+            "action": {"arm": 1},
+            "reward": 1.0,
+            "observation": {},
+            "parsed_response": {"hypothesis": {"best_arm": 1, "stable": True}},
+        }
+    ]
+    filled = agent._build_prompt({"step": 1, "message": "x"}, history)
+    assert "last hypothesis: arm 1" in filled
 
 
 def test_taught_detect_prompt_instructs_recency():

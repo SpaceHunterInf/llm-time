@@ -99,6 +99,7 @@ def run_episode(
                 "done": result.done,
                 "public_info": public_info,
                 "private_info": private_info,
+                "parsed_response": step_info.get("parsed_response"),
             }
         )
         obs = result.observation
