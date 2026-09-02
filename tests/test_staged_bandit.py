@@ -129,3 +129,59 @@ def test_llm_agent_description_override():
     agent.reset({"name": "StagedBandit", "description": "SHOULD BE OVERRIDDEN", "n_arms": 4})
     assert "regime" in agent._task_spec["description"].lower()
     assert "SHOULD BE OVERRIDDEN" not in agent._task_spec["description"]
+
+
+def test_random_cuts_and_matched_no_change():
+    kwargs = dict(
+        n_arms=4,
+        stage_length=30,
+        horizon=90,
+        change_mode="random",
+        min_stage_length=15,
+        stages=[{"family": "constant"}] * 3,
+        force_distinct_best_arms=True,
+    )
+    changing = StagedBandit(no_change=False, **kwargs)
+    control = StagedBandit(no_change=True, **kwargs)
+    changing.reset(seed=7)
+    control.reset(seed=7)
+    ch = changing.oracle()
+    co = control.oracle()
+    assert ch["stage_starts"] == co["stage_starts"]
+    assert ch["stage_starts"][0] == 0
+    assert ch["no_change"] is False
+    assert co["no_change"] is True
+    ch_best = [p["best"] for p in ch["stage_params"]]
+    co_best = [p["best"] for p in co["stage_params"]]
+    assert len(set(ch_best)) == 3
+    assert len(set(co_best)) == 1
+    starts = ch["stage_starts"]
+    for i in range(1, len(starts)):
+        assert starts[i] - starts[i - 1] >= 15
+    assert starts[-1] <= 90 - 15
+    # Advance across first sampled cut; changing best flips, control does not.
+    cut = starts[1]
+    for _ in range(cut):
+        changing.step({"arm": 0})
+        control.step({"arm": 0})
+    assert changing.oracle()["best_arm"] == ch_best[1]
+    assert control.oracle()["best_arm"] == co_best[0]
+
+
+def test_unequal_stage_lengths_inertia():
+    env = StagedBandit(
+        n_arms=4,
+        stage_lengths=[10, 60],
+        stages=[{"family": "constant"}, {"family": "constant"}],
+        force_distinct_best_arms=True,
+    )
+    env.reset(seed=0)
+    o = env.oracle()
+    assert o["stage_starts"] == [0, 10]
+    assert o["horizon"] == 70
+    bests = [p["best"] for p in o["stage_params"]]
+    assert bests[0] != bests[1]
+    for _ in range(10):
+        assert env.oracle()["best_arm"] == bests[0]
+        env.step({"arm": 0})
+    assert env.oracle()["best_arm"] == bests[1]

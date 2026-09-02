@@ -1,0 +1,52 @@
+# Revision protocol, CHANGING env, vanilla raw + taught detect, seeds 0–9.
+# Random unannounced cuts; matched control is experiment_p0_revision_control_ad.yaml.
+experiment_name: benchmark_p0_revision_change_ad
+horizon: 90
+n_episodes: 10
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+llm_parallel_workers: 8
+generate_plots: true
+
+environments:
+  - name: StagedBandit
+    n_arms: 4
+    stage_length: 30
+    horizon: 90
+    change_mode: random
+    no_change: false
+    min_stage_length: 15
+    force_distinct_best_arms: true
+    strong_p: 0.85
+    weak_p: 0.20
+    description_mode: blind
+    stages:
+      - family: constant
+      - family: constant
+      - family: constant
+
+agents:
+  - name: random
+  - name: greedy
+  - name: ucb
+  - name: sliding_window_ucb
+    window: 10
+  - name: oracle
+
+  - name: llm_hyp_raw
+    prompt_mode: hypothesis_loop
+    interface: raw
+    n_arms: 4
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1
+
+  - name: llm_hyp_taught_detect
+    prompt_mode: hypothesis_taught_detect
+    interface: stats_plus_recent
+    history_tail: 10
+    recency_window: 10
+    stats_last_k: 5
+    n_arms: 4
+    model: gemini-3.5-flash
+    temperature: 0
+    max_retries: 1

@@ -432,38 +432,168 @@ def _first_consecutive_match(flags: list[bool], k: int) -> int | None:
     return None
 
 
+def stage_starts_from_oracle(oracle: dict[str, Any], n_records: int = 0) -> list[int]:
+    """Absolute step indices where stages begin. Falls back to fixed stage_length."""
+    raw = oracle.get("stage_starts")
+    if raw:
+        return [int(x) for x in raw]
+    L = int(oracle.get("stage_length") or 0)
+    n_stages = int(oracle.get("n_stages") or 1)
+    if L <= 0:
+        return [0]
+    return [s * L for s in range(n_stages)]
+
+
+def revision_sequence(
+    h_best: list[int | None],
+    stable: list[bool | None],
+    actions: list[int | None],
+    old_best: int | None,
+    new_best: int | None,
+    k_persist: int = 3,
+) -> dict[str, Any]:
+    """Doubt → retract → resurrect → search, plus belief–action coupling.
+
+    Delays are 1-based offsets into this window (a post-cut stage).
+    ``k_persist`` consecutive steps off ``old_best`` count as retraction.
+    """
+    n = len(h_best)
+    true_change = (
+        old_best is not None and new_best is not None and old_best != new_best
+    )
+
+    doubt: int | None = None
+    for i in range(n):
+        left = h_best[i] is not None and old_best is not None and h_best[i] != old_best
+        if left or stable[i] is False:
+            doubt = i + 1
+            break
+
+    retract: int | None = None
+    if old_best is not None:
+        for i in range(n):
+            window = h_best[i : i + k_persist]
+            if len(window) < k_persist:
+                break
+            if all(h is not None and h != old_best for h in window):
+                retract = i + 1
+                break
+
+    n_resurrections = 0
+    first_leave: int | None = None
+    for i, h in enumerate(h_best):
+        if old_best is not None and h is not None and h != old_best:
+            first_leave = i
+            break
+    if first_leave is not None and old_best is not None:
+        on_old = False
+        for i in range(first_leave + 1, n):
+            h = h_best[i]
+            if h == old_best and not on_old:
+                n_resurrections += 1
+                on_old = True
+            elif h is not None and h != old_best:
+                on_old = False
+
+    lock_new = None
+    if new_best is not None:
+        flags = [h == new_best for h in h_best]
+        lock_new = _first_consecutive_match(flags, k_persist)
+
+    search: int | None = None
+    if retract is not None and lock_new is not None and lock_new >= retract:
+        search = lock_new - retract
+
+    n_cons = n_decl = 0
+    n_pull_old = n_pull_new = 0
+    n_doubt_still_pull_old = 0
+    n_post_doubt = 0
+    n_post_doubt_declare_old = 0
+    n_stale_h_old_pull = 0
+    for i in range(n):
+        a = actions[i]
+        h = h_best[i]
+        if a is not None and old_best is not None and a == old_best:
+            n_pull_old += 1
+        if a is not None and new_best is not None and a == new_best:
+            n_pull_new += 1
+        if h is not None and a is not None:
+            n_decl += 1
+            if a == h:
+                n_cons += 1
+        if doubt is not None and i + 1 >= doubt:
+            n_post_doubt += 1
+            if a is not None and old_best is not None and a == old_best:
+                n_doubt_still_pull_old += 1
+            if h == old_best:
+                n_post_doubt_declare_old += 1
+        if h is not None and old_best is not None and h != old_best and a == old_best:
+            n_stale_h_old_pull += 1
+
+    return {
+        "true_change": true_change,
+        "doubt_latency": doubt,
+        "retraction_latency": retract,
+        "n_resurrections": n_resurrections,
+        "resurrected": n_resurrections > 0,
+        "search_duration": search,
+        "relock_latency": lock_new,
+        "belief_action_consistency": n_cons / n_decl if n_decl else None,
+        "frac_pull_old": n_pull_old / n if n else None,
+        "frac_pull_new": n_pull_new / n if n else None,
+        "frac_post_doubt_pull_old": (
+            n_doubt_still_pull_old / n_post_doubt if n_post_doubt else None
+        ),
+        "frac_post_doubt_declare_old": (
+            n_post_doubt_declare_old / n_post_doubt if n_post_doubt else None
+        ),
+        "frac_declare_new_pull_old": n_stale_h_old_pull / n if n else None,
+    }
+
+
 def _hypothesis_loop_metrics(
     trajectory: Trajectory, oracle: dict[str, Any], k_lock: int = 3
 ) -> dict[str, Any]:
-    """Lock / falsify / re-lock and confidence calibration vs oracle best arm."""
+    """Lock / falsify / re-lock, revision sequence, and confidence calibration."""
     records = trajectory.records
-    L = int(oracle.get("stage_length") or 0)
     params = oracle.get("stage_params") or []
-    n_stages = int(oracle.get("n_stages") or (len(params) if params else 1))
-    if L <= 0:
-        L = max(len(records), 1)
-        n_stages = 1
+    starts = stage_starts_from_oracle(oracle, len(records))
+    n_stages = int(oracle.get("n_stages") or (len(params) if params else len(starts) or 1))
+    n_stages = max(n_stages, len(starts), 1)
 
     stage_true: list[int | None] = []
     if params:
         stage_true = [p.get("best") for p in params]
     else:
         stage_true = [None] * n_stages
+    while len(stage_true) < n_stages:
+        stage_true.append(None)
 
     lock_times: list[int | None] = []
     falsify_delays: list[int | None] = []
     relock_times: list[int | None] = []
     hyp_correct: list[int] = []
     conf_pairs: list[tuple[float, bool]] = []
+    revision: list[dict[str, Any] | None] = []
 
     for s in range(n_stages):
-        start = s * L
-        end = min((s + 1) * L, len(records))
+        start = starts[s] if s < len(starts) else s * int(oracle.get("stage_length") or 30)
+        end = starts[s + 1] if s + 1 < len(starts) else len(records)
+        end = min(end, len(records))
         recs = records[start:end]
-        true_best = stage_true[s] if s < len(stage_true) else None
+        true_best = stage_true[s]
         flags: list[bool] = []
+        h_seq: list[int | None] = []
+        st_seq: list[bool | None] = []
+        act_seq: list[int | None] = []
         for rec in recs:
-            h_best, _stable, conf = _parse_hypothesis(rec)
+            h_best, rec_stable, conf = _parse_hypothesis(rec)
+            h_seq.append(h_best)
+            st_seq.append(rec_stable)
+            try:
+                act_seq.append(int(rec.action["arm"]) if rec.action.get("arm") is not None else None)
+            except (TypeError, ValueError, KeyError):
+                act_seq.append(None)
             tb = true_best
             if tb is None:
                 tb = _true_best_from_record(rec, oracle)
@@ -478,18 +608,15 @@ def _hypothesis_loop_metrics(
         if s == 0:
             falsify_delays.append(None)
             relock_times.append(None)
+            revision.append(None)
             continue
 
-        old_best = stage_true[s - 1] if s - 1 < len(stage_true) else None
-        delay: int | None = None
-        for i, rec in enumerate(recs):
-            h_best, stable, _conf = _parse_hypothesis(rec)
-            left = h_best is not None and old_best is not None and h_best != old_best
-            unstable = stable is False
-            if left or unstable:
-                delay = i + 1
-                break
-        falsify_delays.append(delay)
+        old_best = stage_true[s - 1]
+        seq = revision_sequence(
+            h_seq, st_seq, act_seq, old_best, true_best, k_persist=k_lock
+        )
+        revision.append(seq)
+        falsify_delays.append(seq["doubt_latency"])
         relock_times.append(lock)
 
     n_hyp_steps = max(len(hyp_correct), 1)
@@ -513,6 +640,17 @@ def _hypothesis_loop_metrics(
     valid_lock = [x for x in lock_times if x is not None]
     valid_f = [x for x in falsify_delays if x is not None]
     valid_r = [x for x in relock_times if x is not None]
+    cuts = [r for r in revision if r is not None]
+    def _mean_field(key: str) -> float | None:
+        xs = [r[key] for r in cuts if r.get(key) is not None]
+        return sum(xs) / len(xs) if xs else None
+
+    n_true = sum(1 for r in cuts if r.get("true_change"))
+    n_false_rev = sum(
+        1
+        for r in cuts
+        if not r.get("true_change") and r.get("doubt_latency") is not None
+    )
     return {
         "hypothesis_correct_rate": sum(hyp_correct) / n_hyp_steps,
         "lock_time": lock_times,
@@ -526,6 +664,19 @@ def _hypothesis_loop_metrics(
         ),
         "confidence_calibration": cal,
         "k_lock": k_lock,
+        "revision": revision,
+        "mean_doubt_latency": _mean_field("doubt_latency"),
+        "mean_retraction_latency": _mean_field("retraction_latency"),
+        "mean_search_duration": _mean_field("search_duration"),
+        "mean_n_resurrections": _mean_field("n_resurrections"),
+        "resurrection_rate": (
+            sum(1 for r in cuts if r.get("resurrected")) / len(cuts) if cuts else None
+        ),
+        "mean_belief_action_consistency": _mean_field("belief_action_consistency"),
+        "mean_frac_post_doubt_pull_old": _mean_field("frac_post_doubt_pull_old"),
+        "mean_frac_declare_new_pull_old": _mean_field("frac_declare_new_pull_old"),
+        "n_true_changes": n_true,
+        "n_false_revisions": n_false_rev,
     }
 
 

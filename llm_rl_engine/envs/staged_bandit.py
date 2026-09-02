@@ -72,10 +72,21 @@ class StagedBandit(_BanditBase):
         linear_variant: str = "ramp_up",
         invalid_penalty: float = -0.1,
         description_mode: str = "blind",
+        change_mode: str = "fixed",
+        no_change: bool = False,
+        min_stage_length: int = 15,
+        horizon: int | None = None,
+        stage_lengths: list[int] | None = None,
     ) -> None:
         super().__init__(n_arms=n_arms, invalid_penalty=invalid_penalty)
         self.stage_length = max(int(stage_length), 1)
-        self.force_distinct_best_arms = force_distinct_best_arms
+        self.change_mode = (change_mode or "fixed").lower().strip()
+        if self.change_mode not in ("fixed", "random"):
+            raise ValueError(f"Unknown change_mode={change_mode!r}; expected 'fixed' or 'random'")
+        self.no_change = bool(no_change)
+        self.min_stage_length = max(int(min_stage_length), 1)
+        self.horizon = int(horizon) if horizon is not None else None
+        self.force_distinct_best_arms = force_distinct_best_arms and not self.no_change
         self.strong_p = strong_p
         self.weak_p = weak_p
         self.period_range = period_range
@@ -95,8 +106,23 @@ class StagedBandit(_BanditBase):
         ]
         self._stage_templates = [self._normalize_stage_template(s) for s in raw_stages]
         self._n_stages = len(self._stage_templates)
+        if stage_lengths is None:
+            self._stage_lengths: list[int] | None = None
+        else:
+            lengths = [max(int(x), 1) for x in stage_lengths]
+            if len(lengths) != self._n_stages:
+                raise ValueError(
+                    f"stage_lengths has {len(lengths)} entries but {self._n_stages} stages"
+                )
+            self._stage_lengths = lengths
         self._stage_params: list[dict[str, Any]] = []
+        self._stage_starts: list[int] = []
         self._prob_history: list[list[float]] = []
+        if self.horizon is None:
+            if self._stage_lengths:
+                self.horizon = sum(self._stage_lengths)
+            else:
+                self.horizon = self.stage_length * self._n_stages
 
     @property
     def metadata(self) -> dict[str, Any]:
@@ -112,11 +138,16 @@ class StagedBandit(_BanditBase):
             "stage_length": self.stage_length,
             "n_stages": self._n_stages,
             "stage_families": families,
+            "change_mode": self.change_mode,
+            "no_change": self.no_change,
+            "horizon": self.horizon,
+            "stage_lengths": list(self._stage_lengths) if self._stage_lengths else None,
         }
 
     def reset(self, seed: int | None = None) -> Observation:
         if seed is not None:
             self._rng.seed(seed)
+        self._stage_starts = self._sample_stage_starts()
         self._stage_params = self._sample_all_stage_params()
         self._step = 0
         self._last_action = None
@@ -140,8 +171,13 @@ class StagedBandit(_BanditBase):
         result.info["best_arm"] = self._best_arm(
             result.info.get("step_probs") or self._probs
         )
-        result.info["stage_start"] = stage_idx * self.stage_length
-        result.info["stage_end"] = (stage_idx + 1) * self.stage_length
+        result.info["stage_start"] = self._stage_start(stage_idx)
+        result.info["stage_end"] = (
+            self._stage_starts[stage_idx + 1]
+            if stage_idx + 1 < len(self._stage_starts)
+            else self.horizon
+        )
+        result.info["no_change"] = self.no_change
         return result
 
     def oracle(self) -> dict[str, Any]:
@@ -154,13 +190,20 @@ class StagedBandit(_BanditBase):
         return {
             "stage_index": stage_idx,
             "stage_family": params.get("family"),
-            "stage_start": stage_idx * self.stage_length,
-            "stage_end": (stage_idx + 1) * self.stage_length,
+            "stage_start": self._stage_start(stage_idx),
+            "stage_end": (
+                self._stage_starts[stage_idx + 1]
+                if stage_idx + 1 < len(self._stage_starts)
+                else self.horizon
+            ),
             "stage_length": self.stage_length,
             "n_stages": self._n_stages,
-            "stage_boundaries": [
-                s * self.stage_length for s in range(1, self._n_stages)
-            ],
+            "stage_starts": list(self._stage_starts),
+            "stage_boundaries": list(self._stage_starts[1:]),
+            "change_mode": self.change_mode,
+            "no_change": self.no_change,
+            "horizon": self.horizon,
+            "stage_lengths": list(self._stage_lengths) if self._stage_lengths else None,
             "stage_params": list(self._stage_params),
             "current_probs": list(probs),
             "prob_history": list(self._prob_history),
@@ -178,6 +221,34 @@ class StagedBandit(_BanditBase):
         out["family"] = family
         return out
 
+    def _sample_stage_starts(self) -> list[int]:
+        n = self._n_stages
+        h = int(self.horizon)
+        if n <= 1:
+            return [0]
+        if self._stage_lengths:
+            starts = [0]
+            acc = 0
+            for length in self._stage_lengths[:-1]:
+                acc += length
+                starts.append(acc)
+            return starts
+        if self.change_mode == "fixed":
+            return [i * self.stage_length for i in range(n)]
+        min_len = min(self.min_stage_length, max(h // n, 1))
+        starts = [0]
+        t = 0
+        for s in range(n - 1):
+            stages_after = n - s - 1
+            earliest = t + min_len
+            latest = h - stages_after * min_len
+            if latest < earliest:
+                latest = earliest
+            cut = self._rng.randint(earliest, latest)
+            starts.append(cut)
+            t = cut
+        return starts
+
     def _sample_all_stage_params(self) -> list[dict[str, Any]]:
         used_best: list[int] = []
         params: list[dict[str, Any]] = []
@@ -193,6 +264,8 @@ class StagedBandit(_BanditBase):
             if self.force_distinct_best_arms and "best" in p:
                 used_best.append(p["best"])
             params.append(p)
+            if self.no_change:
+                return [dict(params[0]) for _ in self._stage_templates]
         return params
 
     def _pick_best_arm(self, used_best: list[int]) -> int:
@@ -250,12 +323,20 @@ class StagedBandit(_BanditBase):
         }
 
     def _stage_index_at(self, t: int) -> int:
-        if not self._stage_params:
-            return 0
-        idx = t // self.stage_length
-        return max(0, min(idx, self._n_stages - 1))
+        if not self._stage_starts:
+            if not self._stage_params:
+                return 0
+            idx = t // self.stage_length
+            return max(0, min(idx, self._n_stages - 1))
+        idx = 0
+        for i, start in enumerate(self._stage_starts):
+            if t >= start:
+                idx = i
+        return idx
 
     def _stage_start(self, stage_idx: int) -> int:
+        if self._stage_starts:
+            return self._stage_starts[max(0, min(stage_idx, len(self._stage_starts) - 1))]
         return stage_idx * self.stage_length
 
     def _probs_at(self, t: int) -> list[float]:
@@ -282,7 +363,13 @@ class StagedBandit(_BanditBase):
     def _linear_probs(self, t: int, params: dict[str, Any]) -> list[float]:
         stage_idx = self._stage_index_at(t)
         t0 = self._stage_start(stage_idx)
-        L = self.stage_length
+        if self._stage_starts:
+            if stage_idx + 1 < len(self._stage_starts):
+                L = self._stage_starts[stage_idx + 1] - t0
+            else:
+                L = int(self.horizon) - t0
+        else:
+            L = self.stage_length
         u = (t - t0) / max(L - 1, 1)
         best = params["best"]
         p_best = min(0.95, max(0.05, params["p0"] + params["slope"] * u))

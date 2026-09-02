@@ -7,7 +7,11 @@ from llm_rl_engine.agents.history_views import (
     render_interface_blocks,
 )
 from llm_rl_engine.agents.llm import make_llm_agent
-from llm_rl_engine.analysis.metrics import _hypothesis_loop_metrics, compute_episode_metrics
+from llm_rl_engine.analysis.metrics import (
+    _hypothesis_loop_metrics,
+    compute_episode_metrics,
+    revision_sequence,
+)
 from llm_rl_engine.types import TokenUsage, Trajectory, TrajectoryRecord
 
 
@@ -207,3 +211,34 @@ def test_lock_falsify_relock_metrics():
     assert m["relock_time"][1] == 4  # consecutive correct from index 13 → start 4 in stage
     assert m["mean_confidence"] is not None
     assert compute_episode_metrics(traj)["lock_time"][0] == 1
+    rev = m["revision"][1]
+    assert rev["doubt_latency"] == 4
+    assert rev["retraction_latency"] == 4
+    assert rev["resurrected"] is False
+    assert rev["true_change"] is True
+
+
+def test_revision_doubt_without_retract_and_resurrection():
+    # 2-step flinch (stable=false, still declare old), then leave, then restore old, then new.
+    h = [3, 3, 3, 1, 3, 1, 1, 1]
+    st = [True, False, True, True, True, True, True, True]
+    act = [3, 3, 3, 3, 3, 1, 1, 1]
+    seq = revision_sequence(h, st, act, old_best=3, new_best=1, k_persist=3)
+    assert seq["doubt_latency"] == 2
+    assert seq["retraction_latency"] == 6  # first 3 consecutive off old: indices 5,6,7
+    assert seq["n_resurrections"] == 1
+    assert seq["resurrected"] is True
+    assert seq["frac_post_doubt_pull_old"] is not None
+    assert seq["frac_post_doubt_pull_old"] > 0.4
+    assert seq["belief_action_consistency"] < 1.0  # pulled 3 while declaring 1 once
+
+
+def test_revision_false_alarm_on_no_change():
+    h = [2, 2, 2, 0, 2, 2, 2, 2]
+    st = [True, True, True, False, True, True, True, True]
+    act = [2, 2, 2, 0, 2, 2, 2, 2]
+    seq = revision_sequence(h, st, act, old_best=2, new_best=2, k_persist=3)
+    assert seq["true_change"] is False
+    assert seq["doubt_latency"] == 4
+    assert seq["retraction_latency"] is None
+    assert seq["resurrected"] is True

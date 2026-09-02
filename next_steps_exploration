@@ -1,0 +1,129 @@
+## Next plans
+
+The next stage should focus on turning the current P0 result into a cleaner test of **belief revision under hidden environmental change**, before expanding to substantially larger environments.
+
+### 1. Separate doubt from durable falsification
+
+Our current falsification metric counts the first point at which the agent either leaves the old hypothesis or sets `stable = false`. However, the qualitative traces show that these events do not necessarily mean that the hypothesis has actually been abandoned: an agent may temporarily doubt the old hypothesis and subsequently restore it.
+
+We will therefore decompose adaptation after a change into a more detailed sequence:
+
+> **maintain H → doubt H → retract H → search → adopt H' → exploit H'**
+
+We will measure:
+
+* **Doubt latency:** number of steps after a change until the agent first sets `stable = false` or moves away from the old hypothesis.
+* **Retraction latency:** number of steps until the old hypothesis is abandoned persistently.
+* **Resurrection rate:** how often an agent returns to a previously rejected hypothesis.
+* **Search duration:** time between retracting the old hypothesis and adopting a new one.
+* **Re-lock latency:** time until the new hypothesis matches the current environment consistently.
+* **Belief–action consistency:** whether actions actually follow the agent's declared hypothesis.
+
+This should clarify the current distinction between the surprise instruction and the more task-specific detection rule. In particular, the surprise instruction may improve **contradiction detection** without ensuring **durable revision**.
+
+### 2. Randomize change points and add no-change controls
+
+The current P0 environment always changes at fixed steps 30 and 60. This makes analysis simple, but it also introduces a predictable temporal structure.
+
+We will replace fixed change points with randomly sampled change times while keeping the overall episode structure comparable. The agent will not be told either when or whether a change has occurred.
+
+For each changing environment, we will also include matched **no-change control episodes**. This gives us two complementary errors:
+
+* **revision failure:** continuing to trust an obsolete hypothesis after the world changes;
+* **false revision:** abandoning a correct hypothesis because of ordinary stochastic noise.
+
+This turns the problem into a stability–plasticity trade-off: a good agent should revise quickly when genuine change occurs without becoming excessively sensitive to unlucky observations.
+
+### 3. Test belief inertia directly
+
+The current traces suggest that accumulated historical evidence can make an old hypothesis difficult to abandon even after the model explicitly notices contradictory recent evidence.
+
+We will test this systematically by manipulating the amount of evidence accumulated before a change. For example, the same reward reversal can occur after a short or long stable period.
+
+The key question is:
+
+> **How much contradictory evidence is required to overturn a hypothesis as a function of how long and how strongly it has previously been supported?**
+
+Possible factors include:
+
+* age of the hypothesis;
+* number of observations supporting it;
+* pre-change confidence;
+* magnitude of the environmental change;
+* amount of contradictory evidence received after the change.
+
+This would allow us to estimate a form of **belief inertia curve**, rather than only reporting average adaptation delay.
+
+### 4. Clean up the surprise intervention
+
+The current engine-computed binomial statistic uses the lifetime empirical mean of the hypothesized arm, including recent observations. This makes the signal increasingly conservative after a change.
+
+We will replace this with a cleaner measure of predictive surprise based only on evidence available before the current evaluation window, for example:
+
+$$
+S_t = -\log P(D_{\mathrm{recent}}\mid H_t).
+$$
+
+The purpose is not to give the model the true environmental parameters, but to provide a controlled measure of how incompatible recent observations are with its own previous hypothesis.
+
+We can then compare:
+
+1. no explicit revision instruction;
+2. generic surprise-based revision instruction;
+3. surprise instruction + externally computed surprise;
+4. task-specific recency/detection heuristic.
+
+This should distinguish whether the model lacks the ability to **compute evidence against H**, to **interpret such evidence**, or to **act on the resulting revision**.
+
+### 5. Replicate across multiple model families
+
+The current experiments use Gemini 3.5 Flash as the main model. Once the revised P0 protocol is stable, we will run the same core conditions on several model families.
+
+The aim is not initially to benchmark a large number of models, but to determine whether the observed decomposition is general:
+
+> Do models consistently differ in hypothesis formation, contradiction detection, durable revision, and behavioural recovery?
+
+The most useful comparison may therefore be a small number of heterogeneous models evaluated with exactly the same instrumentation.
+
+### 6. Transfer to ExploitDecay
+
+After establishing the revised metrics on P0, we will test the same prompting interventions on **ExploitDecay**.
+
+This is an important transfer environment because the failure of the current best action is partly caused by the agent's own behaviour. The correct heuristic is therefore different from simply reacting to recent reward collapse.
+
+This gives a useful test of what has actually been taught:
+
+* If the P0-specific detection rule transfers poorly or causes excessive exploitation, it is likely a task-specific cookbook.
+* If the more general surprise/revision rule transfers, this provides evidence for a broader adaptive mechanism.
+* If neither transfers, this identifies an important boundary of the current hypothesis-revision framework.
+
+### 7. Move from “which arm is best?” to structural hypotheses
+
+A longer-term extension is to allow the hypothesis itself to describe **how the environment works**, rather than only which action is currently optimal.
+
+For example, the agent might distinguish hypotheses such as:
+
+* the environment is stationary;
+* the best option occasionally switches;
+* rewards follow a periodic process;
+* exploiting an option causes its value to decay;
+* an option recovers when it is not selected.
+
+The resulting loop would become:
+
+> **infer a model of the environment → act under that model → detect model failure → revise the model → change behaviour**
+
+This would move beyond bandit adaptation toward a more general test of in-context model revision in long-horizon agents.
+
+### Immediate priority
+
+The immediate experiment should therefore remain small:
+
+1. implement **doubt / retraction / resurrection** metrics;
+2. randomize P0 change points;
+3. add matched stationary/no-change controls;
+4. rerun the existing four prompting conditions;
+5. test whether accumulated evidence creates measurable belief inertia;
+6. only then move the best interventions to ExploitDecay.
+
+The objective for the next iteration is not to add more environments, but to establish whether the phenomenon we are observing is genuinely **belief revision**, rather than simply greater sensitivity to recent reward.
