@@ -62,6 +62,7 @@ def load_L(L: int):
     runs = sorted(ROOT.glob(f"runs/*p0_inertia_L{L}_*"))
     by = defaultdict(list)
     rew = defaultdict(list)
+    seen: dict[tuple[str, int], dict] = {}
     for run in runs:
         summ_path = run / "episode_summaries.jsonl"
         traj_path = run / "trajectories.jsonl"
@@ -104,8 +105,10 @@ def load_L(L: int):
                 [p[2] for p in parsed],
                 params[0].get("best") if params else None,
             )
-            by[agent].append(seq)
-            rew[agent].append(rewards.get((agent, seed)))
+            seen[(agent, seed)] = {"seq": seq, "rew": rewards.get((agent, seed))}
+    for (agent, _seed), item in seen.items():
+        by[agent].append(item["seq"])
+        rew[agent].append(item["rew"])
     return by, rew
 
 

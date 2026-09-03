@@ -46,7 +46,10 @@ def compute_episode_metrics(trajectory: Trajectory) -> dict[str, Any]:
         if env_name == "ExploitDecayBandit":
             metrics.update(_exploit_decay_metrics(trajectory, oracle))
         if _has_hypothesis_fields(trajectory):
-            metrics.update(_hypothesis_loop_metrics(trajectory, oracle))
+            if env_name == "ExploitDecayBandit":
+                metrics.update(_exploit_decay_revision_metrics(trajectory, oracle))
+            else:
+                metrics.update(_hypothesis_loop_metrics(trajectory, oracle))
     elif env_name == "PendulumGate":
         metrics.update(_pendulum_metrics(trajectory, oracle))
     elif env_name == "TrafficLightGate":
@@ -265,6 +268,71 @@ def _exploit_decay_metrics(
         "mean_overmine_rate": sum(valid_om) / len(valid_om) if valid_om else None,
         "mean_recovery_delay": sum(valid_rec) / len(valid_rec) if valid_rec else None,
         "mean_post_death_reward": sum(valid_pr) / len(valid_pr) if valid_pr else None,
+    }
+
+
+def _arm_from_record(rec: Any) -> int | None:
+    try:
+        arm = rec.action.get("arm")
+        return int(arm) if arm is not None else None
+    except (TypeError, ValueError, AttributeError):
+        return None
+
+
+def _exploit_decay_revision_metrics(
+    trajectory: Trajectory, oracle: dict[str, Any], k_lock: int = 3
+) -> dict[str, Any]:
+    """Doubt / retract / resurrect in the window after each alpha death."""
+    records = trajectory.records
+    death_indices = [
+        i for i, r in enumerate(records) if r.private_info.get("alpha_died")
+    ]
+    revision: list[dict[str, Any]] = []
+    for j, di in enumerate(death_indices):
+        rec = records[di]
+        old = rec.private_info.get("alpha_arm")
+        if old is None:
+            old = rec.action.get("arm")
+        try:
+            old_i = int(old) if old is not None else None
+        except (TypeError, ValueError):
+            old_i = None
+        new = rec.private_info.get("alpha_arm_after")
+        try:
+            new_i = int(new) if new is not None else None
+        except (TypeError, ValueError):
+            new_i = None
+        nxt = death_indices[j + 1] if j + 1 < len(death_indices) else len(records)
+        post = records[di + 1 : nxt]
+        h_seq: list[int | None] = []
+        st_seq: list[bool | None] = []
+        act_seq: list[int | None] = []
+        for r in post:
+            h, st, _conf = _parse_hypothesis(r)
+            h_seq.append(h)
+            st_seq.append(st)
+            act_seq.append(_arm_from_record(r))
+        seq = revision_sequence(h_seq, st_seq, act_seq, old_i, new_i, k_persist=k_lock)
+        seq["death_step"] = rec.step
+        revision.append(seq)
+
+    def _mean_field(key: str) -> float | None:
+        xs = [r[key] for r in revision if r.get(key) is not None]
+        return sum(xs) / len(xs) if xs else None
+
+    return {
+        "revision": revision,
+        "mean_doubt_latency": _mean_field("doubt_latency"),
+        "mean_retraction_latency": _mean_field("retraction_latency"),
+        "mean_search_duration": _mean_field("search_duration"),
+        "resurrection_rate": (
+            sum(1 for r in revision if r.get("resurrected")) / len(revision)
+            if revision
+            else None
+        ),
+        "mean_belief_action_consistency": _mean_field("belief_action_consistency"),
+        "mean_frac_post_doubt_pull_old": _mean_field("frac_post_doubt_pull_old"),
+        "k_lock": k_lock,
     }
 
 
