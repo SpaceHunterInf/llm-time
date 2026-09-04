@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 2 — doubt, retract, resurrection</title>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+</script>
+<style>
+:root {
+  --fg: #1a1a1a;
+  --muted: #555;
+  --border: #ddd;
+  --bg: #f6f7f9;
+  --card: #fff;
+  --accent: #1f4e79;
+}
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.55;
+}
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 36px 28px 96px;
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--border);
+}
+h1, h2, h3 { color: var(--accent); line-height: 1.25; }
+h1 { font-size: 1.85rem; margin-top: 0; }
+h2 {
+  margin-top: 2.2rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0 1.4rem;
+  font-size: 0.92rem;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+th { background: #eef3f8; }
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.6rem auto 0.3rem;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+em { color: var(--muted); }
+code {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.88em;
+  background: #f3f3f3;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+pre {
+  background: #f4f6f8;
+  padding: 12px 14px;
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+pre code { background: none; padding: 0; }
+blockquote {
+  margin: 1rem 0;
+  padding: 0.15rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: #f4f7fb;
+}
+.mermaid {
+  background: #fff;
+  padding: 12px;
+  margin: 1rem 0;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Week 2 — Doubt, retract, resurrection, and transfer</h1>
+<p><strong>Date:</strong> 3 September 2026<br />
+<strong>Follows:</strong> <a href="group_meeting_2026-08-24.md">24 Aug group meeting</a><br />
+<strong>Model:</strong> frozen Gemini 3.5 Flash, T = 0, <strong>blind</strong> task text  </p>
+<hr />
+<h2>TL;DR</h2>
+<p>A frozen LLM will <strong>form an H</strong> and <strong>get nervous</strong> when the data sour. Unless you install a recency cookbook, it often <strong>talks itself back onto the old H</strong> because n is large — and that is what it then pulls.</p>
+<p>Teaching recency helps whenever “recent mean died” is the right local statistic (P0 flips <em>and</em> mining an arm to death). It <strong>hurts</strong> when the world did not change. It is not a general revision loop. We do not have a prompt that beats vanilla on both a changing world and a still one.</p>
+<div class="mermaid">flowchart LR
+  A[Form H] --> B[Doubt]
+  B --> C{Retract and stay off?}
+  C -->|often no| D[Resurrect old H]
+  D --> E[Pull the old arm]
+  C -->|sometimes| F[Lock new H]
+  F --> G[Pull the new arm]
+</div>
+<hr />
+<h2>1. The question this week</h2>
+<p>Last week: can they form H, assign confidence, and adapt on a toy non-stationary bandit?</p>
+<p>This week:</p>
+<blockquote>
+<p>How do <strong>belief revision</strong> and <strong>behavioural adaptation</strong> interact when the world stops satisfying the previous hypothesis?</p>
+</blockquote>
+<p>That required splitting “falsify” into <strong>doubt</strong> vs <strong>durable retract</strong>, adding a <strong>no-change control</strong>, measuring <strong>inertia</strong> (how long H was true), and transferring to <strong>ExploitDecay</strong> (you kill the arm by pulling it).</p>
+<p>Same JSON every step: <code>{hypothesis: {best_arm, stable}, confidence, heuristic, action}</code>.</p>
+<p>Four prompts, unchanged:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vanilla</td>
+<td>Schema only</td>
+</tr>
+<tr>
+<td>Surprise</td>
+<td>H is a model; drop it if recent pulls are surprising</td>
+</tr>
+<tr>
+<td>Surprise + p-value</td>
+<td>Same + engine binomial tail</td>
+</tr>
+<tr>
+<td>Detect</td>
+<td>Prefer last-10 mean; collapse ⇒ <code>stable=false</code>; do not restore from large n</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. Doubt is not retract (n = 20 P0 traces, no new API)</h2>
+<p><strong>Doubt</strong> = first <code>stable=false</code> or declared best ≠ old best.<br />
+<strong>Retract</strong> = first 3 consecutive steps off the old H.<br />
+<strong>Resurrect</strong> = return to the old H after leaving it.</p>
+<p><img alt="Doubt vs retract on n=20 P0" src="figures/week2_2026-09/fig02_doubt_retract_n20.png" /></p>
+<p><em>Figure 1. Mean steps after a cut (40 events). Surprise is fastest to doubt and among the slowest to stay off. Detect is fastest on both, still not fast on retract.</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Doubt</th>
+<th style="text-align: right;">Retract</th>
+<th style="text-align: right;">Gap</th>
+<th style="text-align: right;">Resurrect</th>
+<th style="text-align: right;">Pull old while declaring new</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vanilla</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;"><strong>68%</strong></td>
+<td style="text-align: right;">~0</td>
+</tr>
+<tr>
+<td>Surprise</td>
+<td style="text-align: right;"><strong>3.6</strong></td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;"><strong>8.5</strong></td>
+<td style="text-align: right;">45%</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+<tr>
+<td>Surprise + p</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">55%</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+<tr>
+<td>Detect</td>
+<td style="text-align: right;"><strong>3.2</strong></td>
+<td style="text-align: right;"><strong>9.5</strong></td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">45%</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+</tbody>
+</table>
+<p>Belief–action consistency is high (~0.8). They pull what they declare. Failure is <strong>putting the old H back on</strong>, not secretly milking a corpse. Once they really retract, search onto the new arm is short (~1 step).</p>
+<hr />
+<h2>3. Teaching is a change-point prior (random cuts + matched control, n = 10)</h2>
+<p>Cuts are now random. Control: <strong>same seeds, same ghost times, best arm never flips.</strong> False doubt at a ghost cut is a false revision.</p>
+<p><img alt="Reward on change vs no-change" src="figures/week2_2026-09/fig01_change_vs_control.png" /></p>
+<p><em>Figure 2. Blue = world flips. Orange = nothing flips. Every addition helps (a bit) on the left and </em><em>hurts</em><em> on the right. Detect’s control penalty is larger than its change gain.</em></p>
+<p><img alt="False doubt on the control" src="figures/week2_2026-09/fig03_false_doubt.png" /></p>
+<p><em>Figure 3. Vanilla never flinches on noise. Detect false-doubts 55% of ghost cuts. Nobody false-</em><em>retracts</em><em> a true H. The leak is twitchy exploration.</em></p>
+<p>If change and no-change are mixed 50/50:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Mean of the two worlds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vanilla</td>
+<td style="text-align: right;"><strong>64.5</strong></td>
+</tr>
+<tr>
+<td>Surprise</td>
+<td style="text-align: right;">65.2</td>
+</tr>
+<tr>
+<td>Surprise + p</td>
+<td style="text-align: right;">65.4</td>
+</tr>
+<tr>
+<td>Detect</td>
+<td style="text-align: right;"><strong>63.3</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Detect <strong>loses the average</strong>. Surprise/p-value do not Pareto-dominate vanilla (they still lose on the control). Vanilla is already near oracle (~76) when nothing changes (72.3). Room to beat it there is tiny.</p>
+<p>This is not a worse prior on <code>p</code>. It is <strong>P(the world just changed | a few zeros)</strong> set too high.</p>
+<hr />
+<h2>4. Vanilla’s inertia is n (one flip after L = 10, 30, 60)</h2>
+<p><img alt="Inertia delays and resurrection vs L" src="figures/week2_2026-09/fig04_inertia.png" /></p>
+<p><em>Figure 4. Left: doubt/retract vs how long H was true. Right: resurrection. Vanilla (red) is the clean curve. Taught prompts still doubt fast; resurrection is noisy at n = 10.</em></p>
+<p><strong>Vanilla</strong></p>
+<table>
+<thead>
+<tr>
+<th>L</th>
+<th style="text-align: right;">Doubt</th>
+<th style="text-align: right;">Retract</th>
+<th style="text-align: right;">Policy leaves old</th>
+<th style="text-align: right;">Resurrect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;"><strong>4.3</strong></td>
+<td style="text-align: right;">10%</td>
+</tr>
+<tr>
+<td>30</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">30%</td>
+</tr>
+<tr>
+<td>60</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;"><strong>50%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>At short L the <strong>policy moves before H</strong>. At long L they couple and stick. Retract saturates after L=30; resurrection keeps climbing.</p>
+<p>Taught prompts: doubt stays ~3–5 at every L. Resurrection is <strong>not</strong> a monotone L-curve at n=10 (detect 60% / 90% / 50%). Teaching buys fast doubt, not proven immunity to bringing H back.</p>
+<hr />
+<h2>5. Transfer: ExploitDecay (you kill the arm)</h2>
+<p>Pulling the current winner lowers its p; when it dies a new alpha spawns. Same four prompts, n=10, blind.</p>
+<p><img alt="ExploitDecay reward and overmine" src="figures/week2_2026-09/fig05_exploit_decay.png" /></p>
+<p><em>Figure 5. Detect is the only LLM that beats vanilla and cuts overmining. Surprise and p-value overmine </em><em>more</em><em> than vanilla. SW-UCB overmines least and scores worse (leaves too early).</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Reward</th>
+<th style="text-align: right;">Overmine</th>
+<th style="text-align: right;">Doubt</th>
+<th style="text-align: right;">Retract</th>
+<th style="text-align: right;">Resurrect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oracle</td>
+<td style="text-align: right;">53.4</td>
+<td style="text-align: right;">10%</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Detect</td>
+<td style="text-align: right;"><strong>34.2</strong></td>
+<td style="text-align: right;"><strong>31%</strong></td>
+<td style="text-align: right;"><strong>2.7</strong></td>
+<td style="text-align: right;"><strong>5.8</strong></td>
+<td style="text-align: right;">53%</td>
+</tr>
+<tr>
+<td>Surprise</td>
+<td style="text-align: right;">32.6</td>
+<td style="text-align: right;">50%</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">54%</td>
+</tr>
+<tr>
+<td>Vanilla</td>
+<td style="text-align: right;">32.4</td>
+<td style="text-align: right;">44%</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">40%</td>
+</tr>
+<tr>
+<td>Surprise + p</td>
+<td style="text-align: right;">31.4</td>
+<td style="text-align: right;"><strong>60%</strong></td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">40%</td>
+</tr>
+<tr>
+<td>SW-UCB</td>
+<td style="text-align: right;">29.7</td>
+<td style="text-align: right;">18%</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p>Detect transfers because <strong>recency collapse is the right local cue</strong> both when an arm is swapped and when you mine it to death. That is a cookbook win, not a revision win. Generic surprise still doubts, then milks the dead alpha.</p>
+<hr />
+<h2>6. What we can say</h2>
+<ol>
+<li>Blind Flash <strong>can</strong> play a changing bandit without being told it changes, and beats full-history UCB on discrete flips.</li>
+<li>Declared H <strong>tracks behaviour</strong>. Adaptation fails at <strong>retract-and-stay-off</strong>, not at noticing.</li>
+<li>Recency teaching is a <strong>change-point prior</strong>. It helps when recent mean dying is the right statistic (P0 <em>and</em> ExploitDecay). It <strong>hurts</strong> a still world.</li>
+<li>Vanilla’s stickiness scales with <strong>how long H was true</strong>.</li>
+<li>We have <strong>not</strong> found a global prompt that beats vanilla on both a changing world and a still one. Conservative doubt + committed retract is the missing policy; we have not installed it.</li>
+</ol>
+<h2>7. What we should not say</h2>
+<ul>
+<li>That they cannot falsify (they can; they don’t commit).</li>
+<li>That detect is general adaptation (it loses the 50/50 mix; it wins when “recent mean died” is the cue).</li>
+<li>That surprise/p-value is the scientific win (right idea; does not bind action on harvest or on ExploitDecay).</li>
+</ul>
+<p><strong>One sentence.</strong> They form an H and get nervous when the data sour; unless you hand them a recency cookbook, n talks them back onto the old H — and that is what they pull.</p>
+<hr />
+<h2>Appendix — runs and scripts</h2>
+<table>
+<thead>
+<tr>
+<th>Experiment</th>
+<th>Configs / analyze</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>n=20 P0 four prompts</td>
+<td><code>experiment_p0_hypothesis_n20_*.yaml</code>, <code>analyze_hypothesis_teach.py</code></td>
+</tr>
+<tr>
+<td>Revision on those traces</td>
+<td><code>scripts/analyze_revision.py</code></td>
+</tr>
+<tr>
+<td>Random cut + control</td>
+<td><code>experiment_p0_revision_{change,control}_*.yaml</code>, <code>analyze_revision_protocol.py</code></td>
+</tr>
+<tr>
+<td>Inertia L=10/30/60</td>
+<td><code>experiment_p0_inertia_L*_*.yaml</code>, <code>analyze_inertia.py</code></td>
+</tr>
+<tr>
+<td>ExploitDecay hyp</td>
+<td><code>experiment_exploit_decay_hyp_*.yaml</code>, <code>analyze_exploit_decay_hyp.py</code></td>
+</tr>
+<tr>
+<td>This week’s log</td>
+<td><code>revision_inertia_2026-09.md</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
