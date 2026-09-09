@@ -5,8 +5,9 @@ from llm_rl_engine.analysis.token_cost import aggregate_token_usage, estimate_co
 
 def test_estimate_cost_usd():
     costs = estimate_cost_usd("gemini-3.5-flash", 1_000_000, 500_000)
-    assert costs["total_cost_usd"] > 0
-    assert costs["input_cost_usd"] > costs["output_cost_usd"] * 0.1
+    assert costs["input_cost_usd"] == 1.50
+    assert costs["output_cost_usd"] == 4.50
+    assert costs["total_cost_usd"] == 6.00
 
 
 def test_aggregate_token_usage():

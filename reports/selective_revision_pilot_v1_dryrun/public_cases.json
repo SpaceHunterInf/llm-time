@@ -1,0 +1,842 @@
+[
+  {
+    "case_id": "case_01",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 5,
+        "successes": 0
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "shared"
+  },
+  {
+    "case_id": "case_02",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 5,
+        "successes": 0
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "shared"
+  },
+  {
+    "case_id": "case_03",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 3,
+        "successes": 2
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "shared"
+  },
+  {
+    "case_id": "case_04",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 3,
+        "successes": 2
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "shared"
+  },
+  {
+    "case_id": "case_05",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 1,
+        "successes": 4
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "shared"
+  },
+  {
+    "case_id": "case_06",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 1,
+        "successes": 4
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "shared"
+  },
+  {
+    "case_id": "case_07",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 0,
+        "successes": 5
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "shared"
+  },
+  {
+    "case_id": "case_08",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 0,
+        "successes": 5
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "shared"
+  },
+  {
+    "case_id": "case_09",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 5,
+        "successes": 0
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "independent"
+  },
+  {
+    "case_id": "case_10",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 5,
+        "successes": 0
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "independent"
+  },
+  {
+    "case_id": "case_11",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 3,
+        "successes": 2
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "independent"
+  },
+  {
+    "case_id": "case_12",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 3,
+        "successes": 2
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "independent"
+  },
+  {
+    "case_id": "case_13",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 1,
+        "successes": 4
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "independent"
+  },
+  {
+    "case_id": "case_14",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 1,
+        "successes": 4
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "independent"
+  },
+  {
+    "case_id": "case_15",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 0,
+        "successes": 5
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "independent"
+  },
+  {
+    "case_id": "case_16",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 0,
+        "successes": 5
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "independent"
+  },
+  {
+    "case_id": "case_17",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.0,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 5,
+        "successes": 0
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "stable"
+  },
+  {
+    "case_id": "case_18",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.0,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 5,
+        "successes": 0
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "stable"
+  },
+  {
+    "case_id": "case_19",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.0,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 3,
+        "successes": 2
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "stable"
+  },
+  {
+    "case_id": "case_20",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.0,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 3,
+        "successes": 2
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "stable"
+  },
+  {
+    "case_id": "case_21",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.0,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 1,
+        "successes": 4
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "stable"
+  },
+  {
+    "case_id": "case_22",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.0,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 1,
+        "successes": 4
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "stable"
+  },
+  {
+    "case_id": "case_23",
+    "diagnostic_cost": 0.04,
+    "hazard": 0.0,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 0,
+        "successes": 5
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "stable"
+  },
+  {
+    "case_id": "case_24",
+    "diagnostic_cost": 0.2,
+    "hazard": 0.0,
+    "high": 0.8,
+    "low": 0.2,
+    "observation_counts": {
+      "A": {
+        "failures": 0,
+        "successes": 5
+      },
+      "B": {
+        "failures": 0,
+        "successes": 0
+      },
+      "C": {
+        "failures": 0,
+        "successes": 0
+      }
+    },
+    "observations": {
+      "A": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "B": [],
+      "C": []
+    },
+    "prior_high": 0.99,
+    "safe_utility": 0.65,
+    "structure": "stable"
+  }
+]

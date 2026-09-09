@@ -3,8 +3,11 @@ from __future__ import annotations
 from typing import Any
 
 # USD per 1M tokens (estimates; override via config pricing section)
+# Gemini 3.5 Flash standard rates verified 2026-09-09:
+# https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash
+# Output pricing includes thinking tokens. Other entries are legacy estimates.
 DEFAULT_MODEL_PRICING: dict[str, dict[str, float]] = {
-    "gemini-3.5-flash": {"input_per_1m": 0.15, "output_per_1m": 0.60},
+    "gemini-3.5-flash": {"input_per_1m": 1.50, "output_per_1m": 9.00},
     "gemini-2.5-flash": {"input_per_1m": 0.15, "output_per_1m": 0.60},
     "gemini-2.0-flash": {"input_per_1m": 0.10, "output_per_1m": 0.40},
 }
@@ -17,7 +20,7 @@ def estimate_cost_usd(
     pricing: dict[str, Any] | None = None,
 ) -> dict[str, float]:
     table = pricing or DEFAULT_MODEL_PRICING
-    rates = table.get(model) or table.get("gemini-3.5-flash", {"input_per_1m": 0.15, "output_per_1m": 0.60})
+    rates = table.get(model) or table.get("gemini-3.5-flash", DEFAULT_MODEL_PRICING["gemini-3.5-flash"])
     input_cost = (input_tokens / 1_000_000) * rates["input_per_1m"]
     output_cost = (output_tokens / 1_000_000) * rates["output_per_1m"]
     return {

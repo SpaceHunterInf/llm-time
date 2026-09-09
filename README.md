@@ -1,5 +1,7 @@
 # LLM RL Engine Spec
 
+For the current research direction, audit, and Grok implementation queue, start with [AUTO_RESEARCH-commander.md](AUTO_RESEARCH-commander.md) and [auto_research_rules.md](auto_research_rules.md). The build-order notes below describe the original engine plan.
+
 This folder specifies a lightweight reinforcement-learning engine for frozen LLM agents. The goal is to test whether an LLM can explore, infer hidden structure, adapt online, and use prior interaction history to choose better future actions without any model-weight updates.
 
 The initial benchmark should start with simple static environments and then extend to dynamic, time-dependent environments.
@@ -66,4 +68,3 @@ Secondary research question:
 | Latent parameter | A hidden property such as reward probability, phase, period, or target number. |
 | Heuristic | A compact natural-language rule used to guide future action choices. |
 | In-context adaptation | Behavior improves because the agent uses history in the prompt/context, not because weights change. |
-
