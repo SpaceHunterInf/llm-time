@@ -2,7 +2,9 @@
 
 Plan author: Codex (commander). Commander-authored plan files use the `-commander.md` suffix; this convention does not apply to code or generated result reports.
 
-Updated 9 September 2026. Start here in future research sessions, then read `auto_research_rules.md`. Earlier proposals and reports are preserved as historical documents. This file selects the immediate work under the current compute constraints; it does not claim the new method already works.
+Updated 10 September 2026. Start here in future research sessions, then read `auto_research_rules.md`. Earlier proposals and reports are preserved as historical documents. This file selects the immediate work under the current compute constraints; it does not claim the new method already works.
+
+Latest update from the 10 September commander review: **task 002 and both one-event live grids were independently audited**. Thinking-enabled Gemini made 0/72 decision errors; no-thinking made 7/72. See [the commander review](reports/task002_review-commander.md). Implementation briefs: [task 003, harness integrity](research_tasks/003_harness_integrity-commander.md), [task 004, sequential revision](research_tasks/004_sequential_revision-commander.md). Worker has since completed 003, the 004 dry-run, and a 96-call sequential live grid (see `reports/selective_revision_sequential_live.md`). Commander should review that live result before the next brief. Do not train on the one-event worksheet.
 
 ## Direction
 
@@ -77,8 +79,8 @@ Two primary sources were rechecked on 9 September; this is not a renewed exhaust
 
 ## Current state
 
-- Repository orientation and initial audit complete; baseline suite: 54 passing tests. Final suite after reference and pricing changes: **84 passing tests**.
-- Task 001 completed by the research lead after the Grok handoff stalled. Reference: `llm_rl_engine/analysis/selective_revision.py`; reproduction: `uv run python scripts/selective_revision_sanity.py`; outputs: `reports/selective_revision_reference.{json,md}`. Thirty new tests pass. Two regenerations produced identical hashes; all 54 raw/count fixture pairs were checked. The worked example also agrees with an independently calculated closed-form posterior and expected-utility calculation.
-- Task 002 is a prepared next assignment, not yet an executed model experiment.
-- Historical trajectories are on the user's other machine and may be copied tomorrow. They are useful for reanalysis but do not block the new reference/pilot. Prioritize P0 hypothesis and randomized-change/no-change runs, including trajectory JSONL and saved configs. Ordinary small API experiments are authorized; budget for whole-experiment completion plus retries rather than an arbitrary US$1 cutoff.
-- No training or Gemini/DeepSeek experiment calls made in this iteration. Grok CLI sessions were attempted as described above and stopped; no unattended research job is intentionally left running.
+- Task 001 reference observer is in tree. Task 002 one-event grids were run and audited: thinking 0/72 errors, no-thinking 7/72. Audit: `reports/task002_audit-commander.json`; review: `reports/task002_review-commander.md`.
+- Task 003 harness identity is implemented (worker return `research_tasks/003_harness_integrity-worker.md`).
+- Task 004 sequential dry-run and a 96-call thinking-on Gemini grid are done. Sequential live: 96/96 valid, **37 decision errors**, mean loss 0.021, $8.82. Independent tapes 29/36 errors, mostly missed diagnose. Self-state did not beat reconstruct. Report: `reports/selective_revision_sequential_live.md`. Commander should review this before the next brief.
+- Do not train on the one-event worksheet. Ordinary small API experiments remain authorized under the ~$20/run cap.
+- Tests at sequential dry-run: 126 passed; after sequential live runner tests: 127 passed.

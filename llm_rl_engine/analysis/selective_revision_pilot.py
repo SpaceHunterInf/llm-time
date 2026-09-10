@@ -49,8 +49,13 @@ def sha256_text(text: str) -> str:
 
 
 def estimate_tokens(text: str) -> int:
-    """Conservative input-token estimate: 1 token per 2 characters plus overhead."""
+    """Offline heuristic only: 1 token per 2 characters plus overhead. Not a provider count."""
     return 32 + (len(text) + 1) // 2
+
+
+def conservative_char_token_bound(text: str) -> int:
+    """Hard upper bound of one token per Unicode character. Not a typical-use estimate."""
+    return max(1, len(text))
 
 
 @dataclass(frozen=True)
@@ -396,6 +401,10 @@ def _probability_field(name: str, value: Any) -> float:
     return value
 
 
+FORECAST_CONSISTENCY_TOL = 1e-6
+UTILITY_TIE_TOL = 1e-12
+
+
 def parse_response(text: str) -> dict[str, Any]:
     from llm_rl_engine.agents.llm import extract_json_object
 
@@ -433,6 +442,18 @@ def parse_response(text: str) -> dict[str, Any]:
     }
 
 
+def forecast_consistency_error(
+    parsed: Mapping[str, Any], *, low: float, high: float
+) -> dict[str, float]:
+    """|mean - (low + (high-low) p)| per component. Not a parse failure."""
+    width = high - low
+    errors = {}
+    for component in COMPONENTS:
+        expected = low + width * parsed["probability_high"][component]
+        errors[component] = parsed["predictive_mean"][component] - expected
+    return errors
+
+
 def action_utility(action: str, decision: Mapping[str, Any]) -> float:
     values = decision["action_values"]
     if action not in values:
@@ -456,7 +477,7 @@ def score_response(
         action = parsed["action"]
         utility = action_utility(action, decision)
         fallback = False
-        decision_error = action != optimal
+        decision_error = (optimal_utility - utility) > UTILITY_TIE_TOL
     else:
         action = "choose_safe"
         utility = action_utility(action, decision)
@@ -473,14 +494,33 @@ def score_response(
             component: parsed["predictive_mean"][component] - record.predictive_mean[component]
             for component in COMPONENTS
         }
-        brier = sum(err * err for err in p_err.values()) / len(COMPONENTS)
+        posterior_mse = sum(err * err for err in p_err.values()) / len(COMPONENTS)
+        expected_latent_brier = sum(
+            record.posterior_high[c] * (1.0 - record.posterior_high[c]) + p_err[c] * p_err[c]
+            for c in COMPONENTS
+        ) / len(COMPONENTS)
+        expected_reward_brier = sum(
+            record.predictive_mean[c] * (1.0 - record.predictive_mean[c])
+            + mean_err[c] * mean_err[c]
+            for c in COMPONENTS
+        ) / len(COMPONENTS)
         c_drift = parsed["predictive_mean"]["C"] - prior_c
-        overpriced = action == "diagnose_B" and optimal != "diagnose_B"
+        c_abs_error = abs(c_drift)
+        consistency = forecast_consistency_error(parsed, low=spec.low, high=spec.high)
+        max_consistency = max(abs(v) for v in consistency.values())
+        forecast_inconsistent = max_consistency > FORECAST_CONSISTENCY_TOL
+        overpriced = action == "diagnose_B" and (optimal_utility - utility) > UTILITY_TIE_TOL
     else:
         p_err = {component: None for component in COMPONENTS}
         mean_err = {component: None for component in COMPONENTS}
-        brier = None
+        posterior_mse = None
+        expected_latent_brier = None
+        expected_reward_brier = None
         c_drift = None
+        c_abs_error = None
+        consistency = {component: None for component in COMPONENTS}
+        max_consistency = None
+        forecast_inconsistent = False
         overpriced = False
     return {
         "valid": valid,
@@ -494,9 +534,17 @@ def score_response(
         "decision_error": decision_error,
         "probability_error": p_err,
         "predictive_mean_error": mean_err,
-        "brier_probability_high": brier,
+        "posterior_mse": posterior_mse,
+        "excess_expected_brier_latent": posterior_mse,
+        "brier_probability_high": posterior_mse,
+        "expected_latent_brier": expected_latent_brier,
+        "expected_reward_brier": expected_reward_brier,
         "c_drift": c_drift,
-        "linked_b_correct": valid and parsed is not None and parsed["action"] == optimal,
+        "c_abs_error": c_abs_error,
+        "forecast_consistency_error": consistency,
+        "max_forecast_consistency_error": max_consistency,
+        "forecast_inconsistent": forecast_inconsistent,
+        "linked_b_correct": valid and parsed is not None and not decision_error,
         "overpriced_diagnostic": overpriced,
     }
 
@@ -528,6 +576,14 @@ def summarize_scores(rows: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
             return None
         return math.fsum(present) / len(present)
 
+    by_action: dict[str, dict[str, int]] = {}
+    for action in ACTIONS:
+        subset = [row for row in valid if row.get("optimal_action") == action]
+        by_action[action] = {
+            "n_valid": len(subset),
+            "n_decision_error": sum(1 for row in subset if row.get("decision_error")),
+        }
+    abs_c = [row.get("c_abs_error") for row in valid]
     return {
         "n_attempted": attempted,
         "n_valid": len(valid),
@@ -537,12 +593,25 @@ def summarize_scores(rows: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
         "itt_mean_utility": _mean([row.get("chosen_utility") for row in rows]),
         "itt_mean_decision_loss": _mean([row.get("decision_loss") for row in rows]),
         "valid_mean_decision_loss": _mean([row.get("decision_loss") for row in valid]),
+        "valid_mean_posterior_mse": _mean([row.get("posterior_mse") for row in valid]),
         "valid_mean_brier": _mean([row.get("brier_probability_high") for row in valid]),
+        "valid_mean_expected_reward_brier": _mean(
+            [row.get("expected_reward_brier") for row in valid]
+        ),
         "valid_mean_c_drift": _mean([row.get("c_drift") for row in valid]),
+        "valid_mean_c_abs_error": _mean(abs_c),
+        "valid_max_c_abs_error": (max(v for v in abs_c if v is not None) if any(v is not None for v in abs_c) else None),
+        "per_optimal_action": by_action,
+        "n_forecast_inconsistent": sum(1 for row in valid if row.get("forecast_inconsistent")),
         "linked_b_accuracy_valid": (
             sum(1 for row in valid if row.get("linked_b_correct")) / len(valid) if valid else None
         ),
         "overpriced_diagnostic_count": sum(1 for row in valid if row.get("overpriced_diagnostic")),
+        "metric_notes": {
+            "brier_probability_high": "legacy alias of posterior_mse = mean (p_hat - p_ref)^2",
+            "expected_reward_brier": "mean r(1-r)+(f-r)^2 using reference predictive mean r",
+            "equal_utility_tolerance": UTILITY_TIE_TOL,
+        },
         "note": (
             "Descriptive macro-averages over this chosen grid, not estimated natural-world "
             "return. Treatments and cost variants are not independent episodes."

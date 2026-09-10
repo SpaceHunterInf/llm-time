@@ -13,8 +13,10 @@ import sys
 
 from llm_rl_engine.analysis.selective_revision_harness import (
     BoundedGeminiClient,
+    IdentityError,
     LiveConfigError,
     PilotRun,
+    check_or_init_identity,
     live_settings_from_config,
     load_pilot_config,
     run_jobs,
@@ -64,6 +66,12 @@ def main(argv: list[str] | None = None) -> int:
         except LiveConfigError as exc:
             print(f"Rejected live config before any calls: {exc}", file=sys.stderr)
             return 2
+        identity = run.bind_settings(settings)
+        try:
+            check_or_init_identity(output_dir, identity, settings)
+        except IdentityError as exc:
+            print(f"Rejected resume before constructing a client: {exc}", file=sys.stderr)
+            return 2
         from llm_rl_engine.config.env import load_dotenv
 
         load_dotenv()
@@ -89,18 +97,19 @@ def main(argv: list[str] | None = None) -> int:
     output_dir = args.output_dir or DEFAULT_DRYRUN_DIR
     run = PilotRun(output_dir, config, spec, repo_root=REPO_ROOT)
     report = run.write_dry_run()
-    markdown = output_dir / "dryrun.md"
-    DEFAULT_REPORT.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(markdown, DEFAULT_REPORT)
-    json_copy = REPO_ROOT / "reports" / "selective_revision_pilot_dryrun.json"
-    shutil.copyfile(output_dir / "dryrun.json", json_copy)
+    if args.output_dir is None:
+        markdown = output_dir / "dryrun.md"
+        DEFAULT_REPORT.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(markdown, DEFAULT_REPORT)
+        json_copy = REPO_ROOT / "reports" / "selective_revision_pilot_dryrun.json"
+        shutil.copyfile(output_dir / "dryrun.json", json_copy)
+        print(f"Copied report to {DEFAULT_REPORT}")
     print(f"Dry-run wrote {output_dir}")
     print(f"Planned calls: {report['manifest']['n_planned_calls']}")
     print(
         "Reserved USD for grid plus retries: "
         f"{report['manifest']['reserved_usd_full_grid']:.6f}"
     )
-    print(f"Copied report to {DEFAULT_REPORT}")
     return 0
 
 

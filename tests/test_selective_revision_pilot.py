@@ -8,12 +8,15 @@ import pytest
 from llm_rl_engine.analysis.selective_revision import decision_values, posterior
 from llm_rl_engine.analysis.selective_revision_harness import (
     BudgetError,
+    IdentityError,
     LiveConfigError,
     PilotRun,
     ReferenceAnswerClient,
+    job_key,
     live_settings_from_config,
     load_jsonl,
     load_pilot_config,
+    persist_provider_response,
     preflight,
     reserved_cost_usd,
     run_jobs,
@@ -339,13 +342,15 @@ def test_interrupted_reservation_is_not_assumed_free(tmp_path):
     run.jobs = jobs
     settings = _settings(max_calls=6, max_usd=1.0)
     reserved = settings.reserved_per_attempt
-    from llm_rl_engine.analysis.selective_revision_harness import atomic_write_json, append_jsonl, job_key
+    from llm_rl_engine.analysis.selective_revision_harness import atomic_write_json, append_jsonl
 
-    bundle_prompt = render_prompt(case, treatment, evaluator)
+    run.bind_settings(settings)
     from llm_rl_engine.analysis.selective_revision_pilot import prompt_bundle
 
     bundle = prompt_bundle(case, treatment, evaluator)
-    key = job_key(case.case_id, treatment, settings.model, bundle["prompt_hash"], run.config_hash)
+    key = job_key(
+        case.case_id, treatment, run.effective_hash(), bundle["prompt_hash"]
+    )
     atomic_write_json(
         tmp_path / "ledger.json",
         {
@@ -359,10 +364,6 @@ def test_interrupted_reservation_is_not_assumed_free(tmp_path):
     append_jsonl(
         tmp_path / "attempts.jsonl",
         {"attempt_id": "old", "key": key, "status": "reserved", "reserved_usd": reserved},
-    )
-    atomic_write_json(
-        tmp_path / "live_manifest.json",
-        {"config_hash": run.config_hash, "model": settings.model},
     )
     client = _client_for_jobs(jobs)
     result = run_jobs(run, settings, client, resume=True)
@@ -414,3 +415,144 @@ def test_reference_treatment_is_enough_to_score_voi():
     assert scored["c_drift"] == pytest.approx(0.0)
     for component in COMPONENTS:
         assert scored["probability_error"][component] == pytest.approx(0.0)
+    assert scored["posterior_mse"] == scored["brier_probability_high"]
+    assert scored["excess_expected_brier_latent"] == scored["posterior_mse"]
+    assert scored["expected_reward_brier"] is not None
+
+
+def test_thinking_override_does_not_silently_resume(tmp_path):
+    config, spec = load_pilot_config(CONFIG)
+    jobs = build_jobs(spec)[:1]
+    run = PilotRun(tmp_path, config, spec, repo_root=REPO)
+    run.jobs = jobs
+    client = _client_for_jobs(jobs)
+    run_jobs(run, _settings(thinking_budget=0, max_calls=4, max_usd=1.0), client)
+    assert client.calls == 1
+    client2 = _client_for_jobs(jobs)
+    with pytest.raises(IdentityError, match="identity"):
+        run_jobs(run, _settings(thinking_budget=8192, max_calls=4, max_usd=1.0), client2)
+    assert client2.calls == 0
+
+
+def test_identical_settings_resume_makes_no_calls(tmp_path):
+    config, spec = load_pilot_config(CONFIG)
+    jobs = build_jobs(spec)[:1]
+    run = PilotRun(tmp_path, config, spec, repo_root=REPO)
+    run.jobs = jobs
+    settings = _settings(thinking_budget=128, max_calls=4, max_usd=1.0)
+    client = _client_for_jobs(jobs)
+    run_jobs(run, settings, client)
+    client2 = _client_for_jobs(jobs)
+    run_jobs(run, settings, client2)
+    assert client2.calls == 0
+
+
+def test_cli_model_override_changes_effective_hash(tmp_path):
+    from llm_rl_engine.analysis.selective_revision_harness import build_scientific_identity
+
+    config, spec = load_pilot_config(CONFIG)
+    a = build_scientific_identity(spec, _settings(model="gemini-3.5-flash"), REPO)
+    b = build_scientific_identity(spec, _settings(model="gemini-2.5-flash"), REPO)
+    assert a["effective_hash"] != b["effective_hash"]
+    t0 = build_scientific_identity(spec, _settings(temperature=0.0), REPO)
+    t1 = build_scientific_identity(spec, _settings(temperature=0.2), REPO)
+    assert t0["effective_hash"] != t1["effective_hash"]
+
+
+def test_unknown_usage_keeps_reservation(tmp_path):
+    config, spec = load_pilot_config(CONFIG)
+    jobs = build_jobs(spec)[:1]
+    run = PilotRun(tmp_path, config, spec, repo_root=REPO)
+    run.jobs = jobs
+    answers = _client_for_jobs(jobs).answers
+    client = ReferenceAnswerClient(answers, usage_status="unknown")
+    settings = _settings(max_calls=4, max_usd=1.0)
+    result = run_jobs(run, settings, client)
+    assert result["ledger"]["spent_usd"] == pytest.approx(settings.reserved_per_attempt)
+    attempt = [row for row in load_jsonl(tmp_path / "attempts.jsonl") if row.get("status") == "attempted"][0]
+    assert attempt["usage_status"] == "unknown"
+    assert attempt["cost_usd"] == pytest.approx(settings.reserved_per_attempt)
+
+
+def test_saved_response_recovered_without_regeneration(tmp_path):
+    config, spec = load_pilot_config(CONFIG)
+    jobs = build_jobs(spec)[:1]
+    case, treatment, evaluator = jobs[0]
+    run = PilotRun(tmp_path, config, spec, repo_root=REPO)
+    run.jobs = jobs
+    settings = _settings(max_calls=4, max_usd=1.0)
+    run.bind_settings(settings)
+    from llm_rl_engine.agents.llm import GenerationResult
+
+    persist_provider_response(
+        tmp_path,
+        case_id=case.case_id,
+        treatment=treatment,
+        attempt_n=1,
+        attempt_id="pre",
+        result=GenerationResult(
+            text=json.dumps(_perfect_payload(evaluator)),
+            input_tokens=10,
+            output_tokens=20,
+            total_tokens=30,
+            finish_reason="STOP",
+            usage_status="available",
+        ),
+        latency_s=0.1,
+        request_text="saved",
+        request_hash="abc",
+        generation_settings={"model": settings.model},
+        job_key_value="pre",
+        scored=False,
+    )
+    client = _client_for_jobs(jobs)
+    result = run_jobs(run, settings, client)
+    assert client.calls == 0
+    assert result["summary"]["n_valid"] == 1
+    row = json.loads((tmp_path / "results.jsonl").read_text().splitlines()[0])
+    assert row.get("recovered_from_saved_response") is True
+
+
+def test_legacy_manifest_refuses_silent_resume(tmp_path):
+    config, spec = load_pilot_config(CONFIG)
+    jobs = build_jobs(spec)[:1]
+    run = PilotRun(tmp_path, config, spec, repo_root=REPO)
+    run.jobs = jobs
+    (tmp_path / "live_manifest.json").write_text(
+        json.dumps({"config_hash": run.config_hash, "model": "gemini-3.5-flash"})
+    )
+    with pytest.raises(IdentityError, match="legacy"):
+        run_jobs(run, _settings(max_calls=4, max_usd=1.0), _client_for_jobs(jobs))
+
+
+def test_inconsistent_forecast_is_not_a_parse_error():
+    record = evaluator_record(build_public_cases()[0])
+    payload = _perfect_payload(record)
+    payload["predictive_mean"]["A"] = 0.9
+    parsed = parse_response(json.dumps(payload))
+    scored = score_response(parsed, record, valid=True, failure_kind=None)
+    assert scored["forecast_inconsistent"] is True
+    assert scored["valid"] is True
+
+
+def test_equal_utility_is_not_a_decision_error():
+    record = evaluator_record(build_public_cases()[0])
+    values = record.decision["action_values"]
+    # pick an action whose utility equals the optimum within tolerance
+    parsed = parse_response(json.dumps(_perfect_payload(record)))
+    scored = score_response(parsed, record, valid=True, failure_kind=None)
+    assert scored["decision_error"] is False
+    parsed["action"] = record.decision["optimal_action"]
+    assert values[parsed["action"]] == pytest.approx(record.decision["action_values"][record.decision["optimal_action"]])
+
+
+def test_v1_saved_responses_still_score_0_vs_7():
+    think = REPO / "runs/selective_revision_pilot_v1_grid/results.jsonl"
+    nothink = REPO / "runs/selective_revision_pilot_v1_grid_nothink/results.jsonl"
+    if not think.exists() or not nothink.exists():
+        pytest.skip("local v1 live runs not present")
+    trows = [json.loads(line) for line in think.read_text().splitlines()]
+    nrows = [json.loads(line) for line in nothink.read_text().splitlines()]
+    assert sum(1 for r in trows if r.get("decision_error")) == 0
+    assert sum(1 for r in nrows if r.get("decision_error")) == 7
+    assert all(r.get("decision_loss") == 0 or r.get("decision_loss") == 0.0 for r in trows)

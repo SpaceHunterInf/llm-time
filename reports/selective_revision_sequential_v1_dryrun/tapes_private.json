@@ -1,0 +1,3226 @@
+[
+  {
+    "private_events": [
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": true,
+        "reset_observed": true
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      }
+    ],
+    "private_latents": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "tape_id": "shared_s0"
+  },
+  {
+    "private_events": [
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": true
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      }
+    ],
+    "private_latents": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "tape_id": "independent_s0"
+  },
+  {
+    "private_events": [
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": true,
+        "reset_observed": true
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": true,
+        "reset_observed": true
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      }
+    ],
+    "private_latents": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "tape_id": "shared_s1"
+  },
+  {
+    "private_events": [
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": true
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      }
+    ],
+    "private_latents": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "tape_id": "independent_s1"
+  },
+  {
+    "private_events": [
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": true,
+        "reset_observed": true
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      }
+    ],
+    "private_latents": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "tape_id": "shared_s2"
+  },
+  {
+    "private_events": [
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": true,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": true,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      }
+    ],
+    "private_latents": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "tape_id": "independent_s2"
+  },
+  {
+    "private_events": [
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      }
+    ],
+    "private_latents": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "tape_id": "stable_s10"
+  },
+  {
+    "private_events": [
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      },
+      {
+        "reset_linked": false,
+        "reset_observed": false
+      }
+    ],
+    "private_latents": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "tape_id": "stable_s11"
+  }
+]

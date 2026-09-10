@@ -28,6 +28,9 @@ class GenerationResult:
     output_tokens: int = 0
     total_tokens: int = 0
     thoughts_tokens: int = 0
+    model_version: str | None = None
+    finish_reason: str | None = None
+    usage_status: str = "available"
 
 
 class ModelClient(Protocol):

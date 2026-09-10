@@ -1,0 +1,60 @@
+You infer a factored binary latent (high rate 0.8 or low rate 0.2) for three named components. Observed=C, linked=A, unrelated=B. Initial P(high)=0.99 independently.
+
+Before every observation a reset may occur. C and A have independent Bernoulli(0.03) resets with the same redraw rule. B cannot reset.
+
+Joint state order is eight bits observed,linked,unrelated as 000..111 with observed as the least significant bit (index = o + 2*l + 4*u).
+
+History-plus-state is redundant external state, not a memory-compression test. The decision is a one-shot expected-utility question about the linked component. It does not change the tape and does not reveal a diagnostic outcome to later checkpoints.
+
+previous_state checkpoint=after_obs_32:
+{"checkpoint":"after_obs_32","joint":[2.9636397341253713e-07,1.0259627124085668e-05,8.11366486648211e-07,2.8088156323922258e-05,0.007511048542167336,0.26001998983282704,0.020563272237612264,0.7118662338734854],"joint_order":["000","100","010","110","001","101","011","111"]}
+
+Observations 1..44 (no hidden events, no future rows):
+t=1: component C -> 1
+t=2: component A -> 1
+t=3: component B -> 1
+t=4: component C -> 0
+t=5: component A -> 1
+t=6: component B -> 1
+t=7: component C -> 1
+t=8: component A -> 1
+t=9: component B -> 1
+t=10: component C -> 1
+t=11: component A -> 1
+t=12: component B -> 0
+t=13: component C -> 1
+t=14: component C -> 1
+t=15: component C -> 1
+t=16: component C -> 1
+t=17: component C -> 0
+t=18: component C -> 1
+t=19: component C -> 1
+t=20: component C -> 1
+t=21: component A -> 1
+t=22: component A -> 0
+t=23: component B -> 1
+t=24: component B -> 1
+t=25: component C -> 1
+t=26: component C -> 1
+t=27: component C -> 1
+t=28: component C -> 1
+t=29: component C -> 0
+t=30: component C -> 0
+t=31: component C -> 1
+t=32: component C -> 1
+t=33: component A -> 1
+t=34: component A -> 1
+t=35: component B -> 0
+t=36: component B -> 1
+t=37: component C -> 1
+t=38: component C -> 1
+t=39: component C -> 1
+t=40: component C -> 1
+t=41: component C -> 1
+t=42: component C -> 1
+t=43: component C -> 0
+t=44: component C -> 1
+
+Return exactly one JSON object:
+{"joint": [p000, p100, p010, p110, p001, p101, p011, p111], "probability_high": {"observed": p, "linked": p, "unrelated": p}, "predictive_mean": {"observed": m, "linked": m, "unrelated": m}, "action": "choose_linked" or "choose_safe" or "diagnose_linked"}
+joint must be eight nonnegative numbers in that index order, summing to 1. choose_linked takes the linked component's expected rate; choose_safe pays 0.65; diagnose_linked pays 0.04 once for the linked RATE then takes max(rate, safe). Do not include a rationale.

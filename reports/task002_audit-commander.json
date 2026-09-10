@@ -1,0 +1,161 @@
+{
+  "checks": {
+    "all_147_responses_reparsed": true,
+    "all_cost_sums_match_ledgers": true,
+    "all_losses_and_posterior_mse_match_independent_closed_form": true,
+    "all_prompt_hashes_reconstructed": true,
+    "resume_mode_collision_reproduced_with_fake_client": true,
+    "test_suite": "102 passed"
+  },
+  "kind": "Offline commander audit of saved responses; no API calls",
+  "runs": {
+    "grid": {
+      "by_structure_n": {
+        "independent": 24,
+        "shared": 24,
+        "stable": 24
+      },
+      "completed": 72,
+      "config_hash": "5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db",
+      "cost_usd": 1.6829400000000008,
+      "errors": 0,
+      "failures": [],
+      "max_abs_C_drift": 0.0,
+      "max_forecast_consistency_error": 4.000000000004e-06,
+      "mean_loss": 0.0,
+      "optimal_action_counts": {
+        "choose_B": 63,
+        "choose_safe": 3,
+        "diagnose_B": 6
+      },
+      "posterior_mse": 4.0565393550180653e-07,
+      "thinking_budget": 8192
+    },
+    "grid_nothink": {
+      "by_structure_n": {
+        "independent": 24,
+        "shared": 24,
+        "stable": 24
+      },
+      "completed": 72,
+      "config_hash": "5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db",
+      "cost_usd": 0.15540600000000002,
+      "errors": 7,
+      "failures": [
+        {
+          "case_id": "case_01",
+          "chosen": "choose_B",
+          "loss": 0.14867825187020223,
+          "optimal": "diagnose_B",
+          "own_forecast_decision_loss": 0.0,
+          "posterior_high_B": 0.9154444444444444,
+          "posterior_mse": 0.04089168581596606,
+          "reference_high_B": 0.580714995843995,
+          "structure": "shared",
+          "treatment": "raw"
+        },
+        {
+          "case_id": "case_01",
+          "chosen": "choose_B",
+          "loss": 0.14867825187020223,
+          "optimal": "diagnose_B",
+          "own_forecast_decision_loss": 0.004307692307692235,
+          "posterior_high_B": 0.9015384615384615,
+          "posterior_mse": 0.03430923281928557,
+          "reference_high_B": 0.580714995843995,
+          "structure": "shared",
+          "treatment": "counts"
+        },
+        {
+          "case_id": "case_01",
+          "chosen": "choose_safe",
+          "loss": 0.04710724937659927,
+          "optimal": "diagnose_B",
+          "own_forecast_decision_loss": 0.047107249376599936,
+          "posterior_high_B": 0.580714995844,
+          "posterior_mse": 8.288849794721597e-29,
+          "reference_high_B": 0.580714995843995,
+          "structure": "shared",
+          "treatment": "reference"
+        },
+        {
+          "case_id": "case_02",
+          "chosen": "choose_B",
+          "loss": 0.10157100249360296,
+          "optimal": "choose_safe",
+          "own_forecast_decision_loss": 0.0,
+          "posterior_high_B": 0.9007692307692308,
+          "posterior_mse": 0.03414490520374206,
+          "reference_high_B": 0.580714995843995,
+          "structure": "shared",
+          "treatment": "counts"
+        },
+        {
+          "case_id": "case_03",
+          "chosen": "choose_B",
+          "loss": 0.011335174171622553,
+          "optimal": "diagnose_B",
+          "own_forecast_decision_loss": 0.0028571428571428914,
+          "posterior_high_B": 0.9047619047619048,
+          "posterior_mse": 0.14384065285354333,
+          "reference_high_B": 0.8859218351741716,
+          "structure": "shared",
+          "treatment": "raw"
+        },
+        {
+          "case_id": "case_03",
+          "chosen": "choose_B",
+          "loss": 0.011335174171622553,
+          "optimal": "diagnose_B",
+          "own_forecast_decision_loss": 0.0,
+          "posterior_high_B": 0.9411764705882353,
+          "posterior_mse": 0.05112805210642369,
+          "reference_high_B": 0.8859218351741716,
+          "structure": "shared",
+          "treatment": "counts"
+        },
+        {
+          "case_id": "case_03",
+          "chosen": "choose_B",
+          "loss": 0.011335174171622553,
+          "optimal": "diagnose_B",
+          "own_forecast_decision_loss": 0.011335174171699935,
+          "posterior_high_B": 0.885921835174,
+          "posterior_mse": 2.720908219409204e-26,
+          "reference_high_B": 0.8859218351741716,
+          "structure": "shared",
+          "treatment": "reference"
+        }
+      ],
+      "max_abs_C_drift": 0.0,
+      "max_forecast_consistency_error": 4.0000000000040004e-05,
+      "mean_loss": 0.006667226085076032,
+      "optimal_action_counts": {
+        "choose_B": 63,
+        "choose_safe": 3,
+        "diagnose_B": 6
+      },
+      "posterior_mse": 0.023540258241838915,
+      "thinking_budget": 0
+    },
+    "smoke": {
+      "by_structure_n": {
+        "shared": 3
+      },
+      "completed": 3,
+      "config_hash": "5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db",
+      "cost_usd": 0.0880725,
+      "errors": 0,
+      "failures": [],
+      "max_abs_C_drift": 0.0,
+      "max_forecast_consistency_error": 3.999999999837467e-07,
+      "mean_loss": 0.0,
+      "optimal_action_counts": {
+        "diagnose_B": 3
+      },
+      "posterior_mse": 4.981099200339866e-14,
+      "thinking_budget": 8192
+    }
+  },
+  "total_cost_usd": 1.9264185000000007
+}

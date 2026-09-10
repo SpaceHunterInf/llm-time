@@ -1,0 +1,46 @@
+{
+  "grid": {
+    "batch_length": 5,
+    "costs": [
+      0.04,
+      0.2
+    ],
+    "hazard": 0.1,
+    "high": 0.8,
+    "low": 0.2,
+    "prior_high": 0.99,
+    "safe": 0.65,
+    "structures": [
+      "shared",
+      "independent",
+      "stable"
+    ],
+    "successes": [
+      0,
+      2,
+      4,
+      5
+    ],
+    "treatments": [
+      "raw",
+      "counts",
+      "reference"
+    ]
+  },
+  "kind": "selective_revision_fixed_history_pilot",
+  "max_input_tokens": 2000,
+  "max_output_tokens": 2048,
+  "max_retries": 1,
+  "model": "gemini-3.5-flash",
+  "pilot_id": "selective_revision_pilot_v1",
+  "pricing": {
+    "input_per_1m": 1.5,
+    "note": "Output pricing includes thinking tokens. Live runs reserve billed output as max_output_tokens + thinking_budget. thinking_budget=-1 is rejected.",
+    "output_per_1m": 9.0,
+    "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash",
+    "verified": "2026-09-09"
+  },
+  "schema_version": 1,
+  "temperature": 0.0,
+  "thinking_budget": 0
+}

@@ -1,0 +1,35 @@
+You infer a factored binary latent (high rate 0.8 or low rate 0.2) for three named components. Observed=C, linked=A, unrelated=B. Initial P(high)=0.99 independently.
+
+Before every observation a reset may occur. C and A have independent Bernoulli(0.03) resets with the same redraw rule. B cannot reset.
+
+Joint state order is eight bits observed,linked,unrelated as 000..111 with observed as the least significant bit (index = o + 2*l + 4*u).
+
+History-plus-state is redundant external state, not a memory-compression test. The decision is a one-shot expected-utility question about the linked component. It does not change the tape and does not reveal a diagnostic outcome to later checkpoints.
+
+previous_state: empty. Reconstruct from the observation prefix. The generative prior over the eight latent states is the independent product with P(high)=0.99 for each bit before observation 1.
+
+Observations 1..20 (no hidden events, no future rows):
+t=1: component C -> 1
+t=2: component A -> 1
+t=3: component B -> 1
+t=4: component C -> 0
+t=5: component A -> 1
+t=6: component B -> 1
+t=7: component C -> 1
+t=8: component A -> 1
+t=9: component B -> 1
+t=10: component C -> 1
+t=11: component A -> 1
+t=12: component B -> 0
+t=13: component C -> 1
+t=14: component C -> 1
+t=15: component C -> 1
+t=16: component C -> 1
+t=17: component C -> 0
+t=18: component C -> 1
+t=19: component C -> 1
+t=20: component C -> 1
+
+Return exactly one JSON object:
+{"joint": [p000, p100, p010, p110, p001, p101, p011, p111], "probability_high": {"observed": p, "linked": p, "unrelated": p}, "predictive_mean": {"observed": m, "linked": m, "unrelated": m}, "action": "choose_linked" or "choose_safe" or "diagnose_linked"}
+joint must be eight nonnegative numbers in that index order, summing to 1. choose_linked takes the linked component's expected rate; choose_safe pays 0.65; diagnose_linked pays 0.04 once for the linked RATE then takes max(rate, safe). Do not include a rationale.

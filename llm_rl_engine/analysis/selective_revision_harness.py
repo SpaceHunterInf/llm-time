@@ -64,6 +64,24 @@ class LiveConfigError(ValueError):
     pass
 
 
+class IdentityError(ValueError):
+    pass
+
+
+class BookkeepingError(RuntimeError):
+    pass
+
+
+SCIENTIFIC_SCHEMA = "probability_high+predictive_mean+action"
+RESPONSE_MIME = "application/json"
+SUCCESS_FINISH_REASONS = {"STOP", "stop", "END_TURN", "end_turn"}
+IMPLEMENTATION_FILES = (
+    "llm_rl_engine/analysis/selective_revision.py",
+    "llm_rl_engine/analysis/selective_revision_pilot.py",
+    "llm_rl_engine/analysis/selective_revision_harness.py",
+)
+
+
 def _utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -96,25 +114,215 @@ def persist_provider_response(
     attempt_id: str,
     result: GenerationResult,
     latency_s: float,
+    request_text: str,
+    request_hash: str,
+    generation_settings: Mapping[str, Any],
+    job_key_value: str,
+    scored: bool = False,
 ) -> Path:
     """Write the provider payload before scoring. Crash-safe for later resume."""
+    usage_status = getattr(result, "usage_status", None) or (
+        "available" if (result.input_tokens or result.output_tokens) else "unknown"
+    )
     payload = {
         "attempt_id": attempt_id,
         "attempt_n": attempt_n,
         "case_id": case_id,
         "treatment": treatment,
+        "job_key": job_key_value,
+        "scored": scored,
         "received_at": _utc_now(),
         "latency_s": latency_s,
+        "request_text": request_text,
+        "request_hash": request_hash,
+        "generation_settings": dict(generation_settings),
         "raw_response": result.text,
         "input_tokens": result.input_tokens,
         "output_tokens": result.output_tokens,
         "total_tokens": result.total_tokens,
         "thoughts_tokens": int(getattr(result, "thoughts_tokens", 0) or 0),
+        "model_version": getattr(result, "model_version", None),
+        "finish_reason": getattr(result, "finish_reason", None),
+        "usage_status": usage_status,
     }
     path = output_dir / "responses" / f"{case_id}_{treatment}_{attempt_n:04d}.json"
     atomic_write_json(path, payload)
     atomic_write_json(output_dir / "last_response.json", payload)
     return path
+
+
+def file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def implementation_hashes(repo_root: Path) -> dict[str, str]:
+    out = {}
+    for rel in IMPLEMENTATION_FILES:
+        path = repo_root / rel
+        out[rel] = file_sha256(path) if path.is_file() else "missing"
+    return out
+
+
+def spec_fingerprint(spec: PilotSpec) -> dict[str, Any]:
+    return {
+        "schema_version": spec.schema_version,
+        "prior_high": spec.prior_high,
+        "hazard": spec.hazard,
+        "low": spec.low,
+        "high": spec.high,
+        "safe": spec.safe,
+        "batch_length": spec.batch_length,
+        "successes": list(spec.successes),
+        "costs": list(spec.costs),
+        "structures": list(spec.structures),
+        "treatments": list(spec.treatments),
+    }
+
+
+def build_scientific_identity(
+    spec: PilotSpec,
+    settings: LiveSettings,
+    repo_root: Path,
+) -> dict[str, Any]:
+    body = {
+        "schema_version": 2,
+        "kind": "selective_revision_scientific_identity",
+        "model": settings.model,
+        "temperature": settings.temperature,
+        "thinking_budget": settings.thinking_budget,
+        "configured_max_output_tokens": settings.max_output_tokens,
+        "provider_max_output_tokens": settings.billed_output_limit,
+        "provider_output_limit_note": (
+            "Gemini max_output_tokens is set to configured_max_output_tokens + thinking_budget; "
+            "it is not an independent visible-text cap."
+        ),
+        "max_input_tokens": settings.max_input_tokens,
+        "response_mime_type": RESPONSE_MIME,
+        "output_schema": SCIENTIFIC_SCHEMA,
+        "retry_policy": {
+            "max_retries": settings.max_retries,
+            "repair_includes_reference_answers": False,
+        },
+        "grid": spec_fingerprint(spec),
+        "implementation_hashes": implementation_hashes(repo_root),
+    }
+    body["effective_hash"] = sha256_text(canonical_json(body))
+    return body
+
+
+def operational_limits(settings: LiveSettings) -> dict[str, Any]:
+    return {
+        "max_calls": settings.max_calls,
+        "max_usd": settings.max_usd,
+        "note": "Spending limits may increase without changing scientific identity.",
+    }
+
+
+def check_or_init_identity(
+    output_dir: Path,
+    identity: Mapping[str, Any],
+    settings: LiveSettings,
+) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    path = output_dir / "scientific_identity.json"
+    manifest_path = output_dir / "live_manifest.json"
+    if path.exists():
+        existing = json.loads(path.read_text(encoding="utf-8"))
+        stored = existing.get("effective_hash")
+        if not stored:
+            raise IdentityError(
+                "legacy identity file has no effective_hash; refuse silent resume"
+            )
+        if stored != identity["effective_hash"]:
+            raise IdentityError(
+                "scientific identity mismatch; refuse resume into this directory "
+                f"(stored={stored[:12]}… new={identity['effective_hash'][:12]}…)"
+            )
+        ops_path = output_dir / "operational_limits.json"
+        if ops_path.exists():
+            prev = json.loads(ops_path.read_text(encoding="utf-8"))
+            if settings.max_calls < int(prev.get("max_calls") or 0):
+                raise IdentityError("max_calls cannot decrease on resume")
+            if settings.max_usd + 1e-15 < float(prev.get("max_usd") or 0):
+                raise IdentityError("max_usd cannot decrease on resume")
+        atomic_write_json(ops_path, operational_limits(settings))
+        return
+    if manifest_path.exists():
+        existing = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if not existing.get("effective_hash"):
+            raise IdentityError(
+                "legacy live_manifest.json has no effective_hash; refuse silent resume. "
+                "Analyze the directory as-is or start a new output directory."
+            )
+        if existing.get("effective_hash") != identity["effective_hash"]:
+            raise IdentityError("scientific identity mismatch in live_manifest.json")
+    atomic_write_json(path, dict(identity))
+    atomic_write_json(output_dir / "operational_limits.json", operational_limits(settings))
+
+
+def generation_settings_payload(settings: LiveSettings) -> dict[str, Any]:
+    return {
+        "model": settings.model,
+        "temperature": settings.temperature,
+        "thinking_budget": settings.thinking_budget,
+        "provider_max_output_tokens": settings.billed_output_limit,
+        "configured_max_output_tokens": settings.max_output_tokens,
+        "response_mime_type": RESPONSE_MIME,
+    }
+
+
+def count_request_tokens(
+    text: str,
+    client: Any,
+    cache: dict[str, tuple[int, str]],
+) -> tuple[int, str]:
+    request_hash = sha256_text(text)
+    if request_hash in cache:
+        return cache[request_hash]
+    counter = getattr(client, "count_tokens", None)
+    if callable(counter):
+        n = int(counter(text))
+        source = "client_count"
+    else:
+        n = estimate_tokens(text)
+        source = "offline_heuristic"
+    cache[request_hash] = (n, source)
+    return n, source
+
+
+def find_unscored_response(
+    output_dir: Path, case_id: str, treatment: str
+) -> dict[str, Any] | None:
+    folder = output_dir / "responses"
+    if not folder.is_dir():
+        return None
+    matches = sorted(folder.glob(f"{case_id}_{treatment}_*.json"))
+    for path in reversed(matches):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if payload.get("raw_response") is not None and not payload.get("scored"):
+            payload["_path"] = str(path)
+            return payload
+    return None
+
+
+def result_from_saved(payload: Mapping[str, Any]) -> GenerationResult:
+    usage_status = str(payload.get("usage_status") or "unknown")
+    return GenerationResult(
+        text=str(payload.get("raw_response") or ""),
+        input_tokens=int(payload.get("input_tokens") or 0),
+        output_tokens=int(payload.get("output_tokens") or 0),
+        total_tokens=int(payload.get("total_tokens") or 0),
+        thoughts_tokens=int(payload.get("thoughts_tokens") or 0),
+        model_version=payload.get("model_version"),
+        finish_reason=payload.get("finish_reason"),
+        usage_status=usage_status,
+    )
+
+
+def finish_is_incomplete(finish_reason: str | None, finish_available: bool) -> bool:
+    if not finish_available or finish_reason is None:
+        return False
+    return str(finish_reason) not in SUCCESS_FINISH_REASONS
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -194,11 +402,10 @@ def snapshot_code(root: Path) -> dict[str, Any]:
 def job_key(
     case_id: str,
     treatment: str,
-    model: str,
+    effective_hash: str,
     prompt_hash: str,
-    config_hash: str,
 ) -> str:
-    return f"{case_id}|{treatment}|{model}|{prompt_hash}|{config_hash}"
+    return f"{case_id}|{treatment}|{effective_hash}|{prompt_hash}"
 
 
 def classify_exception(exc: BaseException) -> str:
@@ -296,6 +503,9 @@ def preflight(
     n_jobs: int,
     settings: LiveSettings,
     prompts: list[str],
+    *,
+    client: Any = None,
+    token_cache: dict[str, tuple[int, str]] | None = None,
 ) -> dict[str, Any]:
     attempts_needed = n_jobs * (1 + settings.max_retries)
     if settings.max_calls < attempts_needed:
@@ -308,11 +518,20 @@ def preflight(
         raise BudgetError(
             f"max_usd={settings.max_usd} does not cover retry-reserve cost {reserved:.6f}"
         )
+    cache = token_cache if token_cache is not None else {}
     overflows = []
+    sources: list[str] = []
+    counted: list[int] = []
+    dummy_repair = REPAIR_SUFFIX.format(error="invalid JSON: missing field action")
     for index, prompt in enumerate(prompts):
-        estimated = estimate_tokens(prompt)
-        if estimated > settings.max_input_tokens:
-            overflows.append({"index": index, "token_estimate": estimated})
+        n, source = count_request_tokens(prompt, client, cache)
+        if settings.max_retries:
+            n_repair, _ = count_request_tokens(prompt + dummy_repair, client, cache)
+            n = max(n, n_repair)
+        counted.append(n)
+        sources.append(source)
+        if n > settings.max_input_tokens:
+            overflows.append({"index": index, "token_count": n, "source": source})
     if overflows:
         raise BudgetError(
             f"{len(overflows)} prompts exceed max_input_tokens={settings.max_input_tokens}"
@@ -329,6 +548,11 @@ def preflight(
         "max_output_tokens": settings.max_output_tokens,
         "thinking_budget": settings.thinking_budget,
         "billed_output_limit": settings.billed_output_limit,
+        "provider_output_limit_note": (
+            "provider max_output_tokens = configured_max_output_tokens + thinking_budget"
+        ),
+        "token_count_max": max(counted) if counted else 0,
+        "token_count_source": sorted(set(sources)),
         "pricing": settings.pricing,
     }
 
@@ -368,28 +592,69 @@ class BoundedGeminiClient:
             model=self.model, contents=prompt, config=config
         )
         usage = getattr(response, "usage_metadata", None)
-        input_tokens = int(getattr(usage, "prompt_token_count", 0) or 0)
-        candidates = int(getattr(usage, "candidates_token_count", 0) or 0)
-        thoughts = int(getattr(usage, "thoughts_token_count", 0) or 0)
-        billed_output = candidates + thoughts
-        total = int(getattr(usage, "total_token_count", 0) or (input_tokens + billed_output))
+        if usage is None:
+            input_tokens = 0
+            billed_output = 0
+            thoughts = 0
+            total = 0
+            usage_status = "unknown"
+        else:
+            input_tokens = int(getattr(usage, "prompt_token_count", 0) or 0)
+            candidates = int(getattr(usage, "candidates_token_count", 0) or 0)
+            thoughts = int(getattr(usage, "thoughts_token_count", 0) or 0)
+            billed_output = candidates + thoughts
+            total = int(getattr(usage, "total_token_count", 0) or (input_tokens + billed_output))
+            usage_status = "available" if (input_tokens or billed_output) else "unknown"
         text = getattr(response, "text", None) or ""
+        finish = None
+        candidates_list = getattr(response, "candidates", None) or []
+        if candidates_list:
+            finish = getattr(candidates_list[0], "finish_reason", None)
+            finish = None if finish is None else str(finish).split(".")[-1]
+        model_version = getattr(response, "model_version", None)
+        if model_version is None:
+            model_version = getattr(response, "model", None)
         return GenerationResult(
             text=text,
             input_tokens=input_tokens,
             output_tokens=billed_output,
             total_tokens=total,
             thoughts_tokens=thoughts,
+            model_version=None if model_version is None else str(model_version),
+            finish_reason=finish,
+            usage_status=usage_status,
         )
+
+    def count_tokens(self, text: str) -> int:
+        if not self.api_key:
+            raise RuntimeError("GEMINI_API_KEY is not set")
+        from google.genai import Client
+
+        client = Client(api_key=self.api_key)
+        result = client.models.count_tokens(model=self.model, contents=text)
+        return int(getattr(result, "total_tokens", 0) or 0)
 
 
 class ReferenceAnswerClient:
     """Test double that returns evaluator targets as a valid model response."""
 
-    def __init__(self, answers: Mapping[str, dict[str, Any]] | None = None) -> None:
+    def __init__(
+        self,
+        answers: Mapping[str, dict[str, Any]] | None = None,
+        *,
+        usage_status: str = "available",
+        finish_reason: str | None = "STOP",
+        model_version: str | None = "fake-client",
+    ) -> None:
         self.answers = dict(answers or {})
         self.prompts: list[str] = []
         self.calls = 0
+        self.usage_status = usage_status
+        self.finish_reason = finish_reason
+        self.model_version = model_version
+
+    def count_tokens(self, text: str) -> int:
+        return estimate_tokens(text)
 
     def generate(self, prompt: str) -> GenerationResult:
         self.calls += 1
@@ -397,11 +662,26 @@ class ReferenceAnswerClient:
         payload = self.answers.get(prompt)
         if payload is None:
             raise RuntimeError("no scripted answer for prompt")
+        text = json.dumps(payload, sort_keys=True)
+        if self.usage_status == "unknown":
+            return GenerationResult(
+                text=text,
+                input_tokens=0,
+                output_tokens=0,
+                total_tokens=0,
+                thoughts_tokens=0,
+                model_version=self.model_version,
+                finish_reason=self.finish_reason,
+                usage_status="unknown",
+            )
         return GenerationResult(
-            text=json.dumps(payload, sort_keys=True),
+            text=text,
             input_tokens=10,
             output_tokens=20,
             total_tokens=30,
+            model_version=self.model_version,
+            finish_reason=self.finish_reason,
+            usage_status="available",
         )
 
 
@@ -440,6 +720,17 @@ class PilotRun:
         self.jobs = build_jobs(spec)
         self.config_hash = sha256_text(canonical_json(self._hashable_config()))
         self.model = str(self.config.get("model") or DEFAULT_MODEL)
+        self.identity: dict[str, Any] | None = None
+
+    def bind_settings(self, settings: LiveSettings) -> dict[str, Any]:
+        self.model = settings.model
+        self.identity = build_scientific_identity(self.spec, settings, self.repo_root)
+        return self.identity
+
+    def effective_hash(self) -> str:
+        if self.identity and self.identity.get("effective_hash"):
+            return str(self.identity["effective_hash"])
+        return self.config_hash
 
     def _hashable_config(self) -> dict[str, Any]:
         data = json.loads(canonical_json(self.config))
@@ -462,9 +753,8 @@ class PilotRun:
                     "key": job_key(
                         case.case_id,
                         treatment,
-                        self.model,
+                        self.effective_hash(),
                         bundle["prompt_hash"],
-                        self.config_hash,
                     ),
                 }
             )
@@ -510,12 +800,6 @@ class PilotRun:
         max_input = int(self.config.get("max_input_tokens", DEFAULT_MAX_INPUT))
         max_output = int(self.config.get("max_output_tokens", DEFAULT_MAX_OUTPUT))
         pricing = verified_pricing(self.config, self.model)
-        reserved_each = reserved_cost_usd(
-            max_input_tokens=max_input,
-            max_output_tokens=max_output,
-            model=self.model,
-            pricing=pricing,
-        )
         planned_attempts = n_jobs * (1 + max_retries)
         overflow = [
             item["bundle"]["token_estimate"]
@@ -523,18 +807,29 @@ class PilotRun:
             if item["bundle"]["token_estimate"] > max_input
         ]
         code = snapshot_code(self.repo_root)
+        thinking = int(self.config.get("thinking_budget", DEFAULT_THINKING_BUDGET))
+        billed_limit = max_output + thinking
+        reserved_each = reserved_cost_usd(
+            max_input_tokens=max_input,
+            max_output_tokens=billed_limit,
+            model=self.model,
+            pricing=pricing,
+        )
         manifest = {
-            "schema_version": 1,
+            "schema_version": 2,
             "kind": "selective_revision_fixed_history_pilot_dryrun",
             "model": self.model,
             "config_hash": self.config_hash,
+            "effective_hash": self.effective_hash(),
             "n_public_cases": len(unique_cases),
             "n_treatments": len(self.spec.treatments),
             "n_planned_calls": n_jobs,
             "n_planned_attempts_with_retry_reserve": planned_attempts,
             "max_input_tokens": max_input,
             "max_output_tokens": max_output,
-            "thinking_budget": int(self.config.get("thinking_budget", DEFAULT_THINKING_BUDGET)),
+            "provider_max_output_tokens": billed_limit,
+            "thinking_budget": thinking,
+            "token_estimate_kind": "offline_heuristic",
             "pricing": pricing,
             "reserved_usd_per_attempt": reserved_each,
             "reserved_usd_full_grid": planned_attempts * reserved_each,
@@ -597,13 +892,14 @@ def render_dryrun_markdown(
         "",
         "## Cost bound",
         "",
-        "Each attempt is reserved at `max_input_tokens` input plus `max_output_tokens`",
-        "output using the verified per-million rates. Thinking is requested disabled",
-        f"(`thinking_budget={manifest['thinking_budget']}`) so billed output is intended to",
-        "lie inside `max_output_tokens`. Interrupted calls keep their reservation.",
+        "Each attempt is reserved at `max_input_tokens` input plus the **provider**",
+        "output limit (`configured_max_output_tokens + thinking_budget`) at the output",
+        "rate. 2048 is not an independently enforced visible-text cap. Interrupted",
+        "calls keep their reservation. Dry-run token figures are an offline heuristic.",
         "",
         f"- Input cap: {manifest['max_input_tokens']} tokens",
-        f"- Output cap: {manifest['max_output_tokens']} tokens",
+        f"- Configured max_output_tokens: {manifest['max_output_tokens']}",
+        f"- Provider output limit (sum): {manifest.get('provider_max_output_tokens', manifest['max_output_tokens'])}",
         f"- Rates: ${manifest['pricing']['input_per_1m']}/M input, ${manifest['pricing']['output_per_1m']}/M output",
         f"- Reserved per attempt: ${manifest['reserved_usd_per_attempt']:.6f}",
         f"- Reserved for full grid plus retries: **${manifest['reserved_usd_full_grid']:.6f}**",
@@ -613,10 +909,11 @@ def render_dryrun_markdown(
         "## Integrity",
         "",
         f"- Config hash: `{manifest['config_hash']}`",
+        f"- Effective hash: `{manifest.get('effective_hash')}`",
         f"- Git HEAD: `{manifest['code'].get('git_head')}`",
         f"- Dirty files hashed: {len(manifest['code'].get('dirty_file_hashes') or {})} (credentials omitted)",
         "- Public prompts are under `prompts/`. Evaluator targets are in `evaluator.json` and are not sent to the provider.",
-        "- Resume key: `case_id|treatment|model|prompt_hash|config_hash`.",
+        "- Resume key: `case_id|treatment|effective_hash|prompt_hash`.",
         "",
         "## Reproduction",
         "",
@@ -652,34 +949,33 @@ def run_jobs(
     resume: bool = True,
     progress: bool = False,
 ) -> dict[str, Any]:
+    run.bind_settings(settings)
+    check_or_init_identity(run.output_dir, run.identity, settings)
     records = run.prepare_records()
     if smoke_limit is not None:
         if smoke_limit > 3:
             raise BudgetError("smoke is at most 3 calls")
         records = records[:smoke_limit]
     prompts = [item["bundle"]["prompt"] for item in records]
-    preflight_info = preflight(len(records), settings, prompts)
-    run.output_dir.mkdir(parents=True, exist_ok=True)
+    token_cache: dict[str, tuple[int, str]] = {}
+    preflight_info = preflight(
+        len(records), settings, prompts, client=client, token_cache=token_cache
+    )
     ledger_path = run.output_dir / "ledger.json"
     attempts_path = run.output_dir / "attempts.jsonl"
     results_path = run.output_dir / "results.jsonl"
     manifest_path = run.output_dir / "live_manifest.json"
-    if manifest_path.exists():
-        existing = json.loads(manifest_path.read_text(encoding="utf-8"))
-        if existing.get("config_hash") != run.config_hash:
-            raise BudgetError("output directory belongs to a different config hash; refusing to overwrite")
-        if existing.get("model") != settings.model:
-            raise BudgetError("output directory belongs to a different model; refusing to overwrite")
-    else:
-        atomic_write_json(
-            manifest_path,
-            {
-                "config_hash": run.config_hash,
-                "model": settings.model,
-                "preflight": preflight_info,
-                "code": snapshot_code(run.repo_root),
-            },
-        )
+    atomic_write_json(
+        manifest_path,
+        {
+            "config_hash": run.config_hash,
+            "effective_hash": run.effective_hash(),
+            "model": settings.model,
+            "scientific_identity": run.identity,
+            "preflight": preflight_info,
+            "code": snapshot_code(run.repo_root),
+        },
+    )
     ledger = load_ledger(ledger_path)
     absorb_dangling_reservations(ledger)
     atomic_write_json(ledger_path, ledger)
@@ -779,6 +1075,53 @@ def _reserved_attempts_for_key(attempts: list[dict[str, Any]], key: str) -> int:
     return sum(1 for row in attempts if row.get("key") == key and row.get("status") == "reserved")
 
 
+def _score_generation(
+    result: GenerationResult,
+    *,
+    evaluator: EvaluatorRecord,
+    spec: PilotSpec,
+    settings: LiveSettings,
+) -> dict[str, Any]:
+    finish = getattr(result, "finish_reason", None)
+    finish_available = finish is not None
+    incomplete = finish_is_incomplete(finish, finish_available)
+    parsed = None
+    valid = False
+    failure_kind = None
+    if incomplete:
+        failure_kind = "incomplete_finish"
+        try:
+            parsed = parse_response(result.text)
+        except ValidationError:
+            parsed = None
+    else:
+        try:
+            parsed = parse_response(result.text)
+            valid = True
+        except ValidationError as exc:
+            failure_kind = "parse_failure"
+            parsed = None
+            last = str(exc)
+            scored = score_response(
+                None, evaluator, valid=False, failure_kind=failure_kind, spec=spec
+            )
+            scored["parse_error"] = last
+            scored["finish_reason"] = finish
+            scored["finish_reason_status"] = "available" if finish_available else "unavailable"
+            scored["model_version"] = getattr(result, "model_version", None) or "unavailable"
+            scored["usage_status"] = getattr(result, "usage_status", None) or "unknown"
+            return scored
+    scored = score_response(
+        parsed, evaluator, valid=valid, failure_kind=failure_kind, spec=spec
+    )
+    scored["parse_error"] = None if valid else scored.get("parse_error")
+    scored["finish_reason"] = finish
+    scored["finish_reason_status"] = "available" if finish_available else "unavailable"
+    scored["model_version"] = getattr(result, "model_version", None) or "unavailable"
+    scored["usage_status"] = getattr(result, "usage_status", None) or "unknown"
+    return scored
+
+
 def _run_one_job(
     item: dict[str, Any],
     *,
@@ -797,16 +1140,45 @@ def _run_one_job(
     bundle = item["bundle"]
     prompt = bundle["prompt"]
     key = item["key"]
-    estimated = bundle["token_estimate"]
-    if estimated > settings.max_input_tokens:
-        raise BudgetError(f"prompt for {key} exceeds max_input_tokens")
-
     parsed = None
     failure_kind = None
     last_error = None
     stop_run = False
     valid = False
     attempts_used = 0
+    last_scored: dict[str, Any] | None = None
+    settings_payload = generation_settings_payload(settings)
+    saved = find_unscored_response(run.output_dir, case.case_id, treatment)
+    if saved and saved.get("raw_response") is not None:
+        result = result_from_saved(saved)
+        scored = _score_generation(
+            result,
+            evaluator=evaluator,
+            spec=run.spec,
+            settings=settings,
+        )
+        row = {
+            "key": key,
+            "status": "complete",
+            "case_id": case.case_id,
+            "treatment": treatment,
+            "model": settings.model,
+            "prompt_hash": bundle["prompt_hash"],
+            "config_hash": run.config_hash,
+            "effective_hash": run.effective_hash(),
+            "request_hash": saved.get("request_hash"),
+            "recovered_from_saved_response": True,
+            "attempts_used": int(saved.get("attempt_n") or 1),
+            **scored,
+            "stop_run": False,
+        }
+        append_jsonl(results_path, row)
+        ledger["completed_jobs"] += 1
+        atomic_write_json(ledger_path, ledger)
+        saved["scored"] = True
+        path = Path(saved["_path"])
+        atomic_write_json(path, {k: v for k, v in saved.items() if k != "_path"})
+        return row
     already = _reserved_attempts_for_key(prior_attempts or [], key)
     remaining_tries = settings.max_retries + 1 - already
     if remaining_tries <= 0:
@@ -821,6 +1193,7 @@ def _run_one_job(
             "model": settings.model,
             "prompt_hash": bundle["prompt_hash"],
             "config_hash": run.config_hash,
+            "effective_hash": run.effective_hash(),
             "attempts_used": already,
             **scored,
             "stop_run": False,
@@ -860,27 +1233,50 @@ def _run_one_job(
         atomic_write_json(ledger_path, ledger)
         append_jsonl(attempts_path, reservation)
         started = time.perf_counter()
+        request_hash = sha256_text(current_prompt)
         try:
             result = client.generate(current_prompt)
             latency = time.perf_counter() - started
-            persist_provider_response(
-                run.output_dir,
-                case_id=case.case_id,
-                treatment=treatment,
-                attempt_n=ledger["attempts"],
-                attempt_id=attempt_id,
-                result=result,
-                latency_s=latency,
-            )
-            actual = estimate_cost_usd(
-                settings.model,
-                result.input_tokens,
-                result.output_tokens,
-                {settings.model: settings.pricing},
-            )["total_cost_usd"]
-            if result.input_tokens > settings.max_input_tokens:
-                raise BudgetError("provider reported input tokens above cap")
-            # thoughts are included in result.output_tokens by BoundedGeminiClient
+            try:
+                persist_provider_response(
+                    run.output_dir,
+                    case_id=case.case_id,
+                    treatment=treatment,
+                    attempt_n=ledger["attempts"],
+                    attempt_id=attempt_id,
+                    result=result,
+                    latency_s=latency,
+                    request_text=current_prompt,
+                    request_hash=request_hash,
+                    generation_settings=settings_payload,
+                    job_key_value=key,
+                    scored=False,
+                )
+                append_jsonl(
+                    run.output_dir / "requests.jsonl",
+                    {
+                        "attempt_id": attempt_id,
+                        "request_hash": request_hash,
+                        "generation_settings": settings_payload,
+                        "request_text": current_prompt,
+                    },
+                )
+            except Exception as exc:
+                raise BookkeepingError(
+                    f"provider returned but persistence failed: {exc}"
+                ) from exc
+            usage_status = getattr(result, "usage_status", None) or "unknown"
+            if usage_status == "unknown":
+                actual = settings.reserved_per_attempt
+            else:
+                actual = estimate_cost_usd(
+                    settings.model,
+                    result.input_tokens,
+                    result.output_tokens,
+                    {settings.model: settings.pricing},
+                )["total_cost_usd"]
+                if result.input_tokens > settings.max_input_tokens:
+                    raise BudgetError("provider reported input tokens above cap")
             ledger["reserved_usd"] -= settings.reserved_per_attempt
             ledger["spent_usd"] += actual
             completion = {
@@ -892,12 +1288,16 @@ def _run_one_job(
                 "output_tokens": result.output_tokens,
                 "total_tokens": result.total_tokens,
                 "cost_usd": actual,
+                "usage_status": usage_status,
+                "request_hash": request_hash,
                 "exception_category": None,
                 "raw_response": result.text,
+                "model_version": getattr(result, "model_version", None) or "unavailable",
+                "finish_reason": getattr(result, "finish_reason", None),
             }
             thoughts = int(getattr(result, "thoughts_tokens", 0) or 0)
             completion["thoughts_tokens"] = thoughts
-            if result.output_tokens > settings.billed_output_limit:
+            if usage_status != "unknown" and result.output_tokens > settings.billed_output_limit:
                 completion["exception_category"] = "output_cap"
                 append_jsonl(attempts_path, completion)
                 atomic_write_json(ledger_path, ledger)
@@ -905,22 +1305,19 @@ def _run_one_job(
                     "billed output exceeded thinking_budget + max_output_tokens; "
                     "dollar ceiling is no longer valid"
                 )
-            try:
-                parsed = parse_response(result.text)
-                valid = True
-                failure_kind = None
-                completion["parse_error"] = None
-            except ValidationError as exc:
-                valid = False
-                failure_kind = "parse_failure"
-                last_error = str(exc)
-                parsed = None
-                completion["parse_error"] = last_error
+            scored_gen = _score_generation(
+                result, evaluator=evaluator, spec=run.spec, settings=settings
+            )
+            last_scored = scored_gen
+            valid = bool(scored_gen.get("valid"))
+            failure_kind = scored_gen.get("failure_kind")
+            last_error = scored_gen.get("parse_error")
+            completion["parse_error"] = last_error
             append_jsonl(attempts_path, completion)
             atomic_write_json(ledger_path, ledger)
             if valid:
                 break
-        except BudgetError:
+        except (BudgetError, BookkeepingError, IdentityError):
             raise
         except Exception as exc:
             latency = time.perf_counter() - started
@@ -951,7 +1348,7 @@ def _run_one_job(
             # retry only once and only for non-auth/quota failures, still inside cap
             continue
 
-    scored = score_response(
+    scored = last_scored or score_response(
         parsed, evaluator, valid=valid, failure_kind=failure_kind, spec=run.spec
     )
     row = {
@@ -962,6 +1359,7 @@ def _run_one_job(
         "model": settings.model,
         "prompt_hash": bundle["prompt_hash"],
         "config_hash": run.config_hash,
+        "effective_hash": run.effective_hash(),
         "attempts_used": attempts_used,
         **scored,
         "stop_run": stop_run,
@@ -969,6 +1367,13 @@ def _run_one_job(
     append_jsonl(results_path, row)
     ledger["completed_jobs"] += 1
     atomic_write_json(ledger_path, ledger)
+    leftover = find_unscored_response(run.output_dir, case.case_id, treatment)
+    if leftover:
+        leftover["scored"] = True
+        atomic_write_json(
+            Path(leftover["_path"]),
+            {k: v for k, v in leftover.items() if k != "_path"},
+        )
     return row
 
 

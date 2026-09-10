@@ -1,0 +1,2890 @@
+[
+  {
+    "hazard": 0.03,
+    "labels": {
+      "linked": "B",
+      "observed": "A",
+      "unrelated": "C"
+    },
+    "probes": {
+      "12": {
+        "net_diagnostic_advantage": -0.02856075639408484,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9745794586535218,
+          "observed": 0.9662302595556043,
+          "unrelated": 0.999960544486092
+        }
+      },
+      "20": {
+        "net_diagnostic_advantage": -0.005336753866296062,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9229705641473246,
+          "observed": 0.993590255348367,
+          "unrelated": 0.999960544486092
+        }
+      },
+      "32": {
+        "net_diagnostic_advantage": 0.048483166603161654,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.5898877773544116,
+          "observed": 0.06226716638358409,
+          "unrelated": 0.9999975339391624
+        }
+      },
+      "44": {
+        "net_diagnostic_advantage": 0.01173626285016327,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.885030526999637,
+          "observed": 0.00505200937155075,
+          "unrelated": 0.9999998458708412
+        }
+      }
+    },
+    "public_observations": [
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 1
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 2
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 3
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 4
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 5
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 6
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 7
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 8
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 9
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 10
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 11
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 12
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 13
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 14
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 15
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 16
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 17
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 18
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 19
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 20
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 21
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 22
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 23
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 24
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 25
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 26
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 27
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 28
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 29
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 30
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 31
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 32
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 33
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 34
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 35
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 36
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 37
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 38
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 39
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 40
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 41
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 42
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 43
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 44
+      }
+    ],
+    "schedule": [
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "seed": 0,
+    "structure": "shared",
+    "tape_id": "shared_s0"
+  },
+  {
+    "hazard": 0.03,
+    "labels": {
+      "linked": "B",
+      "observed": "A",
+      "unrelated": "C"
+    },
+    "probes": {
+      "12": {
+        "net_diagnostic_advantage": -0.026745664160709004,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9705459203571308,
+          "observed": 0.9551503462412896,
+          "unrelated": 0.9999605444860918
+        }
+      },
+      "20": {
+        "net_diagnostic_advantage": 0.01904574182431973,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.8687872403904005,
+          "observed": 0.6901356956907955,
+          "unrelated": 0.999960544486092
+        }
+      },
+      "32": {
+        "net_diagnostic_advantage": 0.023714591223275905,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.8584120195038312,
+          "observed": 0.023960516385849322,
+          "unrelated": 0.9999975339391624
+        }
+      },
+      "44": {
+        "net_diagnostic_advantage": 0.023993043488859778,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.8577932366914227,
+          "observed": 0.00505119279140235,
+          "unrelated": 0.9999998458708412
+        }
+      }
+    },
+    "public_observations": [
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 1
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 2
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 3
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 4
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 5
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 6
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 7
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 8
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 9
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 10
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 11
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 12
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 13
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 14
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 15
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 16
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 17
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 18
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 19
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 20
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 21
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 22
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 23
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 24
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 25
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 26
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 27
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 28
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 29
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 30
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 31
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 32
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 33
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 34
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 35
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 36
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 37
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 38
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 39
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 40
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 41
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 42
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 43
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 44
+      }
+    ],
+    "schedule": [
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "seed": 0,
+    "structure": "independent",
+    "tape_id": "independent_s0"
+  },
+  {
+    "hazard": 0.03,
+    "labels": {
+      "linked": "C",
+      "observed": "B",
+      "unrelated": "A"
+    },
+    "probes": {
+      "12": {
+        "net_diagnostic_advantage": 0.06586357668603426,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.7647476073643684,
+          "observed": 0.1680481534076017,
+          "unrelated": 0.99
+        }
+      },
+      "20": {
+        "net_diagnostic_advantage": 0.06917174434130335,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.7278116289420227,
+          "observed": 0.07677203221526557,
+          "unrelated": 0.99
+        }
+      },
+      "32": {
+        "net_diagnostic_advantage": -0.008886076830296852,
+        "optimal_action": "choose_safe",
+        "probability_high": {
+          "linked": 0.20742615446468765,
+          "observed": 0.005053116183398843,
+          "unrelated": 0.9900000000000001
+        }
+      },
+      "44": {
+        "net_diagnostic_advantage": -0.024025650196133563,
+        "optimal_action": "choose_safe",
+        "probability_high": {
+          "linked": 0.10649566535910951,
+          "observed": 0.031862342309303675,
+          "unrelated": 0.9993690851735015
+        }
+      }
+    },
+    "public_observations": [
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 1
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 2
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 3
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 4
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 5
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 6
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 7
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 8
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 9
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 10
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "linked",
+        "step": 11
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 12
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 13
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 14
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 15
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 16
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 17
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 18
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 19
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 20
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "linked",
+        "step": 21
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "linked",
+        "step": 22
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 23
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 24
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 25
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 26
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 27
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 28
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 29
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 30
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 31
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 32
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "linked",
+        "step": 33
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "linked",
+        "step": 34
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 35
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 36
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 37
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 38
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 39
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 40
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 41
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 42
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 43
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 44
+      }
+    ],
+    "schedule": [
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "seed": 1,
+    "structure": "shared",
+    "tape_id": "shared_s1"
+  },
+  {
+    "hazard": 0.03,
+    "labels": {
+      "linked": "C",
+      "observed": "B",
+      "unrelated": "A"
+    },
+    "probes": {
+      "12": {
+        "net_diagnostic_advantage": 0.051807583448359784,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.7959831478925337,
+          "observed": 0.7736556308781857,
+          "unrelated": 0.99
+        }
+      },
+      "20": {
+        "net_diagnostic_advantage": 0.06979622399993579,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.7319748266662387,
+          "observed": 0.9937084524442615,
+          "unrelated": 0.99
+        }
+      },
+      "32": {
+        "net_diagnostic_advantage": 0.060172409024095264,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.6678160601606358,
+          "observed": 0.9899656071832041,
+          "unrelated": 0.99
+        }
+      },
+      "44": {
+        "net_diagnostic_advantage": 0.030467758184088978,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.8434049818131355,
+          "observed": 0.9949297132799673,
+          "unrelated": 0.9993690851735016
+        }
+      }
+    },
+    "public_observations": [
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 1
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 2
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 3
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 4
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 5
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 6
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 7
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 8
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 9
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 10
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "linked",
+        "step": 11
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 12
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 13
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 14
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 15
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 16
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 17
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 18
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 19
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 20
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "linked",
+        "step": 21
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 22
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 23
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 24
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 25
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 26
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 27
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 28
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 29
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 30
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 31
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 32
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 33
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 34
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 35
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 36
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 37
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 38
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 39
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 40
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 41
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 42
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 43
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 44
+      }
+    ],
+    "schedule": [
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "seed": 1,
+    "structure": "independent",
+    "tape_id": "independent_s1"
+  },
+  {
+    "hazard": 0.03,
+    "labels": {
+      "linked": "A",
+      "observed": "C",
+      "unrelated": "B"
+    },
+    "probes": {
+      "12": {
+        "net_diagnostic_advantage": -0.005313476342921564,
+        "optimal_action": "choose_safe",
+        "probability_high": {
+          "linked": 0.23124349104718922,
+          "observed": 0.14197184695378512,
+          "unrelated": 0.9993690851735015
+        }
+      },
+      "20": {
+        "net_diagnostic_advantage": -0.005998043784738449,
+        "optimal_action": "choose_safe",
+        "probability_high": {
+          "linked": 0.22667970810174365,
+          "observed": 0.023550614275475796,
+          "unrelated": 0.9993690851735016
+        }
+      },
+      "32": {
+        "net_diagnostic_advantage": -0.02197543084409148,
+        "optimal_action": "choose_safe",
+        "probability_high": {
+          "linked": 0.12016379437272318,
+          "observed": 0.07512307450651004,
+          "unrelated": 0.9999605444860918
+        }
+      },
+      "44": {
+        "net_diagnostic_advantage": -0.026828384409753547,
+        "optimal_action": "choose_safe",
+        "probability_high": {
+          "linked": 0.08781077060164336,
+          "observed": 0.00576165470919218,
+          "unrelated": 0.9999605444860918
+        }
+      }
+    },
+    "public_observations": [
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 1
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 2
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 3
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 4
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 5
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 6
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 7
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "linked",
+        "step": 8
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 9
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 10
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "linked",
+        "step": 11
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 12
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 13
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 14
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 15
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 16
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 17
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 18
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 19
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 20
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "linked",
+        "step": 21
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "linked",
+        "step": 22
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 23
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 24
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 25
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 26
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 27
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 28
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 29
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 30
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 31
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 32
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "linked",
+        "step": 33
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "linked",
+        "step": 34
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 35
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 36
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 37
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 38
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 39
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 40
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 41
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 42
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 43
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 44
+      }
+    ],
+    "schedule": [
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "seed": 2,
+    "structure": "shared",
+    "tape_id": "shared_s2"
+  },
+  {
+    "hazard": 0.03,
+    "labels": {
+      "linked": "A",
+      "observed": "C",
+      "unrelated": "B"
+    },
+    "probes": {
+      "12": {
+        "net_diagnostic_advantage": -0.026745664160709004,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9705459203571308,
+          "observed": 0.9456826541131719,
+          "unrelated": 0.9993690851735015
+        }
+      },
+      "20": {
+        "net_diagnostic_advantage": 0.01904574182431973,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.8687872403904005,
+          "observed": 0.9937644013034498,
+          "unrelated": 0.9993690851735016
+        }
+      },
+      "32": {
+        "net_diagnostic_advantage": 0.0698687608450862,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.7324584056339082,
+          "observed": 0.9719245714897604,
+          "unrelated": 0.999960544486092
+        }
+      },
+      "44": {
+        "net_diagnostic_advantage": 0.027934840668074612,
+        "optimal_action": "diagnose_B",
+        "probability_high": {
+          "linked": 0.8490336874042786,
+          "observed": 0.9764668692661704,
+          "unrelated": 0.9999605444860921
+        }
+      }
+    },
+    "public_observations": [
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 1
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 2
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 3
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 4
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 5
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 6
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 7
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 8
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 9
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 10
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 11
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 12
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 13
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 14
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 15
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 16
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 17
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 18
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 19
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 20
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 21
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "linked",
+        "step": 22
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 23
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 24
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 25
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 26
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 27
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 28
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 29
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 30
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 31
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 32
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 33
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "linked",
+        "step": 34
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 35
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 36
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 37
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 38
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 39
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 40
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 41
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 42
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "observed",
+        "step": 43
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "observed",
+        "step": 44
+      }
+    ],
+    "schedule": [
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "seed": 2,
+    "structure": "independent",
+    "tape_id": "independent_s2"
+  },
+  {
+    "hazard": 0.0,
+    "labels": {
+      "linked": "B",
+      "observed": "A",
+      "unrelated": "C"
+    },
+    "probes": {
+      "12": {
+        "net_diagnostic_advantage": -0.039716088328075716,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9993690851735015,
+          "observed": 0.999960544486092,
+          "unrelated": 0.9993690851735015
+        }
+      },
+      "20": {
+        "net_diagnostic_advantage": -0.039716088328075716,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9993690851735016,
+          "observed": 0.9999999903669262,
+          "unrelated": 0.9993690851735016
+        }
+      },
+      "32": {
+        "net_diagnostic_advantage": -0.039716088328075716,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9993690851735016,
+          "observed": 0.9999999999976482,
+          "unrelated": 0.9993690851735016
+        }
+      },
+      "44": {
+        "net_diagnostic_advantage": -0.03998224501874148,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.999960544486092,
+          "observed": 0.9999999999999994,
+          "unrelated": 0.9993690851735015
+        }
+      }
+    },
+    "public_observations": [
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 1
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 2
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 3
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 4
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "linked",
+        "step": 5
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 6
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 7
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 8
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 9
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 10
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 11
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 12
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 13
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 14
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 15
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 16
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 17
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 18
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 19
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 20
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "linked",
+        "step": 21
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 22
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 23
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 24
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 25
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 26
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 27
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 28
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 29
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 30
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 31
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 32
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 33
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "linked",
+        "step": 34
+      },
+      {
+        "component": "C",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 35
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 36
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 37
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "observed",
+        "step": 38
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 39
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 40
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 41
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 42
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 43
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "observed",
+        "step": 44
+      }
+    ],
+    "schedule": [
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "seed": 10,
+    "structure": "stable",
+    "tape_id": "stable_s10"
+  },
+  {
+    "hazard": 0.0,
+    "labels": {
+      "linked": "C",
+      "observed": "B",
+      "unrelated": "A"
+    },
+    "probes": {
+      "12": {
+        "net_diagnostic_advantage": -0.03998224501874148,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.999960544486092,
+          "observed": 0.9993690851735016,
+          "unrelated": 0.999960544486092
+        }
+      },
+      "20": {
+        "net_diagnostic_advantage": -0.03998224501874148,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.999960544486092,
+          "observed": 0.9999998458708413,
+          "unrelated": 0.999960544486092
+        }
+      },
+      "32": {
+        "net_diagnostic_advantage": -0.039998890272623044,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9999975339391622,
+          "observed": 0.9999999999623708,
+          "unrelated": 0.9993690851735015
+        }
+      },
+      "44": {
+        "net_diagnostic_advantage": -0.03999993064187868,
+        "optimal_action": "choose_B",
+        "probability_high": {
+          "linked": 0.9999998458708413,
+          "observed": 0.9999999999999996,
+          "unrelated": 0.9999605444860921
+        }
+      }
+    },
+    "public_observations": [
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 1
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 2
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 3
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 4
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 5
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 6
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 7
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 8
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 9
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 10
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 11
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 12
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 13
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 14
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 15
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 16
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 17
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 18
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 19
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 20
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 21
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 22
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 23
+      },
+      {
+        "component": "A",
+        "outcome": 0,
+        "role": "unrelated",
+        "step": 24
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 25
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 26
+      },
+      {
+        "component": "B",
+        "outcome": 0,
+        "role": "observed",
+        "step": 27
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 28
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 29
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 30
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 31
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 32
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 33
+      },
+      {
+        "component": "C",
+        "outcome": 1,
+        "role": "linked",
+        "step": 34
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 35
+      },
+      {
+        "component": "A",
+        "outcome": 1,
+        "role": "unrelated",
+        "step": 36
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 37
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 38
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 39
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 40
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 41
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 42
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 43
+      },
+      {
+        "component": "B",
+        "outcome": 1,
+        "role": "observed",
+        "step": 44
+      }
+    ],
+    "schedule": [
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "linked",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "linked",
+      "linked",
+      "unrelated",
+      "unrelated",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "seed": 11,
+    "structure": "stable",
+    "tape_id": "stable_s11"
+  }
+]
