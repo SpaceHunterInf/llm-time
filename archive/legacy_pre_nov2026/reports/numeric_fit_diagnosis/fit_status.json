@@ -1,0 +1,48 @@
+{
+  "device": "cpu",
+  "rss_mb": 431.7578125,
+  "runs": [
+    {
+      "best": {
+        "dev_kl": 0.11684912163764238,
+        "epoch": 29,
+        "step": 1920
+      },
+      "incomplete": false,
+      "out": "runs/numeric_fit_diagnosis/mlp_s0",
+      "seed": 0,
+      "step": 1920,
+      "stop_reason": "completed",
+      "updates": 1920
+    },
+    {
+      "best": {
+        "dev_kl": 0.12524770852178335,
+        "epoch": 29,
+        "step": 1920
+      },
+      "incomplete": false,
+      "out": "runs/numeric_fit_diagnosis/mlp_s1",
+      "seed": 1,
+      "step": 1920,
+      "stop_reason": "completed",
+      "updates": 1920
+    },
+    {
+      "best": {
+        "dev_kl": 0.12974091805517673,
+        "epoch": 29,
+        "step": 1920
+      },
+      "incomplete": false,
+      "out": "runs/numeric_fit_diagnosis/mlp_s2",
+      "seed": 2,
+      "step": 1920,
+      "stop_reason": "completed",
+      "updates": 1920
+    }
+  ],
+  "threads": 4,
+  "wall_budget_s": 600.0,
+  "wall_s": 74.82498600898543
+}

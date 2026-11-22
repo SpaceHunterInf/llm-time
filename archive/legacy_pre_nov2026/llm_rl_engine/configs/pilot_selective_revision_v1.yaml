@@ -1,0 +1,32 @@
+schema_version: 1
+kind: selective_revision_fixed_history_pilot
+pilot_id: selective_revision_pilot_v1
+model: gemini-3.5-flash
+temperature: 0.0
+max_retries: 1
+max_input_tokens: 2000
+max_output_tokens: 2048
+thinking_budget: 0
+
+pricing:
+  input_per_1m: 1.50
+  output_per_1m: 9.00
+  source: https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash
+  verified: "2026-09-09"
+  note: Output pricing includes thinking tokens. Live runs reserve billed output as max_output_tokens + thinking_budget. thinking_budget=-1 is rejected.
+
+grid:
+  successes: [0, 2, 4, 5]
+  costs: [0.04, 0.20]
+  structures: [shared, independent, stable]
+  treatments: [raw, counts, reference]
+  batch_length: 5
+  prior_high: 0.99
+  hazard: 0.1
+  low: 0.2
+  high: 0.8
+  safe: 0.65
+
+# Live execution is off unless the CLI is given --live plus explicit budget fields.
+# Do not put API keys here.
+live: {}

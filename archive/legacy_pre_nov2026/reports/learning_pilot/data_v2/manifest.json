@@ -1,0 +1,50 @@
+{
+  "file_hashes": {
+    "dev_audit": "1792dbb441cf41ee0db4e7fa3521f926aa84474cd6470a930b5f8ee2213cb8ce",
+    "dev_model": "3bab5667c4e57e297cacec9e6b69eab4b36956ee3ac95ad877141db8b4475750",
+    "same_topology_audit": "f7c4e0b9040d17b367fe5a7f431b4af938cc9b4998d195d637f669c29392fb52",
+    "same_topology_model": "644fa5c93235834aed69b30ce2a1c858d3dc7166a86eba55a57f3bdf5c17528e",
+    "structural_audit": "ce0d4d6c68ebcc07d0b34b6a2b8ea553788163effdd62bddba9a066d478bba0c",
+    "structural_model": "a00f36e76a6d3240eb4046c8733687faa8832688208e9c3debb516ffbbc14c2f",
+    "train_audit": "33348693d3cf412b993ef113e05429f973fe72e16838e75c77d4691c1d71fc6e",
+    "train_model": "f4b859acfb5b6c0a9e13849251134b8690a524611e1be6feba69ace9099685aa"
+  },
+  "lex_keys": [
+    "0000",
+    "0001",
+    "0010",
+    "0011",
+    "0100",
+    "0101",
+    "0110",
+    "0111",
+    "1000",
+    "1001",
+    "1010",
+    "1011",
+    "1100",
+    "1101",
+    "1110",
+    "1111"
+  ],
+  "n": {
+    "dev": 256,
+    "same_topology": 256,
+    "structural": 256,
+    "train": 2048
+  },
+  "note": "Same sampled trajectories as 008. Text-only renderer correction.",
+  "parent_v1_hashes": {
+    "dev_audit.jsonl": "e701950c673bb20259210cbb9846be51d8a1978d1718fd048df9d9ef51d43503",
+    "dev_model.jsonl": "d1e9e67a8c724dbc2b1997acbba27439200535bd6f5db6d87fc5f77460fff432",
+    "manifest.json": "7b07fdee13f80050ddc65397fb66677fe3a8bd9018fea24370926b1db1491308",
+    "same_topology_audit.jsonl": "da3ec89e561507536e3d532494062aaf41b2fc739a47fa32898c644339cbe72c",
+    "same_topology_model.jsonl": "0893eeefca3b0fba3f4f0b047c8a3d2fa53a8e8438a5c27c85ad211ba7dbcdc1",
+    "structural_audit.jsonl": "fb7907634ef4f1770e0fe295f9c324d38f6dadc7364f30c7ec9301603a5caf63",
+    "structural_model.jsonl": "8b85d11deeb3c4e199b4521e852bc593c5bdc826f598da1a26441e985b1277e1",
+    "train_audit.jsonl": "8d8dd5763c5f1ae50923c0ba339a260e53906c523ebb14dc6306929397d7a734",
+    "train_model.jsonl": "12fea13909664efe0110eb8b646d80e4555ede0ca7d7a083098236259e6cd25f"
+  },
+  "renderer_version": "v2",
+  "version": "learning_pilot_v2_render"
+}

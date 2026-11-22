@@ -1,0 +1,3 @@
+{"batch_ids": ["fix2", "fix0"], "epoch": 0, "kl": 2.5258511304855347, "lr": 0.00010526315789473683, "n_microbatches": 2, "split": "train", "step": 1}
+{"batch_ids": ["fix1", "fix3"], "epoch": 0, "kl": 2.729522228240967, "lr": 0.00015789473684210527, "n_microbatches": 2, "split": "train", "step": 2}
+{"epoch": 0, "kl": 2.6507461071014404, "split": "dev", "step": 2}

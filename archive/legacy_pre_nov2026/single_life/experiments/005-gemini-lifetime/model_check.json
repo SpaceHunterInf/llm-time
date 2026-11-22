@@ -1,0 +1,7 @@
+{
+  "counted_as_decision": false,
+  "display_name": "Gemini 3.5 Flash",
+  "endpoint_name": "models/gemini-3.5-flash",
+  "ok": true,
+  "requested_model": "gemini-3.5-flash"
+}

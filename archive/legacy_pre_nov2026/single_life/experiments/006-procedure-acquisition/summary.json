@@ -1,0 +1,3364 @@
+{
+  "blocker": null,
+  "cap_usd": "2.82624",
+  "interpretation_limit": "One lifetime per cell. Acquisition and revision are descriptive. Local relearning is a competent alternative on this deterministic toy. Not RSI, not a population effect, and not adoption of a paper benchmark.",
+  "lifetimes": {
+    "route": {
+      "frozen": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "37": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "49": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "61": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          }
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": {
+          "label": "evaluator_only",
+          "note": "Not supplied to the model and not used to choose a deployment.",
+          "per_type": {
+            "T1": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T2": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "B|pair"
+              ],
+              "optimum_action": "B|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T3": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            }
+          },
+          "table": "pre-change"
+        },
+        "probes_from_lists_longer_than_one": 12,
+        "semantic_deployments": [
+          1,
+          13
+        ],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {
+          "25_to_25": [
+            "T1",
+            "T2",
+            "T3"
+          ]
+        },
+        "usage_estimate_usd": "0.017868",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 630,
+          "actions_25_42": 144,
+          "actions_43_96": 342
+        }
+      },
+      "local-relearning-v1": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 704,
+          "actions_25_42": 144,
+          "actions_43_96": 416
+        }
+      },
+      "revision": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "37": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 37,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "49": {
+            "content_hash": "05f50f069ece7641772767860453a5e5d34f4c2b291d1be2d98e7d4fe4d75e70",
+            "deployment_index": 49,
+            "procedure": {
+              "T1": [
+                "A|single"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": true
+          },
+          "61": {
+            "content_hash": "c803c2e7f5dc4a9a293718f0b47a3e3abb1ed2c86634542bef911a8c5d36d5a0",
+            "deployment_index": 61,
+            "procedure": {
+              "T1": [
+                "B|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": true
+          }
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": {
+          "label": "evaluator_only",
+          "note": "Not supplied to the model and not used to choose a deployment.",
+          "per_type": {
+            "T1": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T2": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "B|pair"
+              ],
+              "optimum_action": "B|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T3": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            }
+          },
+          "table": "pre-change"
+        },
+        "probes_from_lists_longer_than_one": 12,
+        "semantic_deployments": [
+          1,
+          13,
+          49,
+          61
+        ],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {
+          "25_to_37": [
+            "T1",
+            "T2",
+            "T3"
+          ],
+          "37_to_49": [
+            "T2",
+            "T3"
+          ],
+          "49_to_61": [
+            "T2",
+            "T3"
+          ]
+        },
+        "usage_estimate_usd": "0.0631710",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 678,
+          "actions_25_42": 144,
+          "actions_43_96": 390
+        }
+      },
+      "uniform-random-v1": {
+        "actions": [
+          "A|pair",
+          "A|single",
+          "A|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "A|single",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|single"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 112,
+          "actions_1_96": 365,
+          "actions_25_42": 48,
+          "actions_43_96": 205
+        }
+      },
+      "whole-relearning-v1": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 672,
+          "actions_25_42": 144,
+          "actions_43_96": 384
+        }
+      }
+    },
+    "shared": {
+      "frozen": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "37": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "49": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "61": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          }
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": {
+          "label": "evaluator_only",
+          "note": "Not supplied to the model and not used to choose a deployment.",
+          "per_type": {
+            "T1": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T2": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "B|pair"
+              ],
+              "optimum_action": "B|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T3": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            }
+          },
+          "table": "pre-change"
+        },
+        "probes_from_lists_longer_than_one": 12,
+        "semantic_deployments": [
+          1,
+          13
+        ],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {
+          "25_to_25": [
+            "T1",
+            "T2",
+            "T3"
+          ]
+        },
+        "usage_estimate_usd": "0.017481",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 342,
+          "actions_25_42": 144,
+          "actions_43_96": 54
+        }
+      },
+      "local-relearning-v1": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|pair",
+          "B|single",
+          "B|pair",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 504,
+          "actions_25_42": 144,
+          "actions_43_96": 216
+        }
+      },
+      "revision": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single"
+        ],
+        "checkpoints": {
+          "25": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "37": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 37,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "49": {
+            "content_hash": "a52c4b8e2fdca10251e68113a324ebb6e72a43d0c695320dc2d19e1e7deda5a7",
+            "deployment_index": 49,
+            "procedure": {
+              "T1": [
+                "A|single",
+                "A|pair",
+                "B|single",
+                "B|pair"
+              ],
+              "T2": [
+                "A|single",
+                "A|pair",
+                "B|single",
+                "B|pair"
+              ],
+              "T3": [
+                "A|single",
+                "A|pair",
+                "B|single",
+                "B|pair"
+              ]
+            },
+            "semantic_change": true
+          },
+          "61": {
+            "content_hash": "4896b3548c77c311eea7123b284247380845c0ac0d395b79f8534eaf8fcc5792",
+            "deployment_index": 61,
+            "procedure": {
+              "T1": [
+                "A|single"
+              ],
+              "T2": [
+                "B|single"
+              ],
+              "T3": [
+                "A|single"
+              ]
+            },
+            "semantic_change": true
+          }
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": {
+          "label": "evaluator_only",
+          "note": "Not supplied to the model and not used to choose a deployment.",
+          "per_type": {
+            "T1": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T2": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "B|pair"
+              ],
+              "optimum_action": "B|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T3": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            }
+          },
+          "table": "pre-change"
+        },
+        "probes_from_lists_longer_than_one": 24,
+        "semantic_deployments": [
+          1,
+          13,
+          49,
+          61
+        ],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {
+          "25_to_37": [
+            "T1",
+            "T2",
+            "T3"
+          ],
+          "37_to_49": [],
+          "49_to_61": []
+        },
+        "usage_estimate_usd": "0.0601170",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 480,
+          "actions_25_42": 144,
+          "actions_43_96": 192
+        }
+      },
+      "uniform-random-v1": {
+        "actions": [
+          "A|pair",
+          "A|single",
+          "A|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "A|single",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|single"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 112,
+          "actions_1_96": 210,
+          "actions_25_42": 48,
+          "actions_43_96": 50
+        }
+      },
+      "whole-relearning-v1": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 504,
+          "actions_25_42": 144,
+          "actions_43_96": 216
+        }
+      }
+    },
+    "stable": {
+      "frozen": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "37": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "49": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "61": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          }
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": {
+          "label": "evaluator_only",
+          "note": "Not supplied to the model and not used to choose a deployment.",
+          "per_type": {
+            "T1": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T2": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "B|pair"
+              ],
+              "optimum_action": "B|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T3": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            }
+          },
+          "table": "pre-change"
+        },
+        "probes_from_lists_longer_than_one": 12,
+        "semantic_deployments": [
+          1,
+          13
+        ],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {
+          "25_to_25": [
+            "T1",
+            "T2",
+            "T3"
+          ]
+        },
+        "usage_estimate_usd": "0.0171885",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 720,
+          "actions_25_42": 144,
+          "actions_43_96": 432
+        }
+      },
+      "local-relearning-v1": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 720,
+          "actions_25_42": 144,
+          "actions_43_96": 432
+        }
+      },
+      "revision": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "37": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 37,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "49": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 49,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "61": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 61,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          }
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": {
+          "label": "evaluator_only",
+          "note": "Not supplied to the model and not used to choose a deployment.",
+          "per_type": {
+            "T1": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T2": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "B|pair"
+              ],
+              "optimum_action": "B|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T3": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            }
+          },
+          "table": "pre-change"
+        },
+        "probes_from_lists_longer_than_one": 12,
+        "semantic_deployments": [
+          1,
+          13
+        ],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {
+          "25_to_37": [
+            "T1",
+            "T2",
+            "T3"
+          ],
+          "37_to_49": [
+            "T1",
+            "T2",
+            "T3"
+          ],
+          "49_to_61": [
+            "T1",
+            "T2",
+            "T3"
+          ]
+        },
+        "usage_estimate_usd": "0.0467505",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 720,
+          "actions_25_42": 144,
+          "actions_43_96": 432
+        }
+      },
+      "uniform-random-v1": {
+        "actions": [
+          "A|pair",
+          "A|single",
+          "A|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "A|single",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|single"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 112,
+          "actions_1_96": 385,
+          "actions_25_42": 48,
+          "actions_43_96": 225
+        }
+      },
+      "whole-relearning-v1": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 720,
+          "actions_25_42": 144,
+          "actions_43_96": 432
+        }
+      }
+    },
+    "trap": {
+      "frozen": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "37": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "49": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "61": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          }
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": {
+          "label": "evaluator_only",
+          "note": "Not supplied to the model and not used to choose a deployment.",
+          "per_type": {
+            "T1": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T2": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "B|pair"
+              ],
+              "optimum_action": "B|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T3": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            }
+          },
+          "table": "pre-change"
+        },
+        "probes_from_lists_longer_than_one": 12,
+        "semantic_deployments": [
+          1,
+          13
+        ],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {
+          "25_to_25": [
+            "T1",
+            "T2",
+            "T3"
+          ]
+        },
+        "usage_estimate_usd": "0.016869",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 468,
+          "actions_25_42": 144,
+          "actions_43_96": 180
+        }
+      },
+      "local-relearning-v1": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 631,
+          "actions_25_42": 144,
+          "actions_43_96": 343
+        }
+      },
+      "revision": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 25,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "37": {
+            "content_hash": "94752996b25b9779b5cf9d13fc7686f4fab72906be64df0de17548c1d95cfa23",
+            "deployment_index": 37,
+            "procedure": {
+              "T1": [
+                "A|pair"
+              ],
+              "T2": [
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": false
+          },
+          "49": {
+            "content_hash": "6af82d32312fb20f9c281c1e144a4454bf79ad6d5be37d1cba2708fcf14a17a4",
+            "deployment_index": 49,
+            "procedure": {
+              "T1": [
+                "A|single",
+                "B|single",
+                "B|pair",
+                "A|pair"
+              ],
+              "T2": [
+                "B|single",
+                "A|single",
+                "A|pair",
+                "B|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": true
+          },
+          "61": {
+            "content_hash": "3b858cbe431fff4212f23789f7dcfb29366d23be5d1eacc139affda972b93e02",
+            "deployment_index": 61,
+            "procedure": {
+              "T1": [
+                "A|single"
+              ],
+              "T2": [
+                "A|pair"
+              ],
+              "T3": [
+                "A|pair"
+              ]
+            },
+            "semantic_change": true
+          }
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": {
+          "label": "evaluator_only",
+          "note": "Not supplied to the model and not used to choose a deployment.",
+          "per_type": {
+            "T1": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T2": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "B|pair"
+              ],
+              "optimum_action": "B|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            },
+            "T3": {
+              "cycle_count": 1,
+              "cycle_mean_tenths": "8/1",
+              "cycle_sum_tenths": 8,
+              "listed_actions": [
+                "A|pair"
+              ],
+              "optimum_action": "A|pair",
+              "optimum_tenths": 8,
+              "uniform_mean_tenths": "16/4"
+            }
+          },
+          "table": "pre-change"
+        },
+        "probes_from_lists_longer_than_one": 20,
+        "semantic_deployments": [
+          1,
+          13,
+          49,
+          61
+        ],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {
+          "25_to_37": [
+            "T1",
+            "T2",
+            "T3"
+          ],
+          "37_to_49": [
+            "T3"
+          ],
+          "49_to_61": [
+            "T3"
+          ]
+        },
+        "usage_estimate_usd": "0.0672165",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 609,
+          "actions_25_42": 144,
+          "actions_43_96": 321
+        }
+      },
+      "uniform-random-v1": {
+        "actions": [
+          "A|pair",
+          "A|single",
+          "A|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "B|pair",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "A|single",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|single",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "A|single",
+          "B|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "B|single",
+          "B|single",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "B|single",
+          "A|single"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 112,
+          "actions_1_96": 312,
+          "actions_25_42": 48,
+          "actions_43_96": 152
+        }
+      },
+      "whole-relearning-v1": {
+        "actions": [
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "B|pair",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|single",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "B|single",
+          "B|single",
+          "B|single",
+          "B|pair",
+          "B|pair",
+          "B|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair",
+          "A|single",
+          "A|pair",
+          "A|pair"
+        ],
+        "checkpoints": {
+          "25": null,
+          "37": null,
+          "49": null,
+          "61": null
+        },
+        "committed_index": 96,
+        "cycle_means_at_25_evaluator_only": null,
+        "probes_from_lists_longer_than_one": 0,
+        "semantic_deployments": [],
+        "status": "completed",
+        "type_rules_unchanged_between_checkpoints": {},
+        "usage_estimate_usd": "0",
+        "windows_utility_tenths": {
+          "actions_1_24": 144,
+          "actions_1_96": 615,
+          "actions_25_42": 144,
+          "actions_43_96": 327
+        }
+      }
+    }
+  },
+  "progress": {
+    "attempts": 46,
+    "billing_note": "usage estimate from published token rates, not a provider invoice",
+    "cap_usd": "2.82624",
+    "completed_calls": 46,
+    "completed_frozen_calls": 12,
+    "completed_frozen_ticks": 384,
+    "completed_references": 12,
+    "completed_revision_calls": 32,
+    "completed_revision_ticks": 384,
+    "completed_smoke_calls": 2,
+    "completed_smoke_ticks": 2,
+    "completed_ticks": 770,
+    "condition": "frozen",
+    "elapsed_seconds": 146.179,
+    "eta_seconds": 0.0,
+    "failures": 0,
+    "headroom_usd": "2.5093950",
+    "heartbeat": false,
+    "in_flight": false,
+    "inflight_reserved_usd": "0",
+    "known_attempts": 46,
+    "known_input_tokens": 59472,
+    "known_output_tokens_including_thinking": 25293,
+    "known_spend_usd": "0.3168450",
+    "known_thoughts_tokens": 17782,
+    "observed_usd_per_completed_call": "0.006887934782608695652173913043",
+    "percent": 100,
+    "phase": "pilot",
+    "planned_calls": 46,
+    "planned_frozen_calls": 12,
+    "planned_frozen_ticks": 384,
+    "planned_references": 12,
+    "planned_revision_calls": 32,
+    "planned_revision_ticks": 384,
+    "planned_smoke_calls": 2,
+    "planned_smoke_ticks": 2,
+    "planned_ticks": 770,
+    "projected_final_usd": "0.3168450000000000000000000000",
+    "projected_remaining_usd": "0.000000000000000000000000000000",
+    "projection_basis": "observed_mean_per_completed_call",
+    "retries": 0,
+    "status": "complete",
+    "tick": 25,
+    "token_count_failures": 0,
+    "token_count_requests": 46,
+    "unknown_attempts": 0,
+    "unknown_reserved_usd": "0",
+    "updated_at": "2026-09-29T11:59:28Z",
+    "world": "trap"
+  },
+  "prompt_scan": {
+    "banned_hits": [],
+    "files_with_prompt": 46
+  },
+  "status": "complete",
+  "task": "006",
+  "unit": "utility_tenths; 8 means 0.8 utility points"
+}

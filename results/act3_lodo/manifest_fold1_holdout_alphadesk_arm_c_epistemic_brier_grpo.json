@@ -1,0 +1,40 @@
+{
+  "fold": "fold1_holdout_alphadesk",
+  "held_in_train_domains": [
+    "life_companion",
+    "coalition_ops"
+  ],
+  "held_out_eval_domain": "alpha_desk_v2",
+  "held_out_eval_specs": [
+    "alpha_desk_v2:stationary",
+    "alpha_desk_v2:abrupt_reversal",
+    "alpha_desk_v2:gradual_decay",
+    "alpha_desk_v2:opportunity_rise",
+    "alpha_desk_v2:off_scope_shock"
+  ],
+  "arm": "arm_c_epistemic_brier_grpo",
+  "base_model": "Qwen/Qwen3-8B",
+  "lora_rank": 32,
+  "dtype": "auto",
+  "exported_sft_counts": {
+    "fold1_holdout_alphadesk": 48,
+    "fold2_holdout_lifecompanion": 48,
+    "fold3_holdout_coalitionops": 48
+  },
+  "sample_reward_arm_b": {
+    "arm": "arm_b_outcome_grpo",
+    "normalized_utility": 0.82,
+    "brier_calibration_reward": 0.0,
+    "non_redundant_probe_bonus": 0.0,
+    "invariant_penalty": 0.0,
+    "total_reward": 0.82
+  },
+  "sample_reward_arm_c": {
+    "arm": "arm_c_epistemic_brier_grpo",
+    "normalized_utility": 0.82,
+    "brier_calibration_reward": 0.9975,
+    "non_redundant_probe_bonus": 0.0,
+    "invariant_penalty": 0.0,
+    "total_reward": 1.0694
+  }
+}

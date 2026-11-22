@@ -1,0 +1,218 @@
+{
+  "kind": "task008_commander_audit",
+  "date": "2026-09-14",
+  "tests": "164 passed",
+  "independent_reference_max_errors": {
+    "previous_joint": 3.3306690738754696e-16,
+    "current_joint": 3.3306690738754696e-16,
+    "likelihood": 5.329070518200751e-15
+  },
+  "file_hashes_match": true,
+  "all_rows_align_with_rendered_text": true,
+  "all_n_current_targets": 2816,
+  "cross_split_families": 0,
+  "unique_texts": 2816,
+  "by_split": {
+    "dev": {
+      "n": 256,
+      "n_families": 256,
+      "role_component_counts": {
+        "observed": 522,
+        "related_unobserved": 75,
+        "unrelated": 427
+      },
+      "selected_query_actions": {
+        "choose_linked": 178,
+        "diagnose_linked": 71,
+        "choose_safe": 7
+      },
+      "all_component_actions": {
+        "choose_linked": 690,
+        "diagnose_linked": 322,
+        "choose_safe": 12
+      },
+      "query_is_suffix_observed": 256
+    },
+    "same_topology": {
+      "n": 256,
+      "n_families": 256,
+      "role_component_counts": {
+        "observed": 492,
+        "related_unobserved": 70,
+        "unrelated": 462
+      },
+      "selected_query_actions": {
+        "choose_linked": 187,
+        "diagnose_linked": 61,
+        "choose_safe": 8
+      },
+      "all_component_actions": {
+        "choose_linked": 681,
+        "diagnose_linked": 334,
+        "choose_safe": 9
+      },
+      "query_is_suffix_observed": 256
+    },
+    "structural": {
+      "n": 256,
+      "n_families": 256,
+      "role_component_counts": {
+        "observed": 501,
+        "related_unobserved": 286,
+        "unrelated": 237
+      },
+      "selected_query_actions": {
+        "choose_linked": 195,
+        "diagnose_linked": 59,
+        "choose_safe": 2
+      },
+      "all_component_actions": {
+        "choose_linked": 723,
+        "diagnose_linked": 293,
+        "choose_safe": 8
+      },
+      "query_is_suffix_observed": 256
+    },
+    "train": {
+      "n": 2048,
+      "n_families": 2030,
+      "role_component_counts": {
+        "observed": 3967,
+        "related_unobserved": 556,
+        "unrelated": 3669
+      },
+      "selected_query_actions": {
+        "choose_linked": 1545,
+        "diagnose_linked": 467,
+        "choose_safe": 36
+      },
+      "all_component_actions": {
+        "choose_linked": 5626,
+        "diagnose_linked": 2487,
+        "choose_safe": 79
+      },
+      "query_is_suffix_observed": 2048
+    }
+  },
+  "stored_preflight": {
+    "batch_token_lengths": [
+      522,
+      521,
+      474,
+      523
+    ],
+    "chat_template_used": false,
+    "cpu_threads": 4,
+    "cuda_available": false,
+    "cuda_peak_alloc_mb": null,
+    "device": "cpu",
+    "dtype": "float32",
+    "dtype_note": "float32 (Turing GPUs are not assumed to have native BF16)",
+    "forward_finite": true,
+    "forward_kl": 0.7603012919425964,
+    "gpu_name": null,
+    "hidden_size": 1024,
+    "load_s": 2.9911242439993657,
+    "max_batch_tokens": 523,
+    "max_verify_steps_allowed": 4,
+    "mixed_length_max_abs": 6.198883056640625e-06,
+    "model_id": "Qwen/Qwen3-0.6B-Base",
+    "model_revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+    "modes": [
+      {
+        "checkpoint_bytes": 276341,
+        "frozen_max_abs_change": 0.0,
+        "mode": "head",
+        "n_frozen": 310,
+        "n_trainable": 2,
+        "optimizer_steps_executed": 3,
+        "resume_logprob_max_abs": 0.0,
+        "resume_trainable_max_abs": 0.0,
+        "step1_loss": 1.8815159797668457,
+        "step2_loss": 0.2189359962940216,
+        "step2_resume_loss": 0.2189359962940216,
+        "trainable_max_abs_change": 0.0010000001639127731,
+        "unique_optimizer_steps": 2
+      },
+      {
+        "checkpoint_bytes": 14169948,
+        "frozen_max_abs_change": 0.0,
+        "mode": "lora",
+        "n_frozen": 310,
+        "n_trainable": 114,
+        "optimizer_steps_executed": 3,
+        "resume_logprob_max_abs": 0.0,
+        "resume_trainable_max_abs": 0.0,
+        "step1_loss": 3.3627467155456543,
+        "step2_loss": 0.24788273870944977,
+        "step2_resume_loss": 0.24788273870944977,
+        "trainable_max_abs_change": 0.0010000001639127731,
+        "unique_optimizer_steps": 2
+      }
+    ],
+    "packages": {
+      "peft": "0.20.0",
+      "torch": "2.14.0+cpu",
+      "transformers": "5.17.0"
+    },
+    "pad_token": "<|endoftext|>",
+    "prob_row_sums": [
+      1.0000001192092896,
+      1.0000001192092896,
+      1.0,
+      1.0
+    ],
+    "rss_mb_peak": 22018.96875,
+    "rss_mb_start": 367.77734375,
+    "token_length_sample64": {
+      "max": 531,
+      "mean": 500.0,
+      "min": 474,
+      "n": 64
+    }
+  },
+  "audit_optimized_models": false,
+  "remaining_code_findings": [
+    "fit has no resume CLI, scheduler/sampler checkpoint state absent",
+    "fit manifest written only at end; no full scientific identity or target hashes",
+    "held-out evaluation command absent",
+    "yaml is not loaded by fit",
+    "CPU torch source conflicts with proposed external uv run workflow",
+    "independent reference uses hidden prefix rather than common displayed previous state",
+    "initial head differs after adapter initialization consumes RNG"
+  ],
+  "model_readonly_checks": {
+    "same_seed_head_initialization_max_diff": {
+      "proj.weight": 0.06220213323831558,
+      "proj.bias": 0.04532352462410927
+    },
+    "stored_lora_B_tensors": 56,
+    "stored_lora_B_nonzero": 56
+  },
+  "all_input_token_lengths": {
+    "train": {
+      "min": 458,
+      "max": 558,
+      "mean": 520.47998046875,
+      "n": 2048
+    },
+    "dev": {
+      "min": 458,
+      "max": 558,
+      "mean": 521.13671875,
+      "n": 256
+    },
+    "same_topology": {
+      "min": 458,
+      "max": 558,
+      "mean": 520.078125,
+      "n": 256
+    },
+    "structural": {
+      "min": 423,
+      "max": 523,
+      "mean": 496.83203125,
+      "n": 256
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "n": 2048,
+  "summary": {
+    "actions": {
+      "choose_linked": 5626,
+      "choose_safe": 79,
+      "diagnose_linked": 2487
+    },
+    "family_bootstrap_kl": {
+      "hi": 0.2991222038449668,
+      "lo": 0.27059071480374963,
+      "mean": 0.2839773609866183,
+      "n_families": 2030
+    },
+    "h0": {
+      "joint_kl": 0.24821797104786542,
+      "mean_abs_error": 0.07546104927449328,
+      "mean_regret": 0.010555172127913922,
+      "n": 512,
+      "n_with_related": 132,
+      "n_with_unrelated": 477,
+      "role_observed_abs": 0.07683237766954684,
+      "role_related_abs": 0.07066155967189301,
+      "role_unrelated_abs": 0.07325282212804586
+    },
+    "h03": {
+      "joint_kl": 0.2958971576328685,
+      "mean_abs_error": 0.08350516382139588,
+      "mean_regret": 0.00967719581820936,
+      "n": 1536,
+      "n_with_related": 424,
+      "n_with_unrelated": 1413,
+      "role_observed_abs": 0.1068222690064304,
+      "role_related_abs": 0.05802094171585753,
+      "role_unrelated_abs": 0.0606966225066751
+    },
+    "overall": {
+      "joint_kl": 0.2839773609866183,
+      "mean_abs_error": 0.0814941351846701,
+      "mean_regret": 0.009896689895635509,
+      "n": 2048,
+      "n_with_related": 556,
+      "n_with_unrelated": 1890,
+      "role_observed_abs": 0.0993247961722094,
+      "role_related_abs": 0.06102195173419683,
+      "role_unrelated_abs": 0.06386556812540205
+    },
+    "worst_example_ids": [
+      "train|one_pair|1844",
+      "train|one_pair|1652",
+      "train|four_singletons|811",
+      "train|one_pair|1393",
+      "train|one_pair|1536"
+    ]
+  }
+}

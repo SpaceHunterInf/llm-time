@@ -1,0 +1,762 @@
+{
+  "label": "Illustrative hand-specified witnesses. Not a learner result, not a population estimate, and not a method comparison.",
+  "clock": "interaction-indexed; one request and one action per tick",
+  "reward_unit": "utility point; integer tenths are reward * 10",
+  "horizon": 36,
+  "change_applies_at": 13,
+  "response_starts_at": 19,
+  "gap": "1/5",
+  "schedule": "T1, T2, T3, repeating; sealed from the learner except for the current request type",
+  "cases": {
+    "shared_batch": {
+      "description": "From t=13 the shared pair effect changes from +3/10 to -2/5. Preferred servers stay T1=A, T2=B, T3=A.",
+      "strategies": {
+        "keep": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "3/5",
+          "response_t19_36": "9/5",
+          "lifetime_t1_36": "12/1",
+          "response_tenths": 18,
+          "lifetime_tenths": 120
+        },
+        "oracle_repair": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "3/5",
+          "response_t19_36": "9/1",
+          "lifetime_t1_36": "96/5",
+          "response_tenths": 90,
+          "lifetime_tenths": 192
+        },
+        "wrong_factor": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "3/5",
+          "response_t19_36": "-36/5",
+          "lifetime_t1_36": "3/1",
+          "response_tenths": -72,
+          "lifetime_tenths": 30
+        },
+        "unnecessary_probe": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "3/5",
+          "response_t19_36": "11/5",
+          "lifetime_t1_36": "62/5",
+          "response_tenths": 22,
+          "lifetime_tenths": 124
+        },
+        "per_type_stop": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "3/5",
+          "response_t19_36": "63/10",
+          "lifetime_t1_36": "33/2",
+          "response_tenths": 63,
+          "lifetime_tenths": 165
+        },
+        "one_type_then_transfer": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "3/5",
+          "response_t19_36": "73/10",
+          "lifetime_t1_36": "35/2",
+          "response_tenths": 73,
+          "lifetime_tenths": 175
+        },
+        "whole_reset": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "3/5",
+          "response_t19_36": "63/10",
+          "lifetime_t1_36": "33/2",
+          "response_tenths": 63,
+          "lifetime_tenths": 165
+        }
+      }
+    },
+    "type_local_route": {
+      "description": "From t=13 only T1's preferred server changes from A to B. The pair effect stays +3/10.",
+      "strategies": {
+        "keep": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "19/5",
+          "response_t19_36": "57/5",
+          "lifetime_t1_36": "124/5",
+          "response_tenths": 114,
+          "lifetime_tenths": 248
+        },
+        "oracle_repair": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "19/5",
+          "response_t19_36": "72/5",
+          "lifetime_t1_36": "139/5",
+          "response_tenths": 144,
+          "lifetime_tenths": 278
+        },
+        "wrong_factor": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "19/5",
+          "response_t19_36": "6/1",
+          "lifetime_t1_36": "97/5",
+          "response_tenths": 60,
+          "lifetime_tenths": 194
+        },
+        "unnecessary_probe": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "19/5",
+          "response_t19_36": "111/10",
+          "lifetime_t1_36": "49/2",
+          "response_tenths": 111,
+          "lifetime_tenths": 245
+        },
+        "per_type_stop": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "19/5",
+          "response_t19_36": "72/5",
+          "lifetime_t1_36": "139/5",
+          "response_tenths": 144,
+          "lifetime_tenths": 278
+        },
+        "one_type_then_transfer": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "19/5",
+          "response_t19_36": "72/5",
+          "lifetime_t1_36": "139/5",
+          "response_tenths": 144,
+          "lifetime_tenths": 278
+        },
+        "whole_reset": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "19/5",
+          "response_t19_36": "56/5",
+          "lifetime_t1_36": "123/5",
+          "response_tenths": 112,
+          "lifetime_tenths": 246
+        }
+      }
+    },
+    "stable": {
+      "description": "No hidden change. Pair effect stays +3/10 and routes stay put.",
+      "strategies": {
+        "keep": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "24/5",
+          "response_t19_36": "72/5",
+          "lifetime_t1_36": "144/5",
+          "response_tenths": 144,
+          "lifetime_tenths": 288
+        },
+        "oracle_repair": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "24/5",
+          "response_t19_36": "72/5",
+          "lifetime_t1_36": "144/5",
+          "response_tenths": 144,
+          "lifetime_tenths": 288
+        },
+        "wrong_factor": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "24/5",
+          "response_t19_36": "9/1",
+          "lifetime_t1_36": "117/5",
+          "response_tenths": 90,
+          "lifetime_tenths": 234
+        },
+        "unnecessary_probe": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "24/5",
+          "response_t19_36": "141/10",
+          "lifetime_t1_36": "57/2",
+          "response_tenths": 141,
+          "lifetime_tenths": 285
+        },
+        "per_type_stop": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "24/5",
+          "response_t19_36": "72/5",
+          "lifetime_t1_36": "144/5",
+          "response_tenths": 144,
+          "lifetime_tenths": 288
+        },
+        "one_type_then_transfer": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "24/5",
+          "response_t19_36": "72/5",
+          "lifetime_t1_36": "144/5",
+          "response_tenths": 144,
+          "lifetime_tenths": 288
+        },
+        "whole_reset": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "24/5",
+          "response_t19_36": "48/5",
+          "lifetime_t1_36": "24/1",
+          "response_tenths": 96,
+          "lifetime_tenths": 240
+        }
+      }
+    },
+    "nonadditive_trap": {
+      "description": "Researcher-built counterexample. From t=13, T1 is repaired by single on A, while T2 is repaired by switching to A and keeping pair. Transferring the T1 mode conclusion to T2 is harmful. T3 is unchanged.",
+      "strategies": {
+        "keep": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "2/1",
+          "response_t19_36": "6/1",
+          "lifetime_t1_36": "88/5",
+          "response_tenths": 60,
+          "lifetime_tenths": 176
+        },
+        "oracle_repair": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "2/1",
+          "response_t19_36": "63/5",
+          "lifetime_t1_36": "121/5",
+          "response_tenths": 126,
+          "lifetime_tenths": 242
+        },
+        "wrong_factor": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "2/1",
+          "response_t19_36": "6/1",
+          "lifetime_t1_36": "88/5",
+          "response_tenths": 60,
+          "lifetime_tenths": 176
+        },
+        "unnecessary_probe": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "2/1",
+          "response_t19_36": "32/5",
+          "lifetime_t1_36": "18/1",
+          "response_tenths": 64,
+          "lifetime_tenths": 180
+        },
+        "per_type_stop": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "2/1",
+          "response_t19_36": "121/10",
+          "lifetime_t1_36": "237/10",
+          "response_tenths": 121,
+          "lifetime_tenths": 237
+        },
+        "one_type_then_transfer": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "2/1",
+          "response_t19_36": "37/5",
+          "lifetime_t1_36": "19/1",
+          "response_tenths": 74,
+          "lifetime_tenths": 190
+        },
+        "whole_reset": {
+          "acquire_t1_12": "48/5",
+          "stale_t13_18": "2/1",
+          "response_t19_36": "21/2",
+          "lifetime_t1_36": "221/10",
+          "response_tenths": 105,
+          "lifetime_tenths": 221
+        }
+      }
+    }
+  },
+  "equal_weight_mean_response": {
+    "keep": "42/5",
+    "oracle_repair": "63/5",
+    "wrong_factor": "69/20",
+    "unnecessary_probe": "169/20",
+    "per_type_stop": "59/5",
+    "one_type_then_transfer": "87/8",
+    "whole_reset": "47/5"
+  },
+  "non_incumbent_server_ticks_t19_36": {
+    "shared_batch": {
+      "keep": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "oracle_repair": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "wrong_factor": {
+        "T1": 6,
+        "T2": 6,
+        "T3": 6
+      },
+      "unnecessary_probe": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "per_type_stop": {
+        "T1": 1,
+        "T2": 1,
+        "T3": 1
+      },
+      "one_type_then_transfer": {
+        "T1": 1,
+        "T2": 0,
+        "T3": 0
+      },
+      "whole_reset": {
+        "T1": 1,
+        "T2": 1,
+        "T3": 1
+      }
+    },
+    "type_local_route": {
+      "keep": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "oracle_repair": {
+        "T1": 6,
+        "T2": 0,
+        "T3": 0
+      },
+      "wrong_factor": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "unnecessary_probe": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "per_type_stop": {
+        "T1": 6,
+        "T2": 0,
+        "T3": 0
+      },
+      "one_type_then_transfer": {
+        "T1": 6,
+        "T2": 0,
+        "T3": 0
+      },
+      "whole_reset": {
+        "T1": 6,
+        "T2": 2,
+        "T3": 2
+      }
+    },
+    "stable": {
+      "keep": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "oracle_repair": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "wrong_factor": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "unnecessary_probe": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "per_type_stop": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "one_type_then_transfer": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "whole_reset": {
+        "T1": 2,
+        "T2": 2,
+        "T3": 2
+      }
+    },
+    "nonadditive_trap": {
+      "keep": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "oracle_repair": {
+        "T1": 0,
+        "T2": 6,
+        "T3": 0
+      },
+      "wrong_factor": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "unnecessary_probe": {
+        "T1": 0,
+        "T2": 0,
+        "T3": 0
+      },
+      "per_type_stop": {
+        "T1": 1,
+        "T2": 6,
+        "T3": 0
+      },
+      "one_type_then_transfer": {
+        "T1": 1,
+        "T2": 0,
+        "T3": 0
+      },
+      "whole_reset": {
+        "T1": 1,
+        "T2": 6,
+        "T3": 2
+      }
+    }
+  },
+  "confound_at_t18_shared_batch": {
+    "exploited_observation": "1/10",
+    "batch_explanation": {
+      "story": "Routes unchanged. Pair effect fell from 3/10 to -2/5.",
+      "matches_exploited_cell": true,
+      "predict_original_server_single": "1/2",
+      "predict_other_server_pair": "-2/5"
+    },
+    "route_explanation": {
+      "story": "Pair effect stays 3/10. Match bonus fell by 7/10, from 1/2 to -1/5.",
+      "matches_exploited_cell": true,
+      "predict_original_server_single": "-1/5",
+      "predict_other_server_pair": "3/10"
+    },
+    "truth_hidden": {
+      "story": "Hidden shared_batch parameters.",
+      "original_server_single": "1/2",
+      "other_server_pair": "-2/5",
+      "exploited_cell": "1/10"
+    }
+  },
+  "worked_trajectory_shared_batch_one_type_then_transfer": [
+    {
+      "t": 1,
+      "request_type": "T1",
+      "action": "A|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T1, action=A|pair, reward=4/5",
+      "researcher_annotation": "Researcher annotation: the witness starts from an already chosen procedure (preferred server, pair), not from a learner discovering it. Hidden reward is 1/2 + 3/10. The runtime observation has no split."
+    },
+    {
+      "t": 2,
+      "request_type": "T2",
+      "action": "B|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T2, action=B|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 3,
+      "request_type": "T3",
+      "action": "A|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T3, action=A|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 4,
+      "request_type": "T1",
+      "action": "A|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T1, action=A|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 5,
+      "request_type": "T2",
+      "action": "B|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T2, action=B|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 6,
+      "request_type": "T3",
+      "action": "A|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T3, action=A|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 7,
+      "request_type": "T1",
+      "action": "A|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T1, action=A|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 8,
+      "request_type": "T2",
+      "action": "B|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T2, action=B|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 9,
+      "request_type": "T3",
+      "action": "A|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T3, action=A|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 10,
+      "request_type": "T1",
+      "action": "A|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T1, action=A|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 11,
+      "request_type": "T2",
+      "action": "B|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T2, action=B|pair, reward=4/5",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 12,
+      "request_type": "T3",
+      "action": "A|pair",
+      "reward": "4/5",
+      "reward_tenths": 8,
+      "runtime_observation": "request_type=T3, action=A|pair, reward=4/5",
+      "researcher_annotation": "Researcher annotation: last tick before the hidden change. No boundary signal is emitted. The action at t=13 cannot use rewards from t=13 onward."
+    },
+    {
+      "t": 13,
+      "request_type": "T1",
+      "action": "A|pair",
+      "reward": "1/10",
+      "reward_tenths": 1,
+      "runtime_observation": "request_type=T1, action=A|pair, reward=1/10",
+      "researcher_annotation": "Researcher annotation: same action as acquisition, hidden pair effect now -2/5, so the scalar falls from 4/5 to 1/10. The observation has request type, action, and scalar reward. It has no regime id and no factor split."
+    },
+    {
+      "t": 14,
+      "request_type": "T2",
+      "action": "B|pair",
+      "reward": "1/10",
+      "reward_tenths": 1,
+      "runtime_observation": "request_type=T2, action=B|pair, reward=1/10",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 15,
+      "request_type": "T3",
+      "action": "A|pair",
+      "reward": "1/10",
+      "reward_tenths": 1,
+      "runtime_observation": "request_type=T3, action=A|pair, reward=1/10",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 16,
+      "request_type": "T1",
+      "action": "A|pair",
+      "reward": "1/10",
+      "reward_tenths": 1,
+      "runtime_observation": "request_type=T1, action=A|pair, reward=1/10",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 17,
+      "request_type": "T2",
+      "action": "B|pair",
+      "reward": "1/10",
+      "reward_tenths": 1,
+      "runtime_observation": "request_type=T2, action=B|pair, reward=1/10",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 18,
+      "request_type": "T3",
+      "action": "A|pair",
+      "reward": "1/10",
+      "reward_tenths": 1,
+      "runtime_observation": "request_type=T3, action=A|pair, reward=1/10",
+      "researcher_annotation": "Researcher annotation: every exploited cell now pays 1/10. That drop of 7/10 fits both a pair-effect change and a route-bonus change. The trajectory has not separated them."
+    },
+    {
+      "t": 19,
+      "request_type": "T1",
+      "action": "B|pair",
+      "reward": "-2/5",
+      "reward_tenths": -4,
+      "runtime_observation": "request_type=T1, action=B|pair, reward=-2/5",
+      "researcher_annotation": "Researcher annotation: route-first probe. Hidden value is 0 + (-2/5). This tick is worse than both the stale action (1/10) and the untried single action (1/2). The agent is not told which fact failed."
+    },
+    {
+      "t": 20,
+      "request_type": "T2",
+      "action": "B|pair",
+      "reward": "1/10",
+      "reward_tenths": 1,
+      "runtime_observation": "request_type=T2, action=B|pair, reward=1/10",
+      "researcher_annotation": "Researcher annotation: T2 is also dropped, but the rule waits for another T1 arrival before trying mode. T2 keeps the stale action."
+    },
+    {
+      "t": 21,
+      "request_type": "T3",
+      "action": "A|pair",
+      "reward": "1/10",
+      "reward_tenths": 1,
+      "runtime_observation": "request_type=T3, action=A|pair, reward=1/10",
+      "researcher_annotation": ""
+    },
+    {
+      "t": 22,
+      "request_type": "T1",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T1, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: mode probe on the original server improves on the stale scalar, so the hand rule copies single onto every dropped type. That copy is a hypothesis. It is true in this case and false in nonadditive_trap."
+    },
+    {
+      "t": 23,
+      "request_type": "T2",
+      "action": "B|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T2, action=B|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 24,
+      "request_type": "T3",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T3, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 25,
+      "request_type": "T1",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T1, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 26,
+      "request_type": "T2",
+      "action": "B|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T2, action=B|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 27,
+      "request_type": "T3",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T3, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 28,
+      "request_type": "T1",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T1, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 29,
+      "request_type": "T2",
+      "action": "B|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T2, action=B|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 30,
+      "request_type": "T3",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T3, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 31,
+      "request_type": "T1",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T1, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 32,
+      "request_type": "T2",
+      "action": "B|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T2, action=B|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 33,
+      "request_type": "T3",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T3, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 34,
+      "request_type": "T1",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T1, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 35,
+      "request_type": "T2",
+      "action": "B|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T2, action=B|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    },
+    {
+      "t": 36,
+      "request_type": "T3",
+      "action": "A|single",
+      "reward": "1/2",
+      "reward_tenths": 5,
+      "runtime_observation": "request_type=T3, action=A|single, reward=1/2",
+      "researcher_annotation": "Researcher annotation: hidden pair effect is still -2/5 and the server still matches. Runtime observation remains the scalar only. Original servers stay in use."
+    }
+  ]
+}

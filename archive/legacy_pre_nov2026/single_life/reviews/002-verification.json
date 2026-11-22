@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "public_log.jsonl": true,
+    "private_log.jsonl": true,
+    "artifacts.json": true,
+    "source_matches_worker_smoke": true,
+    "fresh_cli_exit_zero": true,
+    "fresh_smoke_hashes_match": true
+  },
+  "protocol_version": "single-life-v0.2",
+  "source_sha256": "97e5a0f5d6848c4b25648b7ef893ccc686ad045e89cb81e2b3fdc4afabf83bc7",
+  "tests_rerun": {
+    "count": 21,
+    "passed": 21
+  },
+  "implementation_modified_by_review": false
+}

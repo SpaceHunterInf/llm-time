@@ -1,0 +1,145 @@
+{
+  "adapter_seed": null,
+  "checkpoint_selection": "development_kl_only",
+  "code_hashes": {
+    "llm_rl_engine/analysis/learning_pilot.py": "989d7e49134cdf756a395f48ba9e9a53b649474949752772ce744607067b3ad8",
+    "llm_rl_engine/analysis/learning_pilot_train.py": "856c9cd209f0206a1a9348f3e64bf41c8dde4fea6d751336cd16f43a8a563d70",
+    "llm_rl_engine/analysis/posterior_baseline.py": "3ac9ea1ae373114297e382fdb89ce52813e9fb435c9aba9c699d0a209fb7f3a5",
+    "llm_rl_engine/analysis/posterior_baseline_model.py": "ce3590973afbbd3bcc3e1c9823202a649c0227af8a8ae739a59a0f9761164468",
+    "llm_rl_engine/configs/learning_pilot.yaml": "f01cac220601de5e25deb0ee94d7f1c2f5b279b6528db104f6d12b7182329ac9",
+    "scripts/learning_pilot.py": "ae5dd044ecf10b8bc7fecbf7354079abc90353e41be1d493878af6099306a425"
+  },
+  "data_hashes": {
+    "dev_rows": {
+      "example_ids_sha256": "5724ad0759cbd3c88fdab28d3d35fd6d0692970ed29171f125778183f6594f17",
+      "n": 2,
+      "targets_sha256": "75a08041a770c886c83f70e48f896af1dd0e46757277e4046848bbbb199acd0c"
+    },
+    "source": "in_memory_rows",
+    "train_rows": {
+      "example_ids_sha256": "72122e60f8966fd8bff1d0ce7e27959987bc891b652a757408d61fc68b905c35",
+      "n": 4,
+      "targets_sha256": "22afcbd7f73566bb5f4fdb1ec3029cf37a842c4b7eb205b83c3310f317bd1336"
+    }
+  },
+  "dependencies": {
+    "torch": "2.14.0+cpu"
+  },
+  "device": "cpu",
+  "dtype": "float32",
+  "effective_batch": 2,
+  "epochs": 1,
+  "head_seed": 0,
+  "heldout_read": false,
+  "kind": "ordinary_posterior_kl_pilot",
+  "lex_keys": [
+    "0000",
+    "0001",
+    "0010",
+    "0011",
+    "0100",
+    "0101",
+    "0110",
+    "0111",
+    "1000",
+    "1001",
+    "1010",
+    "1011",
+    "1100",
+    "1101",
+    "1110",
+    "1111"
+  ],
+  "lora": {
+    "alpha": 16,
+    "dropout": 0.0,
+    "r": 8,
+    "targets": [
+      "q_proj",
+      "v_proj"
+    ]
+  },
+  "loss": "joint_kl_teacher_to_student",
+  "microbatch": 1,
+  "mlp_hidden": 64,
+  "mlp_seed": 0,
+  "mode": "mlp",
+  "model_id": "Qwen/Qwen3-0.6B-Base",
+  "model_revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+  "numeric_encoder_version": "v1",
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "grad_clip": 1.0,
+    "head_lr": 0.001,
+    "lora_lr": 0.0001,
+    "mlp_lr": 0.001,
+    "name": "AdamW",
+    "warmup_ratio": 0.1,
+    "warmup_steps": 19,
+    "weight_decay": 0.01,
+    "weight_decay_bias": 0.0
+  },
+  "optimizer_steps_per_run": 2,
+  "renderer_version": "v2",
+  "resolved_config": {
+    "analysis_seed": 909,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "cache_dir": "models/hf",
+    "chat_template": false,
+    "checkpoint_selection": "development_kl_only",
+    "cpu_threads": 4,
+    "data_dir": "reports/learning_pilot/data_v2",
+    "dtype": "float32",
+    "effective_batch": 2,
+    "epochs": 1,
+    "eps": 1e-08,
+    "grad_clip": 1.0,
+    "head_lr": 0.001,
+    "heldout_eval": "after_selection_only",
+    "kind": "ordinary_posterior_kl_pilot",
+    "lora_alpha": 16,
+    "lora_dropout": 0.0,
+    "lora_lr": 0.0001,
+    "lora_r": 8,
+    "lora_targets": [
+      "q_proj",
+      "v_proj"
+    ],
+    "loss": "joint_kl_teacher_to_student",
+    "max_length": 1024,
+    "microbatch": 1,
+    "mlp_hidden": 64,
+    "mlp_lr": 0.001,
+    "model_id": "Qwen/Qwen3-0.6B-Base",
+    "model_revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+    "n_language_runs": 6,
+    "n_numeric_runs": 3,
+    "numeric_encoder_version": "v1",
+    "optimizer": "AdamW",
+    "optimizer_steps_per_run": 2,
+    "renderer_version": "v2",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "version": "learning_pilot_v1",
+    "wall_time_s": null,
+    "warmup_ratio": 0.1,
+    "warmup_steps": 19,
+    "weight_decay": 0.01,
+    "weight_decay_bias": 0.0
+  },
+  "seed": 0,
+  "torch": "2.14.0+cpu",
+  "trainable_parameter_count": 8272,
+  "version": "learning_pilot_v1",
+  "warmup_steps": 19
+}

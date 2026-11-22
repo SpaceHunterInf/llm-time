@@ -1,0 +1,15 @@
+{
+  "frozen_at_utc": "2026-09-29T02:36:00Z",
+  "settings": {
+    "input_token_cap": 4096,
+    "instruction_sha256": "48d2b3eedff5a1c41076d723c514fb6555fd681c51a3af76f79db6778457b70e",
+    "max_attempts_per_decision": 2,
+    "max_output_tokens": 2048,
+    "model": "gemini-3.5-flash",
+    "note_char_limit": 1000,
+    "observation_window": 12,
+    "temperature": 0,
+    "thinking_level": "low",
+    "ucb_window": 12
+  }
+}

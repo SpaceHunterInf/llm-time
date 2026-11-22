@@ -1,0 +1,28 @@
+{
+  "device": "cpu",
+  "matched_heads": {
+    "bias_max_abs": 0.0,
+    "logprob_max_abs": 0.0,
+    "tolerance": 1e-06,
+    "weight_max_abs": 0.0
+  },
+  "note": "Actual fit/resume path. Not a learning result. Holdouts not scored.",
+  "optimizer_counts": {
+    "head": {
+      "executed_updates_this_command": 3,
+      "final_step": 2,
+      "unique_steps": 2
+    },
+    "lora": {
+      "executed_updates_this_command": 3,
+      "final_step": 2,
+      "unique_steps": 2
+    },
+    "mlp": {
+      "executed_updates_this_command": 3,
+      "final_step": 2,
+      "unique_steps": 2
+    }
+  },
+  "rss_mb": 12531.62890625
+}

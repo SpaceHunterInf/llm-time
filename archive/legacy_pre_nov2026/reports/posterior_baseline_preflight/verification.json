@@ -1,0 +1,77 @@
+{
+  "batch_token_lengths": [
+    522,
+    521,
+    474,
+    523
+  ],
+  "chat_template_used": false,
+  "cpu_threads": 4,
+  "cuda_available": false,
+  "cuda_peak_alloc_mb": null,
+  "device": "cpu",
+  "dtype": "float32",
+  "dtype_note": "float32 (Turing GPUs are not assumed to have native BF16)",
+  "forward_finite": true,
+  "forward_kl": 0.7603012919425964,
+  "gpu_name": null,
+  "hidden_size": 1024,
+  "load_s": 2.9911242439993657,
+  "max_batch_tokens": 523,
+  "max_verify_steps_allowed": 4,
+  "mixed_length_max_abs": 6.198883056640625e-06,
+  "model_id": "Qwen/Qwen3-0.6B-Base",
+  "model_revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+  "modes": [
+    {
+      "checkpoint_bytes": 276341,
+      "frozen_max_abs_change": 0.0,
+      "mode": "head",
+      "n_frozen": 310,
+      "n_trainable": 2,
+      "optimizer_steps_executed": 3,
+      "resume_logprob_max_abs": 0.0,
+      "resume_trainable_max_abs": 0.0,
+      "step1_loss": 1.8815159797668457,
+      "step2_loss": 0.2189359962940216,
+      "step2_resume_loss": 0.2189359962940216,
+      "trainable_max_abs_change": 0.0010000001639127731,
+      "unique_optimizer_steps": 2
+    },
+    {
+      "checkpoint_bytes": 14169948,
+      "frozen_max_abs_change": 0.0,
+      "mode": "lora",
+      "n_frozen": 310,
+      "n_trainable": 114,
+      "optimizer_steps_executed": 3,
+      "resume_logprob_max_abs": 0.0,
+      "resume_trainable_max_abs": 0.0,
+      "step1_loss": 3.3627467155456543,
+      "step2_loss": 0.24788273870944977,
+      "step2_resume_loss": 0.24788273870944977,
+      "trainable_max_abs_change": 0.0010000001639127731,
+      "unique_optimizer_steps": 2
+    }
+  ],
+  "packages": {
+    "peft": "0.20.0",
+    "torch": "2.14.0+cpu",
+    "transformers": "5.17.0"
+  },
+  "pad_token": "<|endoftext|>",
+  "prob_row_sums": [
+    1.0000001192092896,
+    1.0000001192092896,
+    1.0,
+    1.0
+  ],
+  "rss_mb_peak": 22018.96875,
+  "rss_mb_start": 367.77734375,
+  "token_length_sample64": {
+    "max": 531,
+    "mean": 500.0,
+    "min": 474,
+    "n": 64
+  }
+}

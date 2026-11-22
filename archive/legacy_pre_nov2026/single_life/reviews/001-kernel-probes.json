@@ -1,0 +1,33 @@
+{
+  "artifact_deployment": {
+    "accepted_backdated_deployment": true,
+    "artifacts_seen_at_2": 0,
+    "artifacts_seen_at_4": 1,
+    "recorded_deployment": 2
+  },
+  "checkpoint_accounting": {
+    "accepted_inconsistent_budget": true,
+    "compute_used": 4,
+    "inconsistent_checkpoint_final_index": 8,
+    "interactions_used": 8,
+    "status": "completed",
+    "valid_checkpoint_final_index": 5
+  },
+  "partial_run_overwrite": {
+    "exit_code": 0,
+    "prior_log_preserved": false
+  },
+  "public_cutoff": {
+    "accepted_future_observation": true,
+    "decision": 2,
+    "observed_action_indexes": [
+      60
+    ]
+  },
+  "uncaught_crash": {
+    "exception": "review injected updater failure",
+    "manifest_exists": false,
+    "public_log_exists": false,
+    "run_directory_exists": false
+  }
+}

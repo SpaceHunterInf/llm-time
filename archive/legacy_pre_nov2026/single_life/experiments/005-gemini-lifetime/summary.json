@@ -1,0 +1,4128 @@
+{
+  "blocker": null,
+  "experiment_id": "005-gemini-lifetime",
+  "interpretation_limit": "One paired lifetime per world is not a population effect. A reward difference is not, by itself, harmful memory. This is an integration baseline and a narrow note-retention comparison.",
+  "live_attempts": {
+    "ledger_attempts": 196,
+    "ledger_failures": 0,
+    "ledger_retries": 0,
+    "parser_or_transport_failures": 0,
+    "parser_successes": 196
+  },
+  "performance_claim": null,
+  "progress": {
+    "attempts": 196,
+    "billing_note": "usage estimate from published token rates, not a provider invoice",
+    "cap_usd": "9.633792",
+    "completed_pilot": 192,
+    "completed_smoke": 4,
+    "completed_total": 196,
+    "condition": "persistent",
+    "conservative_completion_bound_usd": "9.633792",
+    "elapsed_seconds": 410.605,
+    "eta_seconds": 0.0,
+    "failures": 0,
+    "headroom_usd": "9.0259245",
+    "heartbeat": false,
+    "in_flight": false,
+    "inflight_reserved_usd": "0",
+    "known_attempts": 196,
+    "known_input_tokens": 73487,
+    "known_output_tokens_including_thinking": 55293,
+    "known_spend_usd": "0.6078675",
+    "known_thoughts_tokens": 44502,
+    "observed_usd_per_completed_decision": "0.003101364795918367346938775510",
+    "percent": 100,
+    "phase": "pilot",
+    "planned_pilot": 192,
+    "planned_smoke": 4,
+    "planned_total": 196,
+    "projected_final_usd": "0.6078675000000000000000000000",
+    "projected_remaining_usd": "0.000000000000000000000000000000",
+    "projection_basis": "observed_mean_per_completed_decision",
+    "retries": 0,
+    "status": "complete",
+    "step": 48,
+    "unknown_attempts": 0,
+    "unknown_reserved_usd": "0",
+    "updated_at": "2026-09-29T02:42:38Z",
+    "world": "w2"
+  },
+  "runs": [
+    {
+      "agent_name": "llm-note",
+      "api_usage_status": "usage_estimate",
+      "condition": "smoke",
+      "excerpts": [
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 1,
+          "latest_observation_index": null,
+          "observation_count": 0,
+          "proposed_note": "Starting exploration with arm_a. Plan to try arm_b and arm_c next to gather initial rewards.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-smoke/responses/d001-a1.json",
+          "retained_strategy_note": null
+        }
+      ],
+      "group": "smoke",
+      "innovation_seed": "innovation-005-smoke-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0.0117705",
+      "lifetime_id": "life-005-smoke",
+      "memory_condition": "persistent-note",
+      "note_changes": 3,
+      "provider_elapsed_seconds": 8.766,
+      "realized_reward": 2,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-smoke",
+      "run_id": "smoke",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_a",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Starting exploration with arm_a. Plan to try arm_b and arm_c next to gather initial rewards.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "arm_a returned 0. Trying arm_b now to explore other options, then arm_c if needed.",
+          "retained_strategy_note": "Starting exploration with arm_a. Plan to try arm_b and arm_c next to gather initial rewards.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "arm_b returned 1, which is the maximum reward. Exploiting arm_b for the remaining steps.",
+          "retained_strategy_note": "arm_a returned 0. Trying arm_b now to explore other options, then arm_c if needed.",
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Only 1 interaction remaining. Exploiting arm_b as it has the highest observed reward so far (1 out of 2 trials), whereas arm_a has 0.",
+          "retained_strategy_note": "arm_b returned 1, which is the maximum reward. Exploiting arm_b for the remaining steps.",
+          "reward": 1
+        }
+      ],
+      "unknown_reserved_usd": "0.000000",
+      "usage_estimate_usd": "0.0117705",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 1,
+            "arm_b": 3
+          },
+          "actions": "1_4",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_b",
+          "observed": 4,
+          "reward_sum": 2
+        }
+      ]
+    },
+    {
+      "agent_name": "ucb",
+      "api_usage_status": "offline_reference",
+      "condition": "ucb-reference",
+      "excerpts": [],
+      "group": "reference",
+      "innovation_seed": "innovation-005-w1-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0",
+      "lifetime_id": "life-005-w1",
+      "memory_condition": "none",
+      "note_changes": 0,
+      "provider_elapsed_seconds": 0,
+      "realized_reward": 29,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-references/w1/ucb",
+      "run_id": "w1-ucb",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_a",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 5,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 6,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 7,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 8,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 9,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 10,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 11,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 12,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 13,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 14,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 15,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 16,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 17,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 18,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 19,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 20,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 21,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 22,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 23,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 24,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 25,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 26,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 27,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 28,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 29,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 30,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 31,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 32,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 33,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 34,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 35,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 36,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 37,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 38,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 39,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 40,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 41,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 42,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 43,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 44,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 45,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 46,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 47,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 48,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        }
+      ],
+      "unknown_reserved_usd": "0",
+      "usage_estimate_usd": "0",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 20,
+            "arm_b": 11,
+            "arm_c": 17
+          },
+          "actions": "1_48",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 48,
+          "reward_sum": 29
+        }
+      ]
+    },
+    {
+      "agent_name": "random",
+      "api_usage_status": "offline_reference",
+      "condition": "random-reference",
+      "excerpts": [],
+      "group": "reference",
+      "innovation_seed": "innovation-005-w1-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0",
+      "lifetime_id": "life-005-w1",
+      "memory_condition": "none",
+      "note_changes": 0,
+      "provider_elapsed_seconds": 0,
+      "realized_reward": 28,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-references/w1/random",
+      "run_id": "w1-random",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_b",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 5,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 6,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 7,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 8,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 9,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 10,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 11,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 12,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 13,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 14,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 15,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 16,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 17,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 18,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 19,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 20,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 21,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 22,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 23,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 24,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 25,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 26,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 27,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 28,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 29,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 30,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 31,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 32,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 33,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 34,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 35,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 36,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 37,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 38,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 39,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 40,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 41,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 42,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 43,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 44,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 45,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 46,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 47,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 48,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        }
+      ],
+      "unknown_reserved_usd": "0",
+      "usage_estimate_usd": "0",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 19,
+            "arm_b": 11,
+            "arm_c": 18
+          },
+          "actions": "1_48",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 48,
+          "reward_sum": 28
+        }
+      ]
+    },
+    {
+      "agent_name": "llm-recent",
+      "api_usage_status": "usage_estimate",
+      "condition": "recent",
+      "excerpts": [
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 1,
+          "latest_observation_index": null,
+          "observation_count": 0,
+          "proposed_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w1/recent/responses/d001-a1.json",
+          "retained_strategy_note": null
+        },
+        {
+          "action": "arm_b",
+          "attempt": 1,
+          "decision": 16,
+          "latest_observation_index": 15,
+          "observation_count": 12,
+          "proposed_note": "Arm A has a high reward rate (~73%), but Arm B just returned a reward of 1. Testing Arm B further to see if it outperforms Arm A.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w1/recent/responses/d016-a1.json",
+          "retained_strategy_note": null
+        },
+        {
+          "action": "arm_c",
+          "attempt": 1,
+          "decision": 17,
+          "latest_observation_index": 16,
+          "observation_count": 12,
+          "proposed_note": "Explore arm_c to determine its reward rate, as arm_a has a solid 70% reward rate but arm_c is currently untested in the observation window.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w1/recent/responses/d017-a1.json",
+          "retained_strategy_note": null
+        }
+      ],
+      "group": "pilot",
+      "innovation_seed": "innovation-005-w1-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0.1603080",
+      "lifetime_id": "life-005-w1",
+      "memory_condition": "recent-only",
+      "note_changes": 0,
+      "provider_elapsed_seconds": 100.931,
+      "realized_reward": 26,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w1/recent",
+      "run_id": "w1-recent",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_a",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "First action arm_a gave reward 1. Now exploring arm_b to compare its reward rate.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Explored arm_a (reward 1) and arm_b (reward 0). Now exploring arm_c to complete initial exploration of all three arms.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A yielded a reward of 1 on the first trial, while Arm B and Arm C yielded 0. Testing Arm A again to evaluate its success rate.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 5,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_a has yielded 1.0 reward rate (2/2) so far, while arm_b and arm_c yielded 0. Continue exploiting arm_a unless it starts failing.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 6,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has yielded 3/3 rewards, while arm_b and arm_c have yielded 0/1. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 7,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has yielded 4/4 rewards, while Arm B and Arm C have yielded 0/1. Continuing to exploit Arm A as it has a high success rate.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 8,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has yielded 5/5 rewards, while arm_b and arm_c have yielded 0/1. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 9,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high success rate of 5/6 (83.3%), while arm_b and arm_c both yielded 0 on their single trials. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 10,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high success rate of 6/7 (~86%). arm_b and arm_c both yielded 0 on their single trials. I will continue to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 11,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a high reward rate of 75% (6/8). I will continue to exploit Arm A while keeping track of its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 12,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high reward rate of 7/9 (~78%). arm_b and arm_c both yielded 0 on their single trials. I will continue to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 13,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a high success rate of 8/10 (80%). Arm B and C both yielded 0 on their single trials. I will continue to exploit Arm A.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 14,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high reward rate of 70% (7/10) in the observation window. I will continue to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 15,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Explored arm_c (0/1) and arm_a (8/11). Now exploring arm_b to evaluate its reward rate before committing.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 16,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a high reward rate (~73%), but Arm B just returned a reward of 1. Testing Arm B further to see if it outperforms Arm A.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 17,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Explore arm_c to determine its reward rate, as arm_a has a solid 70% reward rate but arm_c is currently untested in the observation window.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 18,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a solid reward rate of 6/9 (0.67). Arm B is at 1/2. Arm C has only been tested once and yielded a reward. Testing Arm C again to estimate its reward rate more accurately.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 19,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a 5/8 (62.5%) success rate in the current window. Arm B and C are at 50% (1/2 each). Continuing with Arm A to exploit its higher observed rate while keeping an eye ...(truncated in summary)",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 20,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has the highest observed reward rate (5/8) in the current window, including a reward on the most recent pull. Continuing to exploit Arm A.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 21,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a high reward rate of 75% (6/8) in the current observation window, while Arm B and Arm C are both at 50% (1/2). Continuing to exploit Arm A.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 22,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a high success rate of 75% (6/8) in the current observation window, including a streak of three consecutive rewards. I will continue to exploit Arm A.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 23,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a high reward rate of 75% (6/8) in the observation window, despite the occasional 0. I will continue to exploit Arm A while monitoring its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 24,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a high reward rate of 75% (6/8) in the current observation window. I will continue to exploit Arm A while monitoring its performance.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 25,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a solid reward rate of 5/8 (62.5%) in the current observation window, compared to 50% for Arm B and Arm C. Continuing to exploit Arm A while monitoring its performa...(truncated in summary)",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 26,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a solid success rate of 5/8 (62.5%) in the recent observation window. I will continue to exploit Arm A while monitoring its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 27,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a high reward rate of 75% (6/8) in the recent observation window. Continuing to exploit Arm A.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 28,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a strong reward rate of 6/9 (67%) in the current observation window. I will continue to exploit Arm A while keeping an eye on its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 29,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high success rate of 70% in the current window. Testing arm_b once to see if it outperforms arm_a, otherwise we will revert to arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 30,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high reward rate of 0.7 (7/10), but arm_b just returned 1. Testing arm_b again to evaluate its reward rate compared to arm_a.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 31,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Explore arm_c to see if its reward rate is higher than arm_a's current 70% success rate.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 32,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a solid reward rate of ~67% over 9 trials. Arm C has 1/1 reward. Testing Arm C again to estimate its reward rate more accurately.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 33,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has a 2/2 success rate in recent trials. Testing Arm C further to estimate its true reward rate compared to Arm A (5/8) and Arm B (1/2).",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 34,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has shown 3/3 successes in the recent window. Exploiting Arm C while monitoring its performance.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 35,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has shown a high reward rate of 0.75 (3/4) in the recent observation window. Arm A is also strong at 0.67 (4/6). I will continue testing Arm C to verify its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 36,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has the highest reward rate in the current observation window (4/5 = 80%). I will continue pulling Arm C to exploit its high performance.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 37,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has the highest average reward (0.75) in the current observation window compared to Arm B (0.50) and Arm C (0.67). Exploiting Arm A.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 38,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has the highest average reward (4/6 = 0.67) in the current observation window compared to Arm A (2/4 = 0.50) and Arm B (1/2 = 0.50). Exploiting Arm C.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 39,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has shown the highest reward rate (5/7) in the recent observation window. I will continue to exploit Arm C while keeping track of its performance.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 40,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has the highest reward rate (5/8) in the current observation window. Continuing to exploit Arm C while monitoring its performance.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 41,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has a 5/9 success rate in the window, but has recently decayed (1, 0, 0). Arm B has 1/2. Let's test Arm B to see if it yields a higher reward rate.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 42,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has shown a solid reward rate of 5/9 in the current window, while Arm A and Arm B have only yielded 0 rewards so far. Continuing to exploit Arm C.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 43,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_c has degraded recently with multiple 0s. Exploring arm_a to see if it yields a better reward rate.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 44,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Testing arm_b to see if it has a higher reward rate than arm_c, which has recently decayed in performance.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 45,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm C has shown the most consistent rewards in the recent window (3/8), while Arm A and Arm B have yielded no rewards in their limited trials. Continuing with Arm C.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 46,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_c has the highest observed reward rate (3/8) in the current window, while arm_a and arm_b have 0/2. Exploiting arm_c for the remaining 3 steps.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 47,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_c has shown a 50% success rate in the current window, including consecutive rewards in the last two trials. arm_a and arm_b have not yielded rewards in their limited trials. Co...(truncated in summary)",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 48,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "With only 1 interaction remaining, arm_c has the highest observed success rate (3/8) in the current window compared to arm_a (0/2) and arm_b (0/2).",
+          "retained_strategy_note": null,
+          "reward": 0
+        }
+      ],
+      "unknown_reserved_usd": "0.000000",
+      "usage_estimate_usd": "0.1603080",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 24,
+            "arm_b": 7,
+            "arm_c": 17
+          },
+          "actions": "1_48",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 48,
+          "reward_sum": 26
+        }
+      ]
+    },
+    {
+      "agent_name": "llm-note",
+      "api_usage_status": "usage_estimate",
+      "condition": "persistent",
+      "excerpts": [
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 1,
+          "latest_observation_index": null,
+          "observation_count": 0,
+          "proposed_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w1/persistent/responses/d001-a1.json",
+          "retained_strategy_note": null
+        },
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 16,
+          "latest_observation_index": 15,
+          "observation_count": 12,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current observation window. I will continue to exploit Arm A.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w1/persistent/responses/d016-a1.json",
+          "retained_strategy_note": "Arm A has a success rate of 8/11 (approx 72.7%) in the current observation window. I will continue to exploit Arm A as it remains highly rewarding."
+        },
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 17,
+          "latest_observation_index": 16,
+          "observation_count": 12,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current observation window. I will continue to exploit Arm A.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w1/persistent/responses/d017-a1.json",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current observation window. I will continue to exploit Arm A."
+        }
+      ],
+      "group": "pilot",
+      "innovation_seed": "innovation-005-w1-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0.1494135",
+      "lifetime_id": "life-005-w1",
+      "memory_condition": "persistent-note",
+      "note_changes": 46,
+      "provider_elapsed_seconds": 96.013,
+      "realized_reward": 34,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w1/persistent",
+      "run_id": "w1-persistent",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_a",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "arm_a returned 1. Now testing arm_b to explore other options.",
+          "retained_strategy_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Tested arm_a (reward 1) and arm_b (reward 0). Now testing arm_c to complete initial exploration of all three arms.",
+          "retained_strategy_note": "arm_a returned 1. Now testing arm_b to explore other options.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A yielded a reward of 1, while B and C yielded 0. Exploiting Arm A now to verify its consistency.",
+          "retained_strategy_note": "Tested arm_a (reward 1) and arm_b (reward 0). Now testing arm_c to complete initial exploration of all three arms.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 5,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has yielded 2/2 rewards. Continuing to exploit Arm A to confirm its high reward rate.",
+          "retained_strategy_note": "Arm A yielded a reward of 1, while B and C yielded 0. Exploiting Arm A now to verify its consistency.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 6,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has yielded 3/3 rewards. Continuing to exploit Arm A as it remains highly successful.",
+          "retained_strategy_note": "Arm A has yielded 2/2 rewards. Continuing to exploit Arm A to confirm its high reward rate.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 7,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has yielded 4/4 rewards. Continuing to exploit Arm A as it remains highly successful.",
+          "retained_strategy_note": "Arm A has yielded 3/3 rewards. Continuing to exploit Arm A as it remains highly successful.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 8,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform exceptionally well with 5/5 rewards. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has yielded 4/4 rewards. Continuing to exploit Arm A as it remains highly successful.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 9,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a high success rate of 5/6 (83.3%). I will continue to exploit Arm A as it is currently the most promising option.",
+          "retained_strategy_note": "Arm A continues to perform exceptionally well with 5/5 rewards. I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 10,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform exceptionally well with 6 successes out of 7 trials (85.7%). I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has a high success rate of 5/6 (83.3%). I will continue to exploit Arm A as it is currently the most promising option.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 11,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with a 75% success rate (6 out of 8 trials). I will continue to exploit Arm A as it is clearly the best performing option so far.",
+          "retained_strategy_note": "Arm A continues to perform exceptionally well with 6 successes out of 7 trials (85.7%). I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 12,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with 7/9 successful trials (~78%). I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains highly successful with a 75% success rate (6 out of 8 trials). I will continue to exploit Arm A as it is clearly the best performing option so far.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 13,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with an 8/10 (80%) reward rate. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with 7/9 successful trials (~78%). I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 14,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with an 80% success rate (8/10) in the current window. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains highly successful with an 8/10 (80%) reward rate. I will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 15,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a success rate of 8/11 (approx 72.7%) in the current observation window. I will continue to exploit Arm A as it remains highly rewarding.",
+          "retained_strategy_note": "Arm A continues to perform well with an 80% success rate (8/10) in the current window. I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 16,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current observation window. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has a success rate of 8/11 (approx 72.7%) in the current observation window. I will continue to exploit Arm A as it remains highly rewarding.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 17,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current observation window. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current observation window. I will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 18,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a reward rate of 8/12 (66.7%) in the current window. I will continue to exploit Arm A as it remains highly rewarding.",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current observation window. I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 19,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a reward rate of 8/12 (66.7%) in the current window. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has a reward rate of 8/12 (66.7%) in the current window. I will continue to exploit Arm A as it remains highly rewarding.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 20,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly rewarding with 8/12 (66.7%) success rate in the current window. Continuing to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with a reward rate of 8/12 (66.7%) in the current window. I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 21,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. Continuing to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains highly rewarding with 8/12 (66.7%) success rate in the current window. Continuing to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 22,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the observation window. Continuing to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. Continuing to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 23,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. Continuing to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the observation window. Continuing to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 24,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the latest window. Continuing to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. Continuing to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 25,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with an 8/12 (66.7%) success rate in the current window. Continuing to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the latest window. Continuing to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 26,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains strong with an 8/12 (66.7%) success rate in the recent window. Continuing to exploit Arm A as the primary choice.",
+          "retained_strategy_note": "Arm A continues to perform well with an 8/12 (66.7%) success rate in the current window. Continuing to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 27,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. Continue exploiting Arm A.",
+          "retained_strategy_note": "Arm A remains strong with an 8/12 (66.7%) success rate in the recent window. Continuing to exploit Arm A as the primary choice.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 28,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains strong with an 8/12 (66.7%) success rate in the current window. Continue exploiting Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. Continue exploiting Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 29,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with an 8/12 (66.7%) success rate in the current window. Continue exploiting Arm A.",
+          "retained_strategy_note": "Arm A remains strong with an 8/12 (66.7%) success rate in the current window. Continue exploiting Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 30,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. Continue exploiting Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with an 8/12 (66.7%) success rate in the current window. Continue exploiting Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 31,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the latest window. Continue exploiting Arm A as long as its performance remains strong.",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. Continue exploiting Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 32,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform exceptionally well with a 9/12 (75%) success rate in the current window. With 17 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the latest window. Continue exploiting Arm A as long as its performance remains strong.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 33,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the observation window. With 16 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform exceptionally well with a 9/12 (75%) success rate in the current window. With 17 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 34,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform exceptionally well, with a 9/12 success rate in the current window and a streak of consecutive successes. With 15 interactions remaining, we will continu...(truncated in summary)",
+          "retained_strategy_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the observation window. With 16 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 35,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a 9/12 (75%) success rate in the current observation window. With only 14 interactions remaining, we will continue to exploit Arm A as it remains highly rewarding.",
+          "retained_strategy_note": "Arm A continues to perform exceptionally well, with a 9/12 success rate in the current window and a streak of consecutive successes. With 15 interactions remaining, we will continu...(truncated in summary)",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 36,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. With 13 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has a 9/12 (75%) success rate in the current observation window. With only 14 interactions remaining, we will continue to exploit Arm A as it remains highly rewarding.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 37,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform exceptionally well with a 10/12 (83.3%) success rate in the current window. With only 12 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the current window. With 13 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 38,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the current window. With only 11 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform exceptionally well with a 10/12 (83.3%) success rate in the current window. With only 12 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 39,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the observation window. With only 10 interactions remaining, we will continue to exploit Arm A to maximize reward.",
+          "retained_strategy_note": "Arm A remains highly successful with a 9/12 (75%) success rate in the current window. With only 11 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 40,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a 75% success rate (9/12) in the current window. With only 9 interactions remaining, we will continue to exploit Arm A to maximize our total reward.",
+          "retained_strategy_note": "Arm A continues to perform well with a 9/12 (75%) success rate in the observation window. With only 10 interactions remaining, we will continue to exploit Arm A to maximize reward.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 41,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 75% success rate in the observation window. With only 8 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has a 75% success rate (9/12) in the current window. With only 9 interactions remaining, we will continue to exploit Arm A to maximize our total reward.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 42,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a 75% success rate (9/12) in the current observation window. With only 7 interactions remaining, we will continue to exploit Arm A as it is highly likely to be the optima...(truncated in summary)",
+          "retained_strategy_note": "Arm A continues to perform well with a 75% success rate in the observation window. With only 8 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 43,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with a 75% success rate (9/12) in the last window. With only 6 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has a 75% success rate (9/12) in the current observation window. With only 7 interactions remaining, we will continue to exploit Arm A as it is highly likely to be the optima...(truncated in summary)",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 44,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains the best choice with a 66.7% (8/12) success rate in the current window. With only 5 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with a 75% success rate (9/12) in the last window. With only 6 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 45,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with an 8/12 (66.7%) success rate in the current window. With only 4 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains the best choice with a 66.7% (8/12) success rate in the current window. With only 5 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 46,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with an 8/12 (66.7%) success rate in the current window. With only 3 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with an 8/12 (66.7%) success rate in the current window. With only 4 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 47,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a 9/12 (75%) success rate in the current window. With only 2 interactions remaining, we will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with an 8/12 (66.7%) success rate in the current window. With only 3 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 48,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Only 1 interaction remaining. Arm A has consistently provided high rewards (8/12 in the current window). Exploiting Arm A for the final step.",
+          "retained_strategy_note": "Arm A has a 9/12 (75%) success rate in the current window. With only 2 interactions remaining, we will continue to exploit Arm A.",
+          "reward": 1
+        }
+      ],
+      "unknown_reserved_usd": "0.000000",
+      "usage_estimate_usd": "0.1494135",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 46,
+            "arm_b": 1,
+            "arm_c": 1
+          },
+          "actions": "1_48",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 48,
+          "reward_sum": 34
+        }
+      ]
+    },
+    {
+      "agent_name": "ucb",
+      "api_usage_status": "offline_reference",
+      "condition": "ucb-reference",
+      "excerpts": [],
+      "group": "reference",
+      "innovation_seed": "innovation-005-w2-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0",
+      "lifetime_id": "life-005-w2",
+      "memory_condition": "none",
+      "note_changes": 0,
+      "provider_elapsed_seconds": 0,
+      "realized_reward": 29,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-references/w2/ucb",
+      "run_id": "w2-ucb",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_a",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 5,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 6,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 7,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 8,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 9,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 10,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 11,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 12,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 13,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 14,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 15,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 16,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 17,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 18,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 19,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 20,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 21,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 22,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 23,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 24,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 25,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 26,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 27,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 28,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 29,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 30,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 31,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 32,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 33,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 34,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 35,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 36,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 37,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 38,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 39,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 40,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 41,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 42,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 43,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 44,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 45,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 46,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 47,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 48,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        }
+      ],
+      "unknown_reserved_usd": "0",
+      "usage_estimate_usd": "0",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 7,
+            "arm_b": 3,
+            "arm_c": 6
+          },
+          "actions": "1_16",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 16,
+          "reward_sum": 9
+        },
+        {
+          "action_counts": {
+            "arm_a": 5,
+            "arm_b": 6,
+            "arm_c": 7
+          },
+          "actions": "17_34",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_b",
+          "modal_action": "arm_c",
+          "observed": 18,
+          "reward_sum": 11
+        },
+        {
+          "action_counts": {
+            "arm_a": 8,
+            "arm_b": 3,
+            "arm_c": 3
+          },
+          "actions": "35_48",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 14,
+          "reward_sum": 9
+        }
+      ]
+    },
+    {
+      "agent_name": "random",
+      "api_usage_status": "offline_reference",
+      "condition": "random-reference",
+      "excerpts": [],
+      "group": "reference",
+      "innovation_seed": "innovation-005-w2-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0",
+      "lifetime_id": "life-005-w2",
+      "memory_condition": "none",
+      "note_changes": 0,
+      "provider_elapsed_seconds": 0,
+      "realized_reward": 28,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-references/w2/random",
+      "run_id": "w2-random",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_a",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 5,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 6,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 7,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 8,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 9,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 10,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 11,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 12,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 13,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 14,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 15,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 16,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 17,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 18,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 19,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 20,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 21,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 22,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 23,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 24,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 25,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 26,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 27,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 28,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 29,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 30,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 31,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 32,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 33,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 34,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 35,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 36,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 37,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 38,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 39,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 40,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 41,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 42,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 43,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 44,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 45,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 46,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 47,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 48,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": null,
+          "retained_strategy_note": null,
+          "reward": 1
+        }
+      ],
+      "unknown_reserved_usd": "0",
+      "usage_estimate_usd": "0",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 6,
+            "arm_b": 5,
+            "arm_c": 5
+          },
+          "actions": "1_16",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 16,
+          "reward_sum": 7
+        },
+        {
+          "action_counts": {
+            "arm_a": 5,
+            "arm_b": 5,
+            "arm_c": 8
+          },
+          "actions": "17_34",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_b",
+          "modal_action": "arm_c",
+          "observed": 18,
+          "reward_sum": 11
+        },
+        {
+          "action_counts": {
+            "arm_a": 4,
+            "arm_b": 3,
+            "arm_c": 7
+          },
+          "actions": "35_48",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_c",
+          "observed": 14,
+          "reward_sum": 10
+        }
+      ]
+    },
+    {
+      "agent_name": "llm-recent",
+      "api_usage_status": "usage_estimate",
+      "condition": "recent",
+      "excerpts": [
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 1,
+          "latest_observation_index": null,
+          "observation_count": 0,
+          "proposed_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w2/recent/responses/d001-a1.json",
+          "retained_strategy_note": null
+        },
+        {
+          "action": "arm_b",
+          "attempt": 1,
+          "decision": 16,
+          "latest_observation_index": 15,
+          "observation_count": 12,
+          "proposed_note": "Arm A has a high success rate (8/11), but Arm B just returned a reward of 1. I will test Arm B again to estimate its reward rate before deciding whether to stick with it or return to Arm A.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w2/recent/responses/d016-a1.json",
+          "retained_strategy_note": null
+        },
+        {
+          "action": "arm_c",
+          "attempt": 1,
+          "decision": 17,
+          "latest_observation_index": 16,
+          "observation_count": 12,
+          "proposed_note": "Exploring arm_c to evaluate its reward rate, as arm_a has a high reward rate of 8/10 but arm_c remains untested.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w2/recent/responses/d017-a1.json",
+          "retained_strategy_note": null
+        }
+      ],
+      "group": "pilot",
+      "innovation_seed": "innovation-005-w2-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0.1445670",
+      "lifetime_id": "life-005-w2",
+      "memory_condition": "recent-only",
+      "note_changes": 0,
+      "provider_elapsed_seconds": 97.155,
+      "realized_reward": 35,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w2/recent",
+      "run_id": "w2-recent",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_a",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "First action arm_a gave reward 1. Now exploring arm_b to compare its reward rate.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Explored arm_a (reward 1) and arm_b (reward 0). Now exploring arm_c to complete initial exploration of all three arms.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A yielded a reward of 1 on the first trial, while Arm B and Arm C yielded 0. Testing Arm A again to evaluate its success rate.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 5,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has yielded the only reward so far (1/2). Arm B and C have 0/1. Testing Arm A again to estimate its reward rate more reliably.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 6,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has yielded 2/3 rewards, while B and C have 0/1. Continuing to exploit/explore Arm A to establish its baseline reward rate.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 7,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has yielded 3 rewards out of 4 trials (75%), while Arm B and Arm C have yielded 0 rewards in 1 trial each. Continuing to exploit Arm A while monitoring its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 8,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high success rate of 4/5 (80%) based on the initial observations, while arm_b and arm_c both returned 0 on their single trials. I will continue to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 9,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high success rate of 5/6 (83.3%), while arm_b and arm_c both yielded 0 on their single trials. I will continue to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 10,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high success rate of 6/7. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 11,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_a has shown a very high success rate of 7/8 (87.5%) in the initial trials, while arm_b and arm_c both returned 0 on their single trials. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 12,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high success rate of 7/9 (~78%). I will continue to exploit arm_a as it is currently the most rewarding option.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 13,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a high success rate of 7/10 (70%). I will continue to exploit Arm A as it is currently the most promising option.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 14,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_a has shown a high success rate of 70% (7/10) in the observation window. I will continue to exploit arm_a while keeping track of its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 15,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Explored arm_c once (0) and arm_a extensively (8/11). Now exploring arm_b to evaluate its reward rate before committing to the best arm.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 16,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a high success rate (8/11), but Arm B just returned a reward of 1. I will test Arm B again to estimate its reward rate before deciding whether to stick with it or return ...(truncated in summary)",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 17,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Exploring arm_c to evaluate its reward rate, as arm_a has a high reward rate of 8/10 but arm_c remains untested.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_c",
+          "decision": 18,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has a high success rate of 7/9. arm_b is 1/2. arm_c is 1/1. Testing arm_c again to estimate its reward rate.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 19,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has shown a high reward rate of 75% (6/8) in the observation window, compared to 50% for Arm B and Arm C. Exploiting Arm A is currently the best strategy.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 20,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has a 5/8 reward rate in the current window, but recently failed. Arm B and C both have 1/2. Testing Arm B again to gather more data on its reward rate.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 21,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm B has shown a 2/3 success rate in recent trials. Testing Arm B further to estimate its reward rate compared to Arm A.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 22,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm B has the highest success rate (3/4 = 75%) in the current observation window. I will continue to exploit Arm B while monitoring its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 23,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm B has shown strong performance recently with 4/5 rewards, including three consecutive successes. I will continue to exploit Arm B while monitoring its success rate.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 24,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm B has shown a high success rate of 5/6 (83.3%) in the recent observation window, including a current streak of 4 consecutive rewards. I will continue to exploit Arm B.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 25,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm B has shown strong performance recently with 6 wins out of 7 trials in the observation window, including 5 consecutive wins. Exploiting Arm B.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 26,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm B has shown a very high success rate recently (7/8 in the observation window, including 6 consecutive rewards of 1). I will continue to exploit Arm B.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 27,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_b has shown a very high success rate recently (8 out of 9 successes in the current window, including a streak of 7 consecutive wins). I will continue to exploit arm_b.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 28,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_b has shown a high success rate of 7/9 in the current observation window. Despite the recent 0, it remains the most promising arm to exploit.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 29,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_b has shown a very high success rate of 8/9 in the recent observation window. I will continue to exploit arm_b.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 30,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_b has shown a very high reward rate (9/10 in the current window). I will continue to exploit arm_b.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 31,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_b has shown a high success rate of approximately 82% (9/11) in the current observation window. With 18 interactions remaining, we will continue to exploit arm_b.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 32,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_b continues to show a very high reward rate of approximately 83% (10/12) in the current observation window. I will continue to exploit arm_b.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 33,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_b has a very high reward rate of approximately 83% (10/12) in the current observation window. With 16 interactions remaining, we will continue to exploit arm_b.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 34,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_b has a high reward rate of 75% (9/12) in the current window. Probing arm_a to see if it offers a higher reward rate, otherwise we will revert to arm_b.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 35,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_b has a high reward rate (~73%), but arm_a just returned 1. Testing arm_a again to see if it is superior before deciding whether to stick with arm_b or explore arm_c.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 36,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_b has a solid reward rate of ~70%, but arm_a has started with 2/2 rewards. Continuing to test arm_a to see if its reward rate is higher than arm_b's.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 37,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has yielded 3/3 rewards in the recent window. Continuing to exploit/test Arm A to see if its high reward rate persists.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 38,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_a has yielded 4/4 successes in the current window. Continuing to exploit arm_a while monitoring its performance.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 39,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has yielded 5/5 successes in the recent observation window. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 40,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm_a has yielded 6/6 successes in the current observation window. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 41,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has yielded 100% success (7/7) in the current observation window. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 42,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has yielded 100% reward (8/8) in the current observation window. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 43,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has yielded 9 consecutive rewards of 1. Continuing to exploit Arm A as it is highly successful.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 44,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has yielded 10 consecutive rewards of 1. Continuing to exploit arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 45,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has consistently returned a reward of 1 for the last 11 trials. Continue exploiting arm_a.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 46,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Arm A has consistently yielded a reward of 1 for the last 12 trials. With only 3 interactions remaining, we should continue exploiting Arm A.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 47,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "arm_a has yielded 12 consecutive rewards of 1. With only 2 interactions remaining, continue pulling arm_a.",
+          "retained_strategy_note": null,
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 48,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "With only one interaction remaining, exploiting the highly successful arm_a (11/12 successes in the current window) is the optimal choice.",
+          "retained_strategy_note": null,
+          "reward": 0
+        }
+      ],
+      "unknown_reserved_usd": "0.000000",
+      "usage_estimate_usd": "0.1445670",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 12,
+            "arm_b": 3,
+            "arm_c": 1
+          },
+          "actions": "1_16",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 16,
+          "reward_sum": 10
+        },
+        {
+          "action_counts": {
+            "arm_a": 2,
+            "arm_b": 14,
+            "arm_c": 2
+          },
+          "actions": "17_34",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_b",
+          "modal_action": "arm_b",
+          "observed": 18,
+          "reward_sum": 13
+        },
+        {
+          "action_counts": {
+            "arm_a": 14
+          },
+          "actions": "35_48",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 14,
+          "reward_sum": 12
+        }
+      ]
+    },
+    {
+      "agent_name": "llm-note",
+      "api_usage_status": "usage_estimate",
+      "condition": "persistent",
+      "excerpts": [
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 1,
+          "latest_observation_index": null,
+          "observation_count": 0,
+          "proposed_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w2/persistent/responses/d001-a1.json",
+          "retained_strategy_note": null
+        },
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 16,
+          "latest_observation_index": 15,
+          "observation_count": 12,
+          "proposed_note": "Arm A continues to perform well with 9 rewards out of 12 trials (75%) in the current window. I will continue to exploit Arm A.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w2/persistent/responses/d016-a1.json",
+          "retained_strategy_note": "Arm A remains highly successful with 8 rewards out of 11 trials (72.7%). I will continue to exploit Arm A."
+        },
+        {
+          "action": "arm_a",
+          "attempt": 1,
+          "decision": 17,
+          "latest_observation_index": 16,
+          "observation_count": 12,
+          "proposed_note": "Arm A has a 75% reward rate (9/12) in the current observation window. I will continue to exploit Arm A as it remains highly rewarding.",
+          "quoted_prompt_has_evaluator_annotation": false,
+          "response_path": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w2/persistent/responses/d017-a1.json",
+          "retained_strategy_note": "Arm A continues to perform well with 9 rewards out of 12 trials (75%) in the current window. I will continue to exploit Arm A."
+        }
+      ],
+      "group": "pilot",
+      "innovation_seed": "innovation-005-w2-v1",
+      "invalid_actions": 0,
+      "known_spend_usd": "0.1418085",
+      "lifetime_id": "life-005-w2",
+      "memory_condition": "persistent-note",
+      "note_changes": 47,
+      "provider_elapsed_seconds": 95.442,
+      "realized_reward": 32,
+      "run_dir": "/home/xz479/llm-time/single_life/runs/005-gemini-pilot/w2/persistent",
+      "run_id": "w2-persistent",
+      "status": "completed",
+      "timeline": [
+        {
+          "action": "arm_a",
+          "decision": 1,
+          "kind": "observed",
+          "note_changed": false,
+          "proposed_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "retained_strategy_note": null,
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 2,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "arm_a returned 1. Now testing arm_b to explore other options.",
+          "retained_strategy_note": "Starting exploration phase. Testing arm_a first to establish a baseline.",
+          "reward": 0
+        },
+        {
+          "action": "arm_c",
+          "decision": 3,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Tested arm_a (reward 1) and arm_b (reward 0). Now testing arm_c to complete initial exploration of all three arms.",
+          "retained_strategy_note": "arm_a returned 1. Now testing arm_b to explore other options.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 4,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A yielded a reward of 1, while B and C yielded 0. Exploiting Arm A now to verify its consistency.",
+          "retained_strategy_note": "Tested arm_a (reward 1) and arm_b (reward 0). Now testing arm_c to complete initial exploration of all three arms.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 5,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has 1/2 success. Testing Arm A again to establish a more reliable estimate of its reward rate before deciding whether to explore B or C further.",
+          "retained_strategy_note": "Arm A yielded a reward of 1, while B and C yielded 0. Exploiting Arm A now to verify its consistency.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 6,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has 2 successes out of 3 trials (67%). Testing Arm A again to confirm if it remains a high-performing option before considering further exploration of B or C.",
+          "retained_strategy_note": "Arm A has 1/2 success. Testing Arm A again to establish a more reliable estimate of its reward rate before deciding whether to explore B or C further.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 7,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with 3 successes out of 4 trials (75%). I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has 2 successes out of 3 trials (67%). Testing Arm A again to confirm if it remains a high-performing option before considering further exploration of B or C.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 8,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a high success rate of 80% (4 out of 5 trials). I will continue to exploit Arm A as it is currently the best performing arm.",
+          "retained_strategy_note": "Arm A continues to perform well with 3 successes out of 4 trials (75%). I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 9,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform exceptionally well with 5 successes out of 6 trials (83.3%). I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has a high success rate of 80% (4 out of 5 trials). I will continue to exploit Arm A as it is currently the best performing arm.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 10,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with 6 successes out of 7 trials. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform exceptionally well with 5 successes out of 6 trials (83.3%). I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 11,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to show a very high success rate of 7 out of 8 trials. I will continue to exploit Arm A as the primary action.",
+          "retained_strategy_note": "Arm A remains highly successful with 6 successes out of 7 trials. I will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 12,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with 7 successes out of 9 trials (approx 78%). I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to show a very high success rate of 7 out of 8 trials. I will continue to exploit Arm A as the primary action.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 13,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a 70% success rate (7/10). Despite two recent failures, it remains the most promising option. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains highly successful with 7 successes out of 9 trials (approx 78%). I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 14,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with an 8/11 success rate (72.7%) after the latest reward. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A has a 70% success rate (7/10). Despite two recent failures, it remains the most promising option. I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 15,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A remains highly successful with 8 rewards out of 11 trials (72.7%). I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A continues to perform well with an 8/11 success rate (72.7%) after the latest reward. I will continue to exploit Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 16,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A continues to perform well with 9 rewards out of 12 trials (75%) in the current window. I will continue to exploit Arm A.",
+          "retained_strategy_note": "Arm A remains highly successful with 8 rewards out of 11 trials (72.7%). I will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 17,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A has a 75% reward rate (9/12) in the current observation window. I will continue to exploit Arm A as it remains highly rewarding.",
+          "retained_strategy_note": "Arm A continues to perform well with 9 rewards out of 12 trials (75%) in the current window. I will continue to exploit Arm A.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 18,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A's reward rate in the current window is 8/12 (approx 67%). Although it has dropped slightly from 75%, it remains relatively high. I will continue to exploit Arm A while monito...(truncated in summary)",
+          "retained_strategy_note": "Arm A has a 75% reward rate (9/12) in the current observation window. I will continue to exploit Arm A as it remains highly rewarding.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 19,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A's reward rate in the current window is 8/12 (approx 67%). This is still a solid return. I will continue to exploit Arm A, but if the rate drops below 50%, I will consider exp...(truncated in summary)",
+          "retained_strategy_note": "Arm A's reward rate in the current window is 8/12 (approx 67%). Although it has dropped slightly from 75%, it remains relatively high. I will continue to exploit Arm A while monito...(truncated in summary)",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 20,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A's reward rate in the current window is 7/12 (approx 58.3%). This is still above the 50% threshold. I will continue to exploit Arm A, but will monitor if it drops further, in ...(truncated in summary)",
+          "retained_strategy_note": "Arm A's reward rate in the current window is 8/12 (approx 67%). This is still a solid return. I will continue to exploit Arm A, but if the rate drops below 50%, I will consider exp...(truncated in summary)",
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 21,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm A's reward rate in the last 12 trials dropped to 50% (6/12). I am switching to explore Arm B to see if it offers a higher reward rate.",
+          "retained_strategy_note": "Arm A's reward rate in the current window is 7/12 (approx 58.3%). This is still above the 50% threshold. I will continue to exploit Arm A, but will monitor if it drops further, in ...(truncated in summary)",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 22,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B yielded a reward of 1 on the first try. I will continue testing Arm B to estimate its reward rate before deciding whether to try Arm C or return to Arm A.",
+          "retained_strategy_note": "Arm A's reward rate in the last 12 trials dropped to 50% (6/12). I am switching to explore Arm B to see if it offers a higher reward rate.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 23,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B has yielded 2/2 rewards. I will continue testing Arm B to see if it maintains a high reward rate before considering Arm C.",
+          "retained_strategy_note": "Arm B yielded a reward of 1 on the first try. I will continue testing Arm B to estimate its reward rate before deciding whether to try Arm C or return to Arm A.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 24,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B has yielded 3/3 rewards in the current window. I will continue to exploit Arm B as long as its reward rate remains high.",
+          "retained_strategy_note": "Arm B has yielded 2/2 rewards. I will continue testing Arm B to see if it maintains a high reward rate before considering Arm C.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 25,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B has yielded 4/4 rewards in the current window. I will continue to exploit Arm B as long as its reward rate remains high.",
+          "retained_strategy_note": "Arm B has yielded 3/3 rewards in the current window. I will continue to exploit Arm B as long as its reward rate remains high.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 26,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B has yielded 5/5 rewards in the current window. I will continue to exploit Arm B as long as its reward rate remains high.",
+          "retained_strategy_note": "Arm B has yielded 4/4 rewards in the current window. I will continue to exploit Arm B as long as its reward rate remains high.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 27,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B continues to perform perfectly with 6/6 rewards in the current window. I will continue to exploit Arm B.",
+          "retained_strategy_note": "Arm B has yielded 5/5 rewards in the current window. I will continue to exploit Arm B as long as its reward rate remains high.",
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 28,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B remains highly successful with 6/7 rewards in the current window despite the last 0. I will continue to exploit Arm B.",
+          "retained_strategy_note": "Arm B continues to perform perfectly with 6/6 rewards in the current window. I will continue to exploit Arm B.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 29,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B continues to perform exceptionally well, yielding 7/8 rewards in the current window. I will continue to exploit Arm B.",
+          "retained_strategy_note": "Arm B remains highly successful with 6/7 rewards in the current window despite the last 0. I will continue to exploit Arm B.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 30,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B remains highly successful with an 8/9 reward rate in the current window. I will continue to exploit Arm B.",
+          "retained_strategy_note": "Arm B continues to perform exceptionally well, yielding 7/8 rewards in the current window. I will continue to exploit Arm B.",
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 31,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B continues to perform well with an 8/10 reward rate in the current window. I will continue to exploit Arm B.",
+          "retained_strategy_note": "Arm B remains highly successful with an 8/9 reward rate in the current window. I will continue to exploit Arm B.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 32,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B continues to perform exceptionally well with a 9/11 reward rate in the current window. I will continue to exploit Arm B.",
+          "retained_strategy_note": "Arm B continues to perform well with an 8/10 reward rate in the current window. I will continue to exploit Arm B.",
+          "reward": 1
+        },
+        {
+          "action": "arm_b",
+          "decision": 33,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B remains highly productive with 10/12 rewards in the current window. I will continue to exploit Arm B.",
+          "retained_strategy_note": "Arm B continues to perform exceptionally well with a 9/11 reward rate in the current window. I will continue to exploit Arm B.",
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 34,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B continues to perform well with 9/12 rewards in the current window. With 15 interactions remaining, I will continue to exploit Arm B.",
+          "retained_strategy_note": "Arm B remains highly productive with 10/12 rewards in the current window. I will continue to exploit Arm B.",
+          "reward": 0
+        },
+        {
+          "action": "arm_b",
+          "decision": 35,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B has yielded 8/12 rewards in the latest window. With 14 interactions remaining, I will continue to exploit Arm B as it remains relatively strong.",
+          "retained_strategy_note": "Arm B continues to perform well with 9/12 rewards in the current window. With 15 interactions remaining, I will continue to exploit Arm B.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 36,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm B's performance has dropped recently with three consecutive failures (0s). I will explore Arm_a to see if it offers a better reward rate.",
+          "retained_strategy_note": "Arm B has yielded 8/12 rewards in the latest window. With 14 interactions remaining, I will continue to exploit Arm B as it remains relatively strong.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 37,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a returned a reward of 1. I will continue testing arm_a to estimate its reward rate compared to arm_b's recent decline.",
+          "retained_strategy_note": "Arm B's performance has dropped recently with three consecutive failures (0s). I will explore Arm_a to see if it offers a better reward rate.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 38,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a has returned 1 for two consecutive trials. I will continue pulling arm_a to confirm if its reward rate is consistently high.",
+          "retained_strategy_note": "Arm_a returned a reward of 1. I will continue testing arm_a to estimate its reward rate compared to arm_b's recent decline.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 39,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a has returned 1 for three consecutive trials. I will continue pulling arm_a to exploit its high reward rate.",
+          "retained_strategy_note": "Arm_a has returned 1 for two consecutive trials. I will continue pulling arm_a to confirm if its reward rate is consistently high.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 40,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a has now returned 1 for four consecutive trials. I will continue to exploit arm_a as long as it keeps returning high rewards.",
+          "retained_strategy_note": "Arm_a has returned 1 for three consecutive trials. I will continue pulling arm_a to exploit its high reward rate.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 41,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a has returned 1 for five consecutive trials. I will continue to exploit arm_a as long as it keeps returning high rewards.",
+          "retained_strategy_note": "Arm_a has now returned 1 for four consecutive trials. I will continue to exploit arm_a as long as it keeps returning high rewards.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 42,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a has returned 1 for six consecutive trials in the current window. I will continue to exploit arm_a.",
+          "retained_strategy_note": "Arm_a has returned 1 for five consecutive trials. I will continue to exploit arm_a as long as it keeps returning high rewards.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 43,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a has returned 1 for seven consecutive trials in the current window. I will continue to exploit arm_a.",
+          "retained_strategy_note": "Arm_a has returned 1 for six consecutive trials in the current window. I will continue to exploit arm_a.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 44,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a has returned 1 for eight consecutive trials in the current window. I will continue to exploit arm_a.",
+          "retained_strategy_note": "Arm_a has returned 1 for seven consecutive trials in the current window. I will continue to exploit arm_a.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 45,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a continues to return 1 consistently (9 consecutive times in the current window). I will continue to exploit arm_a.",
+          "retained_strategy_note": "Arm_a has returned 1 for eight consecutive trials in the current window. I will continue to exploit arm_a.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 46,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a continues to return 1 consistently (10 consecutive times in the current window). I will continue to exploit arm_a.",
+          "retained_strategy_note": "Arm_a continues to return 1 consistently (9 consecutive times in the current window). I will continue to exploit arm_a.",
+          "reward": 1
+        },
+        {
+          "action": "arm_a",
+          "decision": 47,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Arm_a continues to yield a reward of 1 consistently. With only 2 interactions remaining, I will continue to exploit arm_a.",
+          "retained_strategy_note": "Arm_a continues to return 1 consistently (10 consecutive times in the current window). I will continue to exploit arm_a.",
+          "reward": 0
+        },
+        {
+          "action": "arm_a",
+          "decision": 48,
+          "kind": "observed",
+          "note_changed": true,
+          "proposed_note": "Only 1 interaction remaining. Despite the last reward being 0, arm_a has been highly reliable (11/12 in the window). I will stick with arm_a for the final step.",
+          "retained_strategy_note": "Arm_a continues to yield a reward of 1 consistently. With only 2 interactions remaining, I will continue to exploit arm_a.",
+          "reward": 0
+        }
+      ],
+      "unknown_reserved_usd": "0.000000",
+      "usage_estimate_usd": "0.1418085",
+      "windows": [
+        {
+          "action_counts": {
+            "arm_a": 14,
+            "arm_b": 1,
+            "arm_c": 1
+          },
+          "actions": "1_16",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 16,
+          "reward_sum": 10
+        },
+        {
+          "action_counts": {
+            "arm_a": 4,
+            "arm_b": 14
+          },
+          "actions": "17_34",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_b",
+          "modal_action": "arm_b",
+          "observed": 18,
+          "reward_sum": 11
+        },
+        {
+          "action_counts": {
+            "arm_a": 13,
+            "arm_b": 1
+          },
+          "actions": "35_48",
+          "evaluator_only": true,
+          "evaluator_oracle_arm": "arm_a",
+          "modal_action": "arm_a",
+          "observed": 14,
+          "reward_sum": 11
+        }
+      ]
+    }
+  ],
+  "status": "complete",
+  "timing_note": "A note proposed at decision t is written before that decision's reward and deployed at decision t+1. Its creation cutoff is t-1. The prompt at decision 17 therefore includes observations through action 16 and the note proposed at 16. For the second world, the first reward scored under the middle probability table is the outcome of decision 17, and it is visible starting at decision 18. Those boundaries are evaluator-side and are not part of the prompt.",
+  "written_at_utc": "2026-09-29T02:42:38Z"
+}

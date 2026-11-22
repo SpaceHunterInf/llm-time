@@ -1,0 +1,33 @@
+{
+  "artifact_rollback": {
+    "committed_index": 2,
+    "final_artifact_hash_valid": false,
+    "historical_content_preserved": false,
+    "status": "updater_failure"
+  },
+  "interrupted_journal_write": {
+    "injected": true,
+    "manifest_hash_matches": false,
+    "prefix_had_event_1": true,
+    "public_log_bytes_after_interrupt": 0,
+    "recorded_committed_event_count": 1
+  },
+  "output_path_alias": {
+    "exit_code": 0,
+    "public_log_matches_manifest": false,
+    "public_log_replaced_with_summary": true
+  },
+  "updater_resume_identity": {
+    "changed_updater_accepted": true,
+    "resumed_deployments": [
+      4,
+      5,
+      7
+    ],
+    "same_semantic_stream": false,
+    "uninterrupted_deployments": [
+      4,
+      7
+    ]
+  }
+}

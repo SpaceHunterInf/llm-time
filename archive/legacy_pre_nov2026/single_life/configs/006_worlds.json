@@ -1,0 +1,198 @@
+{
+  "actions": [
+    "A|single",
+    "A|pair",
+    "B|single",
+    "B|pair"
+  ],
+  "change_at_action": 43,
+  "horizon": 96,
+  "note": "Evaluator-only. Do not copy this file into a model prompt. change_at_action is the first action scored on the post table.",
+  "sentinel": "SENTINEL_PRIVATE_do_not_leak 006",
+  "task": "006",
+  "type_cycle": "T1, T2, T3, repeating, one type before each action",
+  "types": [
+    "T1",
+    "T2",
+    "T3"
+  ],
+  "utility_unit": "tenths of a utility point",
+  "worlds": {
+    "route": {
+      "description": "At action 43 only T1's preferred server becomes B. The pair effect stays +3 tenths.",
+      "post": {
+        "T1": {
+          "A|pair": 3,
+          "A|single": 0,
+          "B|pair": 8,
+          "B|single": 5
+        },
+        "T2": {
+          "A|pair": 3,
+          "A|single": 0,
+          "B|pair": 8,
+          "B|single": 5
+        },
+        "T3": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        }
+      },
+      "pre": {
+        "T1": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        },
+        "T2": {
+          "A|pair": 3,
+          "A|single": 0,
+          "B|pair": 8,
+          "B|single": 5
+        },
+        "T3": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        }
+      },
+      "switches": true
+    },
+    "shared": {
+      "description": "At action 43 the pair effect becomes -4 tenths. Preferred servers stay put.",
+      "post": {
+        "T1": {
+          "A|pair": 1,
+          "A|single": 5,
+          "B|pair": -4,
+          "B|single": 0
+        },
+        "T2": {
+          "A|pair": -4,
+          "A|single": 0,
+          "B|pair": 1,
+          "B|single": 5
+        },
+        "T3": {
+          "A|pair": 1,
+          "A|single": 5,
+          "B|pair": -4,
+          "B|single": 0
+        }
+      },
+      "pre": {
+        "T1": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        },
+        "T2": {
+          "A|pair": 3,
+          "A|single": 0,
+          "B|pair": 8,
+          "B|single": 5
+        },
+        "T3": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        }
+      },
+      "switches": true
+    },
+    "stable": {
+      "description": "Pair effect stays +3 tenths and preferred servers stay T1=A, T2=B, T3=A.",
+      "post": {
+        "T1": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        },
+        "T2": {
+          "A|pair": 3,
+          "A|single": 0,
+          "B|pair": 8,
+          "B|single": 5
+        },
+        "T3": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        }
+      },
+      "pre": {
+        "T1": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        },
+        "T2": {
+          "A|pair": 3,
+          "A|single": 0,
+          "B|pair": 8,
+          "B|single": 5
+        },
+        "T3": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        }
+      },
+      "switches": false
+    },
+    "trap": {
+      "description": "At action 43 the post table is non-additive. T1 is best as A|single; T2 is best as A|pair; T3 stays A|pair.",
+      "post": {
+        "T1": {
+          "A|pair": 1,
+          "A|single": 5,
+          "B|pair": 0,
+          "B|single": 0
+        },
+        "T2": {
+          "A|pair": 8,
+          "A|single": 2,
+          "B|pair": 1,
+          "B|single": 0
+        },
+        "T3": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        }
+      },
+      "pre": {
+        "T1": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        },
+        "T2": {
+          "A|pair": 3,
+          "A|single": 0,
+          "B|pair": 8,
+          "B|single": 5
+        },
+        "T3": {
+          "A|pair": 8,
+          "A|single": 5,
+          "B|pair": 3,
+          "B|single": 0
+        }
+      },
+      "switches": true
+    }
+  }
+}

@@ -1,0 +1,39 @@
+kind: ordinary_posterior_kl_pilot
+version: learning_pilot_v1
+renderer_version: v2
+numeric_encoder_version: v1
+model_id: Qwen/Qwen3-0.6B-Base
+model_revision: da87bfb608c14b7cf20ba1ce41287e8de496c0cd
+loss: joint_kl_teacher_to_student
+chat_template: false
+dtype: float32
+max_length: 1024
+epochs: 3
+effective_batch: 32
+microbatch: 8
+optimizer: AdamW
+betas: [0.9, 0.999]
+eps: 1.0e-8
+weight_decay: 0.01
+weight_decay_bias: 0.0
+head_lr: 0.001
+lora_lr: 0.0001
+mlp_lr: 0.001
+grad_clip: 1.0
+warmup_ratio: 0.1
+warmup_steps: 19
+seeds: [0, 1, 2]
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.0
+lora_targets: [q_proj, v_proj]
+mlp_hidden: 64
+checkpoint_selection: development_kl_only
+heldout_eval: after_selection_only
+optimizer_steps_per_run: 192
+n_language_runs: 6
+n_numeric_runs: 3
+data_dir: reports/learning_pilot/data_v2
+cache_dir: models/hf
+cpu_threads: 4
+analysis_seed: 909

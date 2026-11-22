@@ -1,0 +1,17 @@
+Named components: observed=B, linked=C, unrelated=A. High rate is 0.8 and low rate is 0.2.
+
+Initially each component is high with probability 0.99, independently. A reset is different from initialization: whenever a component resets, its new state is high with probability 0.5 and low with probability 0.5, independently of its previous state. Components that reset together share only the event; their redrawn values are independent. The unrelated component never resets. Before every observed outcome, apply that time step's reset transition, then generate the Bernoulli outcome from the current rate (0.8 if high, 0.2 if low). The decision uses the latent state immediately after the final listed observation; there is no extra transition before diagnosis or reward.
+
+Observed component B and linked component C have independent Bernoulli(0.03) reset events.
+
+Each joint key has three characters, left to right: observed, linked, unrelated. 1 means the component is high and 0 means low. Example: 100 means observed high, linked low, unrelated low. Keys are names, not an ordered array.
+
+The supplied distribution already conditions on all observations through the decision time. Copy this joint unchanged. No further inference or transition is needed. This is posterior assistance, not a revealed simulator latent.
+
+current_state checkpoint=after_obs_32:
+{"checkpoint":"after_obs_32","joint":{"000":1.332726294112008e-07,"001":0.003377661519797471,"010":6.601414028296727e-08,"011":0.0016730623713315201,"100":2.6252523534419127e-05,"101":0.6653439564563178,"110":1.3003703603955393e-05,"111":0.32956586413864514},"schema_version":2}
+
+Return exactly one JSON object and no other text:
+{"joint": {"000": p, "001": p, "010": p, "011": p, "100": p, "101": p, "110": p, "111": p}, "action": "choose_linked" or "choose_safe" or "diagnose_linked"}
+joint must contain exactly those eight keys, each a probability in [0, 1], summing to 1. Do not report separate marginals or predictive means.
+choose_linked takes the linked component's expected rate. choose_safe takes a known alternative worth 0.65. diagnose_linked: you pay a cost of 0.04 once to learn the linked latent RATE, then take the higher of that rate and 0.65. Do not include a rationale.

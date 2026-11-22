@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Group meeting — selective revision, 3–15 Sep</title>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+</script>
+<style>
+:root {
+  --fg: #1a1a1a;
+  --muted: #555;
+  --border: #ddd;
+  --bg: #f6f7f9;
+  --card: #fff;
+  --accent: #1f4e79;
+  --good: #1b7a4e;
+  --bad: #9b2c2c;
+  --warn: #8a5a00;
+}
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.55;
+}
+.wrap {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 36px 28px 96px;
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--border);
+}
+h1, h2, h3 { color: var(--accent); line-height: 1.25; }
+h1 { font-size: 1.85rem; margin-top: 0; }
+h2 {
+  margin-top: 2.2rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0 1.4rem;
+  font-size: 0.92rem;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+th { background: #eef3f8; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.good { color: var(--good); font-weight: 600; }
+.bad { color: var(--bad); font-weight: 600; }
+em { color: var(--muted); }
+code {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.88em;
+  background: #f3f3f3;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+blockquote {
+  margin: 1rem 0;
+  padding: 0.15rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: #f4f7fb;
+}
+.callout {
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d8c48a;
+  background: #fff8e8;
+  border-radius: 6px;
+}
+.callout.stop {
+  border-color: #c9a0a0;
+  background: #fbeeee;
+}
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 1rem 0 1.4rem;
+}
+.kpi {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #f8fafc;
+}
+.kpi b { display: block; font-size: 1.25rem; color: var(--accent); }
+.kpi span { font-size: 0.82rem; color: var(--muted); }
+.barwrap { margin: 0.4rem 0 1rem; }
+.barrow {
+  display: grid;
+  grid-template-columns: 210px 1fr 70px;
+  gap: 8px;
+  align-items: center;
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+.track { background: #e8edf3; height: 14px; border-radius: 7px; overflow: hidden; }
+.fill { height: 100%; background: var(--accent); }
+.fill.ref { background: #5a8f6b; }
+.fill.bad { background: #b04a4a; }
+.mermaid { background: #fff; padding: 12px; margin: 1rem 0; text-align: center; }
+.toc a { color: var(--accent); text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+@media print {
+  body { background: #fff; }
+  .wrap { box-shadow: none; max-width: none; }
+  h2 { break-before: auto; }
+}
+@media (max-width: 720px) {
+  .kpis { grid-template-columns: 1fr 1fr; }
+  .barrow { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Selective revision after Week 2</h1>
+<p>
+  <strong>Date:</strong> 15 September 2026<br>
+  <strong>Follows:</strong> <a href="week2_revision_2026-09.html">3 Sep group meeting</a> (doubt / retract / resurrection)<br>
+  <strong>This briefing:</strong> 9–15 Sep diagnostics + first learning result
+</p>
+
+<p class="toc">
+  <a href="#tldr">TL;DR</a> ·
+  <a href="#q">Question</a> ·
+  <a href="#timeline">What we ran</a> ·
+  <a href="#gemini">Gemini</a> ·
+  <a href="#learn">Learning pilot</a> ·
+  <a href="#010">Longer MLP</a> ·
+  <a href="#not">What we do not claim</a> ·
+  <a href="#ask">Ask</a>
+</p>
+
+<h2 id="tldr">TL;DR</h2>
+<ol>
+  <li>We asked whether an LLM <strong>selectively revises</strong> linked predictions and leaves unrelated ones alone, given new evidence.</li>
+  <li>With thinking, frozen Gemini <strong>solves the one-event numeric task</strong> when structure is supplied. Carrying its own previous forecast forward is much harder than reconstructing from the tape.</li>
+  <li>We <strong>retired a proposed paired loss</strong> and trained an ordinary posterior-KL baseline (tiny MLP, linear head, LoRA) on a 16-state filter.</li>
+  <li>LoRA beats the other learners, but <strong>every learner loses to cheap statistical filters</strong> — even on training data. Longer MLP training helps, still far from the independent filter.</li>
+</ol>
+<blockquote>
+  <strong>Status:</strong> useful negative result and working apparatus. <strong>Not</strong> a new method, and not a reason to scale Qwen. Numerical-training queue is closed.
+</blockquote>
+
+<div class="kpis">
+  <div class="kpi"><b>0 / 72</b><span>Gemini thinking errors, one-event grid</span></div>
+  <div class="kpi"><b>~$23</b><span>Gemini diagnostics (002 + 004–006)</span></div>
+  <div class="kpi"><b>$0</b><span>GPU learning pilot + MLP diagnosis</span></div>
+  <div class="kpi"><b>9 + 3</b><span>Qwen/MLP runs, then 30-epoch MLP</span></div>
+</div>
+
+<h2 id="q">The question after Week 2</h2>
+<p>Week 2: a frozen LLM forms a hypothesis, doubts, and often <em>resurrects</em> the old one. Recency prompts help on change and hurt on no-change. That is not a general revision loop.</p>
+<p>This fortnight we isolated a cleaner computational demand:</p>
+<blockquote>
+  Use new evidence to update <strong>linked</strong> mechanisms, <strong>preserve unrelated</strong> forecasts, and only then choose a costly diagnosis.
+</blockquote>
+<p>Four components, known reset groups, known previous joint, short suffix of observations. Exact Bayes is available as a reference, not as the proposed paper.</p>
+
+<div class="mermaid">flowchart TB
+  A[Evidence about some components] --> B{Shared reset group?}
+  B -->|yes| C[Revise linked unobserved too]
+  B -->|no| D[Leave unrelated forecasts alone]
+  C --> E[Decide: exploit / diagnose / safe]
+  D --> E
+</div>
+
+<h2 id="timeline">What we actually ran</h2>
+<table>
+  <thead>
+    <tr><th>When</th><th>What</th><th>Outcome</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>9 Sep</td>
+      <td>Exact 16-state observer + Gemini one-event grid</td>
+      <td>Thinking: <span class="good">0/72 errors</span>. No thinking: 7/72, all shared-reset diagnose misses.</td>
+    </tr>
+    <tr>
+      <td>10–11 Sep</td>
+      <td>Sequential tapes (reconstruct / self-state / reference-state), then a protocol fix, then a state-handoff localizer</td>
+      <td>Reconstruct almost solved. Self-state is not. Giving the <em>current</em> posterior copies perfectly. Suffix continuation is unstable.</td>
+    </tr>
+    <tr>
+      <td>11 Sep</td>
+      <td>Paired “update-difference” loss (CPU, no training)</td>
+      <td><strong>Retired.</strong> Algebra is an uncentered error product; fixtures leak partner IDs. Use ordinary KL first.</td>
+    </tr>
+    <tr>
+      <td>14 Sep</td>
+      <td>9-run GPU pilot: MLP / frozen-Qwen+head / LoRA × 3 seeds, 192 steps</td>
+      <td>LoRA best among learners; <strong>all worse than stale / transition-only / independent</strong> on train.</td>
+    </tr>
+    <tr>
+      <td>15 Sep</td>
+      <td>Same tiny MLP, 30 epochs on CPU</td>
+      <td>Beats transition-only on train+dev. Still ~7× the independent filter. Queue closed.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="gemini">Gemini diagnostics (frozen 3.5 Flash)</h2>
+<p>Paid grids, one in-flight request, resume-safe logs. Temperature 0, thinking on unless noted.</p>
+
+<h3>One event, structure supplied</h3>
+<table>
+  <thead>
+    <tr><th>Run</th><th class="num">Jobs</th><th>Valid</th><th class="num">Decision errors</th><th class="num">Spend</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Thinking on</td><td class="num">72</td><td>72/72</td><td class="num good">0</td><td class="num">$1.68</td></tr>
+    <tr><td>Thinking off</td><td class="num">72</td><td>72/72</td><td class="num">7</td><td class="num">$0.16</td></tr>
+  </tbody>
+</table>
+<p>No-thinking errors sit on <em>shared</em> resets when the optimum is a cheap diagnosis. Unrelated component C does not drift. So: the model can use supplied structure if it thinks; the remaining errors look like valuation/inference on the linked bit, not wild over-update.</p>
+
+<h3>Sequential: reconstruct vs carry your own state</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Interface</th>
+      <th class="num">n</th>
+      <th class="num">Ref-optimal errors</th>
+      <th class="num">Mean loss</th>
+      <th>Read as</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Reconstruct from the tape</td>
+      <td class="num">32</td>
+      <td class="num good">4</td>
+      <td class="num">0.004</td>
+      <td>Almost solved with thinking</td>
+    </tr>
+    <tr>
+      <td>Carry previous self-forecast + suffix</td>
+      <td class="num">32</td>
+      <td class="num">14</td>
+      <td class="num">0.039</td>
+      <td>Not a working memory update</td>
+    </tr>
+    <tr>
+      <td>Carry previous <em>reference</em> + suffix</td>
+      <td class="num">32</td>
+      <td class="num">13</td>
+      <td class="num">0.027</td>
+      <td>Even a correct prior is not enough</td>
+    </tr>
+    <tr>
+      <td>Give current reference posterior</td>
+      <td class="num">12</td>
+      <td class="num good">0</td>
+      <td class="num">0</td>
+      <td>Decisions are easy if inference is handed over</td>
+    </tr>
+  </tbody>
+</table>
+<p>Stable (no change) cells: 0 errors. Independent structure remains the painful sequential case. About half of sequential mistakes also disagree with the model’s <em>own</em> emitted probabilities — not every miss is “didn’t know the VOI formula.”</p>
+<p><em>Paid sequential grids ~$21.5 including protocol-correction reruns. We stopped commissioning further numeric prompt batches after the handoff localizer.</em></p>
+
+<h2 id="learn">First learning result (14 Sep, local RTX 8000)</h2>
+<p>Ordinary teacher→student joint KL. No paired loss. Qwen3-0.6B-Base, float32, 3 epochs / 192 steps, 2048 train + 256 each of dev / same-topology / structural. Three seeds, all reported.</p>
+
+<p><strong>Train joint KL</strong> (lower is better). Green = cheap non-learned filters.</p>
+<div class="barwrap">
+  <div class="barrow"><span>Independent filter</span><div class="track"><div class="fill ref" style="width:5.9%"></div></div><span>0.017</span></div>
+  <div class="barrow"><span>Transition only (ignore evidence)</span><div class="track"><div class="fill ref" style="width:42%"></div></div><span>0.120</span></div>
+  <div class="barrow"><span>Keep previous joint</span><div class="track"><div class="fill ref" style="width:55%"></div></div><span>0.158</span></div>
+  <div class="barrow"><span>LoRA + head</span><div class="track"><div class="fill" style="width:81%"></div></div><span>0.230</span></div>
+  <div class="barrow"><span>Frozen Qwen + linear head</span><div class="track"><div class="fill bad" style="width:100%"></div></div><span>0.284</span></div>
+  <div class="barrow"><span>Numeric MLP (8k params)</span><div class="track"><div class="fill bad" style="width:100%"></div></div><span>0.285</span></div>
+</div>
+<p><em>Scale: bar length relative to 0.285. Exact filter is 0 by construction (hand-coded known model, not a learned competitor).</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Predictor</th>
+      <th class="num">Train</th>
+      <th class="num">Same topology</th>
+      <th class="num">New structure</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>MLP</td><td class="num">0.285</td><td class="num">0.278</td><td class="num">0.328</td></tr>
+    <tr><td>Head only</td><td class="num">0.284</td><td class="num">0.278</td><td class="num">0.333</td></tr>
+    <tr><td>LoRA</td><td class="num">0.230</td><td class="num">0.223</td><td class="num">0.295</td></tr>
+    <tr><td>Stale</td><td class="num">0.158</td><td class="num">0.154</td><td class="num">0.154</td></tr>
+    <tr><td>Transition-only</td><td class="num">0.120</td><td class="num">0.120</td><td class="num">0.116</td></tr>
+    <tr><td>Independent filter</td><td class="num good">0.017</td><td class="num good">0.020</td><td class="num good">0.081</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>Three qualifications that matter in the meeting:</strong>
+  <ul>
+    <li><strong>Head ≈ MLP.</strong> Frozen Qwen text does not beat a 47-d numeric encoder. This task does not justify an “LLM method” claim.</li>
+    <li><strong>~78% of LoRA’s structural gain vs head is on h=0</strong>, where grouping has no dynamical effect. Remaining h=.03 gap is small.</li>
+    <li><strong>Almost no decision headroom</strong> over independence: structural regret 0.00075 (independent) vs 0.0086 (LoRA). Fixing the last coupling would not unlock a large average utility story on this distribution.</li>
+  </ul>
+</div>
+<p>Wall: ~2 hours on a Quadro RTX 8000. All nine <code>best</code> checkpoints are the last step — the 3-epoch recipe had not converged (and its LR hits 0 at step 192).</p>
+
+<h2 id="010">Did we just under-train the numeric net?</h2>
+<p>Same 8,272-parameter MLP, CPU, 30 epochs / 1,920 updates, warmup still 19 steps. Train/dev only (holdouts already peeked in the pilot).</p>
+<table>
+  <thead>
+    <tr><th>Predictor</th><th class="num">Train KL</th><th class="num">Dev KL</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>3-epoch MLP</td><td class="num">0.285</td><td class="num">0.294</td></tr>
+    <tr><td>30-epoch MLP</td><td class="num good">0.105</td><td class="num good">0.124</td></tr>
+    <tr><td>Transition-only</td><td class="num">0.120</td><td class="num">0.134</td></tr>
+    <tr><td>Independent filter</td><td class="num good">0.017</td><td class="num good">0.018</td></tr>
+  </tbody>
+</table>
+<p>All three seeds beat transition-only on train <em>and</em> dev. Train and dev fell together (not a classic overfit). Dev is still about <strong>7×</strong> the independent filter. Unrelated-component error stays ~0.036 vs ~0 for the independent reference.</p>
+<p>75 seconds, $0. Longer ordinary KL <em>helped this net</em>. It does not say Qwen would get the same lift, and it does not make approximating a known 16-state filter a paper.</p>
+
+<h2 id="not">What we do not claim</h2>
+<div class="callout stop">
+  <ul>
+    <li>No novel learner. Ordinary distillation of a supplied posterior.</li>
+    <li>No evidence that language is necessary here. MLP matches the LM head; independent filtering wins.</li>
+    <li>No demonstration of discovering structure, or of long-horizon learned memory.</li>
+    <li>MemoPilot already trains a memory updater for a frozen player. WorldEvolver already revises deployment-time context. Generic “learned memory” is occupied.</li>
+  </ul>
+</div>
+<p>What we <em>do</em> have: an exact reference, sealed-ish splits, cheap statistical controls, checked decision scoring, a resumable tiny training path, and several easy stories we can stop telling.</p>
+
+<h2 id="ask">Ask for the group</h2>
+<p><strong>Recommendation already taken internally:</strong> close the automatic numeric-training queue. Do not buy another Qwen run to chase the independent filter on this supplied-structure task.</p>
+<p>The original scientific bet is still worth a design discussion, not more of the same benchmark:</p>
+<blockquote>
+  Infer <em>which shared mechanism failed</em> from language and experience, decide how far a correction should propagate, and show transfer to an <em>unobserved linked</em> task without harming an unrelated one — against generic memory revision and against a statistical observer that is allowed to infer dependencies.
+</blockquote>
+<p>A later candidate (not run): limited effort among exploiting the current strategy, checking whether its evidence went stale, and proposing/validating a repair under <em>hidden</em> drift. That would need a discriminating example and a literature case, not another 16-state KL table.</p>
+<p><em>Raw reports:</em> one-event live, sequential v2, state handoff, paired-loss feasibility, GPU pilot, 30-epoch MLP diagnosis. Spend cap throughout: ~$20/run; Gemini not DeepSeek.</p>
+
+</div>
+</body>
+</html>

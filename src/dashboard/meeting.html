@@ -1,0 +1,84 @@
+<section class="brief-slide brief-cover" id="brief" data-slide="The question" aria-labelledby="brief-title">
+  <div class="cover-copy">
+    <p class="brief-kicker"><span class="kicker-rule"></span>Group meeting <span aria-hidden="true">/</span> 23 November 2026</p>
+    <h1 id="brief-title">When should an AI question a strategy that still works?</h1>
+    <p class="cover-lead">An agent can notice when its usual choice starts failing. What tells it to look elsewhere while that choice still pays off?</p>
+    <p class="brief-body">Our project follows a language model across many decisions. Its tools keep working, its memory persists, and what earns a reward can change without warning. We varied what the model remembers and who decides when to check.</p>
+    <a class="brief-link reading-only" href="#experiment">See how we tested it <span aria-hidden="true">↓</span></a>
+  </div>
+  <figure class="probe-figure">
+    <figcaption><span class="figure-kicker">An observation from AlphaDesk</span><strong>One check, two possible worlds</strong></figcaption>
+    <p>In our simulated investment desk, the same agent spent 10 points to check strategy S1 in each world.</p>
+    <div class="probe-reading"><div><span>Unused strategy improved</span><strong>82.1</strong></div><span class="yield-track" aria-hidden="true"><i></i></span></div>
+    <div class="probe-reading probe-stable"><div><span>Payoffs stayed stable</span><strong>18.1</strong></div><span class="yield-track" aria-hidden="true"><i></i></span></div>
+    <div class="probe-scale" aria-hidden="true"><span>0</span><span>Yield estimate</span><span>100</span></div>
+    <p class="figure-source">Gemini 3.8 Flash · seed 505 · session 15<br>First directed check in each matched world.</p>
+  </figure>
+</section>
+
+<section class="brief-slide" id="experiment" data-slide="The experiment" aria-labelledby="experiment-title">
+  <p class="brief-kicker">Experiment design</p>
+  <h2 id="experiment-title">Same model, same history.<br>Three ways to use experience.</h2>
+  <p class="brief-deck">In AlphaDesk v0.3 the model allocates a portfolio across six anonymous strategies. It sees the market brief and its own results. Checking one strategy’s current yield costs 10 points. Moving money also costs points.</p>
+  <div class="arm-grid">
+    <article><h3>Rule cards</h3><p>A memory baseline ranks advice that worked before. The model sees the recommended actions and their track records.</p></article>
+    <article><h3>Factual ledger</h3><p>The model gets a table of past actions, outcomes and time since each check. It decides what to do with that evidence.</p></article>
+    <article><h3>Ledger + directions</h3><p>The same ledger carries extra instructions written by us. They name when to check, which option to inspect and how to act on the result.</p></article>
+  </div>
+  <p class="brief-note"><strong>What is a harness?</strong> The software that supplies memory and instructions between decisions. We changed the harness and kept each model’s weights fixed. The evaluation branches start from the same public history and holdings.</p>
+</section>
+
+<section class="brief-slide" id="reversal" data-slide="A visible reversal" aria-labelledby="reversal-title">
+  <p class="brief-kicker">AlphaDesk · abrupt reversal</p>
+  <h2 id="reversal-title">When the old choice failed,<br>the factual ledger helped.</h2>
+  <div class="results-layout">
+    <div class="brief-stat"><strong>$reversal_tally</strong><span>model–seed pairs recovered better with the ledger than with rule cards.</span></div>
+    <div><div class="brief-table-wrap">$reversal_table</div>
+    <p class="figure-note">Higher is better. Scores are relative to a reference that knows the payoffs and pays switching costs. Flash and Hydrogen saw six generated markets each. Gemma saw three of the same markets. <a class="reading-only" href="#score-guide">Scoring equation</a></p></div>
+  </div>
+  <p class="brief-note"><strong>Did explicit directions help further?</strong> Flash lost ground with directions, Hydrogen changed little, and Gemma improved on average. Gemma had only three shorter runs and needed fewer fallback actions with directions. Its estimated additional gain is uncertain.</p>
+</section>
+
+<section class="brief-slide" id="opportunities" data-slide="A silent opportunity" aria-labelledby="opportunities-title">
+  <p class="brief-kicker">AlphaDesk · silent opportunity</p>
+  <h2 id="opportunities-title">What if the old choice<br>keeps paying?</h2>
+  <p class="brief-deck">An unused strategy improves while the current holding looks fine. A second world stays stable. The agent sees the same evidence at the start and pays the same price to look.</p>
+  <div class="results-layout">
+    <div class="brief-stat"><strong>$opportunity_checks</strong><span>paid checks across $opportunity_sessions sessions with the factual ledger alone. Two Gemini models, $opportunity_branches branches.</span></div>
+    <div><div class="brief-table-wrap">$opportunity_table</div><p class="figure-note">Difference in percentage points of reference utility, after checking and switching costs. Each model averaged three directed checks per branch in both worlds. Gemma was evaluated on reversal and stability only.</p></div>
+  </div>
+  <p class="brief-note"><strong>The trade-off.</strong> The extra instruction bought information the models otherwise passed up. That information paid for itself when the alternative improved. The stable comparison shows what unnecessary checking cost.</p>
+</section>
+
+<section class="brief-slide" id="banking" data-slide="External banking test" aria-labelledby="banking-title">
+  <p class="brief-kicker">External benchmark · ServeLearnBench</p>
+  <h2 id="banking-title">Does the idea travel to a bank?</h2>
+  <p class="brief-deck">A customer-service agent handles transfers, cards and credit requests as bank policy changes. It learns from feedback on earlier cases. Its memory is then frozen while it handles the test cases in that window.</p>
+  <div class="results-layout">
+    <div class="brief-stat"><strong>3 <small>cases</small></strong><span>ahead of the strongest baseline on 40 post-change cases. Eight passed only with our harness and five only with the baseline.</span></div>
+    <div><div class="brief-table-wrap">$banking_table</div><p class="figure-note">Gemini 3.8 Flash · one six-window banking stream. Reflection calls are extra calls used to revise memory. Acting calls are counted separately.</p></div>
+  </div>
+  <p class="brief-note"><strong>What transferred?</strong> The idea of revisiting advice within the relevant workflow. Banking used its own grouping and review rules. A simpler earlier banking variant scored 5/14 against 9/14 for the memoryless baseline on a different stream. An unchanged harness still needs a held-out test.</p>
+</section>
+
+<section class="brief-slide" id="guidance" data-slide="Who supplied the guidance?" aria-labelledby="guidance-title">
+  <p class="brief-kicker">Interpreting the evidence</p>
+  <h2 id="guidance-title">Who told the agent to check?</h2>
+  <div class="audit-grid">
+    <article><h3>We wrote the AlphaDesk rule.</h3><p>In calm conditions, check a lightly held strategy if it has gone at least seven calm sessions without a check and the cooldown has passed. The instruction names the strategy. If its measured yield clears the expected portfolio mean by more than eight points, shift 55% to it.</p></article>
+    <article><h3>The banking model wrote the advice.</h3><p>It drafted rules from public outcomes on earlier serving cases. We supplied the workflow categories, failure threshold and prompt to reconsider archived rules. Only a separate reference agent received the active bank policy.</p></article>
+  </div>
+  <div class="audit-verdict"><h3>Did the harness see the future?</h3><p>The paths we traced pass public observations to the acting harness. Researchers did use private strategy roles to build AlphaDesk’s common starting history and private labels to select the banking slice. A public freeze label also made one AlphaDesk case easy. These choices limit what the gains tell us about independent discovery.</p></div>
+</section>
+
+<section class="brief-slide" id="next-study" data-slide="The next test" aria-labelledby="next-title">
+  <p class="brief-kicker">Group discussion · proposed work</p>
+  <h2 id="next-title">Can the agent write a checking rule worth keeping?</h2>
+  <ol class="next-steps">
+    <li><div><h3>Make the benchmark harder to guess.</h3><p>Give a temporary dip and a lasting reversal the same visible loss and market signals. A paid check can distinguish them. This is the next benchmark change.</p></div></li>
+    <li><div><h3>Let the agent write the procedure.</h3><p>Start with blank memory and ordinary task instructions. At a shared checkpoint, apply later self-authored edits in one branch and freeze the procedure in the other. Give both the same review budget and fresh feedback.</p></div></li>
+    <li><div><h3>Test the next change and an unfamiliar setup.</h3><p>Measure later reward after fees on changing and stable streams. Then freeze the method and start with empty memory in a held-out task. A recursive improvement claim needs an edit that improves how the agent makes subsequent edits.</p></div></li>
+  </ol>
+  <p class="brief-note"><strong>Question for the group.</strong> What would persuade us that the agent learned when a check is worth its price? We can test this with frozen models. Training stays deferred.</p>
+  <a class="brief-link reading-only" href="#meeting-evidence">Questions and source tables <span aria-hidden="true">↓</span></a>
+</section>

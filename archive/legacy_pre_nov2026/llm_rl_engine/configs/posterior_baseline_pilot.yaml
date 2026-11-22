@@ -1,0 +1,30 @@
+kind: ordinary_posterior_kl_pilot
+version: posterior_baseline_v1
+model_id: Qwen/Qwen3-0.6B-Base
+model_revision: da87bfb608c14b7cf20ba1ce41287e8de496c0cd
+loss: joint_kl_teacher_to_student
+chat_template: false
+max_length: 1024
+epochs: 3
+batch_size: 32
+optimizer: AdamW
+head_lr: 0.001
+lora_lr: 0.0001
+weight_decay_bias: 0.0
+grad_clip: 1.0
+warmup_ratio: 0.1
+seeds: [0, 1, 2]
+modes:
+  head:
+    trainable: linear_16_state_head
+    backbone: frozen
+  lora:
+    trainable: [linear_16_state_head, lora_q_proj, lora_v_proj]
+    lora_r: 8
+    lora_alpha: 16
+    lora_dropout: 0.0
+checkpoint_selection: development_kl_only
+heldout_eval: after_selection_only
+optimizer_steps_per_run: 192
+n_runs: 6
+note: Initial settings, not optimized. Do not launch from task 008.

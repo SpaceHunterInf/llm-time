@@ -1,0 +1,8 @@
+{
+  "instruction_sha256": "1dc1d37606c566b7911c4403d822efafd518fbb5416d32f509cfd47dc83fa1fc",
+  "max_output_tokens": 2048,
+  "model": "gemini-3.5-flash",
+  "not_retuned_after_smoke": true,
+  "temperature": 0,
+  "thinking_level": "low"
+}

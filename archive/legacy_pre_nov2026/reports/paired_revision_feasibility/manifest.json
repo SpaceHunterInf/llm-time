@@ -1,0 +1,350 @@
+{
+  "algebra": {
+    "common_bias_L_pair": 2.311115933264683e-33,
+    "expansion_abs": 1.3877787807814457e-17,
+    "grad_max_abs_err_a": 6.188674225859891e-11,
+    "grad_max_abs_err_b": 1.2026356993599663e-10,
+    "r_cancels_abs": 0.0
+  },
+  "coverage": {
+    "by_split": {
+      "dev": 16,
+      "test": 16,
+      "train": 96
+    },
+    "enumerated": true,
+    "families": {
+      "dev": [
+        "D00",
+        "D01",
+        "D02",
+        "D03"
+      ],
+      "test": [
+        "X00",
+        "X01",
+        "X02",
+        "X03"
+      ],
+      "train": [
+        "T00",
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T09",
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15"
+      ]
+    },
+    "log_likelihood_max": -1.3489091776748807,
+    "log_likelihood_min": -5.920149041691388,
+    "max_unobserved_related_gap": 0.16706576287368213,
+    "n_pairs": 128,
+    "n_pairs_with_related_gap": 60,
+    "n_previous_states_differ": 96,
+    "topology_types": {
+      "dev": [
+        "four_singletons",
+        "one_pair"
+      ],
+      "test": [
+        "triple",
+        "two_pairs"
+      ],
+      "train": [
+        "four_singletons",
+        "one_pair"
+      ]
+    }
+  },
+  "enumerated_evidence": true,
+  "kind": "paired_revision_feasibility_v1",
+  "n_pairs": 128,
+  "note": "Synthetic prediction-error probes, not a training result. No APIs.",
+  "probes_test": {
+    "common_bias": {
+      "L_base": 0.26190842632884825,
+      "L_kl_mse": 0.26368376030167684,
+      "L_kl_pair": 0.2619318090276052,
+      "L_kl_shuffle": 0.262611155947992,
+      "L_mse": 0.0017753339728285428,
+      "L_pair": 2.3382698756961365e-05,
+      "L_pair_shuffled": 0.0007027296191436967,
+      "max_abs_algebra_gap": 6.776263578034403e-19,
+      "n": 16
+    },
+    "exact": {
+      "L_base": 0.0,
+      "L_kl_mse": 0.0,
+      "L_kl_pair": 0.0,
+      "L_kl_shuffle": 0.0,
+      "L_mse": 0.0,
+      "L_pair": 0.0,
+      "L_pair_shuffled": 0.0,
+      "max_abs_algebra_gap": 0.0,
+      "n": 16
+    },
+    "independent": {
+      "L_base": 0.12361588458846624,
+      "L_kl_mse": 0.12794981128230912,
+      "L_kl_pair": 0.12945853640661856,
+      "L_kl_shuffle": 0.13121769693409002,
+      "L_mse": 0.004333926693842892,
+      "L_pair": 0.005842651818152327,
+      "L_pair_shuffled": 0.00760181234562378,
+      "max_abs_algebra_gap": 3.469446951953614e-18,
+      "n": 16
+    },
+    "random": {
+      "L_base": 2.1233398811988513,
+      "L_kl_mse": 2.303259816471484,
+      "L_kl_pair": 2.1583785806462013,
+      "L_kl_shuffle": 2.2468933736084726,
+      "L_mse": 0.1799199352726332,
+      "L_pair": 0.03503869944734985,
+      "L_pair_shuffled": 0.12355349240962157,
+      "max_abs_algebra_gap": 8.326672684688674e-17,
+      "n": 16
+    },
+    "scope_swap": {
+      "L_base": 0.17019554258415137,
+      "L_kl_mse": 0.1760381944023037,
+      "L_kl_pair": 0.19356614985676068,
+      "L_kl_shuffle": 0.18580167885694604,
+      "L_mse": 0.005842651818152327,
+      "L_pair": 0.023370607272609308,
+      "L_pair_shuffled": 0.01560613627279467,
+      "max_abs_algebra_gap": 0.0,
+      "n": 16
+    },
+    "stale": {
+      "L_base": 0.08982605018452065,
+      "L_kl_mse": 0.09543611340359445,
+      "L_kl_pair": 0.09130139388128825,
+      "L_kl_shuffle": 0.09614146854884967,
+      "L_mse": 0.005610063219073796,
+      "L_pair": 0.0014753436967675931,
+      "L_pair_shuffled": 0.006315418364329003,
+      "max_abs_algebra_gap": 7.806255641895632e-18,
+      "n": 16
+    }
+  },
+  "probes_train": {
+    "common_bias": {
+      "L_base": 0.32329814581996924,
+      "L_kl_mse": 0.32480922637804654,
+      "L_kl_pair": 0.3233045965182362,
+      "L_kl_shuffle": 0.3240088500294542,
+      "L_mse": 0.0015110805580771025,
+      "L_pair": 6.450698266827914e-06,
+      "L_pair_shuffled": 0.0007107042094849023,
+      "max_abs_algebra_gap": 1.2112571145736495e-18,
+      "n": 96
+    },
+    "exact": {
+      "L_base": 0.0,
+      "L_kl_mse": 0.0,
+      "L_kl_pair": 0.0,
+      "L_kl_shuffle": 0.0,
+      "L_mse": 0.0,
+      "L_pair": 0.0,
+      "L_pair_shuffled": 0.0,
+      "max_abs_algebra_gap": 0.0,
+      "n": 96
+    },
+    "independent": {
+      "L_base": 0.0179247800044766,
+      "L_kl_mse": 0.018244481863052626,
+      "L_kl_pair": 0.018564183721628654,
+      "L_kl_shuffle": 0.018564183721628654,
+      "L_mse": 0.0003197018585760324,
+      "L_pair": 0.0006394037171520648,
+      "L_pair_shuffled": 0.0006394037171520649,
+      "max_abs_algebra_gap": 3.2526065174565133e-19,
+      "n": 96
+    },
+    "random": {
+      "L_base": 2.388185441816287,
+      "L_kl_mse": 2.5960871969639383,
+      "L_kl_pair": 2.429290068836093,
+      "L_kl_shuffle": 2.47666561516259,
+      "L_mse": 0.20790175514764875,
+      "L_pair": 0.0411046270198051,
+      "L_pair_shuffled": 0.08848017334630233,
+      "max_abs_algebra_gap": 9.8879238130678e-17,
+      "n": 96
+    },
+    "scope_swap": {
+      "L_base": 0.032375828735591916,
+      "L_kl_mse": 0.03301523245274397,
+      "L_kl_pair": 0.034933443604200136,
+      "L_kl_shuffle": 0.033925299210063466,
+      "L_mse": 0.0006394037171520648,
+      "L_pair": 0.0025576148686082593,
+      "L_pair_shuffled": 0.0015494704744715478,
+      "max_abs_algebra_gap": 6.505213034913027e-19,
+      "n": 96
+    },
+    "stale": {
+      "L_base": 0.13877144588295273,
+      "L_kl_mse": 0.14752266599067868,
+      "L_kl_pair": 0.1390745480789282,
+      "L_kl_shuffle": 0.15624969346107975,
+      "L_mse": 0.008751220107725955,
+      "L_pair": 0.0003031021959755168,
+      "L_pair_shuffled": 0.017478247578127007,
+      "max_abs_algebra_gap": 3.7408257203420513e-17,
+      "n": 96
+    }
+  },
+  "rss_mb_peak": 24.625,
+  "rss_mb_start": 24.625,
+  "runtime_s": 4.232294193003327,
+  "showcase": {
+    "d_a": [
+      0.05679142443131724,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "d_b": [
+      0.05679142443131735,
+      0.025143972000677972,
+      1.1102230246251565e-16,
+      1.1102230246251565e-16
+    ],
+    "family_id": "T04",
+    "hazard": 0.03,
+    "log_likelihood_a": -1.9103246550358643,
+    "log_likelihood_b": -1.9103246550358648,
+    "names": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "pair_id": "T04|four_singletons|one_pair|((0, 1), (2,), (3,))",
+    "partition_a": [
+      [
+        0
+      ],
+      [
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3
+      ]
+    ],
+    "partition_b": [
+      [
+        0,
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3
+      ]
+    ],
+    "prefix": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "previous_states_equal": false,
+    "q_current_a_marginals": [
+      0.9949499370970898,
+      0.8840342461244711,
+      0.8840342461244711,
+      0.8840342461244711
+    ],
+    "q_current_b_marginals": [
+      0.99494993709709,
+      0.930892135889545,
+      0.8840342461244712,
+      0.8840342461244712
+    ],
+    "q_previous_a_marginals": [
+      0.9949306124668207,
+      0.9337934769000001,
+      0.9337934769000001,
+      0.9337934769000001
+    ],
+    "q_previous_b_marginals": [
+      0.9949306124668205,
+      0.9583208620985716,
+      0.9337934769,
+      0.9337934769
+    ],
+    "r_a": [
+      0.9381585126657725,
+      0.8840342461244711,
+      0.8840342461244711,
+      0.8840342461244711
+    ],
+    "r_b": [
+      0.9381585126657727,
+      0.905748163888867,
+      0.8840342461244711,
+      0.8840342461244711
+    ],
+    "structure_a": "{A} has its own Bernoulli(0.03) reset event. {B} has its own Bernoulli(0.03) reset event. {C} has its own Bernoulli(0.03) reset event. {D} has its own Bernoulli(0.03) reset event. When a group resets, each member independently redraws high with probability 0.5 and low with probability 0.5. Groups that do not reset keep their current component states. The unrelated-looking groups may still reset; serialize the stated group hazards. No hidden reset events or future outcomes are provided.",
+    "structure_b": "{A, B} share one Bernoulli(0.03) reset event. {C} has its own Bernoulli(0.03) reset event. {D} has its own Bernoulli(0.03) reset event. When a group resets, each member independently redraws high with probability 0.5 and low with probability 0.5. Groups that do not reset keep their current component states. The unrelated-looking groups may still reset; serialize the stated group hazards. No hidden reset events or future outcomes are provided.",
+    "suffix": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "unobserved_related": {
+      "component": 1,
+      "d_a": 0.0,
+      "d_b": 0.025143972000677972,
+      "gap": 0.025143972000677972,
+      "related_in": "b"
+    }
+  },
+  "split": {
+    "dev": 16,
+    "test": 16,
+    "train": 96
+  }
+}

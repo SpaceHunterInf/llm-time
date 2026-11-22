@@ -1,0 +1,1 @@
+{"batch_ids": ["train|four_singletons|4", "train|four_singletons|1"], "epoch": 0, "lr": 0.001, "n_microbatches": 2, "split": "train", "step": 1}

@@ -1,0 +1,3592 @@
+{
+  "diagnostic_grid": [
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.5484289975063971,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7371072493765993
+          },
+          "gross_value_of_information": 0.0871072493765993,
+          "net_diagnostic_advantage": 0.0871072493765993,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -3.930480298092923,
+        "posterior_events": {
+          "reset_A": 0.8352755186857244,
+          "reset_B": 0.8352755186857244,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.015336473426014968,
+          "B": 0.5807149958439951,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.209201884055609,
+          "B": 0.5484289975063972,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.5484289975063971,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.6971072493765993
+          },
+          "gross_value_of_information": 0.0871072493765993,
+          "net_diagnostic_advantage": 0.04710724937659927,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -3.930480298092923,
+        "posterior_events": {
+          "reset_A": 0.8352755186857244,
+          "reset_B": 0.8352755186857244,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.015336473426014968,
+          "B": 0.5807149958439951,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.209201884055609,
+          "B": 0.5484289975063972,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.5484289975063971,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5371072493765994
+          },
+          "gross_value_of_information": 0.0871072493765993,
+          "net_diagnostic_advantage": -0.11289275062340065,
+          "optimal_action": "choose_safe"
+        },
+        "log_evidence": -3.930480298092923,
+        "posterior_events": {
+          "reset_A": 0.8352755186857244,
+          "reset_B": 0.8352755186857244,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.015336473426014968,
+          "B": 0.5807149958439951,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.209201884055609,
+          "B": 0.5484289975063972,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.591434810260759,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7478587025651897
+          },
+          "gross_value_of_information": 0.09785870256518969,
+          "net_diagnostic_advantage": 0.09785870256518969,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -5.109722196748486,
+        "posterior_events": {
+          "reset_A": 0.6889972440110239,
+          "reset_B": 0.6889972440110239,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.19949120203519172,
+          "B": 0.6523913504345982,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.3196947212211151,
+          "B": 0.591434810260759,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.591434810260759,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7078587025651897
+          },
+          "gross_value_of_information": 0.09785870256518969,
+          "net_diagnostic_advantage": 0.05785870256518966,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -5.109722196748486,
+        "posterior_events": {
+          "reset_A": 0.6889972440110239,
+          "reset_B": 0.6889972440110239,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.19949120203519172,
+          "B": 0.6523913504345982,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.3196947212211151,
+          "B": 0.591434810260759,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.591434810260759,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5478587025651898
+          },
+          "gross_value_of_information": 0.09785870256518969,
+          "net_diagnostic_advantage": -0.10214129743481026,
+          "optimal_action": "choose_safe"
+        },
+        "log_evidence": -5.109722196748486,
+        "posterior_events": {
+          "reset_A": 0.6889972440110239,
+          "reset_B": 0.6889972440110239,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.19949120203519172,
+          "B": 0.6523913504345982,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.3196947212211151,
+          "B": 0.591434810260759,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7315531011045029,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7828882752761257
+          },
+          "gross_value_of_information": 0.05133517417162281,
+          "net_diagnostic_advantage": 0.05133517417162281,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -5.11163201165258,
+        "posterior_events": {
+          "reset_A": 0.2124044180118947,
+          "reset_B": 0.2124044180118947,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.7994902293967713,
+          "B": 0.8859218351741716,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.6796941376380629,
+          "B": 0.7315531011045031,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7315531011045029,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7428882752761257
+          },
+          "gross_value_of_information": 0.05133517417162281,
+          "net_diagnostic_advantage": 0.011335174171622775,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -5.11163201165258,
+        "posterior_events": {
+          "reset_A": 0.2124044180118947,
+          "reset_B": 0.2124044180118947,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.7994902293967713,
+          "B": 0.8859218351741716,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.6796941376380629,
+          "B": 0.7315531011045031,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7315531011045029,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5828882752761257
+          },
+          "gross_value_of_information": 0.05133517417162281,
+          "net_diagnostic_advantage": -0.14866482582837715,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.11163201165258,
+        "posterior_events": {
+          "reset_A": 0.2124044180118947,
+          "reset_B": 0.2124044180118947,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.7994902293967713,
+          "B": 0.8859218351741716,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.6796941376380629,
+          "B": 0.7315531011045031,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7747742610515302,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7936935652628826
+          },
+          "gross_value_of_information": 0.01891930421135235,
+          "net_diagnostic_advantage": 0.01891930421135235,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -3.9335653852164447,
+        "posterior_events": {
+          "reset_A": 0.06539366989275437,
+          "reset_B": 0.06539366989275437,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9845670939053099,
+          "B": 0.9579571017525503,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.790740256343186,
+          "B": 0.7747742610515302,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7747742610515302,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7536935652628826
+          },
+          "gross_value_of_information": 0.01891930421135235,
+          "net_diagnostic_advantage": -0.021080695788647685,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.9335653852164447,
+        "posterior_events": {
+          "reset_A": 0.06539366989275437,
+          "reset_B": 0.06539366989275437,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9845670939053099,
+          "B": 0.9579571017525503,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.790740256343186,
+          "B": 0.7747742610515302,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7747742610515302,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5936935652628825
+          },
+          "gross_value_of_information": 0.01891930421135235,
+          "net_diagnostic_advantage": -0.18108069578864772,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.9335653852164447,
+        "posterior_events": {
+          "reset_A": 0.06539366989275437,
+          "reset_B": 0.06539366989275437,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9845670939053099,
+          "B": 0.9579571017525503,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.790740256343186,
+          "B": 0.7747742610515302,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7781497602972646,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7945374400743161
+          },
+          "gross_value_of_information": 0.016387679777051578,
+          "net_diagnostic_advantage": 0.016387679777051578,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -2.5618450607801924,
+        "posterior_events": {
+          "reset_A": 0.05391237994127699,
+          "reset_B": 0.05391237994127699,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9990212829487582,
+          "B": 0.9635829338287741,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.799412769769255,
+          "B": 0.7781497602972647,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7781497602972646,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7545374400743161
+          },
+          "gross_value_of_information": 0.016387679777051578,
+          "net_diagnostic_advantage": -0.023612320222948457,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -2.5618450607801924,
+        "posterior_events": {
+          "reset_A": 0.05391237994127699,
+          "reset_B": 0.05391237994127699,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9990212829487582,
+          "B": 0.9635829338287741,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.799412769769255,
+          "B": 0.7781497602972647,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7781497602972646,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5945374400743162
+          },
+          "gross_value_of_information": 0.016387679777051578,
+          "net_diagnostic_advantage": -0.18361232022294838,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -2.5618450607801924,
+        "posterior_events": {
+          "reset_A": 0.05391237994127699,
+          "reset_B": 0.05391237994127699,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9990212829487582,
+          "B": 0.9635829338287741,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.799412769769255,
+          "B": 0.7781497602972647,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7783640227760695,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7945910056940174
+          },
+          "gross_value_of_information": 0.016226982917947885,
+          "net_diagnostic_advantage": 0.016226982917947885,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -1.1764686680999745,
+        "posterior_events": {
+          "reset_A": 0.05318359599976337,
+          "reset_B": 0.05318359599976337,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9999387740065564,
+          "B": 0.963940037960116,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999632644039338,
+          "B": 0.7783640227760698,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7783640227760695,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7545910056940174
+          },
+          "gross_value_of_information": 0.016226982917947885,
+          "net_diagnostic_advantage": -0.02377301708205215,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -1.1764686680999745,
+        "posterior_events": {
+          "reset_A": 0.05318359599976337,
+          "reset_B": 0.05318359599976337,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9999387740065564,
+          "B": 0.963940037960116,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999632644039338,
+          "B": 0.7783640227760698,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7783640227760695,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5945910056940173
+          },
+          "gross_value_of_information": 0.016226982917947885,
+          "net_diagnostic_advantage": -0.18377301708205218,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -1.1764686680999745,
+        "posterior_events": {
+          "reset_A": 0.05318359599976337,
+          "reset_B": 0.05318359599976337,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9999387740065564,
+          "B": 0.963940037960116,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999632644039338,
+          "B": 0.7783640227760698,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": 0.026549999999999963,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -3.9304802980929225,
+        "posterior_events": {
+          "reset_A": 0.8352755186857245,
+          "reset_B": 0.09999999999999999,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.01533647342601495,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.209201884055609,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7511500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.013450000000000073,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.9304802980929225,
+        "posterior_events": {
+          "reset_A": 0.8352755186857245,
+          "reset_B": 0.09999999999999999,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.01533647342601495,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.209201884055609,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.1734500000000001,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.9304802980929225,
+        "posterior_events": {
+          "reset_A": 0.8352755186857245,
+          "reset_B": 0.09999999999999999,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.01533647342601495,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.209201884055609,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": 0.026549999999999963,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -5.109722196748486,
+        "posterior_events": {
+          "reset_A": 0.688997244011024,
+          "reset_B": 0.09999999999999998,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.19949120203519177,
+          "B": 0.9410000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.3196947212211151,
+          "B": 0.7646000000000002,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7511500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.013450000000000073,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.109722196748486,
+        "posterior_events": {
+          "reset_A": 0.688997244011024,
+          "reset_B": 0.09999999999999998,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.19949120203519177,
+          "B": 0.9410000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.3196947212211151,
+          "B": 0.7646000000000002,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.1734500000000001,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.109722196748486,
+        "posterior_events": {
+          "reset_A": 0.688997244011024,
+          "reset_B": 0.09999999999999998,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.19949120203519177,
+          "B": 0.9410000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.3196947212211151,
+          "B": 0.7646000000000002,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": 0.026549999999999963,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -5.11163201165258,
+        "posterior_events": {
+          "reset_A": 0.21240441801189464,
+          "reset_B": 0.09999999999999994,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.7994902293967715,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.679694137638063,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7511500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.013450000000000073,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.11163201165258,
+        "posterior_events": {
+          "reset_A": 0.21240441801189464,
+          "reset_B": 0.09999999999999994,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.7994902293967715,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.679694137638063,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.1734500000000001,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.11163201165258,
+        "posterior_events": {
+          "reset_A": 0.21240441801189464,
+          "reset_B": 0.09999999999999994,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.7994902293967715,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.679694137638063,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": 0.026549999999999963,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -3.9335653852164443,
+        "posterior_events": {
+          "reset_A": 0.06539366989275439,
+          "reset_B": 0.09999999999999991,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.98456709390531,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7907402563431862,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7511500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.013450000000000073,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.9335653852164443,
+        "posterior_events": {
+          "reset_A": 0.06539366989275439,
+          "reset_B": 0.09999999999999991,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.98456709390531,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7907402563431862,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.1734500000000001,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.9335653852164443,
+        "posterior_events": {
+          "reset_A": 0.06539366989275439,
+          "reset_B": 0.09999999999999991,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.98456709390531,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7907402563431862,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": 0.026549999999999963,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -2.5618450607801924,
+        "posterior_events": {
+          "reset_A": 0.05391237994127702,
+          "reset_B": 0.09999999999999999,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9990212829487585,
+          "B": 0.9410000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7994127697692552,
+          "B": 0.7646000000000002,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7511500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.013450000000000073,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -2.5618450607801924,
+        "posterior_events": {
+          "reset_A": 0.05391237994127702,
+          "reset_B": 0.09999999999999999,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9990212829487585,
+          "B": 0.9410000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7994127697692552,
+          "B": 0.7646000000000002,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.1734500000000001,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -2.5618450607801924,
+        "posterior_events": {
+          "reset_A": 0.05391237994127702,
+          "reset_B": 0.09999999999999999,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9990212829487585,
+          "B": 0.9410000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7994127697692552,
+          "B": 0.7646000000000002,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000001,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.79115
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": 0.026549999999999963,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -1.1764686680999743,
+        "posterior_events": {
+          "reset_A": 0.05318359599976343,
+          "reset_B": 0.10000000000000006,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9999387740065564,
+          "B": 0.941,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999632644039338,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000001,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.75115
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.013450000000000073,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -1.1764686680999743,
+        "posterior_events": {
+          "reset_A": 0.05318359599976343,
+          "reset_B": 0.10000000000000006,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9999387740065564,
+          "B": 0.941,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999632644039338,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000001,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5911500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.17345,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -1.1764686680999743,
+        "posterior_events": {
+          "reset_A": 0.05318359599976343,
+          "reset_B": 0.10000000000000006,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9999387740065564,
+          "B": 0.941,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999632644039338,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": 0.0044999999999999485,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -5.628600793420149,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.0881567230632235,
+          "B": 0.99,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.25289403383793413,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7585
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.03550000000000009,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.628600793420149,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.0881567230632235,
+          "B": 0.99,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.25289403383793413,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.1955,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.628600793420149,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.0881567230632235,
+          "B": 0.99,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.25289403383793413,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": 0.0044999999999999485,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -6.172315186231939,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.607361963190184,
+          "B": 0.99,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.5644171779141105,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7585
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.03550000000000009,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -6.172315186231939,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.607361963190184,
+          "B": 0.99,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.5644171779141105,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 4,
+            "successes": 1
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.1955,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -6.172315186231939,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.607361963190184,
+          "B": 0.99,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.5644171779141105,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7940000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7985000000000001
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": 0.0044999999999999485,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -5.245042037689176,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9611650485436894,
+          "B": 0.9900000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7766990291262137,
+          "B": 0.7940000000000003,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7940000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7585000000000001
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.03550000000000009,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.245042037689176,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9611650485436894,
+          "B": 0.9900000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7766990291262137,
+          "B": 0.7940000000000003,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 3,
+            "successes": 2
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7940000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.19550000000000012,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -5.245042037689176,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9611650485436894,
+          "B": 0.9900000000000001,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7766990291262137,
+          "B": 0.7940000000000003,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": 0.0044999999999999485,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -3.895834745231622,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9974811083123426,
+          "B": 0.99,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7984886649874057,
+          "B": 0.794,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7585
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.03550000000000009,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.895834745231622,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9974811083123426,
+          "B": 0.99,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7984886649874057,
+          "B": 0.794,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 2,
+            "successes": 3
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.1955,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.895834745231622,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9974811083123426,
+          "B": 0.99,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.7984886649874057,
+          "B": 0.794,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7939999999999999,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7985
+          },
+          "gross_value_of_information": 0.0045000000000000595,
+          "net_diagnostic_advantage": 0.0045000000000000595,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -2.511904637715186,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9998421966230077,
+          "B": 0.9899999999999999,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.7999053179738047,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7939999999999999,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7585
+          },
+          "gross_value_of_information": 0.0045000000000000595,
+          "net_diagnostic_advantage": -0.035499999999999976,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -2.511904637715186,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9998421966230077,
+          "B": 0.9899999999999999,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.7999053179738047,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 1,
+            "successes": 4
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7939999999999999,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5985
+          },
+          "gross_value_of_information": 0.0045000000000000595,
+          "net_diagnostic_advantage": -0.1954999999999999,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -2.511904637715186,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.9998421966230077,
+          "B": 0.9899999999999999,
+          "C": 0.9899999999999999
+        },
+        "predictive_mean": {
+          "A": 0.7999053179738047,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.0,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": 0.0044999999999999485,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -1.1257582282055245,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.999990135829626,
+          "B": 0.99,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999940814977757,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7585
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.03550000000000009,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -1.1257582282055245,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.999990135829626,
+          "B": 0.99,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999940814977757,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.2,
+        "hazard": 0.0,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 0,
+            "successes": 5
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "stable"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.794,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.5985
+          },
+          "gross_value_of_information": 0.0044999999999999485,
+          "net_diagnostic_advantage": -0.1955,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -1.1257582282055245,
+        "posterior_events": {
+          "reset_A": 0.0,
+          "reset_B": 0.0,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.999990135829626,
+          "B": 0.99,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.7999940814977757,
+          "B": 0.794,
+          "C": 0.794
+        }
+      }
+    }
+  ],
+  "kind": "enumerated mathematical diagnostic, not model experiment",
+  "schema_version": 1,
+  "worked_example": [
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "shared"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.5484289975063971,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.6971072493765993
+          },
+          "gross_value_of_information": 0.0871072493765993,
+          "net_diagnostic_advantage": 0.04710724937659927,
+          "optimal_action": "diagnose_B"
+        },
+        "log_evidence": -3.930480298092923,
+        "posterior_events": {
+          "reset_A": 0.8352755186857244,
+          "reset_B": 0.8352755186857244,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.015336473426014968,
+          "B": 0.5807149958439951,
+          "C": 0.9900000000000001
+        },
+        "predictive_mean": {
+          "A": 0.209201884055609,
+          "B": 0.5484289975063972,
+          "C": 0.7940000000000003
+        }
+      }
+    },
+    {
+      "public_inputs": {
+        "diagnostic_cost": 0.04,
+        "hazard": 0.1,
+        "high": 0.8,
+        "low": 0.2,
+        "observation_counts": {
+          "A": {
+            "failures": 5,
+            "successes": 0
+          },
+          "B": {
+            "failures": 0,
+            "successes": 0
+          },
+          "C": {
+            "failures": 0,
+            "successes": 0
+          }
+        },
+        "observations": {
+          "A": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "B": [],
+          "C": []
+        },
+        "prior_high": 0.99,
+        "safe_utility": 0.65,
+        "structure": "independent"
+      },
+      "reference_targets": {
+        "decision": {
+          "action_values": {
+            "choose_B": 0.7646000000000002,
+            "choose_safe": 0.65,
+            "diagnose_B": 0.7511500000000001
+          },
+          "gross_value_of_information": 0.026549999999999963,
+          "net_diagnostic_advantage": -0.013450000000000073,
+          "optimal_action": "choose_B"
+        },
+        "log_evidence": -3.9304802980929225,
+        "posterior_events": {
+          "reset_A": 0.8352755186857245,
+          "reset_B": 0.09999999999999999,
+          "reset_C": 0.0
+        },
+        "posterior_high": {
+          "A": 0.01533647342601495,
+          "B": 0.9410000000000001,
+          "C": 0.99
+        },
+        "predictive_mean": {
+          "A": 0.209201884055609,
+          "B": 0.7646000000000002,
+          "C": 0.794
+        }
+      }
+    }
+  ]
+}

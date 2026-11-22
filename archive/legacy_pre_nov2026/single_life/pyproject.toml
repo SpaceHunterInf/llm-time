@@ -1,0 +1,19 @@
+[project]
+name = "single-life-research"
+version = "0.0.0"
+description = "Causal single-lifetime adaptation research"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+single-life = "single_life.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/single_life"]

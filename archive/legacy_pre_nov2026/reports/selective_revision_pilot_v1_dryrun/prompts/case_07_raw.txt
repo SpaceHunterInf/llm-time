@@ -1,0 +1,36 @@
+You are given a fully stated generative model and public evidence. Infer the requested probabilities and choose one action. Do not assume an event occurred unless the stated model says the hazard is 1.
+
+Components A, B, and C each have a binary latent reward rate: low 0.2 or high 0.8. Independently of the others, each starts high with probability 0.99. That prior already summarizes earlier evidence; you are not given raw prehistory.
+
+There is at most one possible reset before the observation batch. No component changes during the batch.
+
+A and B share one possible reset event. That event occurs with probability 0.1. If it occurs, A and B both reset; if it does not, neither resets. On reset, each affected component independently redraws its rate as high or low with probability 0.5. Sharing the event does not mean sharing the redrawn value. C cannot reset in this interval.
+
+You will see evidence about A only. There is no fresh evidence about B or C.
+
+Choose exactly one action:
+- choose_B: take B's unknown expected reward, equal to 0.2 + 0.6 * P(B is high).
+- choose_safe: take a known alternative worth 0.65.
+- diagnose_B: pay 0.04 once to learn B's latent RATE (not a future reward), then take the higher of that rate and 0.65. The cost is charged exactly once even if the safe option is chosen afterward. Choosing diagnose_B commits to using the revealed rate optimally; this probe tests valuation of information, not interpretation of diagnostic results.
+
+Evidence on A after the possible reset, in order (1 = success, 0 = failure): [1, 1, 1, 1, 1]. B and C were not observed.
+
+Return exactly one JSON object and no other text:
+{
+  "probability_high": {
+    "A": <posterior probability that A's latent rate is high>,
+    "B": <posterior probability that B's latent rate is high>,
+    "C": <posterior probability that C's latent rate is high>
+  },
+  "predictive_mean": {
+    "A": <expected latent reward rate of A>,
+    "B": <expected latent reward rate of B>,
+    "C": <expected latent reward rate of C>
+  },
+  "action": "choose_B" or "choose_safe" or "diagnose_B"
+}
+
+probability_high.X is P(the latent rate of X equals the high rate | permitted evidence and the stated model). It is not a verbal confidence rating.
+predictive_mean.X is the expected latent rate of X, equal to low + (high-low) * probability_high.X, and is also the expected Bernoulli reward if that rate is used.
+action is the unique choice among the three options above.
+Do not include a rationale field.

@@ -1,0 +1,1497 @@
+{
+  "date": "2026-09-15",
+  "tests": "174 passed",
+  "new_research_optimizer_steps": 0,
+  "test_note": "pytest includes tiny numeric optimizer checks; no new research fitting",
+  "data": {
+    "train": {
+      "n": 2048,
+      "targets_previous_and_families_unchanged": true,
+      "hashes_match": true
+    },
+    "dev": {
+      "n": 256,
+      "targets_previous_and_families_unchanged": true,
+      "hashes_match": true
+    },
+    "same_topology": {
+      "n": 256,
+      "targets_previous_and_families_unchanged": true,
+      "hashes_match": true
+    },
+    "structural": {
+      "n": 256,
+      "targets_previous_and_families_unchanged": true,
+      "hashes_match": true
+    }
+  },
+  "runs": {
+    "mlp_s0": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.44163161516189575,
+        0.31732872501015663,
+        0.30382732674479485
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.29401634620414435,
+          "h0_kl": 0.2442500833651499,
+          "h03_kl": 0.3106051004838091,
+          "regret": 0.01165489282591663,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.09979775280937139,
+              "regret": 0.01312003985686223
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.061788250390606606,
+              "regret": 0.00960372030507678
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.06563595482264212,
+              "regret": 0.010878128013216777
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 7.098836349861415e-07
+        },
+        "dev": {
+          "kl": 0.3038273221567265,
+          "h0_kl": 0.27665048509036216,
+          "h03_kl": 0.3128862678455146,
+          "regret": 0.012699948689408165,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10058917725768271,
+              "regret": 0.014958019928573936
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.06264709985198239,
+              "regret": 0.01115468886461222
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.0630562813797517,
+              "regret": 0.009856468770902656
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 4.1696101482635584e-07
+        },
+        "same_topology": {
+          "kl": 0.28722945387099563,
+          "h0_kl": 0.2513214063792478,
+          "h03_kl": 0.2991988030349116,
+          "regret": 0.011868850519454011,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10468713586421889,
+              "regret": 0.013647391108984639
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.07703651982014877,
+              "regret": 0.011949247301945744
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.06122861086298344,
+              "regret": 0.010514241665029418
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 3.331401274841994e-07
+        },
+        "structural": {
+          "kl": 0.3368356130128405,
+          "h0_kl": 0.19135980155971188,
+          "h03_kl": 0.38532755016388337,
+          "regret": 0.014683860354337094,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.0852374416792687,
+              "regret": 0.01524797368105643
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.07153725469732204,
+              "regret": 0.014056716576472802
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.06876650213959157,
+              "regret": 0.012086686379361593
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 5.042523212317462e-07
+        }
+      },
+      "all_recorded_hashes_match": true
+    },
+    "mlp_s1": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.38577384501695633,
+        0.3051866162568331,
+        0.29156109504401684
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.2839773498710269,
+          "h0_kl": 0.24821795611873615,
+          "h03_kl": 0.29589714778845716,
+          "regret": 0.009896689895635495,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.09932478888981688,
+              "regret": 0.010934633963726507
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.06102194319965556,
+              "regret": 0.007838261111332472
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.06386556675177563,
+              "regret": 0.009197138138191974
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 4.747585904407714e-07
+        },
+        "dev": {
+          "kl": 0.29156108143650317,
+          "h0_kl": 0.27535233269130976,
+          "h03_kl": 0.29696399768490095,
+          "regret": 0.009640904033092375,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10035099322332013,
+              "regret": 0.01085886522980799
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.059673822543353704,
+              "regret": 0.005955351855353515
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.06151145595098385,
+              "regret": 0.00837728225919504
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 4.6582954937868237e-07
+        },
+        "same_topology": {
+          "kl": 0.2754091965083828,
+          "h0_kl": 0.24986776657999651,
+          "h03_kl": 0.2839230064845116,
+          "regret": 0.008850293858101514,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10472632350659342,
+              "regret": 0.010062061774792273
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.0750039535621609,
+              "regret": 0.007617878308871904
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.05957027188008264,
+              "regret": 0.008216019311196133
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 3.6768187527957963e-07
+        },
+        "structural": {
+          "kl": 0.32541658134255225,
+          "h0_kl": 0.1848420790003798,
+          "h03_kl": 0.3722747487899431,
+          "regret": 0.010590278493982214,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.08333560040548287,
+              "regret": 0.010708153821125613
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.06865051168751315,
+              "regret": 0.011323806410507481
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.06370812324444024,
+              "regret": 0.008244655233343532
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 4.414724499302025e-07
+        }
+      },
+      "all_recorded_hashes_match": true
+    },
+    "mlp_s2": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.4034176655113697,
+        0.2989359684288502,
+        0.28508911095559597
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.27820468859171116,
+          "h0_kl": 0.23106766487849129,
+          "h03_kl": 0.29391702982945117,
+          "regret": 0.00949445054113665,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.09705291101377153,
+              "regret": 0.010698534611530931
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.05959644609405496,
+              "regret": 0.0077605549392665224
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.06348179753220007,
+              "regret": 0.00856225826181842
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 4.7500065369909805e-07
+        },
+        "dev": {
+          "kl": 0.28508909973599944,
+          "h0_kl": 0.25875206649379445,
+          "h03_kl": 0.2938681108167345,
+          "regret": 0.009486357156522707,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.09812767884589257,
+              "regret": 0.011485425640109419
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.05792217212383168,
+              "regret": 0.005948269407888816
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.061606076400612136,
+              "regret": 0.007884216521754311
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 4.3026080853714177e-07
+        },
+        "same_topology": {
+          "kl": 0.2709805361362274,
+          "h0_kl": 0.23725429629432893,
+          "h03_kl": 0.28222261608352683,
+          "regret": 0.008495186678111302,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10199747400728765,
+              "regret": 0.009620013140495052
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.0737740956577062,
+              "regret": 0.005823023572842214
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.05935163560378807,
+              "regret": 0.008127338594286946
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 5.006312622235498e-07
+        },
+        "structural": {
+          "kl": 0.3219521672010114,
+          "h0_kl": 0.18253910006722923,
+          "h03_kl": 0.3684231895789387,
+          "regret": 0.012245472159448111,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.08316057678578709,
+              "regret": 0.012562457496884737
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.0684113766241347,
+              "regret": 0.010376205082846326
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.06493705327561751,
+              "regret": 0.008688055217610215
+            }
+          },
+          "fresh_cpu_kl_max_abs_diff": 4.854760886630061e-07
+        }
+      },
+      "all_recorded_hashes_match": true
+    },
+    "head_s0": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.38093166798353195,
+        0.30895496904850006,
+        0.28725135512650013
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.28127164563169604,
+          "h0_kl": 0.17501013099324295,
+          "h03_kl": 0.3166921505111804,
+          "regret": 0.009084559079116577,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.10690911677000048,
+              "regret": 0.014203818961776613
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.0633210572366,
+              "regret": 0.005979715436652721
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.0546873464866854,
+              "regret": 0.004104559996686925
+            }
+          }
+        },
+        "dev": {
+          "kl": 0.2872513426866205,
+          "h0_kl": 0.20064706143389954,
+          "h03_kl": 0.3161194364375275,
+          "regret": 0.008911439092839089,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.1054333715543109,
+              "regret": 0.013808407526268104
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.05515362825661542,
+              "regret": 0.004420541784487299
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.052695557114985185,
+              "regret": 0.0036286340499139887
+            }
+          }
+        },
+        "same_topology": {
+          "kl": 0.2755290569539658,
+          "h0_kl": 0.1683879502482289,
+          "h03_kl": 0.3112427591892114,
+          "regret": 0.008232180694934654,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.11254558026276547,
+              "regret": 0.012525350730010022
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.0777910413801285,
+              "regret": 0.008684931805779053
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.04912672130397337,
+              "regret": 0.0036033439410132003
+            }
+          }
+        },
+        "structural": {
+          "kl": 0.3303493903790947,
+          "h0_kl": 0.19889993954914492,
+          "h03_kl": 0.374165873989078,
+          "regret": 0.009822916854143358,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10206365148076754,
+              "regret": 0.013234979160269207
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.07485682720544141,
+              "regret": 0.006650015716405234
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.06216306867206062,
+              "regret": 0.0046625148016716
+            }
+          }
+        }
+      },
+      "all_recorded_hashes_match": true
+    },
+    "head_s1": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.432959845289588,
+        0.32430863194167614,
+        0.291587945073843
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.28504736252499885,
+          "h0_kl": 0.17822784339712772,
+          "h03_kl": 0.3206538689009559,
+          "regret": 0.009338556787548071,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.10457981181577242,
+              "regret": 0.014138826713678998
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.06171748643987155,
+              "regret": 0.007221355574207908
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.05383716948301057,
+              "regret": 0.004556161528618923
+            }
+          }
+        },
+        "dev": {
+          "kl": 0.2915878128813711,
+          "h0_kl": 0.19941334662297053,
+          "h03_kl": 0.32231263496750456,
+          "regret": 0.00924648540846748,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10351739308556675,
+              "regret": 0.015081995178598467
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.05380474779186934,
+              "regret": 0.004240925354473456
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.052609244681357546,
+              "regret": 0.003729564968953664
+            }
+          }
+        },
+        "same_topology": {
+          "kl": 0.2788673518793678,
+          "h0_kl": 0.17038008346235683,
+          "h03_kl": 0.31502977468503807,
+          "regret": 0.008824697715669549,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.1101870841164127,
+              "regret": 0.014862196158799804
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.07712930947386314,
+              "regret": 0.007923463716895765
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.04768096228163366,
+              "regret": 0.003942665096024107
+            }
+          }
+        },
+        "structural": {
+          "kl": 0.33271634970828834,
+          "h0_kl": 0.1901481270279649,
+          "h03_kl": 0.3802390906017295,
+          "regret": 0.010253596534164699,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.0995789706512514,
+              "regret": 0.01255801567715461
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.07371636247685198,
+              "regret": 0.006461639322245061
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.06053415484914001,
+              "regret": 0.00872426434542613
+            }
+          }
+        }
+      },
+      "all_recorded_hashes_match": true
+    },
+    "head_s2": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.35761116445064545,
+        0.30759204365313053,
+        0.2883314546197653
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.286484816138564,
+          "h0_kl": 0.18473902611684076,
+          "h03_kl": 0.32040007947913846,
+          "regret": 0.009477732719401784,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.10661826854718748,
+              "regret": 0.014382566000133911
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.06306806007833939,
+              "regret": 0.00674297934796279
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.05532676608204127,
+              "regret": 0.0045925650482177725
+            }
+          }
+        },
+        "dev": {
+          "kl": 0.2883313979611975,
+          "h0_kl": 0.21006983609425772,
+          "h03_kl": 0.31441858525017746,
+          "regret": 0.008683386614791504,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.1043761584459448,
+              "regret": 0.012143679255098912
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.05586696466594076,
+              "regret": 0.004792324013627926
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.05327829880995196,
+              "regret": 0.0038826953818982047
+            }
+          }
+        },
+        "same_topology": {
+          "kl": 0.27964496996234445,
+          "h0_kl": 0.1766558675001909,
+          "h03_kl": 0.31397467078306235,
+          "regret": 0.008312397064867,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.11212544959417142,
+              "regret": 0.012564751142613649
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.07735172013302734,
+              "regret": 0.006692668212199736
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.04938513228565919,
+              "regret": 0.0038073194686782824
+            }
+          }
+        },
+        "structural": {
+          "kl": 0.33625666401616827,
+          "h0_kl": 0.20750542142862166,
+          "h03_kl": 0.3791737448786838,
+          "regret": 0.01112920550716184,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10140314075871165,
+              "regret": 0.015063944691964436
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.07533017715395739,
+              "regret": 0.006936784766482462
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.06274582368121055,
+              "regret": 0.006757373792880586
+            }
+          }
+        }
+      },
+      "all_recorded_hashes_match": true
+    },
+    "lora_s0": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.34392110630869865,
+        0.26827994640916586,
+        0.23346279188990593
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.22479364510018654,
+          "h0_kl": 0.06171070440960637,
+          "h03_kl": 0.27915462533037994,
+          "regret": 0.007531142470051495,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.0961906582631308,
+              "regret": 0.011751842519868081
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.05285454592420646,
+              "regret": 0.004724338553201021
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.04257989518362645,
+              "regret": 0.003106846303430916
+            }
+          }
+        },
+        "dev": {
+          "kl": 0.23346247296980027,
+          "h0_kl": 0.09805442377278066,
+          "h03_kl": 0.2785984893688068,
+          "regret": 0.007922977881116526,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.09471898745854204,
+              "regret": 0.012405059137491662
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.04211487723501505,
+              "regret": 0.004931934837108587
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.04060492370058917,
+              "regret": 0.003324919792203263
+            }
+          }
+        },
+        "same_topology": {
+          "kl": 0.21945720301271643,
+          "h0_kl": 0.045938119387514194,
+          "h03_kl": 0.2772968975544505,
+          "regret": 0.0073221765161845895,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.0993885751845634,
+              "regret": 0.011370139444489788
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.06521191414699579,
+              "regret": 0.0038913266353740087
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.03987607033202724,
+              "regret": 0.0028089307387552283
+            }
+          }
+        },
+        "structural": {
+          "kl": 0.2850914728064529,
+          "h0_kl": 0.08164887874463343,
+          "h03_kl": 0.3529056708270594,
+          "regret": 0.008406913789334974,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.09565813626681699,
+              "regret": 0.012693879656206889
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.06308937095964508,
+              "regret": 0.005148532197485529
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.05560611445602456,
+              "regret": 0.0031226906336841646
+            }
+          }
+        }
+      },
+      "all_recorded_hashes_match": true
+    },
+    "lora_s1": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.33536089956760406,
+        0.27531286515295506,
+        0.23830554075539112
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.23115947718955665,
+          "h0_kl": 0.062130295047733465,
+          "h03_kl": 0.2875025379034977,
+          "regret": 0.007732903646810941,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.09606158074563889,
+              "regret": 0.012262049368742249
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.05201524796830019,
+              "regret": 0.004364139231322706
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.04281059405725234,
+              "regret": 0.0032046841072601064
+            }
+          }
+        },
+        "dev": {
+          "kl": 0.23830554807716295,
+          "h0_kl": 0.10146113730455894,
+          "h03_kl": 0.2839203516680309,
+          "regret": 0.008684469869488043,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.09433732189887367,
+              "regret": 0.014430192280282311
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.04190341336604962,
+              "regret": 0.005632125371680846
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.04107376989626123,
+              "regret": 0.0032790066220931575
+            }
+          }
+        },
+        "same_topology": {
+          "kl": 0.22266457706662032,
+          "h0_kl": 0.045711530627638414,
+          "h03_kl": 0.28164892587961426,
+          "regret": 0.006881307496574465,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.09795636734998323,
+              "regret": 0.011074334212281985
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.06744386588315587,
+              "regret": 0.004438600635584246
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.03911518373989661,
+              "regret": 0.0025157193293361977
+            }
+          }
+        },
+        "structural": {
+          "kl": 0.3016899715673374,
+          "h0_kl": 0.07938915312552573,
+          "h03_kl": 0.3757902443812746,
+          "regret": 0.008651250246199947,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.09688409239933121,
+              "regret": 0.012715251856364617
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.06439140586343538,
+              "regret": 0.005442275021333538
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.055336174271808806,
+              "regret": 0.0032285003742918966
+            }
+          }
+        }
+      },
+      "all_recorded_hashes_match": true
+    },
+    "lora_s2": {
+      "steps": 192,
+      "best_step": 192,
+      "dev_history": [
+        0.36806341633200645,
+        0.25903829745948315,
+        0.23850279115140438
+      ],
+      "splits": {
+        "train": {
+          "kl": 0.23512030218793806,
+          "h0_kl": 0.06428219503164552,
+          "h03_kl": 0.29206633790670217,
+          "regret": 0.008177347632414275,
+          "roles": {
+            "observed": {
+              "n_examples": 2048,
+              "mae": 0.09898368309582467,
+              "regret": 0.01309228883653279
+            },
+            "related_unobserved": {
+              "n_examples": 556,
+              "mae": 0.05494152705635096,
+              "regret": 0.005895959137730506
+            },
+            "unrelated": {
+              "n_examples": 1890,
+              "mae": 0.04508546545643123,
+              "regret": 0.0032169193554212024
+            }
+          }
+        },
+        "dev": {
+          "kl": 0.2385028656803321,
+          "h0_kl": 0.1095503419939941,
+          "h03_kl": 0.28148704024244475,
+          "regret": 0.007925050998242542,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.09509905297486654,
+              "regret": 0.012024502426349257
+            },
+            "related_unobserved": {
+              "n_examples": 75,
+              "mae": 0.04255487045709398,
+              "regret": 0.005255463944127257
+            },
+            "unrelated": {
+              "n_examples": 231,
+              "mae": 0.04219424871376388,
+              "regret": 0.003358575843053285
+            }
+          }
+        },
+        "same_topology": {
+          "kl": 0.22551813748541086,
+          "h0_kl": 0.048333418750585014,
+          "h03_kl": 0.2845797103970194,
+          "regret": 0.007434844513522493,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.10039805342866265,
+              "regret": 0.011734033772908133
+            },
+            "related_unobserved": {
+              "n_examples": 70,
+              "mae": 0.06590235451157082,
+              "regret": 0.005138262566584936
+            },
+            "unrelated": {
+              "n_examples": 229,
+              "mae": 0.04136616620915707,
+              "regret": 0.0032318756153797657
+            }
+          }
+        },
+        "structural": {
+          "kl": 0.2985805557292338,
+          "h0_kl": 0.08096398954655751,
+          "h03_kl": 0.37111941112345925,
+          "regret": 0.008646118626523883,
+          "roles": {
+            "observed": {
+              "n_examples": 256,
+              "mae": 0.09578458332501133,
+              "regret": 0.012913245656096205
+            },
+            "related_unobserved": {
+              "n_examples": 199,
+              "mae": 0.06411539932928324,
+              "regret": 0.005303941951079607
+            },
+            "unrelated": {
+              "n_examples": 139,
+              "mae": 0.05496676018215899,
+              "regret": 0.0034630008520090657
+            }
+          }
+        }
+      },
+      "all_recorded_hashes_match": true
+    }
+  },
+  "references": {
+    "train": {
+      "stale": {
+        "kl": 0.1577793844067969,
+        "regret": 0.006413442555237748,
+        "role_mae": {
+          "observed": 0.07782198840239607,
+          "related_unobserved": 0.030119871799910485,
+          "unrelated": 0.02153698330651078
+        }
+      },
+      "transition": {
+        "kl": 0.12021867847664364,
+        "regret": 0.005179601869517891,
+        "role_mae": {
+          "observed": 0.08555628668951834,
+          "related_unobserved": 0.027454649310682464,
+          "unrelated": 6.228605716636018e-17
+        }
+      },
+      "independent": {
+        "kl": 0.016750602958880038,
+        "regret": 0.00012933326427929054,
+        "role_mae": {
+          "observed": 0.0018615733437367748,
+          "related_unobserved": 0.027454649310682467,
+          "unrelated": 7.40760578489426e-17
+        }
+      }
+    },
+    "dev": {
+      "stale": {
+        "kl": 0.18106542655998945,
+        "regret": 0.006904511413119423,
+        "role_mae": {
+          "observed": 0.08246580795235647,
+          "related_unobserved": 0.03265195196440989,
+          "unrelated": 0.022447641047474876
+        }
+      },
+      "transition": {
+        "kl": 0.13375824782915346,
+        "regret": 0.00527731298736488,
+        "role_mae": {
+          "observed": 0.08845008059104119,
+          "related_unobserved": 0.026825152535657832,
+          "unrelated": 5.86351554131035e-17
+        }
+      },
+      "independent": {
+        "kl": 0.01755431807552566,
+        "regret": 0.00016536351646798955,
+        "role_mae": {
+          "observed": 0.0013751241470877688,
+          "related_unobserved": 0.026825152535657832,
+          "unrelated": 7.297353358106187e-17
+        }
+      }
+    },
+    "same_topology": {
+      "stale": {
+        "kl": 0.1536583888429226,
+        "regret": 0.00618819115124099,
+        "role_mae": {
+          "observed": 0.07990080977666592,
+          "related_unobserved": 0.04547024051546407,
+          "unrelated": 0.021335428783162406
+        }
+      },
+      "transition": {
+        "kl": 0.11965422821654062,
+        "regret": 0.004689525537546755,
+        "role_mae": {
+          "observed": 0.08732271712999248,
+          "related_unobserved": 0.040087091868268525,
+          "unrelated": 5.595556365013981e-17
+        }
+      },
+      "independent": {
+        "kl": 0.019807497136974293,
+        "regret": 0.0001634277741229045,
+        "role_mae": {
+          "observed": 0.0012575832553316424,
+          "related_unobserved": 0.04008709186826852,
+          "unrelated": 7.288363669664418e-17
+        }
+      }
+    },
+    "structural": {
+      "stale": {
+        "kl": 0.15411863931303543,
+        "regret": 0.00646154435579362,
+        "role_mae": {
+          "observed": 0.07659295261281916,
+          "related_unobserved": 0.03560611633960573,
+          "unrelated": 0.019688188831319377
+        }
+      },
+      "transition": {
+        "kl": 0.1162499088498471,
+        "regret": 0.005607919201116463,
+        "role_mae": {
+          "observed": 0.08302325018276929,
+          "related_unobserved": 0.0325977629168199,
+          "unrelated": 5.444618909732483e-17
+        }
+      },
+      "independent": {
+        "kl": 0.08062274650064777,
+        "regret": 0.0007531742129117255,
+        "role_mae": {
+          "observed": 0.008111097222996686,
+          "related_unobserved": 0.03259776291681991,
+          "unrelated": 7.448078924193946e-17
+        }
+      }
+    }
+  },
+  "checks": {
+    "all_nine_complete": true,
+    "same_seed_batches_match_across_modes": true,
+    "all_36_evals_complete": true,
+    "n_eval_rows": 25344,
+    "max_marginal_and_regret_error": 4.440892098500626e-16,
+    "max_summary_error": 5.551115123125783e-16,
+    "all_fit_best_mtimes_before_any_eval": true,
+    "raw_joints_saved": false,
+    "loader_accepts_changed_lr_and_batch": true
+  },
+  "verification_checkpoint_comparison": {
+    "mlp": {
+      "parameter_max_abs": 0.0,
+      "uninterrupted_step": 2,
+      "resume_step": 2,
+      "actual_verify_executed_updates_from_paths": 4
+    },
+    "head": {
+      "parameter_max_abs": 0.0,
+      "uninterrupted_step": 2,
+      "resume_step": 2,
+      "actual_verify_executed_updates_from_paths": 4
+    },
+    "lora": {
+      "parameter_max_abs": 0.0,
+      "uninterrupted_step": 2,
+      "resume_step": 2,
+      "actual_verify_executed_updates_from_paths": 4
+    }
+  },
+  "structural_lora_improvement": {
+    "head": {
+      "kl_gap": 0.03798680133350907,
+      "h0_share": 0.7777953002592343,
+      "h03_kl_gap": 0.011254461045899352
+    },
+    "mlp": {
+      "kl_gap": 0.03294745381779333,
+      "h0_share": 0.8011214891906376,
+      "h03_kl_gap": 0.008736720733657296
+    }
+  },
+  "code_review_findings": [
+    "Checkpoint identity validates only five fields; optimizer/config/code changes accepted.",
+    "Training module absent from CODE_HASH_PATHS.",
+    "Resuming checkpoint saved before epoch-end validation processes empty batch before finishing validation.",
+    "Completed 192-step schedule has zero LR; max_steps alone cannot extend learning.",
+    "verify-path executes 2+1+1=4 updates before its additional one-step probe; report says 3+1.",
+    "verify-path does not assert parameter equality; commander compared saved checkpoints and got zero difference.",
+    "Full predicted joints are not written; saved per-component fields permit independent marginal/regret checks, not full-joint KL reconstruction.",
+    "Heldout flag is explicit opt-in, not an enforced all-nine-selection gate; actual driver/log order was checked."
+  ],
+  "qwen_cpu_spot_checks": {
+    "head": {
+      "n": 8,
+      "split": "train",
+      "seed": 0,
+      "device": "cpu",
+      "saved_gpu_kl_max_abs_diff": 4.781021950339692e-06,
+      "kl": [
+        0.23187447963702787,
+        0.1782187375292419,
+        0.1900156692155165,
+        0.19351859776792008,
+        0.3891851972758102,
+        0.016090320551481553,
+        0.19777088329361653,
+        2.2805460144408585
+      ],
+      "example_ids": [
+        "train|four_singletons|0",
+        "train|four_singletons|63",
+        "train|four_singletons|64",
+        "train|four_singletons|255",
+        "train|four_singletons|512",
+        "train|four_singletons|1023",
+        "train|one_pair|1024",
+        "train|one_pair|1536"
+      ],
+      "predicted_joints": [
+        [
+          7.961425284172538e-05,
+          0.0024100005785231754,
+          0.0015799879624531087,
+          0.007693710212601108,
+          0.0025954909076880963,
+          0.008674964123807583,
+          0.010261220468457876,
+          0.05313988836293774,
+          0.0015284471808220523,
+          0.008464486180350374,
+          0.0066779377659307694,
+          0.05345981625260283,
+          0.009211041710679473,
+          0.04142837065839023,
+          0.0412965997069087,
+          0.7514984236750052
+        ],
+        [
+          7.678820357610804e-05,
+          0.0014336133098499966,
+          0.001255750815391311,
+          0.00649558928289201,
+          0.0017149777696888304,
+          0.006588272188966021,
+          0.009148366978226002,
+          0.03633718653431787,
+          0.001696181349442756,
+          0.005919995071536935,
+          0.005709319168229867,
+          0.03652680383455822,
+          0.007937755511106053,
+          0.03034788755026259,
+          0.03093226832556225,
+          0.8178792441063932
+        ],
+        [
+          7.979998289901663e-05,
+          0.001657146235605961,
+          0.001326839465236506,
+          0.006548296073285569,
+          0.001650081337593859,
+          0.006923044052174573,
+          0.008228706867753172,
+          0.04161653733408023,
+          0.0017279251352514506,
+          0.005706206144454887,
+          0.005759256151285391,
+          0.038286808886678736,
+          0.008009752887804231,
+          0.030757803874228242,
+          0.034518107046146426,
+          0.8072036885255217
+        ],
+        [
+          7.580656609093213e-05,
+          0.0014839940860860764,
+          0.0011710962404098133,
+          0.005311537124336008,
+          0.0018780565785804645,
+          0.007873714053195811,
+          0.00778697858392357,
+          0.04381830291453458,
+          0.0013209582678542103,
+          0.00709647040845292,
+          0.0047144867045520455,
+          0.03507833592323374,
+          0.009151838816331397,
+          0.03282895718853367,
+          0.035429299251242295,
+          0.8049801672926424
+        ],
+        [
+          0.00011615854267597884,
+          0.0032428204083411022,
+          0.0022959706180814814,
+          0.01401357405682578,
+          0.00395189214341803,
+          0.015143489030884737,
+          0.0155930617078247,
+          0.08265699209186128,
+          0.002934768478983296,
+          0.01200303773436483,
+          0.012806359311290275,
+          0.08833106353913375,
+          0.014127053846643546,
+          0.07275313675403514,
+          0.08001944938327761,
+          0.5800111723523584
+        ],
+        [
+          8.74666014425137e-05,
+          0.003437298397504436,
+          0.001829444572448016,
+          0.010144673427964082,
+          0.003625863747452163,
+          0.013513370603674975,
+          0.011228519646914577,
+          0.07736022132179424,
+          0.002033324008947595,
+          0.01165310309528715,
+          0.00917174679785949,
+          0.07225255767942403,
+          0.013159012603688505,
+          0.0650998064925038,
+          0.06367971090995773,
+          0.6417238800931367
+        ],
+        [
+          9.222847464888279e-05,
+          0.0017654415037416593,
+          0.001368485744279154,
+          0.008094629295846971,
+          0.002120925119592588,
+          0.007522761377487038,
+          0.010161012440024613,
+          0.04341176164579519,
+          0.001679142592595197,
+          0.0068029859296800535,
+          0.006453336234868435,
+          0.043434683357066836,
+          0.007575424409602354,
+          0.033009082172841236,
+          0.03827517490547029,
+          0.7882329247964595
+        ],
+        [
+          0.000126651962528713,
+          0.003451227048898037,
+          0.0021434592942313094,
+          0.01559699533135377,
+          0.004280233089673713,
+          0.012387474418930575,
+          0.019086646885236508,
+          0.08072059223663898,
+          0.0034129387498334986,
+          0.012891860075278762,
+          0.011166086829015674,
+          0.08302200196948571,
+          0.014152391151172308,
+          0.06532659075811327,
+          0.055522726112152886,
+          0.6167121240874562
+        ]
+      ]
+    },
+    "lora": {
+      "n": 8,
+      "split": "train",
+      "seed": 0,
+      "device": "cpu",
+      "saved_gpu_kl_max_abs_diff": 6.243173824138637e-06,
+      "kl": [
+        0.0221274061394727,
+        0.02095541384025626,
+        0.019604698059595034,
+        0.014675771321945108,
+        0.3154275069717547,
+        0.046224994365138106,
+        0.01573124695042318,
+        2.489597321718503
+      ],
+      "example_ids": [
+        "train|four_singletons|0",
+        "train|four_singletons|63",
+        "train|four_singletons|64",
+        "train|four_singletons|255",
+        "train|four_singletons|512",
+        "train|four_singletons|1023",
+        "train|one_pair|1024",
+        "train|one_pair|1536"
+      ],
+      "predicted_joints": [
+        [
+          4.5960862931213153e-05,
+          0.00027745293806027955,
+          0.00014726394794639574,
+          0.0008846334629928393,
+          0.00020380863861312336,
+          0.0008647666616174754,
+          0.0015271412992196628,
+          0.012478549883810504,
+          0.00013283879239191055,
+          0.00106388916085242,
+          0.0005043021075574838,
+          0.01170181556980554,
+          0.0007207316677059735,
+          0.009314174231122562,
+          0.0069225980540000035,
+          0.9532100727213726
+        ],
+        [
+          4.302472304333229e-05,
+          0.00017703992257087916,
+          0.00010580119854806602,
+          0.0007018534718645081,
+          0.00013272214899283748,
+          0.0006754736417008425,
+          0.0012722608813745388,
+          0.00906129802775463,
+          0.00012570375979335474,
+          0.0007801603599162811,
+          0.0004138166254341337,
+          0.00803272761016511,
+          0.0005749456865219823,
+          0.006497685780721641,
+          0.005208345955547998,
+          0.9661971402060499
+        ],
+        [
+          3.053272946576437e-05,
+          0.00018602434499047262,
+          7.773240726778729e-05,
+          0.0006447036689458346,
+          0.00011415892053520224,
+          0.0006426113946319279,
+          0.0010548308201173344,
+          0.008939048029142095,
+          0.00010972474836043668,
+          0.0006934182993068318,
+          0.00039085564291174496,
+          0.007666182958780442,
+          0.0005078902328196383,
+          0.006096218079057627,
+          0.005060378322697491,
+          0.9677856894009693
+        ],
+        [
+          2.3753258918799355e-05,
+          0.00013858040427137272,
+          6.11924098195005e-05,
+          0.00045406409251218304,
+          9.088958277264114e-05,
+          0.0005575775793105679,
+          0.0009093184735907997,
+          0.0068508201930692295,
+          7.441680595779458e-05,
+          0.0006224882657440593,
+          0.00026447008211618673,
+          0.005946864449974498,
+          0.00044586915160108406,
+          0.00521936222021236,
+          0.004504895248053108,
+          0.9738354377820758
+        ],
+        [
+          0.0011410199518642283,
+          0.0069332307331910585,
+          0.0044245779338194695,
+          0.02504138585833158,
+          0.005437934635072487,
+          0.022271388584241672,
+          0.020888832806248793,
+          0.11727872942400551,
+          0.006546839442154104,
+          0.021561238375065586,
+          0.019016365976012466,
+          0.1154560864876189,
+          0.023899381382115302,
+          0.09556194900700135,
+          0.1117781298197459,
+          0.4027629095835116
+        ],
+        [
+          0.0006752716693999508,
+          0.005694305031058186,
+          0.0033179572623112208,
+          0.014903942051050998,
+          0.004430848618051943,
+          0.015937376690399702,
+          0.013215555745590761,
+          0.07929299733477418,
+          0.0037975322737361316,
+          0.015238830746103604,
+          0.01276136090401601,
+          0.09482628806316167,
+          0.01941948747193572,
+          0.09336838826132145,
+          0.10189989159944869,
+          0.5212199662776398
+        ],
+        [
+          4.54029666677333e-05,
+          0.0002029581172495618,
+          0.00010736304619389099,
+          0.0008946046455268073,
+          0.00016721425828272155,
+          0.0007222178647208341,
+          0.0012877902810318545,
+          0.010690700570695452,
+          0.00013441861768289677,
+          0.0008178740756554241,
+          0.0004401597180724242,
+          0.008568313034673914,
+          0.0005341342221767945,
+          0.006713765985917146,
+          0.005334953464580839,
+          0.9633381291308717
+        ],
+        [
+          0.0007312559662727987,
+          0.003636174090632357,
+          0.0032120477000585294,
+          0.014321346585519288,
+          0.003746143029033021,
+          0.01071136058686088,
+          0.012975327505926754,
+          0.06481928296092643,
+          0.003509014567536932,
+          0.011797636597656832,
+          0.010042527563097479,
+          0.06895349087240983,
+          0.013034635989370835,
+          0.0806739767089645,
+          0.058406158540599135,
+          0.6394296207351344
+        ]
+      ]
+    }
+  }
+}

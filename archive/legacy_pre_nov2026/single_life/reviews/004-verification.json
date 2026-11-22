@@ -1,0 +1,27 @@
+{
+  "review_date": "2026-09-29",
+  "checks": {
+    "dossier.md": true,
+    "reference_witness.py": true,
+    "witness.json": true,
+    "reference_exit_zero": true,
+    "witness_reproduces_exactly": true
+  },
+  "api_calls_in_review": 0,
+  "artifact_type": "hand-authored, boundary-conditioned arithmetic illustration; not autonomous adaptation",
+  "known_design_limitations": [
+    "incumbent strategy supplied at initialization",
+    "strategies use CHANGE_AT to partition history",
+    "adaptation starts at preselected RESPONSE_AT",
+    "per_type_stop is fixed-order search, not a demonstrated strong online baseline"
+  ],
+  "equal_weight_mean_response": {
+    "keep": "42/5",
+    "oracle_repair": "63/5",
+    "wrong_factor": "69/20",
+    "unnecessary_probe": "169/20",
+    "per_type_stop": "59/5",
+    "one_type_then_transfer": "87/8",
+    "whole_reset": "47/5"
+  }
+}

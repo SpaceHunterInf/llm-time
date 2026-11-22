@@ -1,0 +1,15 @@
+PREFLIGHT gemini note-retention diagnostic
+model=gemini-3.5-flash temperature=0 thinking_level=low
+input_token_cap=4096 max_output_tokens=2048 output_cap_includes_thinking=true
+planned_decisions=196 smoke=4 pilot=192 max_attempts_including_retries=392
+price_source=https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash
+price_page_updated=2026-09-24 price_checked_on=2026-09-29
+input_usd_per_million=1.50 output_usd_per_million_including_thinking=9.00
+per_attempt_cap_usd=0.024576 = 4096 * 1.50/1e6 + 2048 * 9.00/1e6
+conservative_completion_cap_usd=9.633792 = per_attempt_cap * 392
+illustrative_short_run_usd=0.7644 assumes 196 single attempts at 800 input and 300 output tokens; this is not a measurement
+configured_spend_cap_usd=9.633792 user_ceiling_usd=20
+projection=after 4 completed decisions, remaining cost uses the observed mean spend per completed decision; before that, remaining uses two full-cap attempts per unfinished decision; the conservative cap is not replaced
+unknown_usage=reserved at the per-attempt cap, never priced as zero
+billing_note=usage estimate from published token rates, not a provider invoice
+The same Gemini 3.5 Flash section also lists paid rows at $0.75/$4.50 and $2.70/$16.20. This run does not request batch, flex, or priority. It prices synchronous generateContent at the standard $1.50 input and $9.00 output row.

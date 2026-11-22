@@ -1,0 +1,53 @@
+Named components: observed=C, linked=A, unrelated=B. High rate is 0.8 and low rate is 0.2.
+
+Initially each component is high with probability 0.99, independently. A reset is different from initialization: whenever a component resets, its new state is high with probability 0.5 and low with probability 0.5, independently of its previous state. Components that reset together share only the event; their redrawn values are independent. The unrelated component never resets. Before every observed outcome, apply that time step's reset transition, then generate the Bernoulli outcome from the current rate (0.8 if high, 0.2 if low). The decision uses the latent state immediately after the final listed observation; there is no extra transition before diagnosis or reward.
+
+Observed component C and linked component A have independent Bernoulli(0.03) reset events.
+
+Each joint key has three characters, left to right: observed, linked, unrelated. 1 means the component is high and 0 means low. Example: 100 means observed high, linked low, unrelated low. Keys are names, not an ordered array.
+
+previous_state summarizes observations through its timestamp and is not independent evidence. You may reconstruct from the original prior and all listed observations, or start from previous_state and process only later observations. Do not apply already summarized observations twice. The state is an estimate, not additional data.
+
+History-plus-state is redundant external state, not a memory-compression test. The decision is a one-shot expected-utility question about the linked component. It does not change the tape and does not reveal a diagnostic outcome to later checkpoints.
+
+previous_state checkpoint=after_obs_20:
+{"checkpoint":"after_obs_20","joint":{"000":5.162082730551324e-07,"001":0.0008176739045193289,"010":3.4179233966926782e-06,"011":0.0054139906603611985,"100":8.226786719041475e-05,"101":0.13031230162961685,"110":0.0005447128276382607,"111":0.8628251189790043},"schema_version":2}
+
+Observations 1..32 (no hidden events, no future rows):
+t=1: component C -> 1
+t=2: component A -> 1
+t=3: component B -> 1
+t=4: component C -> 0
+t=5: component A -> 1
+t=6: component B -> 1
+t=7: component C -> 1
+t=8: component A -> 1
+t=9: component B -> 1
+t=10: component C -> 1
+t=11: component A -> 1
+t=12: component B -> 0
+t=13: component C -> 1
+t=14: component C -> 1
+t=15: component C -> 1
+t=16: component C -> 1
+t=17: component C -> 0
+t=18: component C -> 1
+t=19: component C -> 1
+t=20: component C -> 1
+t=21: component A -> 1
+t=22: component A -> 0
+t=23: component B -> 1
+t=24: component B -> 1
+t=25: component C -> 1
+t=26: component C -> 1
+t=27: component C -> 1
+t=28: component C -> 1
+t=29: component C -> 0
+t=30: component C -> 0
+t=31: component C -> 1
+t=32: component C -> 1
+
+Return exactly one JSON object and no other text:
+{"joint": {"000": p, "001": p, "010": p, "011": p, "100": p, "101": p, "110": p, "111": p}, "action": "choose_linked" or "choose_safe" or "diagnose_linked"}
+joint must contain exactly those eight keys, each a probability in [0, 1], summing to 1. Do not report separate marginals or predictive means.
+choose_linked takes the linked component's expected rate. choose_safe takes a known alternative worth 0.65. diagnose_linked: you pay a cost of 0.04 once to learn the linked latent RATE, then take the higher of that rate and 0.65. Do not include a rationale.

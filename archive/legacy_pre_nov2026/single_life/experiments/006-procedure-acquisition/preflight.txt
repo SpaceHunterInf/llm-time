@@ -1,0 +1,10 @@
+Task 006 preflight. Usage estimate from published rates, not a provider invoice.
+Model gemini-3.5-flash, temperature 0, thinkingLevel low, maxOutputTokens 2048 including thinking.
+Input cap 8192 enforced by countTokens before generateContent.
+Scheduled calls 2 smoke + 32 revision + 12 frozen = 46.
+Maximum generation attempts 92 = 46 calls times 2.
+Per-attempt cap $0.03072 = 8192 * 1.50/1e6 + 2048 * 9/1e6.
+Completion cap $2.82624.
+Token-count requests are separate and are not added to this generation cap.
+Unknown generation usage keeps the per-attempt reserve.
+Settings stay fixed after the smoke. There is no second prompt and no retune.

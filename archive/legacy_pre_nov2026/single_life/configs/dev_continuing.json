@@ -1,0 +1,50 @@
+{
+  "action_ids": ["arm_a", "arm_b", "arm_c"],
+  "agent": "artifact",
+  "agent_seed": "agent-dev-shared-v1",
+  "artifact_period": 10,
+  "artifact_window": 30,
+  "compute_budget": 100000,
+  "evaluator_private_note": "SENTINEL_PRIVATE_do_not_leak continuing",
+  "experiment_id": "001-causal-kernel",
+  "fixture_id": "dev-continuing-180",
+  "horizon": 180,
+  "innovation_seed": "innovation-dev-shared-v1",
+  "interaction_budget": 180,
+  "lifetime_id": "life-dev-paired",
+  "protocol_version": "single-life-v0.2",
+  "schedule_seed": "schedule-dev-continuing-v1",
+  "segments": [
+    {
+      "start_index": 1,
+      "end_index": 60,
+      "probabilities": {"arm_a": 0.8, "arm_b": 0.2, "arm_c": 0.5},
+      "regime_id": "regime-early",
+      "unreachable_metadata": {
+        "note": "SENTINEL_PRIVATE_do_not_leak",
+        "oracle_best_arm": "arm_a"
+      }
+    },
+    {
+      "start_index": 61,
+      "end_index": 120,
+      "probabilities": {"arm_a": 0.2, "arm_b": 0.8, "arm_c": 0.5},
+      "regime_id": "regime-middle",
+      "unreachable_metadata": {
+        "note": "SENTINEL_PRIVATE_do_not_leak",
+        "oracle_best_arm": "arm_b"
+      }
+    },
+    {
+      "start_index": 121,
+      "end_index": 180,
+      "probabilities": {"arm_a": 0.2, "arm_b": 0.2, "arm_c": 0.9},
+      "regime_id": "regime-late",
+      "unreachable_metadata": {
+        "note": "SENTINEL_PRIVATE_do_not_leak",
+        "oracle_best_arm": "arm_c"
+      }
+    }
+  ],
+  "ucb_window": 30
+}

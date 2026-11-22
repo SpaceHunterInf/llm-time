@@ -1,0 +1,47 @@
+You infer a factored binary latent (high rate 0.8 or low rate 0.2) for three named components. Observed=B, linked=C, unrelated=A. Initial P(high)=0.99 independently.
+
+Before every observation a reset may occur. B and C share one Bernoulli(0.03) reset event; on reset each redraws independently as high/low with probability 0.5. A cannot reset.
+
+Joint state order is eight bits observed,linked,unrelated as 000..111 with observed as the least significant bit (index = o + 2*l + 4*u).
+
+History-plus-state is redundant external state, not a memory-compression test. The decision is a one-shot expected-utility question about the linked component. It does not change the tape and does not reveal a diagnostic outcome to later checkpoints.
+
+previous_state: empty. Reconstruct from the observation prefix. The generative prior over the eight latent states is the independent product with P(high)=0.99 for each bit before observation 1.
+
+Observations 1..32 (no hidden events, no future rows):
+t=1: component B -> 0
+t=2: component C -> 1
+t=3: component A -> 1
+t=4: component B -> 0
+t=5: component C -> 1
+t=6: component A -> 0
+t=7: component B -> 0
+t=8: component C -> 1
+t=9: component A -> 1
+t=10: component B -> 0
+t=11: component C -> 0
+t=12: component A -> 0
+t=13: component B -> 0
+t=14: component B -> 0
+t=15: component B -> 1
+t=16: component B -> 0
+t=17: component B -> 0
+t=18: component B -> 0
+t=19: component B -> 0
+t=20: component B -> 1
+t=21: component C -> 0
+t=22: component C -> 0
+t=23: component A -> 1
+t=24: component A -> 0
+t=25: component B -> 0
+t=26: component B -> 0
+t=27: component B -> 0
+t=28: component B -> 0
+t=29: component B -> 0
+t=30: component B -> 0
+t=31: component B -> 0
+t=32: component B -> 0
+
+Return exactly one JSON object:
+{"joint": [p000, p100, p010, p110, p001, p101, p011, p111], "probability_high": {"observed": p, "linked": p, "unrelated": p}, "predictive_mean": {"observed": m, "linked": m, "unrelated": m}, "action": "choose_linked" or "choose_safe" or "diagnose_linked"}
+joint must be eight nonnegative numbers in that index order, summing to 1. choose_linked takes the linked component's expected rate; choose_safe pays 0.65; diagnose_linked pays 0.04 once for the linked RATE then takes max(rate, safe). Do not include a rationale.

@@ -2,17 +2,24 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
-llm_rl_engine.egg-info/
 .pytest_cache/
-terminals/
 .ruff_cache/
 .mypy_cache/
-runs/
+.antigravitycli/
+terminals/
 
+# Secrets — never commit
 .env
 .env.*
 !.env.example
 
-# Local Grok / MCP clutter
-agent-tools/
-mcps/
+# External cloned repos & heavy binary artifacts (results/raw JSONL traces are tracked for peer audit)
+competitors/
+runs/
+archive/legacy_pre_nov2026/runs/
+archive/legacy_pre_nov2026/models/
+archive/legacy_pre_nov2026/*.rar
+archive/legacy_pre_nov2026/**/*.pt
+archive/legacy_pre_nov2026/agent-tools/
+archive/legacy_pre_nov2026/mcps/
+archive/legacy_pre_nov2026/.grok/

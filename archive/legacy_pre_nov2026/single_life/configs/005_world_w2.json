@@ -1,0 +1,50 @@
+{
+  "action_ids": ["arm_a", "arm_b", "arm_c"],
+  "agent": "llm-recent",
+  "agent_seed": "agent-005-w2-v1",
+  "artifact_period": 48,
+  "artifact_window": 12,
+  "compute_budget": 100000,
+  "evaluator_private_note": "SENTINEL_PRIVATE_do_not_leak 005",
+  "experiment_id": "005-gemini-lifetime",
+  "fixture_id": "005-w2",
+  "horizon": 48,
+  "innovation_seed": "innovation-005-w2-v1",
+  "interaction_budget": 48,
+  "lifetime_id": "life-005-w2",
+  "protocol_version": "single-life-v0.2",
+  "schedule_seed": "schedule-005-w2-v1",
+  "segments": [
+    {
+      "start_index": 1,
+      "end_index": 16,
+      "probabilities": {"arm_a": 0.8, "arm_b": 0.2, "arm_c": 0.5},
+      "regime_id": "private-w2-a",
+      "unreachable_metadata": {
+        "oracle_best_arm": "arm_a",
+        "sentinel": "SENTINEL_PRIVATE_do_not_leak 005"
+      }
+    },
+    {
+      "start_index": 17,
+      "end_index": 34,
+      "probabilities": {"arm_a": 0.2, "arm_b": 0.8, "arm_c": 0.5},
+      "regime_id": "private-w2-b",
+      "unreachable_metadata": {
+        "oracle_best_arm": "arm_b",
+        "sentinel": "SENTINEL_PRIVATE_do_not_leak 005"
+      }
+    },
+    {
+      "start_index": 35,
+      "end_index": 48,
+      "probabilities": {"arm_a": 0.8, "arm_b": 0.2, "arm_c": 0.5},
+      "regime_id": "private-w2-c",
+      "unreachable_metadata": {
+        "oracle_best_arm": "arm_a",
+        "sentinel": "SENTINEL_PRIVATE_do_not_leak 005"
+      }
+    }
+  ],
+  "ucb_window": 12
+}

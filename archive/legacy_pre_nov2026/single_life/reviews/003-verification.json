@@ -1,0 +1,25 @@
+{
+  "review_date": "2026-09-29",
+  "checks": {
+    "public_log.jsonl": true,
+    "private_log.jsonl": true,
+    "artifacts.json": true,
+    "source_matches_worker_smoke": true,
+    "data_hashes_unchanged_from_task002": true,
+    "fresh_cli_exit_zero": true,
+    "fresh_smoke_hashes_match": true,
+    "summary_hashes_match": true,
+    "actual_temp_write_interrupted": true,
+    "committed_file_survives_partial_temp_write": true,
+    "handled_interruption_removes_temp_file": true
+  },
+  "protocol_version": "single-life-v0.2",
+  "checkpoint_format": "single-life-checkpoint-v3",
+  "source_sha256": "91c2686972205f1522d2d1c316c34f275d74edc5e0e675bce7c4e992a1159a8b",
+  "tests_rerun": {
+    "count": 25,
+    "passed": 25
+  },
+  "implementation_modified_by_review": false,
+  "scope": "trusted offline fixture; no scientific performance claim"
+}

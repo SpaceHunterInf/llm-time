@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "public_log.jsonl": true,
+    "private_log.jsonl": true,
+    "artifacts.json": true,
+    "source_matches_worker_smoke": true,
+    "fresh_cli_exit_zero": true,
+    "fresh_log_hashes_match_saved_smoke": true
+  },
+  "source_sha256": "8353e493e99d0448152cd707de47b2ffb07a0a298bf7c4adaaf4df0e6cd36b13",
+  "worker_tests_rerun": {
+    "count": 15,
+    "passed": 15
+  },
+  "new_tests_added_to_production_suite": false
+}

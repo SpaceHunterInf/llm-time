@@ -1,0 +1,392 @@
+{
+  "action_order": [
+    "A|single",
+    "A|pair",
+    "B|single",
+    "B|pair"
+  ],
+  "call_schedule": {
+    "frozen": [
+      1,
+      13,
+      25
+    ],
+    "revision": [
+      1,
+      13,
+      25,
+      37,
+      49,
+      61,
+      73,
+      85
+    ],
+    "smoke": [
+      1,
+      2
+    ]
+  },
+  "config_sha256": "05301f2ebea37450f79fb7654ec56115a4503f8b9432303f15d5c1449d08298a",
+  "dependency_identity": {
+    "build_backend": "hatchling",
+    "manager": "uv",
+    "python": "3.11.5",
+    "runtime_dependencies": [],
+    "uv_lock_sha256": "85287db42113c1aa43175bdb6aab027b87726e2235b38d3a7ef6771d51c6ac7b"
+  },
+  "failure_policy": {
+    "checkpoint": "disabled",
+    "different_lists": "reset all three counters to zero at deployment",
+    "evidence_rule": "cited ids must already be completed; the model is not required to cite every completed id",
+    "identical_lists": "keep per-type occurrence counters",
+    "input_cap": "provider token count must be at most 8192 before generateContent; over-cap calls do not generate",
+    "interpreter": "on each occurrence of a type, choose list[counter % length], then increment that counter",
+    "invalid_procedure": "retry the same prompt once with no environment action; a second invalid response aborts the lifetime and keeps the committed prefix",
+    "schema": {
+      "evidence_ids": "list of integer indexes of completed observations, none past the cutoff",
+      "procedure": "object with exactly T1, T2, T3; each a list of 1 to 4 distinct permitted action ids",
+      "rationale": "string of at most 1000 characters"
+    },
+    "semantic_identity": "the three action lists, not the rationale",
+    "transport_error": "retry once; a repeated auth, permission, or quota error stops the batch; any other repeated transport error aborts that lifetime"
+  },
+  "frozen_after_action": 25,
+  "horizon": 96,
+  "instruction": "You maintain an executable procedure for three request types, T1, T2, and T3. Before some actions the host asks you for a procedure. Between those calls, the host executes the current procedure. You do not choose those intervening actions yourself. The procedure is a JSON object with exactly the keys T1, T2, and T3. Each value is a list of 1 to 4 distinct action ids. The permitted action ids are A|single, A|pair, B|single, and B|pair. A list is read in the order you write it. On each occurrence of that type since this procedure was deployed, the host uses the next entry and then wraps to the start. A one-element list repeats that action. A longer list rotates, which you can use to explore. If you return action lists identical to the current procedure, the host keeps the occurrence counters. If any list differs, the host sets all three counters back to zero. Only the action lists control later actions. The rationale is your note; rewriting it does not by itself move the counters. utility_tenths is an integer number of tenths of a utility point: 8 means 0.8 and -4 means -0.4. You see the current request type, the current procedure if one has been deployed, and every completed record so far. Each record has an index, a type, the action that was executed, and its utility_tenths. Unchosen actions stay hidden. Later request types are not included. Reply with one JSON object and no other text: {\"procedure\": {\"T1\": [\"<action id>\"], \"T2\": [\"<action id>\"], \"T3\": [\"<action id>\"]}, \"rationale\": \"<at most 1000 characters>\", \"evidence_ids\": [<integer index of a completed record>]}. evidence_ids may cite only completed records in the payload. Use an empty list when you cite none.",
+  "instruction_sha256": "1dc1d37606c566b7911c4403d822efafd518fbb5416d32f509cfd47dc83fa1fc",
+  "interpreter": "on each occurrence of a type, choose list[counter % length], then increment that counter",
+  "model_check": {
+    "counted_as_generation": false,
+    "display_name": "Gemini 3.5 Flash",
+    "name": "models/gemini-3.5-flash"
+  },
+  "no_boundary_call": "The schedule has no generation at action 43.",
+  "pricing": {
+    "completion_cap_usd": "2.82624",
+    "estimate_note": "Usage estimate from the published rates, not a provider invoice. Unknown generation usage keeps the per-attempt reserve.",
+    "input_cap_enforcement": "provider countTokens totalTokens must be <= 8192 before generateContent; characters/4 is not used to accept a prompt",
+    "input_token_cap": 8192,
+    "input_usd_per_million": "1.50",
+    "max_generation_attempts": 92,
+    "max_output_tokens": 2048,
+    "model": "gemini-3.5-flash",
+    "other_published_rows": "The same section also lists $0.75/$4.50 and $2.70/$16.20. This run prices synchronous generateContent at the standard $1.50 input and $9.00 output row.",
+    "output_cap_includes_thinking": true,
+    "output_usd_per_million_including_thinking": "9.00",
+    "per_attempt_cap_usd": "0.03072",
+    "price_checked_on": "2026-09-29",
+    "price_row": "standard paid tier, synchronous generateContent",
+    "price_source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash",
+    "scheduled_calls": 46,
+    "temperature": 0,
+    "thinking_budget_integer": null,
+    "thinking_level": "low",
+    "token_count_requests": "counted separately from generation attempts; no countTokens price is listed on the Gemini 3.5 Flash standard row, so they are not added to the generation estimate"
+  },
+  "random_seed": 601,
+  "reference_algorithms": {
+    "local-relearning-v1": "Per type, sample ACTION_ORDER once, then exploit the highest cached utility, ties by ACTION_ORDER. A mismatch clears that type's other cells and keeps the new cell.",
+    "uniform-random-v1": "uniform over ACTION_ORDER with random.Random(601), a fresh generator in each world",
+    "whole-relearning-v1": "Same as local relearning, except a mismatch clears every type and keeps only the triggering cell."
+  },
+  "same_settings_every_call": true,
+  "smoke_horizon": 2,
+  "smoke_transfers_to_pilot": false,
+  "source": {
+    "git_commit": "1e76874fc54d0fec9104c9f3a7977dbdd6db0903",
+    "pyproject_sha256": "5e219359a95aaed846692943eb034ff335b04432b6c841836589dad2f79f0e90",
+    "single_life_porcelain": [
+      "?? single_life/.gitignore",
+      "?? single_life/AGENTS.md",
+      "?? single_life/README.md",
+      "?? single_life/STATE-commander.md",
+      "?? single_life/configs/.gitkeep",
+      "?? single_life/configs/005_world_w1.json",
+      "?? single_life/configs/005_world_w2.json",
+      "?? single_life/configs/006_worlds.json",
+      "?? single_life/configs/dev_continuing.json",
+      "?? single_life/configs/dev_stationary.json",
+      "?? single_life/experiments/.gitkeep",
+      "?? single_life/experiments/001-causal-kernel/public_input_t61.json",
+      "?? single_life/experiments/001-causal-kernel/summary.json",
+      "?? single_life/experiments/002-kernel-integrity/public_input_t61.json",
+      "?? single_life/experiments/002-kernel-integrity/summary.json",
+      "?? single_life/experiments/003-preservation/public_input_t61.json",
+      "?? single_life/experiments/003-preservation/summary.json",
+      "?? single_life/experiments/004-environment-feasibility/dossier.md",
+      "?? single_life/experiments/004-environment-feasibility/reference_witness.py",
+      "?? single_life/experiments/004-environment-feasibility/witness.json",
+      "?? single_life/experiments/005-gemini-lifetime/frozen.json",
+      "?? single_life/experiments/005-gemini-lifetime/model_check.json",
+      "?? single_life/experiments/005-gemini-lifetime/preflight.txt",
+      "?? single_life/experiments/005-gemini-lifetime/progress.json",
+      "?? single_life/experiments/005-gemini-lifetime/registration.json",
+      "?? single_life/experiments/005-gemini-lifetime/summary.json",
+      "?? single_life/experiments/005-gemini-lifetime/summary.md",
+      "?? single_life/experiments/005-gemini-lifetime/timeline.svg",
+      "?? single_life/program-commander.md",
+      "?? single_life/pyproject.toml",
+      "?? single_life/research/BRIEF-commander.md",
+      "?? single_life/research/decisions-commander.md",
+      "?? single_life/research/protocol-commander.md",
+      "?? single_life/research/question-commander.md",
+      "?? single_life/research/related-work-commander.md",
+      "?? single_life/reviews/001-kernel-probes.json",
+      "?? single_life/reviews/001-kernel-probes.py",
+      "?? single_life/reviews/001-review-commander.md",
+      "?? single_life/reviews/001-verification.json",
+      "?? single_life/reviews/002-kernel-probes.json",
+      "?? single_life/reviews/002-kernel-probes.py",
+      "?? single_life/reviews/002-review-commander.md",
+      "?? single_life/reviews/002-verification.json",
+      "?? single_life/reviews/003-review-commander.md",
+      "?? single_life/reviews/003-verification.json",
+      "?? single_life/reviews/004-review-commander.md",
+      "?? single_life/reviews/004-verification.json",
+      "?? single_life/reviews/005-audit-commander.py",
+      "?? single_life/reviews/005-review-commander.md",
+      "?? single_life/reviews/005-verification.json",
+      "?? single_life/src/single_life/.gitkeep",
+      "?? single_life/src/single_life/__init__.py",
+      "?? single_life/src/single_life/__main__.py",
+      "?? single_life/src/single_life/artifacts.py",
+      "?? single_life/src/single_life/baselines.py",
+      "?? single_life/src/single_life/cli.py",
+      "?? single_life/src/single_life/contracts.py",
+      "?? single_life/src/single_life/fixtures.py",
+      "?? single_life/src/single_life/gemini_adapter.py",
+      "?? single_life/src/single_life/identity.py",
+      "?? single_life/src/single_life/pilot.py",
+      "?? single_life/src/single_life/procedure_client.py",
+      "?? single_life/src/single_life/procedure_dsl.py",
+      "?? single_life/src/single_life/procedure_pilot.py",
+      "?? single_life/src/single_life/procedure_progress.py",
+      "?? single_life/src/single_life/procedure_runner.py",
+      "?? single_life/src/single_life/procedure_world.py",
+      "?? single_life/src/single_life/progress.py",
+      "?? single_life/src/single_life/runner.py",
+      "?? single_life/tasks/001-causal-kernel-commander.md",
+      "?? single_life/tasks/001-causal-kernel-worker.md",
+      "?? single_life/tasks/002-kernel-integrity-commander.md",
+      "?? single_life/tasks/002-kernel-integrity-worker.md",
+      "?? single_life/tasks/003-preservation-repair-commander.md",
+      "?? single_life/tasks/003-preservation-repair-worker.md",
+      "?? single_life/tasks/004-environment-feasibility-commander.md",
+      "?? single_life/tasks/004-environment-feasibility-worker.md",
+      "?? single_life/tasks/005-gemini-lifetime-pilot-commander.md",
+      "?? single_life/tasks/005-gemini-lifetime-pilot-worker.md",
+      "?? single_life/tasks/006-procedure-acquisition-commander.md",
+      "?? single_life/templates/experiment-commander.md",
+      "?? single_life/templates/worker-return.md",
+      "?? single_life/tests/.gitkeep",
+      "?? single_life/tests/test_causal_kernel.py",
+      "?? single_life/tests/test_gemini_pilot.py",
+      "?? single_life/tests/test_kernel_integrity.py",
+      "?? single_life/tests/test_preservation.py",
+      "?? single_life/tests/test_procedure_acquisition.py",
+      "?? single_life/uv.lock"
+    ],
+    "source_sha256": "262406600071bec7d5f857f0bcd44f280b720c72c6778213b926c8777ae95e2c",
+    "worktree_dirty": true
+  },
+  "task": "006",
+  "utility_unit": "tenths of a utility point",
+  "worlds": {
+    "actions": [
+      "A|single",
+      "A|pair",
+      "B|single",
+      "B|pair"
+    ],
+    "change_at_action": 43,
+    "horizon": 96,
+    "note": "Evaluator-only. Do not copy this file into a model prompt. change_at_action is the first action scored on the post table.",
+    "sentinel": "SENTINEL_PRIVATE_do_not_leak 006",
+    "task": "006",
+    "type_cycle": "T1, T2, T3, repeating, one type before each action",
+    "types": [
+      "T1",
+      "T2",
+      "T3"
+    ],
+    "utility_unit": "tenths of a utility point",
+    "worlds": {
+      "route": {
+        "description": "At action 43 only T1's preferred server becomes B. The pair effect stays +3 tenths.",
+        "post": {
+          "T1": {
+            "A|pair": 3,
+            "A|single": 0,
+            "B|pair": 8,
+            "B|single": 5
+          },
+          "T2": {
+            "A|pair": 3,
+            "A|single": 0,
+            "B|pair": 8,
+            "B|single": 5
+          },
+          "T3": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          }
+        },
+        "pre": {
+          "T1": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          },
+          "T2": {
+            "A|pair": 3,
+            "A|single": 0,
+            "B|pair": 8,
+            "B|single": 5
+          },
+          "T3": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          }
+        },
+        "switches": true
+      },
+      "shared": {
+        "description": "At action 43 the pair effect becomes -4 tenths. Preferred servers stay put.",
+        "post": {
+          "T1": {
+            "A|pair": 1,
+            "A|single": 5,
+            "B|pair": -4,
+            "B|single": 0
+          },
+          "T2": {
+            "A|pair": -4,
+            "A|single": 0,
+            "B|pair": 1,
+            "B|single": 5
+          },
+          "T3": {
+            "A|pair": 1,
+            "A|single": 5,
+            "B|pair": -4,
+            "B|single": 0
+          }
+        },
+        "pre": {
+          "T1": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          },
+          "T2": {
+            "A|pair": 3,
+            "A|single": 0,
+            "B|pair": 8,
+            "B|single": 5
+          },
+          "T3": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          }
+        },
+        "switches": true
+      },
+      "stable": {
+        "description": "Pair effect stays +3 tenths and preferred servers stay T1=A, T2=B, T3=A.",
+        "post": {
+          "T1": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          },
+          "T2": {
+            "A|pair": 3,
+            "A|single": 0,
+            "B|pair": 8,
+            "B|single": 5
+          },
+          "T3": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          }
+        },
+        "pre": {
+          "T1": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          },
+          "T2": {
+            "A|pair": 3,
+            "A|single": 0,
+            "B|pair": 8,
+            "B|single": 5
+          },
+          "T3": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          }
+        },
+        "switches": false
+      },
+      "trap": {
+        "description": "At action 43 the post table is non-additive. T1 is best as A|single; T2 is best as A|pair; T3 stays A|pair.",
+        "post": {
+          "T1": {
+            "A|pair": 1,
+            "A|single": 5,
+            "B|pair": 0,
+            "B|single": 0
+          },
+          "T2": {
+            "A|pair": 8,
+            "A|single": 2,
+            "B|pair": 1,
+            "B|single": 0
+          },
+          "T3": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          }
+        },
+        "pre": {
+          "T1": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          },
+          "T2": {
+            "A|pair": 3,
+            "A|single": 0,
+            "B|pair": 8,
+            "B|single": 5
+          },
+          "T3": {
+            "A|pair": 8,
+            "A|single": 5,
+            "B|pair": 3,
+            "B|single": 0
+          }
+        },
+        "switches": true
+      }
+    }
+  }
+}

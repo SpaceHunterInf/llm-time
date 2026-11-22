@@ -1,0 +1,378 @@
+{
+  "checkpoint": "disabled",
+  "completion_cap_usd": "9.633792",
+  "dependency_identity": {
+    "build_backend": "hatchling",
+    "manager": "uv",
+    "python": "3.11.5",
+    "runtime_dependencies": [],
+    "uv_lock_sha256": "85287db42113c1aa43175bdb6aab027b87726e2235b38d3a7ef6771d51c6ac7b"
+  },
+  "experiment_id": "005-gemini-lifetime",
+  "failure_rules": {
+    "checkpoint": "disabled; this policy is not in the checkpoint allowlist",
+    "excess_note": "truncate to 1000 characters, log truncated=true, keep the action",
+    "invalid_json_or_action": "retry the same prompt once; then consume the tick as an invalid action with no reward and no second environment action",
+    "max_attempts_per_decision": 2,
+    "note_char_limit": 1000,
+    "schema": {
+      "action": "permitted action id",
+      "strategy_note": "string"
+    },
+    "transport_error": "retry once; a repeated auth, permission, or quota error stops the task; any other repeated transport error aborts that lifetime without another environment action"
+  },
+  "illustrative_short_run_usd": "0.7644",
+  "input_token_cap": 4096,
+  "input_usd_per_million": "1.50",
+  "instruction": "You choose the next action in a three-action task. Each completed observation has an action and a reward of 0 or 1. Unchosen actions stay hidden. You may also see a strategy note retained from your own earlier reply. If retained_strategy_note is null, no note has been retained. Use only the public payload. Reply with one JSON object and no other text: {\"action\": \"<permitted action id>\", \"strategy_note\": \"<short note, at most 1000 characters>\"}. The note is your own working memory for a later decision. Do not invent probabilities, regime labels, or hidden schedules.",
+  "interpretation_limit": "Integration baseline and a narrow note-retention comparison. Not a novelty claim, a harmful-memory result, or RSI.",
+  "max_attempts": 392,
+  "max_output_tokens": 2048,
+  "model": "gemini-3.5-flash",
+  "other_published_rows": "The same Gemini 3.5 Flash section also lists paid rows at $0.75/$4.50 and $2.70/$16.20. This run does not request batch, flex, or priority. It prices synchronous generateContent at the standard $1.50 input and $9.00 output row.",
+  "output_usd_per_million_including_thinking": "9.00",
+  "parser_policy": {
+    "checkpoint": "disabled; this policy is not in the checkpoint allowlist",
+    "excess_note": "truncate to 1000 characters, log truncated=true, keep the action",
+    "invalid_json_or_action": "retry the same prompt once; then consume the tick as an invalid action with no reward and no second environment action",
+    "max_attempts_per_decision": 2,
+    "note_char_limit": 1000,
+    "schema": {
+      "action": "permitted action id",
+      "strategy_note": "string"
+    },
+    "transport_error": "retry once; a repeated auth, permission, or quota error stops the task; any other repeated transport error aborts that lifetime without another environment action"
+  },
+  "per_attempt_cap_usd": "0.024576",
+  "pilot_index": {
+    "w1-persistent": {
+      "agent": "llm-note",
+      "innovation_seed": "innovation-005-w1-v1",
+      "lifetime_id": "life-005-w1",
+      "memory_condition": "persistent-note",
+      "note_carry": true,
+      "segment_sha256": "44d136eb79c67d36345b0dd48ef66d762f596f5f64fed6aa6b71068599d5d9c8",
+      "spec_sha256": "6288078311d678310edc1f61705295eab62cb94672bca1454ecdb0d2609f53ad"
+    },
+    "w1-recent": {
+      "agent": "llm-recent",
+      "innovation_seed": "innovation-005-w1-v1",
+      "lifetime_id": "life-005-w1",
+      "memory_condition": "recent-only",
+      "note_carry": false,
+      "segment_sha256": "44d136eb79c67d36345b0dd48ef66d762f596f5f64fed6aa6b71068599d5d9c8",
+      "spec_sha256": "48e75c82d5cf821216fd654b34d8d9872e4f2b29b23877b0e5960d4b6b4dfab3"
+    },
+    "w2-persistent": {
+      "agent": "llm-note",
+      "innovation_seed": "innovation-005-w2-v1",
+      "lifetime_id": "life-005-w2",
+      "memory_condition": "persistent-note",
+      "note_carry": true,
+      "segment_sha256": "dd2ce4535d9cafd184ca29ce567665cb4ffe14e19d4987bfd1f31174e42ced19",
+      "spec_sha256": "736fef732e713663658c39796c894eb39763590aea1c3003418ff3e37e8523cb"
+    },
+    "w2-recent": {
+      "agent": "llm-recent",
+      "innovation_seed": "innovation-005-w2-v1",
+      "lifetime_id": "life-005-w2",
+      "memory_condition": "recent-only",
+      "note_carry": false,
+      "segment_sha256": "dd2ce4535d9cafd184ca29ce567665cb4ffe14e19d4987bfd1f31174e42ced19",
+      "spec_sha256": "751ce44aba05b9c312f9f488b92f3b2498c14baa5006783168d6508b44cbd7e6"
+    }
+  },
+  "planned_decisions": 196,
+  "planned_pilot": 192,
+  "planned_smoke": 4,
+  "price_checked_on": "2026-09-29",
+  "price_page_updated": "2026-09-24",
+  "price_source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash",
+  "pricing": {
+    "completion_cap_usd": "9.633792",
+    "estimate_note": "The completion cap prices every planned decision at two full-cap attempts. It is a usage estimate from the published token rates, not a provider invoice. Unknown usage keeps this per-attempt reserve and is not entered as zero.",
+    "input_token_cap": 4096,
+    "input_usd_per_million": "1.50",
+    "max_attempts": 392,
+    "max_output_tokens": 2048,
+    "model": "gemini-3.5-flash",
+    "other_published_rows": "The same Gemini 3.5 Flash section also lists paid rows at $0.75/$4.50 and $2.70/$16.20. This run does not request batch, flex, or priority. It prices synchronous generateContent at the standard $1.50 input and $9.00 output row.",
+    "output_cap_includes_thinking": true,
+    "output_usd_per_million_including_thinking": "9.00",
+    "per_attempt_cap_usd": "0.024576",
+    "planned_decisions": 196,
+    "price_checked_on": "2026-09-29",
+    "price_page_updated": "2026-09-24",
+    "price_row": "standard paid tier, synchronous generateContent, no batch, cache, or grounding",
+    "price_source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash",
+    "temperature": 0,
+    "thinking_budget_integer": null,
+    "thinking_budget_note": "gemini-3.5-flash uses thinkingLevel, not a separate integer thinking budget. The generateContent REST examples spell the level in lowercase, so this run sends \"low\". maxOutputTokens is the hard cap on visible output plus thinking tokens. 2048 reserves 1024 visible tokens plus 1024 thinking tokens because those caps are not separately enforceable.",
+    "thinking_level": "low"
+  },
+  "reference_settings": {
+    "cost_usd": "0",
+    "label": "offline reference, not an equally costly LLM method",
+    "policies": [
+      "ucb",
+      "random"
+    ],
+    "shared_innovation": "same lifetime_id and innovation_seed as the paired LLM runs in that world",
+    "ucb_definition": {
+      "agent_rng": "unused",
+      "counting": "one count per event_id; a repeated full prefix does not add counts",
+      "equation": "score(a) = mean(a) + sqrt(2 * ln(N) / N_a)",
+      "log": "natural",
+      "name": "sliding-window-ucb-v1",
+      "startup": "if any permitted arm has zero pulls inside the window, choose the lexicographically smallest such arm",
+      "ties": "highest score, then lexicographically smallest action id",
+      "window": "global time: action_index in [decision_index - window, decision_index - 1]"
+    },
+    "ucb_window": 12,
+    "updater": "null-updater-v1"
+  },
+  "registered_at_utc": "2026-09-29T02:35:47Z",
+  "settings": {
+    "input_token_cap": 4096,
+    "instruction_sha256": "48d2b3eedff5a1c41076d723c514fb6555fd681c51a3af76f79db6778457b70e",
+    "max_attempts_per_decision": 2,
+    "max_output_tokens": 2048,
+    "model": "gemini-3.5-flash",
+    "note_char_limit": 1000,
+    "observation_window": 12,
+    "temperature": 0,
+    "thinking_level": "low",
+    "ucb_window": 12
+  },
+  "smoke_spec": {
+    "action_ids": [
+      "arm_a",
+      "arm_b",
+      "arm_c"
+    ],
+    "agent": "llm-note",
+    "agent_seed": "agent-005-smoke-v1",
+    "artifact_period": 4,
+    "artifact_window": 12,
+    "compute_budget": 100000,
+    "evaluator_private_note": "SENTINEL_PRIVATE_do_not_leak 005",
+    "experiment_id": "005-gemini-lifetime",
+    "fixture_id": "005-smoke",
+    "horizon": 4,
+    "innovation_seed": "innovation-005-smoke-v1",
+    "interaction_budget": 4,
+    "lifetime_id": "life-005-smoke",
+    "protocol_version": "single-life-v0.2",
+    "schedule_seed": "schedule-005-smoke-v1",
+    "segments": [
+      {
+        "end_index": 4,
+        "probabilities": {
+          "arm_a": 0.8,
+          "arm_b": 0.2,
+          "arm_c": 0.5
+        },
+        "regime_id": "private-w1-a",
+        "start_index": 1,
+        "unreachable_metadata": {
+          "oracle_best_arm": "arm_a",
+          "sentinel": "SENTINEL_PRIVATE_do_not_leak 005"
+        }
+      }
+    ],
+    "ucb_window": 12
+  },
+  "source": {
+    "git_commit": "1e76874fc54d0fec9104c9f3a7977dbdd6db0903",
+    "pyproject_sha256": "5e219359a95aaed846692943eb034ff335b04432b6c841836589dad2f79f0e90",
+    "single_life_porcelain": [
+      "?? single_life/.gitignore",
+      "?? single_life/AGENTS.md",
+      "?? single_life/README.md",
+      "?? single_life/STATE-commander.md",
+      "?? single_life/configs/.gitkeep",
+      "?? single_life/configs/005_world_w1.json",
+      "?? single_life/configs/005_world_w2.json",
+      "?? single_life/configs/dev_continuing.json",
+      "?? single_life/configs/dev_stationary.json",
+      "?? single_life/experiments/.gitkeep",
+      "?? single_life/experiments/001-causal-kernel/public_input_t61.json",
+      "?? single_life/experiments/001-causal-kernel/summary.json",
+      "?? single_life/experiments/002-kernel-integrity/public_input_t61.json",
+      "?? single_life/experiments/002-kernel-integrity/summary.json",
+      "?? single_life/experiments/003-preservation/public_input_t61.json",
+      "?? single_life/experiments/003-preservation/summary.json",
+      "?? single_life/experiments/004-environment-feasibility/dossier.md",
+      "?? single_life/experiments/004-environment-feasibility/reference_witness.py",
+      "?? single_life/experiments/004-environment-feasibility/witness.json",
+      "?? single_life/program-commander.md",
+      "?? single_life/pyproject.toml",
+      "?? single_life/research/BRIEF-commander.md",
+      "?? single_life/research/decisions-commander.md",
+      "?? single_life/research/protocol-commander.md",
+      "?? single_life/research/question-commander.md",
+      "?? single_life/research/related-work-commander.md",
+      "?? single_life/reviews/001-kernel-probes.json",
+      "?? single_life/reviews/001-kernel-probes.py",
+      "?? single_life/reviews/001-review-commander.md",
+      "?? single_life/reviews/001-verification.json",
+      "?? single_life/reviews/002-kernel-probes.json",
+      "?? single_life/reviews/002-kernel-probes.py",
+      "?? single_life/reviews/002-review-commander.md",
+      "?? single_life/reviews/002-verification.json",
+      "?? single_life/reviews/003-review-commander.md",
+      "?? single_life/reviews/003-verification.json",
+      "?? single_life/reviews/004-review-commander.md",
+      "?? single_life/reviews/004-verification.json",
+      "?? single_life/src/single_life/.gitkeep",
+      "?? single_life/src/single_life/__init__.py",
+      "?? single_life/src/single_life/__main__.py",
+      "?? single_life/src/single_life/artifacts.py",
+      "?? single_life/src/single_life/baselines.py",
+      "?? single_life/src/single_life/cli.py",
+      "?? single_life/src/single_life/contracts.py",
+      "?? single_life/src/single_life/fixtures.py",
+      "?? single_life/src/single_life/gemini_adapter.py",
+      "?? single_life/src/single_life/identity.py",
+      "?? single_life/src/single_life/pilot.py",
+      "?? single_life/src/single_life/progress.py",
+      "?? single_life/src/single_life/runner.py",
+      "?? single_life/tasks/001-causal-kernel-commander.md",
+      "?? single_life/tasks/001-causal-kernel-worker.md",
+      "?? single_life/tasks/002-kernel-integrity-commander.md",
+      "?? single_life/tasks/002-kernel-integrity-worker.md",
+      "?? single_life/tasks/003-preservation-repair-commander.md",
+      "?? single_life/tasks/003-preservation-repair-worker.md",
+      "?? single_life/tasks/004-environment-feasibility-commander.md",
+      "?? single_life/tasks/004-environment-feasibility-worker.md",
+      "?? single_life/tasks/005-gemini-lifetime-pilot-commander.md",
+      "?? single_life/templates/experiment-commander.md",
+      "?? single_life/templates/worker-return.md",
+      "?? single_life/tests/.gitkeep",
+      "?? single_life/tests/test_causal_kernel.py",
+      "?? single_life/tests/test_gemini_pilot.py",
+      "?? single_life/tests/test_kernel_integrity.py",
+      "?? single_life/tests/test_preservation.py",
+      "?? single_life/uv.lock"
+    ],
+    "source_sha256": "1e1772057b66e48a00ec1b54a411694cd7fc2fe694eec67926fdf560426d9265",
+    "worktree_dirty": true
+  },
+  "temperature": 0,
+  "thinking_level": "low",
+  "timing_note": "A note proposed at decision t is written before that decision's reward and deployed at decision t+1. Its creation cutoff is t-1. The prompt at decision 17 therefore includes observations through action 16 and the note proposed at 16. For the second world, the first reward scored under the middle probability table is the outcome of decision 17, and it is visible starting at decision 18. Those boundaries are evaluator-side and are not part of the prompt.",
+  "worlds": {
+    "w1": {
+      "path": "configs/005_world_w1.json",
+      "sha256": "da0bc8d29f05217a20313e1fc4b1163af9c1215fd73f7f4f192b3eaf247e1070",
+      "spec": {
+        "action_ids": [
+          "arm_a",
+          "arm_b",
+          "arm_c"
+        ],
+        "agent": "llm-recent",
+        "agent_seed": "agent-005-w1-v1",
+        "artifact_period": 48,
+        "artifact_window": 12,
+        "compute_budget": 100000,
+        "evaluator_private_note": "SENTINEL_PRIVATE_do_not_leak 005",
+        "experiment_id": "005-gemini-lifetime",
+        "fixture_id": "005-w1",
+        "horizon": 48,
+        "innovation_seed": "innovation-005-w1-v1",
+        "interaction_budget": 48,
+        "lifetime_id": "life-005-w1",
+        "protocol_version": "single-life-v0.2",
+        "schedule_seed": "schedule-005-w1-v1",
+        "segments": [
+          {
+            "end_index": 48,
+            "probabilities": {
+              "arm_a": 0.8,
+              "arm_b": 0.2,
+              "arm_c": 0.5
+            },
+            "regime_id": "private-w1-a",
+            "start_index": 1,
+            "unreachable_metadata": {
+              "oracle_best_arm": "arm_a",
+              "sentinel": "SENTINEL_PRIVATE_do_not_leak 005"
+            }
+          }
+        ],
+        "ucb_window": 12
+      }
+    },
+    "w2": {
+      "path": "configs/005_world_w2.json",
+      "sha256": "d9e6167c9e98458df44f1244e23534275ec6752bdf287f84c19189566e9add34",
+      "spec": {
+        "action_ids": [
+          "arm_a",
+          "arm_b",
+          "arm_c"
+        ],
+        "agent": "llm-recent",
+        "agent_seed": "agent-005-w2-v1",
+        "artifact_period": 48,
+        "artifact_window": 12,
+        "compute_budget": 100000,
+        "evaluator_private_note": "SENTINEL_PRIVATE_do_not_leak 005",
+        "experiment_id": "005-gemini-lifetime",
+        "fixture_id": "005-w2",
+        "horizon": 48,
+        "innovation_seed": "innovation-005-w2-v1",
+        "interaction_budget": 48,
+        "lifetime_id": "life-005-w2",
+        "protocol_version": "single-life-v0.2",
+        "schedule_seed": "schedule-005-w2-v1",
+        "segments": [
+          {
+            "end_index": 16,
+            "probabilities": {
+              "arm_a": 0.8,
+              "arm_b": 0.2,
+              "arm_c": 0.5
+            },
+            "regime_id": "private-w2-a",
+            "start_index": 1,
+            "unreachable_metadata": {
+              "oracle_best_arm": "arm_a",
+              "sentinel": "SENTINEL_PRIVATE_do_not_leak 005"
+            }
+          },
+          {
+            "end_index": 34,
+            "probabilities": {
+              "arm_a": 0.2,
+              "arm_b": 0.8,
+              "arm_c": 0.5
+            },
+            "regime_id": "private-w2-b",
+            "start_index": 17,
+            "unreachable_metadata": {
+              "oracle_best_arm": "arm_b",
+              "sentinel": "SENTINEL_PRIVATE_do_not_leak 005"
+            }
+          },
+          {
+            "end_index": 48,
+            "probabilities": {
+              "arm_a": 0.8,
+              "arm_b": 0.2,
+              "arm_c": 0.5
+            },
+            "regime_id": "private-w2-c",
+            "start_index": 35,
+            "unreachable_metadata": {
+              "oracle_best_arm": "arm_a",
+              "sentinel": "SENTINEL_PRIVATE_do_not_leak 005"
+            }
+          }
+        ],
+        "ucb_window": 12
+      }
+    }
+  }
+}

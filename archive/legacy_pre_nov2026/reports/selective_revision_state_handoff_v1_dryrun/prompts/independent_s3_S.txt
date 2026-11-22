@@ -1,0 +1,31 @@
+Named components: observed=A, linked=B, unrelated=C. High rate is 0.8 and low rate is 0.2.
+
+Initially each component is high with probability 0.99, independently. A reset is different from initialization: whenever a component resets, its new state is high with probability 0.5 and low with probability 0.5, independently of its previous state. Components that reset together share only the event; their redrawn values are independent. The unrelated component never resets. Before every observed outcome, apply that time step's reset transition, then generate the Bernoulli outcome from the current rate (0.8 if high, 0.2 if low). The decision uses the latent state immediately after the final listed observation; there is no extra transition before diagnosis or reward.
+
+Observed component A and linked component B have independent Bernoulli(0.03) reset events.
+
+Each joint key has three characters, left to right: observed, linked, unrelated. 1 means the component is high and 0 means low. Example: 100 means observed high, linked low, unrelated low. Keys are names, not an ordered array.
+
+The supplied previous_state is the exact posterior after observation 20. Start from that distribution. There are exactly 12 subsequent reset-then-observe steps. Do not restart from the 0.99 prior. Do not apply an extra transition after the last listed observation.
+
+previous_state checkpoint=after_obs_20:
+{"checkpoint":"after_obs_20","joint":{"000":2.2973035672716654e-06,"001":0.058222861608932995,"010":8.289451145407381e-07,"011":0.021008784982920442,"100":2.6696324923279163e-05,"101":0.6765916588555859,"110":9.63294030297715e-06,"111":0.24413723903865267},"schema_version":2}
+
+Observations 21..32 only:
+t=21: component B -> 1
+t=22: component B -> 0
+t=23: component C -> 1
+t=24: component C -> 1
+t=25: component A -> 0
+t=26: component A -> 0
+t=27: component A -> 0
+t=28: component A -> 1
+t=29: component A -> 1
+t=30: component A -> 0
+t=31: component A -> 0
+t=32: component A -> 0
+
+Return exactly one JSON object and no other text:
+{"joint": {"000": p, "001": p, "010": p, "011": p, "100": p, "101": p, "110": p, "111": p}, "action": "choose_linked" or "choose_safe" or "diagnose_linked"}
+joint must contain exactly those eight keys, each a probability in [0, 1], summing to 1. Do not report separate marginals or predictive means.
+choose_linked takes the linked component's expected rate. choose_safe takes a known alternative worth 0.65. diagnose_linked: you pay a cost of 0.04 once to learn the linked latent RATE, then take the higher of that rate and 0.65. Do not include a rationale.

@@ -1,0 +1,47 @@
+{
+  "checkpoint": 32,
+  "illustrative_reserved_usd": 9.42336,
+  "interfaces": [
+    "R",
+    "F",
+    "S",
+    "C"
+  ],
+  "kind": "state_handoff_v1_dryrun",
+  "limitation": "No safe-optimal cell in this six-tape set. Development diagnostic, not a holdout.",
+  "n_jobs": 48,
+  "n_unique_prompts": 24,
+  "optimal_action_counts": {
+    "choose_linked": 16,
+    "diagnose_linked": 32
+  },
+  "per_tape_optimal": {
+    "independent_s3": {
+      "n32": "diagnose_linked",
+      "structure": "independent"
+    },
+    "independent_s4": {
+      "n32": "diagnose_linked",
+      "structure": "independent"
+    },
+    "shared_s3": {
+      "n32": "diagnose_linked",
+      "structure": "shared"
+    },
+    "shared_s4": {
+      "n32": "diagnose_linked",
+      "structure": "shared"
+    },
+    "stable_s12": {
+      "n32": "choose_linked",
+      "structure": "stable"
+    },
+    "stable_s13": {
+      "n32": "choose_linked",
+      "structure": "stable"
+    }
+  },
+  "previous_state": 20,
+  "repeats": 2,
+  "token_estimate_max": 1641
+}

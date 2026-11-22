@@ -1,0 +1,693 @@
+{
+  "jobs": [
+    {
+      "case_hash": "cc07a33b5f28cf4e28fe448b2e8581ba588e0fbe3fa54a941d2a451201634a89",
+      "case_id": "case_01",
+      "key": "case_01|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|3a17d834460b599a418e33f156238f7b259fe97111ff57e8509bd832e4c75e1e",
+      "prompt_hash": "3a17d834460b599a418e33f156238f7b259fe97111ff57e8509bd832e4c75e1e",
+      "token_estimate": 1277,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "cc07a33b5f28cf4e28fe448b2e8581ba588e0fbe3fa54a941d2a451201634a89",
+      "case_id": "case_01",
+      "key": "case_01|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|b5a0f4ea14ebd55c123e242c16fc638ae0a204a6eff1a983b9a3dd26c92fe8fc",
+      "prompt_hash": "b5a0f4ea14ebd55c123e242c16fc638ae0a204a6eff1a983b9a3dd26c92fe8fc",
+      "token_estimate": 1333,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "cc07a33b5f28cf4e28fe448b2e8581ba588e0fbe3fa54a941d2a451201634a89",
+      "case_id": "case_01",
+      "key": "case_01|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|041a1c1858c5df4d13a8da0e343f7d407a9cc958146292c436d9d82d9b928012",
+      "prompt_hash": "041a1c1858c5df4d13a8da0e343f7d407a9cc958146292c436d9d82d9b928012",
+      "token_estimate": 1461,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "203502c2179ffc9fa2edebfc770a62f496dbf92be159cd73b8b23fe7e34baa04",
+      "case_id": "case_02",
+      "key": "case_02|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|5ea42e6b1e090706313d50525794c9357cd0d2ed09acc70132e9d83024b5969e",
+      "prompt_hash": "5ea42e6b1e090706313d50525794c9357cd0d2ed09acc70132e9d83024b5969e",
+      "token_estimate": 1277,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "203502c2179ffc9fa2edebfc770a62f496dbf92be159cd73b8b23fe7e34baa04",
+      "case_id": "case_02",
+      "key": "case_02|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|895ab69b831b1ab951305d16351e802f52836f7c640b58ea809e321e9ec5e76f",
+      "prompt_hash": "895ab69b831b1ab951305d16351e802f52836f7c640b58ea809e321e9ec5e76f",
+      "token_estimate": 1332,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "203502c2179ffc9fa2edebfc770a62f496dbf92be159cd73b8b23fe7e34baa04",
+      "case_id": "case_02",
+      "key": "case_02|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|b21a6ca10bc2e8cc1042b17bfb116eb920a42646cfe731711cf7c88160d90c0f",
+      "prompt_hash": "b21a6ca10bc2e8cc1042b17bfb116eb920a42646cfe731711cf7c88160d90c0f",
+      "token_estimate": 1461,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "bf101a70681445bc26d19aa7e3a344aad47c85603c34966966eaf69d3e7f65ec",
+      "case_id": "case_03",
+      "key": "case_03|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|4fb3156bce21420214204f1a0b5a08611ae004678fccafc03cf32ebff1d6bdfa",
+      "prompt_hash": "4fb3156bce21420214204f1a0b5a08611ae004678fccafc03cf32ebff1d6bdfa",
+      "token_estimate": 1277,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "bf101a70681445bc26d19aa7e3a344aad47c85603c34966966eaf69d3e7f65ec",
+      "case_id": "case_03",
+      "key": "case_03|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|13ee2d851b3aa859443a906e9e5437c3d03a2e024e322dc5e3af8f315246f1d7",
+      "prompt_hash": "13ee2d851b3aa859443a906e9e5437c3d03a2e024e322dc5e3af8f315246f1d7",
+      "token_estimate": 1333,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "bf101a70681445bc26d19aa7e3a344aad47c85603c34966966eaf69d3e7f65ec",
+      "case_id": "case_03",
+      "key": "case_03|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|3b7409dea708b484db88c7293dab2a275c3b6c2ed3cce541da4960ef959c21a0",
+      "prompt_hash": "3b7409dea708b484db88c7293dab2a275c3b6c2ed3cce541da4960ef959c21a0",
+      "token_estimate": 1461,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "b192faba1ff23d7f784d96678f3e69e7b76d262d7c7e69e684d4897006490bd9",
+      "case_id": "case_04",
+      "key": "case_04|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|73fc950af1e574eb88ee76a10e6b197750c127c5b03bd063338664f59962a9c9",
+      "prompt_hash": "73fc950af1e574eb88ee76a10e6b197750c127c5b03bd063338664f59962a9c9",
+      "token_estimate": 1277,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "b192faba1ff23d7f784d96678f3e69e7b76d262d7c7e69e684d4897006490bd9",
+      "case_id": "case_04",
+      "key": "case_04|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|c03fe9b8bb6d22445dd91994e019e95912eafa0c0858a1bdcca3a10aa37dfa7f",
+      "prompt_hash": "c03fe9b8bb6d22445dd91994e019e95912eafa0c0858a1bdcca3a10aa37dfa7f",
+      "token_estimate": 1332,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "b192faba1ff23d7f784d96678f3e69e7b76d262d7c7e69e684d4897006490bd9",
+      "case_id": "case_04",
+      "key": "case_04|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|68043d2645a947461f05aa317b78dc909a93e8bbcacf572e07a17cedd9bac104",
+      "prompt_hash": "68043d2645a947461f05aa317b78dc909a93e8bbcacf572e07a17cedd9bac104",
+      "token_estimate": 1461,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "3e575d9b8ce16b2401201c55bfcda8cc96655a5463398aaf9a8a6b5f88bb967d",
+      "case_id": "case_05",
+      "key": "case_05|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|c789a6717569ea86bc5eb3c731dcf10907d2e2649a0e7ed14829c3de067c5136",
+      "prompt_hash": "c789a6717569ea86bc5eb3c731dcf10907d2e2649a0e7ed14829c3de067c5136",
+      "token_estimate": 1277,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "3e575d9b8ce16b2401201c55bfcda8cc96655a5463398aaf9a8a6b5f88bb967d",
+      "case_id": "case_05",
+      "key": "case_05|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|85c34f78fc68fa519d79aeb8dc22aa712c5881f1b5bbfd9c80018119f59e0beb",
+      "prompt_hash": "85c34f78fc68fa519d79aeb8dc22aa712c5881f1b5bbfd9c80018119f59e0beb",
+      "token_estimate": 1333,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "3e575d9b8ce16b2401201c55bfcda8cc96655a5463398aaf9a8a6b5f88bb967d",
+      "case_id": "case_05",
+      "key": "case_05|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|60024aa632fbf5fdc0a02248be3d566fcf67c31dc01699b1ffbbe5949161d958",
+      "prompt_hash": "60024aa632fbf5fdc0a02248be3d566fcf67c31dc01699b1ffbbe5949161d958",
+      "token_estimate": 1461,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "1c69dde0f16710041902023c1ca9d18db1c19b0b52d66d00244f43f0889c2077",
+      "case_id": "case_06",
+      "key": "case_06|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|1ba081f312f63a8f0be1da9a4d4f3eadf84b28971f0e9b29928233dae8bbbf57",
+      "prompt_hash": "1ba081f312f63a8f0be1da9a4d4f3eadf84b28971f0e9b29928233dae8bbbf57",
+      "token_estimate": 1277,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "1c69dde0f16710041902023c1ca9d18db1c19b0b52d66d00244f43f0889c2077",
+      "case_id": "case_06",
+      "key": "case_06|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|94221fa7a50878bf93dd4bf7dcfd87fe732fb195e55a34df16e10f26338a0284",
+      "prompt_hash": "94221fa7a50878bf93dd4bf7dcfd87fe732fb195e55a34df16e10f26338a0284",
+      "token_estimate": 1332,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "1c69dde0f16710041902023c1ca9d18db1c19b0b52d66d00244f43f0889c2077",
+      "case_id": "case_06",
+      "key": "case_06|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|a753225e5e7342623af42c0ff91314e119a650e26e44a9e9157dd95e165c8252",
+      "prompt_hash": "a753225e5e7342623af42c0ff91314e119a650e26e44a9e9157dd95e165c8252",
+      "token_estimate": 1461,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "cd5903e031fc183c4012349923c96dd29fc475963e48827ca1b980f0e6750774",
+      "case_id": "case_07",
+      "key": "case_07|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|18cbbfc6113f7b68d62ab24fba59ae99036c5e82bd4c0fccc4ae97d88e865c8a",
+      "prompt_hash": "18cbbfc6113f7b68d62ab24fba59ae99036c5e82bd4c0fccc4ae97d88e865c8a",
+      "token_estimate": 1277,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "cd5903e031fc183c4012349923c96dd29fc475963e48827ca1b980f0e6750774",
+      "case_id": "case_07",
+      "key": "case_07|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|807c3c4199774a3278cb5a23d5da1620cd6fa4c4faa1e260920193eef954b911",
+      "prompt_hash": "807c3c4199774a3278cb5a23d5da1620cd6fa4c4faa1e260920193eef954b911",
+      "token_estimate": 1333,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "cd5903e031fc183c4012349923c96dd29fc475963e48827ca1b980f0e6750774",
+      "case_id": "case_07",
+      "key": "case_07|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|31bb77f16934432facee744f4c0b0ed53e295914bb7e3c57f96aa053ef859855",
+      "prompt_hash": "31bb77f16934432facee744f4c0b0ed53e295914bb7e3c57f96aa053ef859855",
+      "token_estimate": 1461,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "1f894c9cfc22728ef54e69f609a8e40bc7a961c11411f0d9a7af312d1c1b2627",
+      "case_id": "case_08",
+      "key": "case_08|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|2a31d29e5c56a0b18672d6082468fc29ea09cd3561630b41fa0fd58ec7389fae",
+      "prompt_hash": "2a31d29e5c56a0b18672d6082468fc29ea09cd3561630b41fa0fd58ec7389fae",
+      "token_estimate": 1277,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "1f894c9cfc22728ef54e69f609a8e40bc7a961c11411f0d9a7af312d1c1b2627",
+      "case_id": "case_08",
+      "key": "case_08|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|963a215f3d6fb88423feeddacc260399d4d75ebe143290c38073ffcefa0f5d8c",
+      "prompt_hash": "963a215f3d6fb88423feeddacc260399d4d75ebe143290c38073ffcefa0f5d8c",
+      "token_estimate": 1332,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "1f894c9cfc22728ef54e69f609a8e40bc7a961c11411f0d9a7af312d1c1b2627",
+      "case_id": "case_08",
+      "key": "case_08|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|5fc64a1b56e5dd6e0aed66116af0e58f17149e3dff5d616ea42b6880a297b270",
+      "prompt_hash": "5fc64a1b56e5dd6e0aed66116af0e58f17149e3dff5d616ea42b6880a297b270",
+      "token_estimate": 1460,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "01ea1bbf1c8fce04dbfda2f177e266da5bd8fac49879fad1c1aa1112cd3ae9a3",
+      "case_id": "case_09",
+      "key": "case_09|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|8d6ba1fd698cb485a130e36f8cc9ab3632e05a69813e043b57184dd196b3f441",
+      "prompt_hash": "8d6ba1fd698cb485a130e36f8cc9ab3632e05a69813e043b57184dd196b3f441",
+      "token_estimate": 1213,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "01ea1bbf1c8fce04dbfda2f177e266da5bd8fac49879fad1c1aa1112cd3ae9a3",
+      "case_id": "case_09",
+      "key": "case_09|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|030e557ed133bdac360e60f205950a7348207c21ce71e5a6d51c27ad0c5d9ba5",
+      "prompt_hash": "030e557ed133bdac360e60f205950a7348207c21ce71e5a6d51c27ad0c5d9ba5",
+      "token_estimate": 1268,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "01ea1bbf1c8fce04dbfda2f177e266da5bd8fac49879fad1c1aa1112cd3ae9a3",
+      "case_id": "case_09",
+      "key": "case_09|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|c0e866806b5d4a7184431157ad4f76e38049f42aabaef74e3a22f173e946928d",
+      "prompt_hash": "c0e866806b5d4a7184431157ad4f76e38049f42aabaef74e3a22f173e946928d",
+      "token_estimate": 1392,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "cad5830a377e819acaff46d56e5c8f524f0494f69f5b04779cf4ae3f2c935548",
+      "case_id": "case_10",
+      "key": "case_10|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|83ef858f9fddcea7f830d2ae0aa29c3a40a756ae43bea222f116a17c77869557",
+      "prompt_hash": "83ef858f9fddcea7f830d2ae0aa29c3a40a756ae43bea222f116a17c77869557",
+      "token_estimate": 1212,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "cad5830a377e819acaff46d56e5c8f524f0494f69f5b04779cf4ae3f2c935548",
+      "case_id": "case_10",
+      "key": "case_10|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|3c6307f91856256e1fbe028a89e39203cf0dd61f7c08d18fff6544907a19be79",
+      "prompt_hash": "3c6307f91856256e1fbe028a89e39203cf0dd61f7c08d18fff6544907a19be79",
+      "token_estimate": 1268,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "cad5830a377e819acaff46d56e5c8f524f0494f69f5b04779cf4ae3f2c935548",
+      "case_id": "case_10",
+      "key": "case_10|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|1cb59175a32cd15440e5e0ce20362fcfcf8a134a97d3e5b27f2f9f430b4502ea",
+      "prompt_hash": "1cb59175a32cd15440e5e0ce20362fcfcf8a134a97d3e5b27f2f9f430b4502ea",
+      "token_estimate": 1392,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "812fdc0440a1f1fbf99b8ba9477532fe4e567a6c5ac24491edec25ff36233754",
+      "case_id": "case_11",
+      "key": "case_11|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|5ac8513306904a6b068dce2d82f9e065842e18a616f91d61c6296ee5919baace",
+      "prompt_hash": "5ac8513306904a6b068dce2d82f9e065842e18a616f91d61c6296ee5919baace",
+      "token_estimate": 1213,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "812fdc0440a1f1fbf99b8ba9477532fe4e567a6c5ac24491edec25ff36233754",
+      "case_id": "case_11",
+      "key": "case_11|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|836f792bfcd8bd45f6179b101d9834dfe6abf82179715044e2bd85e7599bd8ec",
+      "prompt_hash": "836f792bfcd8bd45f6179b101d9834dfe6abf82179715044e2bd85e7599bd8ec",
+      "token_estimate": 1268,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "812fdc0440a1f1fbf99b8ba9477532fe4e567a6c5ac24491edec25ff36233754",
+      "case_id": "case_11",
+      "key": "case_11|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|f36a1789b6533da8e6daed96e332a185ad5635a988b3d6d35c5708bd7efd6253",
+      "prompt_hash": "f36a1789b6533da8e6daed96e332a185ad5635a988b3d6d35c5708bd7efd6253",
+      "token_estimate": 1392,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "1261c6fd47d956240b1da8297e25f367ca167fc0c93571b61bc018233daa9605",
+      "case_id": "case_12",
+      "key": "case_12|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|0317b67c8a83a506e4581a1cea46390c36d0b6d6c90c71c13bf2266a5a9a6dbb",
+      "prompt_hash": "0317b67c8a83a506e4581a1cea46390c36d0b6d6c90c71c13bf2266a5a9a6dbb",
+      "token_estimate": 1212,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "1261c6fd47d956240b1da8297e25f367ca167fc0c93571b61bc018233daa9605",
+      "case_id": "case_12",
+      "key": "case_12|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|185b6e078b4e85e9cd3cb15fda15e8c196ea9e51dbecb71bdf3394c926fe777f",
+      "prompt_hash": "185b6e078b4e85e9cd3cb15fda15e8c196ea9e51dbecb71bdf3394c926fe777f",
+      "token_estimate": 1268,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "1261c6fd47d956240b1da8297e25f367ca167fc0c93571b61bc018233daa9605",
+      "case_id": "case_12",
+      "key": "case_12|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|23268847a40e1bf6e1a163590e155e2fc0db1182c863ba45781d229aa370d7b5",
+      "prompt_hash": "23268847a40e1bf6e1a163590e155e2fc0db1182c863ba45781d229aa370d7b5",
+      "token_estimate": 1392,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "8c53e5ee8a4be6a47879b71d146c279434dc6eca1390b8565a067b790cdcc73a",
+      "case_id": "case_13",
+      "key": "case_13|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|af38b084082b7c6bcd8eb56456e3c561baa7c7b0d99b4ee759578070acd0c2b9",
+      "prompt_hash": "af38b084082b7c6bcd8eb56456e3c561baa7c7b0d99b4ee759578070acd0c2b9",
+      "token_estimate": 1213,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "8c53e5ee8a4be6a47879b71d146c279434dc6eca1390b8565a067b790cdcc73a",
+      "case_id": "case_13",
+      "key": "case_13|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|50d2399d4e1d4653718a153dc732011ca13ebd09a71bd080a0b7027b0696a9c2",
+      "prompt_hash": "50d2399d4e1d4653718a153dc732011ca13ebd09a71bd080a0b7027b0696a9c2",
+      "token_estimate": 1268,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "8c53e5ee8a4be6a47879b71d146c279434dc6eca1390b8565a067b790cdcc73a",
+      "case_id": "case_13",
+      "key": "case_13|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|c1f1d4a2c08660031e024f07a348d7e0026ad6c050344712a61e0be25844b830",
+      "prompt_hash": "c1f1d4a2c08660031e024f07a348d7e0026ad6c050344712a61e0be25844b830",
+      "token_estimate": 1392,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "5930a01f5e58a5e8d3a12681d138cc8936b3632db148a9e687c6647f8bd68dd1",
+      "case_id": "case_14",
+      "key": "case_14|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|9448a1c5210d14a4b171c313d9666482b42dfe16251223d1ee1bd72af1a3fc1f",
+      "prompt_hash": "9448a1c5210d14a4b171c313d9666482b42dfe16251223d1ee1bd72af1a3fc1f",
+      "token_estimate": 1212,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "5930a01f5e58a5e8d3a12681d138cc8936b3632db148a9e687c6647f8bd68dd1",
+      "case_id": "case_14",
+      "key": "case_14|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|c856f893aff4b9644ef4e31c9195e542cfd8a062674f6143fb9d64eaeab625f9",
+      "prompt_hash": "c856f893aff4b9644ef4e31c9195e542cfd8a062674f6143fb9d64eaeab625f9",
+      "token_estimate": 1268,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "5930a01f5e58a5e8d3a12681d138cc8936b3632db148a9e687c6647f8bd68dd1",
+      "case_id": "case_14",
+      "key": "case_14|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|b5036fd2cb174b1e69656d831cab4656062da1f4188c12db7aec34fb6cccee0b",
+      "prompt_hash": "b5036fd2cb174b1e69656d831cab4656062da1f4188c12db7aec34fb6cccee0b",
+      "token_estimate": 1392,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "65e9dc454c5f16f4f9d753187ff60f33f0409e149612c35f9c4f5080aea8c949",
+      "case_id": "case_15",
+      "key": "case_15|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|265ed6a64e09a903667abcaabfa1603e3f737e50cdc8e0a65c7e727a81894a2d",
+      "prompt_hash": "265ed6a64e09a903667abcaabfa1603e3f737e50cdc8e0a65c7e727a81894a2d",
+      "token_estimate": 1213,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "65e9dc454c5f16f4f9d753187ff60f33f0409e149612c35f9c4f5080aea8c949",
+      "case_id": "case_15",
+      "key": "case_15|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|df24723df9d6756b27c8e8f774dcc4dc104d69b06c80bb4aebdb0e59ac27488a",
+      "prompt_hash": "df24723df9d6756b27c8e8f774dcc4dc104d69b06c80bb4aebdb0e59ac27488a",
+      "token_estimate": 1268,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "65e9dc454c5f16f4f9d753187ff60f33f0409e149612c35f9c4f5080aea8c949",
+      "case_id": "case_15",
+      "key": "case_15|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|f8e17e7cd73db09077ba133d186f9813c7a9a78a286ff831b5b8f3d313404ccc",
+      "prompt_hash": "f8e17e7cd73db09077ba133d186f9813c7a9a78a286ff831b5b8f3d313404ccc",
+      "token_estimate": 1392,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "c9145b3f0272d176fc2f9df455801494031ace26555e5548aff7df3feda49e20",
+      "case_id": "case_16",
+      "key": "case_16|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|2b904c4b7c563de2ed4be02b1d76f3d53dc9629197850095a5fc35785d4d40db",
+      "prompt_hash": "2b904c4b7c563de2ed4be02b1d76f3d53dc9629197850095a5fc35785d4d40db",
+      "token_estimate": 1212,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "c9145b3f0272d176fc2f9df455801494031ace26555e5548aff7df3feda49e20",
+      "case_id": "case_16",
+      "key": "case_16|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|ac759a104a10b88ae6c39911c17d3ade8928accbc0ee5dce9c755e5c79e26d91",
+      "prompt_hash": "ac759a104a10b88ae6c39911c17d3ade8928accbc0ee5dce9c755e5c79e26d91",
+      "token_estimate": 1268,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "c9145b3f0272d176fc2f9df455801494031ace26555e5548aff7df3feda49e20",
+      "case_id": "case_16",
+      "key": "case_16|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|a10c5c0dc69186ebaf995f220088944d95a996fcc5e3d88a346c779e5ca2c22a",
+      "prompt_hash": "a10c5c0dc69186ebaf995f220088944d95a996fcc5e3d88a346c779e5ca2c22a",
+      "token_estimate": 1392,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "96cc615ab5c0254a9f96b06c3799020e0e054c2dec534617e0ab3b083d824143",
+      "case_id": "case_17",
+      "key": "case_17|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|8dd02857c57ed3f8d76def6b6b2b21e38b4a8f31cbc5481a105f64fa9533edec",
+      "prompt_hash": "8dd02857c57ed3f8d76def6b6b2b21e38b4a8f31cbc5481a105f64fa9533edec",
+      "token_estimate": 1193,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "96cc615ab5c0254a9f96b06c3799020e0e054c2dec534617e0ab3b083d824143",
+      "case_id": "case_17",
+      "key": "case_17|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|1e301593d839acd2a1b01a67407f6c8fb192749d7330422f96aacbff99fbf895",
+      "prompt_hash": "1e301593d839acd2a1b01a67407f6c8fb192749d7330422f96aacbff99fbf895",
+      "token_estimate": 1248,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "96cc615ab5c0254a9f96b06c3799020e0e054c2dec534617e0ab3b083d824143",
+      "case_id": "case_17",
+      "key": "case_17|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|91acd98ca1cc7ed33e4aca7208b07220a31b77997a51d3b6ad9a8b3c1bd9b290",
+      "prompt_hash": "91acd98ca1cc7ed33e4aca7208b07220a31b77997a51d3b6ad9a8b3c1bd9b290",
+      "token_estimate": 1372,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "77614a2d248d5c91c783c14f9447e9f91966985ba61db64f945c217397a4fcf1",
+      "case_id": "case_18",
+      "key": "case_18|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|4c32788365db29f754d5f03c65ca2f6ef439e610afa1a4fb336749490c282271",
+      "prompt_hash": "4c32788365db29f754d5f03c65ca2f6ef439e610afa1a4fb336749490c282271",
+      "token_estimate": 1192,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "77614a2d248d5c91c783c14f9447e9f91966985ba61db64f945c217397a4fcf1",
+      "case_id": "case_18",
+      "key": "case_18|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|2e845ff8593d57e31d66c05da8fe130517d6bd77b6fded76a204d4e343198260",
+      "prompt_hash": "2e845ff8593d57e31d66c05da8fe130517d6bd77b6fded76a204d4e343198260",
+      "token_estimate": 1248,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "77614a2d248d5c91c783c14f9447e9f91966985ba61db64f945c217397a4fcf1",
+      "case_id": "case_18",
+      "key": "case_18|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|423d339525733df9c2889d82217cbd4562a1e114b2217862246b1222bbfb5742",
+      "prompt_hash": "423d339525733df9c2889d82217cbd4562a1e114b2217862246b1222bbfb5742",
+      "token_estimate": 1372,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "1523a76a9efe9a9355aa6f75a9bd73fd27d3dc3e9020e49620c35280d734132d",
+      "case_id": "case_19",
+      "key": "case_19|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|1a4925f5e753b3e72b46b237326dfaf3caf85e70a81dcd0bb3b6d7e4dc3b51bf",
+      "prompt_hash": "1a4925f5e753b3e72b46b237326dfaf3caf85e70a81dcd0bb3b6d7e4dc3b51bf",
+      "token_estimate": 1193,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "1523a76a9efe9a9355aa6f75a9bd73fd27d3dc3e9020e49620c35280d734132d",
+      "case_id": "case_19",
+      "key": "case_19|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|38c5538adc830a5c653bcb0d494943dbba25d3504ac57cedae0d33b3d9883280",
+      "prompt_hash": "38c5538adc830a5c653bcb0d494943dbba25d3504ac57cedae0d33b3d9883280",
+      "token_estimate": 1248,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "1523a76a9efe9a9355aa6f75a9bd73fd27d3dc3e9020e49620c35280d734132d",
+      "case_id": "case_19",
+      "key": "case_19|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|477b29d9c3e337f0cbcbab8c1626723b854b9f500486b33b2d66dbdc338ac21a",
+      "prompt_hash": "477b29d9c3e337f0cbcbab8c1626723b854b9f500486b33b2d66dbdc338ac21a",
+      "token_estimate": 1372,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "79ead6d652d1b3493640de1e7363b7e709ae2beda55fa64a73b005d7e5b44837",
+      "case_id": "case_20",
+      "key": "case_20|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|8e9cd989b1073a954023618850df3add117143d5f5107980ed5cf078982765a0",
+      "prompt_hash": "8e9cd989b1073a954023618850df3add117143d5f5107980ed5cf078982765a0",
+      "token_estimate": 1192,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "79ead6d652d1b3493640de1e7363b7e709ae2beda55fa64a73b005d7e5b44837",
+      "case_id": "case_20",
+      "key": "case_20|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|a47e6dd9b438a4c87b614f477d9e5326b85718927e5b34df16ef872d56ee4b47",
+      "prompt_hash": "a47e6dd9b438a4c87b614f477d9e5326b85718927e5b34df16ef872d56ee4b47",
+      "token_estimate": 1248,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "79ead6d652d1b3493640de1e7363b7e709ae2beda55fa64a73b005d7e5b44837",
+      "case_id": "case_20",
+      "key": "case_20|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|38a909051b830108a22ee79d9c4ed5ebd848ad94779789526c7497ca274c0274",
+      "prompt_hash": "38a909051b830108a22ee79d9c4ed5ebd848ad94779789526c7497ca274c0274",
+      "token_estimate": 1371,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "613d52f57d065e2cb64aa0571e960947505d99d070d81f54c38dae78818ffa03",
+      "case_id": "case_21",
+      "key": "case_21|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|5fa4e0267aac742dd87db23a7988096f3c47c7e21b1736fbb523c4537e5fac39",
+      "prompt_hash": "5fa4e0267aac742dd87db23a7988096f3c47c7e21b1736fbb523c4537e5fac39",
+      "token_estimate": 1193,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "613d52f57d065e2cb64aa0571e960947505d99d070d81f54c38dae78818ffa03",
+      "case_id": "case_21",
+      "key": "case_21|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|365c1ad3fb090488f84042335533b031a386cf52560f65eff36fb7a78110a2c2",
+      "prompt_hash": "365c1ad3fb090488f84042335533b031a386cf52560f65eff36fb7a78110a2c2",
+      "token_estimate": 1248,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "613d52f57d065e2cb64aa0571e960947505d99d070d81f54c38dae78818ffa03",
+      "case_id": "case_21",
+      "key": "case_21|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|51e50c57530d463c04ee88eb8344e01454e6e6666d9906817b2be2308a3f2f60",
+      "prompt_hash": "51e50c57530d463c04ee88eb8344e01454e6e6666d9906817b2be2308a3f2f60",
+      "token_estimate": 1372,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "c460e9678ba4c9f1ecec5c8243207de0d7ee817106508115a050bd7c32cc631e",
+      "case_id": "case_22",
+      "key": "case_22|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|74edc0375d3791e79f5f28577cfb4b6d945f1d2be9ded9c21c3a57c079b21f8a",
+      "prompt_hash": "74edc0375d3791e79f5f28577cfb4b6d945f1d2be9ded9c21c3a57c079b21f8a",
+      "token_estimate": 1192,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "c460e9678ba4c9f1ecec5c8243207de0d7ee817106508115a050bd7c32cc631e",
+      "case_id": "case_22",
+      "key": "case_22|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|b098a310c6a99bdf4c324aea191e262ab6e25430b2453ed7f4dd7c913eaa7385",
+      "prompt_hash": "b098a310c6a99bdf4c324aea191e262ab6e25430b2453ed7f4dd7c913eaa7385",
+      "token_estimate": 1248,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "c460e9678ba4c9f1ecec5c8243207de0d7ee817106508115a050bd7c32cc631e",
+      "case_id": "case_22",
+      "key": "case_22|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|9ae0d86bf8dd332b1441fcfc52e0ac5b2838fc951252a700f7ca0eb58a427510",
+      "prompt_hash": "9ae0d86bf8dd332b1441fcfc52e0ac5b2838fc951252a700f7ca0eb58a427510",
+      "token_estimate": 1371,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "72e1052d2d0c439eb4131a89402ba73332efcfc392ec56c60ea53edf3e6a8080",
+      "case_id": "case_23",
+      "key": "case_23|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|496145b2f8dccef997d8ee8ed94ed374989785025eb3c139e15fbda8ae4f1629",
+      "prompt_hash": "496145b2f8dccef997d8ee8ed94ed374989785025eb3c139e15fbda8ae4f1629",
+      "token_estimate": 1193,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "72e1052d2d0c439eb4131a89402ba73332efcfc392ec56c60ea53edf3e6a8080",
+      "case_id": "case_23",
+      "key": "case_23|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|4b3ecd3acdd210879864ae05f4381ac02c75cc381c1347926dedf893c9183222",
+      "prompt_hash": "4b3ecd3acdd210879864ae05f4381ac02c75cc381c1347926dedf893c9183222",
+      "token_estimate": 1248,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "72e1052d2d0c439eb4131a89402ba73332efcfc392ec56c60ea53edf3e6a8080",
+      "case_id": "case_23",
+      "key": "case_23|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|f6bc639d23ded5d7b04999963dc57ce5e62f64097d2a5350b79986f1cfeb0337",
+      "prompt_hash": "f6bc639d23ded5d7b04999963dc57ce5e62f64097d2a5350b79986f1cfeb0337",
+      "token_estimate": 1371,
+      "treatment": "reference"
+    },
+    {
+      "case_hash": "3e26d2927c1c29bca56acf8e896d6f361d72aaae1cf7eb2c58339daf18212367",
+      "case_id": "case_24",
+      "key": "case_24|raw|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|21d4714a1b9aeef2be275948973da8212abfe3933d456b2618589721943c22f3",
+      "prompt_hash": "21d4714a1b9aeef2be275948973da8212abfe3933d456b2618589721943c22f3",
+      "token_estimate": 1192,
+      "treatment": "raw"
+    },
+    {
+      "case_hash": "3e26d2927c1c29bca56acf8e896d6f361d72aaae1cf7eb2c58339daf18212367",
+      "case_id": "case_24",
+      "key": "case_24|counts|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|cac2bc9fa8a9308fb5b24c6d1a6fbda7dd30f830168ab8f898512a279960d3d6",
+      "prompt_hash": "cac2bc9fa8a9308fb5b24c6d1a6fbda7dd30f830168ab8f898512a279960d3d6",
+      "token_estimate": 1248,
+      "treatment": "counts"
+    },
+    {
+      "case_hash": "3e26d2927c1c29bca56acf8e896d6f361d72aaae1cf7eb2c58339daf18212367",
+      "case_id": "case_24",
+      "key": "case_24|reference|5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db|835ec66e4ff81a8bf37dc14868869567e1ac4442234a2899ce0f547ede30a153",
+      "prompt_hash": "835ec66e4ff81a8bf37dc14868869567e1ac4442234a2899ce0f547ede30a153",
+      "token_estimate": 1371,
+      "treatment": "reference"
+    }
+  ],
+  "manifest": {
+    "code": {
+      "dirty_file_hashes": {
+        "AUTO_RESEARCH-commander.md": "2833dcb2acec8e06acdc693c31030e0eb2f27a0680519630fb33e4e91a3a7364",
+        "llm_rl_engine/agents/llm.py": "e7648f4f03e65306423de5884400315a374851c3156eee0b1046033df1e49cb3",
+        "llm_rl_engine/analysis/selective_revision_harness.py": "eb10a3f3c3b5229470df78cd25733699cf5ccd758f42de7608fd762da711ba98",
+        "llm_rl_engine/analysis/selective_revision_pilot.py": "389bc4119bb6267ade14f17ea1881b721196dd8e402399eea19850171429c4e0",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_01_counts.txt": "b5a0f4ea14ebd55c123e242c16fc638ae0a204a6eff1a983b9a3dd26c92fe8fc",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_01_raw.txt": "3a17d834460b599a418e33f156238f7b259fe97111ff57e8509bd832e4c75e1e",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_01_reference.txt": "041a1c1858c5df4d13a8da0e343f7d407a9cc958146292c436d9d82d9b928012",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_02_counts.txt": "895ab69b831b1ab951305d16351e802f52836f7c640b58ea809e321e9ec5e76f",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_02_raw.txt": "5ea42e6b1e090706313d50525794c9357cd0d2ed09acc70132e9d83024b5969e",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_02_reference.txt": "b21a6ca10bc2e8cc1042b17bfb116eb920a42646cfe731711cf7c88160d90c0f",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_03_counts.txt": "13ee2d851b3aa859443a906e9e5437c3d03a2e024e322dc5e3af8f315246f1d7",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_03_raw.txt": "4fb3156bce21420214204f1a0b5a08611ae004678fccafc03cf32ebff1d6bdfa",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_03_reference.txt": "3b7409dea708b484db88c7293dab2a275c3b6c2ed3cce541da4960ef959c21a0",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_04_counts.txt": "c03fe9b8bb6d22445dd91994e019e95912eafa0c0858a1bdcca3a10aa37dfa7f",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_04_raw.txt": "73fc950af1e574eb88ee76a10e6b197750c127c5b03bd063338664f59962a9c9",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_04_reference.txt": "68043d2645a947461f05aa317b78dc909a93e8bbcacf572e07a17cedd9bac104",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_05_counts.txt": "85c34f78fc68fa519d79aeb8dc22aa712c5881f1b5bbfd9c80018119f59e0beb",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_05_raw.txt": "c789a6717569ea86bc5eb3c731dcf10907d2e2649a0e7ed14829c3de067c5136",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_05_reference.txt": "60024aa632fbf5fdc0a02248be3d566fcf67c31dc01699b1ffbbe5949161d958",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_06_counts.txt": "94221fa7a50878bf93dd4bf7dcfd87fe732fb195e55a34df16e10f26338a0284",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_06_raw.txt": "1ba081f312f63a8f0be1da9a4d4f3eadf84b28971f0e9b29928233dae8bbbf57",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_06_reference.txt": "a753225e5e7342623af42c0ff91314e119a650e26e44a9e9157dd95e165c8252",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_07_counts.txt": "807c3c4199774a3278cb5a23d5da1620cd6fa4c4faa1e260920193eef954b911",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_07_raw.txt": "18cbbfc6113f7b68d62ab24fba59ae99036c5e82bd4c0fccc4ae97d88e865c8a",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_07_reference.txt": "31bb77f16934432facee744f4c0b0ed53e295914bb7e3c57f96aa053ef859855",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_08_counts.txt": "963a215f3d6fb88423feeddacc260399d4d75ebe143290c38073ffcefa0f5d8c",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_08_raw.txt": "2a31d29e5c56a0b18672d6082468fc29ea09cd3561630b41fa0fd58ec7389fae",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_08_reference.txt": "5fc64a1b56e5dd6e0aed66116af0e58f17149e3dff5d616ea42b6880a297b270",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_09_counts.txt": "030e557ed133bdac360e60f205950a7348207c21ce71e5a6d51c27ad0c5d9ba5",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_09_raw.txt": "8d6ba1fd698cb485a130e36f8cc9ab3632e05a69813e043b57184dd196b3f441",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_09_reference.txt": "c0e866806b5d4a7184431157ad4f76e38049f42aabaef74e3a22f173e946928d",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_10_counts.txt": "3c6307f91856256e1fbe028a89e39203cf0dd61f7c08d18fff6544907a19be79",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_10_raw.txt": "83ef858f9fddcea7f830d2ae0aa29c3a40a756ae43bea222f116a17c77869557",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_10_reference.txt": "1cb59175a32cd15440e5e0ce20362fcfcf8a134a97d3e5b27f2f9f430b4502ea",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_11_counts.txt": "836f792bfcd8bd45f6179b101d9834dfe6abf82179715044e2bd85e7599bd8ec",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_11_raw.txt": "5ac8513306904a6b068dce2d82f9e065842e18a616f91d61c6296ee5919baace",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_11_reference.txt": "f36a1789b6533da8e6daed96e332a185ad5635a988b3d6d35c5708bd7efd6253",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_12_counts.txt": "185b6e078b4e85e9cd3cb15fda15e8c196ea9e51dbecb71bdf3394c926fe777f",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_12_raw.txt": "0317b67c8a83a506e4581a1cea46390c36d0b6d6c90c71c13bf2266a5a9a6dbb",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_12_reference.txt": "23268847a40e1bf6e1a163590e155e2fc0db1182c863ba45781d229aa370d7b5",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_13_counts.txt": "50d2399d4e1d4653718a153dc732011ca13ebd09a71bd080a0b7027b0696a9c2",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_13_raw.txt": "af38b084082b7c6bcd8eb56456e3c561baa7c7b0d99b4ee759578070acd0c2b9",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_13_reference.txt": "c1f1d4a2c08660031e024f07a348d7e0026ad6c050344712a61e0be25844b830",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_14_counts.txt": "c856f893aff4b9644ef4e31c9195e542cfd8a062674f6143fb9d64eaeab625f9",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_14_raw.txt": "9448a1c5210d14a4b171c313d9666482b42dfe16251223d1ee1bd72af1a3fc1f",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_14_reference.txt": "b5036fd2cb174b1e69656d831cab4656062da1f4188c12db7aec34fb6cccee0b",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_15_counts.txt": "df24723df9d6756b27c8e8f774dcc4dc104d69b06c80bb4aebdb0e59ac27488a",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_15_raw.txt": "265ed6a64e09a903667abcaabfa1603e3f737e50cdc8e0a65c7e727a81894a2d",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_15_reference.txt": "f8e17e7cd73db09077ba133d186f9813c7a9a78a286ff831b5b8f3d313404ccc",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_16_counts.txt": "ac759a104a10b88ae6c39911c17d3ade8928accbc0ee5dce9c755e5c79e26d91",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_16_raw.txt": "2b904c4b7c563de2ed4be02b1d76f3d53dc9629197850095a5fc35785d4d40db",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_16_reference.txt": "a10c5c0dc69186ebaf995f220088944d95a996fcc5e3d88a346c779e5ca2c22a",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_17_counts.txt": "1e301593d839acd2a1b01a67407f6c8fb192749d7330422f96aacbff99fbf895",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_17_raw.txt": "8dd02857c57ed3f8d76def6b6b2b21e38b4a8f31cbc5481a105f64fa9533edec",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_17_reference.txt": "91acd98ca1cc7ed33e4aca7208b07220a31b77997a51d3b6ad9a8b3c1bd9b290",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_18_counts.txt": "2e845ff8593d57e31d66c05da8fe130517d6bd77b6fded76a204d4e343198260",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_18_raw.txt": "4c32788365db29f754d5f03c65ca2f6ef439e610afa1a4fb336749490c282271",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_18_reference.txt": "423d339525733df9c2889d82217cbd4562a1e114b2217862246b1222bbfb5742",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_19_counts.txt": "38c5538adc830a5c653bcb0d494943dbba25d3504ac57cedae0d33b3d9883280",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_19_raw.txt": "1a4925f5e753b3e72b46b237326dfaf3caf85e70a81dcd0bb3b6d7e4dc3b51bf",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_19_reference.txt": "477b29d9c3e337f0cbcbab8c1626723b854b9f500486b33b2d66dbdc338ac21a",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_20_counts.txt": "a47e6dd9b438a4c87b614f477d9e5326b85718927e5b34df16ef872d56ee4b47",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_20_raw.txt": "8e9cd989b1073a954023618850df3add117143d5f5107980ed5cf078982765a0",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_20_reference.txt": "38a909051b830108a22ee79d9c4ed5ebd848ad94779789526c7497ca274c0274",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_21_counts.txt": "365c1ad3fb090488f84042335533b031a386cf52560f65eff36fb7a78110a2c2",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_21_raw.txt": "5fa4e0267aac742dd87db23a7988096f3c47c7e21b1736fbb523c4537e5fac39",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_21_reference.txt": "51e50c57530d463c04ee88eb8344e01454e6e6666d9906817b2be2308a3f2f60",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_22_counts.txt": "b098a310c6a99bdf4c324aea191e262ab6e25430b2453ed7f4dd7c913eaa7385",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_22_raw.txt": "74edc0375d3791e79f5f28577cfb4b6d945f1d2be9ded9c21c3a57c079b21f8a",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_22_reference.txt": "9ae0d86bf8dd332b1441fcfc52e0ac5b2838fc951252a700f7ca0eb58a427510",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_23_counts.txt": "4b3ecd3acdd210879864ae05f4381ac02c75cc381c1347926dedf893c9183222",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_23_raw.txt": "496145b2f8dccef997d8ee8ed94ed374989785025eb3c139e15fbda8ae4f1629",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_23_reference.txt": "f6bc639d23ded5d7b04999963dc57ce5e62f64097d2a5350b79986f1cfeb0337",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_24_counts.txt": "cac2bc9fa8a9308fb5b24c6d1a6fbda7dd30f830168ab8f898512a279960d3d6",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_24_raw.txt": "21d4714a1b9aeef2be275948973da8212abfe3933d456b2618589721943c22f3",
+        "reports/selective_revision_pilot_v1_dryrun_identity/prompts/case_24_reference.txt": "835ec66e4ff81a8bf37dc14868869567e1ac4442234a2899ce0f547ede30a153",
+        "reports/task002_audit-commander.json": "38dbefceda39805a98b04097ac293d822d163821460f69618f87dc5fc83e0555",
+        "reports/task002_review-commander.md": "b090aa82d6bf44b2cb63f446b0b70e18c639160cab625e9b8483216d6ef19c88",
+        "reports/task002_review-worker.md": "6507231615229ffa51a359a3c82e5e8ad85463eed287f25fd1ec37665a1f7b29",
+        "research_tasks/003_harness_integrity-commander.md": "cf38ff4d3e10288681ebfd2b611bd0f40927334917cb62aa2b5616055415002a",
+        "research_tasks/004_sequential_revision-commander.md": "77d16975e81ff2d64e78465d34fa9dd294e4864e57aab360da8629b270a87896",
+        "scripts/selective_revision_pilot.py": "e1ebba053f5c643d0b82d85822316b5aae759b08a245a655cc22f396613d4902",
+        "tests/test_selective_revision_pilot.py": "4de885b05dbc728633a11bdb2852932bc42e38deba0c289df3bfd5050dc380e3"
+      },
+      "git_head": "9aff4fad14e9f29f5f998a2b4ed154a2386161c3"
+    },
+    "config_hash": "5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db",
+    "effective_hash": "5dc02da811a38c21425a19adc9aff0efba350b6e333fb0628a3df7d4060844db",
+    "kind": "selective_revision_fixed_history_pilot_dryrun",
+    "limitation": "Cost bound is reserved_per_attempt * jobs * (1 + retries) using max_input_tokens at the input rate and (max_output_tokens + thinking_budget) at the output rate. thinking_budget=-1 is rejected. Dry-run made no model calls.",
+    "max_input_tokens": 2000,
+    "max_output_tokens": 2048,
+    "model": "gemini-3.5-flash",
+    "n_planned_attempts_with_retry_reserve": 144,
+    "n_planned_calls": 72,
+    "n_public_cases": 24,
+    "n_treatments": 3,
+    "pricing": {
+      "input_per_1m": 1.5,
+      "output_per_1m": 9.0
+    },
+    "prompt_token_estimate_max": 1461,
+    "prompts_exceeding_input_cap": 0,
+    "provider_max_output_tokens": 2048,
+    "reserved_usd_full_grid": 3.086208,
+    "reserved_usd_per_attempt": 0.021432,
+    "schema_version": 2,
+    "thinking_budget": 0,
+    "token_estimate_kind": "offline_heuristic"
+  }
+}

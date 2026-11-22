@@ -1,0 +1,27 @@
+{
+  "task": "009",
+  "cap_per_control": 4,
+  "verify_path": {
+    "mlp": 3,
+    "head": 3,
+    "lora": 3
+  },
+  "probe": {
+    "mlp": 1,
+    "head": 1,
+    "lora": 1
+  },
+  "total_executed_updates": {
+    "mlp": 4,
+    "head": 4,
+    "lora": 4
+  },
+  "probe_cpu": {
+    "mlp_s": 0.094,
+    "head_s": 179.25,
+    "lora_s": 271.23,
+    "head_rss_mb": 8699.6,
+    "lora_rss_mb": 24571.2
+  },
+  "note": "Counts include replayed resume updates. Not a learning result."
+}

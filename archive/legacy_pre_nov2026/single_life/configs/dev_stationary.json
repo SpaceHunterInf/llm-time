@@ -1,0 +1,31 @@
+{
+  "action_ids": ["arm_a", "arm_b", "arm_c"],
+  "agent": "artifact",
+  "agent_seed": "agent-dev-shared-v1",
+  "artifact_period": 10,
+  "artifact_window": 30,
+  "compute_budget": 100000,
+  "evaluator_private_note": "SENTINEL_PRIVATE_do_not_leak stationary",
+  "experiment_id": "001-causal-kernel",
+  "fixture_id": "dev-stationary-180",
+  "horizon": 180,
+  "innovation_seed": "innovation-dev-shared-v1",
+  "interaction_budget": 180,
+  "lifetime_id": "life-dev-paired",
+  "protocol_version": "single-life-v0.2",
+  "schedule_seed": "schedule-dev-stationary-v1",
+  "segments": [
+    {
+      "start_index": 1,
+      "end_index": 180,
+      "probabilities": {"arm_a": 0.8, "arm_b": 0.2, "arm_c": 0.5},
+      "regime_id": "regime-early",
+      "unreachable_metadata": {
+        "note": "SENTINEL_PRIVATE_do_not_leak stationary-meta",
+        "oracle_best_arm": "arm_a",
+        "decoy_future_segment": {"start_index": 181, "end_index": 240, "oracle_best_arm": "arm_b"}
+      }
+    }
+  ],
+  "ucb_window": 30
+}

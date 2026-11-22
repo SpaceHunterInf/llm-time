@@ -1,0 +1,183 @@
+# Research State & 1-Month Submission Plan
+
+**Last Updated:** 2026-11-22  
+**Target Venues:** **ACL (January 2027)** / **ICML 2027** (internal draft milestone: mid-Dec 2026; Act 3 open-weight backbone deferred to pick best available e.g. upcoming `Qwen4-27B` / `Qwen3` / `Gemma-3`)  
+**Available Gemini Models Verified on `.env` Key:**
+- *Lightweight Dev:* `gemini-3.5-flash-lite`, `gemini-3.5-flash`, `gemini-3.8-flash`, `gemini-4-hydrogen`
+- *Frontier Flagship:* `gemini-4-argon`, `gemini-4-carbon`, `gemini-4-neon`
+*(Friend endpoints & DeepSeek reserved strictly for final frozen evaluation—never for dev iteration.)*
+
+---
+
+## 1. Core Thesis & Testbed Architecture
+
+> **Canonical Alignment Record:** See [DECISIONS.md](file:///home/xz479/llm-time/DECISIONS.md) (`D1`–`D9`) and [2026-11-21-alphadesk-v03-multishift-spec.md](file:///home/xz479/llm-time/setup-debates/2026-11-21-alphadesk-v03-multishift-spec.md) for the completed **Cross-Model Epistemic Autonomy Fork** ([summary.md](file:///home/xz479/llm-time/results/runs/autonomy_cross_model_n6/summary.md) across `gemini-3.8-flash`, `gemini-4-hydrogen`, and `gemma-4-31b-it`), **`AlphaDesk-v0.3` Multi-Shift Stateful Benchmark** ([summary.md](file:///home/xz479/llm-time/results/runs/alphadesk_v3_multishift_n4/summary.md)), and **6-Window `ServeLearnBench L3` (`banking_l3`)** ([summary.md](file:///home/xz479/llm-time/results/runs/slb_banking_l3_6win/summary.md)). Training remains deferred per PI direction; stopped at the next `GO` gate.
+
+### Thesis: *Breaking the Self-Evolution Ratchet under Non-Stationary Reward Paradigms*
+Self-evolving harnesses (`SkillOpt`, `Continual Harness`, `ACE`, `GEPA`, `SRN`) crystallize past wins into persistent rules, skills, or scores. When **world mechanics stay valid** (tools don't crash) and only the **latent reward/utility paradigm** shifts silently, self-improvement becomes an **anti-adaptation ratchet** (e.g., on `ServeLearnBench` Retail, `SkillOpt` drops from `69.2%` in L1 to **`0.0%–1.1%`** in L2 when rules revise, while `Continual Harness` drops `97.9% → 30.5%` and burns `$2,449`!).
+
+### Two-Pillar Testbed (Multi-Turn Tool-Calling Agents; MAB Optional Teaser Only)
+1. **Pillar 1 — External Standard (`ServeLearnBench`):**
+   - Multi-turn `Retail` (order-DB tools), `Banking` (numeric/categorical case-review tools), and `Pitch` across `L1` (acquisition), `L2` (revision), and `L3` (non-monotonic reversals/re-entry).
+   - **Small-Scale Dev Mode (`SLB-Mini`, `<$1/run`):** Stratified 3-window × ~20-task slice (`~60` tasks instead of `7,718`) preserving exact L1/L2/L3 policy shifts at **1% of full benchmark cost** for rapid iteration!
+2. **Pillar 2 — `ParadigmBench` (3 Pure-Python Stateful Tool-Calling Environments Covering Continuous & Strategic Drift):**
+   - **`AlphaDesk`:** Quant/resource allocation tools under **gradual alpha decay / crowding** + macro regime switches & recurrence + matched stationary noise control.
+   - **`LifeCompanion`:** Longitudinal personal agent under **smooth lifecycle maturation** (hard personal invariants stay fixed while life-stage utility weights evolve continuously).
+   - **`CoalitionOps`:** Counterparty/ecosystem operations under **silent strategic incentive reversals (foe $\leftrightarrow$ friend)** requiring active diagnostic probing.
+   *(Optional Figure 1a Teaser: 1-panel MAB microscope illustrating Doubt vs. Resurrection mathematically.)*
+
+---
+
+## 2. Strict 4-Tier Cost-Escalation Policy
+
+| Tier | Scope | Allowed Models | Hard Cap | Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| **Tier 0** | Offline unit tests + scripted `Oracle` / `Blind` / `Stale` | None (`$0.00`) | `$0.00` | Verify zero leakage, verifiers, and change-detector math |
+| **Tier 1** | **Small-Scale Dev** (`SLB-Mini` 60-task slice + `ParadigmBench` 50-step streams) | `gemini-3.5-flash` / `gemini-3.8-flash` | **`$2.00` / run** | Iterate fast until we see **clear, decisive small-scale gains** (+15–25 pts net utility & lower RSI token tax) |
+| **Tier 2** | Multi-seed validation + Act 3 rollout generation | `gemini-3.8-flash`, `gemini-4-argon` | Pre-approved per batch | Full `ServeLearnBench` + `ParadigmBench` tables & 30k+ training trajectories |
+| **Tier 3** | **Frozen Final Paper Eval** | `gemini-4-argon`, `gemini-4-carbon`, DeepSeek, Friend APIs | One-shot only | Final cross-family leaderboard right before submission |
+
+---
+
+## 3. Live Empirical Record (Cumulative Spend: `$77.19` / `$70,000+` Pool; `99.890%` Remaining)
+
+### 3.0 Cross-Model Epistemic Autonomy vs. Controller Scaffolding Fork (`autonomy_cross_model_n6`, `3,060` Post-Fork Episodes across `gemini-3.8-flash`, `gemini-4-hydrogen`, & `gemma-4-31b-it`, `$24.6545`)
+Full report: [summary.md](file:///home/xz479/llm-time/results/runs/autonomy_cross_model_n6/summary.md) | JSON: [autonomy_fork_report.json](file:///home/xz479/llm-time/results/runs/autonomy_cross_model_n6/autonomy_fork_report.json) (`0-char` prompt diff across models at shared fork `t* = 14`, silent weight auto-repair disabled, provider `model_version` verified: `gemini-3.8-flash`, `gemini-4-hydrogen`, `gemma-4-31b-it`; `Seeds 501–506` $6\times6$ Latin-square on `Flash` & `Hydrogen` across 5 worlds + `Seeds 501–503` on `16k`-TPM-capped `Gemma 4 31B IT` across `stationary` & `abrupt_reversal`).
+
+- **1. Reactive Type-I Reversal & Equal-Loss Freeze Discrimination Are Solved Autonomously by Objective Factual Memory (`15/15` Seeds Positive Across All 3 Models!):**
+  - Stripping 100% of `SGEH`'s prescriptions (`Factual-Ledger [Ours — Autonomy Only]`: `0` named probe targets, `0` thresholds, `0` weight recommendations, `0` liquidity-safeguard rules, `0` curator calls) beat `ScopedCardBook (Baseline)` on **every single seed across all 3 models** on `abrupt_reversal`:
+    - **`gemini-3.8-flash` (`N=6`):** `Factual-Ledger` **`88.3%`** (`81.5%` CalmOpt, `0` violations, `0` runner interventions) vs. `ScopedCardBook` `73.2%` (`+15.11 pts [+8.03, +26.63]`, **`+15.14 pts` DiD**, `6/6` seeds positive) — even edging `Directive-SGEH` (`84.1%`, `-4.14 pts`) by avoiding post-recovery hazard probe fees!
+    - **`gemini-4-hydrogen` (`N=6`):** `Factual-Ledger` **`83.7%`** (`67.7%` CalmOpt, `0` violations, `0` interventions) vs. `ScopedCardBook` `78.6%` (`+5.11 pts [+3.46, +6.76]`, **`+5.11 pts` DiD**, `6/6` seeds positive; `50%` vs `0%` non-incumbent first probe vs. `Flash`), matching `Directive-SGEH` (`82.7%`, `-0.95 pts`).
+    - **`gemma-4-31b-it` (`N=3`):** `ScopedCardBook` collapsed to **`38.9%`** (`0.0%` CalmOpt, `0.0` probes on `3/3` seeds!), whereas **`Factual-Ledger` jumped to `60.8%`** (`48.8%` CalmOpt; **`+21.89 pts [+0.11, +39.55]`**, **`+27.20 pts [+8.46, +39.83]` DiD**, `3/3` seeds positive) and **`Directive-SGEH` reached `70.8%`** (`+31.86 pts [+26.71, +34.44]` over `CardBook`; `+9.97 pts` / `+7.01 pts` DiD over `Factual-Ledger`).
+  - **Equal-Loss Temporary Freeze (`freeze_matched_loss`, `~19.0` freeze vs. `~18.9` permanent reversal):** With all liquidity-safeguard rules removed, `Factual-Ledger` hit **`99.9%`** (`Flash`) and **`100.0%`** (`Hydrogen`) with **`0.0` freeze probes and `0.0` freeze turnover** — reading `liquidity_status == "acute_liquidity_freeze"` directly from the factual ledger without dumping valid calm holdings!
+- **2. Why Explicit Controller Guidance Still Matters (Two Sharp Failure Modes of Frozen Models):**
+  - **Zero Spontaneous Staleness Exploration on Type-II `opportunity_rise` (`0 / 12` Branches!):** Across **all `6/6` `Flash` seeds and all `6/6` `Hydrogen` seeds (`192` sessions)**, `Factual-Ledger` took **`0.0` probes (`0.0%` CalmOpt)** despite seeing `last_probe=unprobed (11 calm sessions elapsed)` and `mean_port_gross=61.3` — whereas `Directive-SGEH` won on **`12/12` branches (`+6.34 pts [+3.38, +9.94]` DiD on `Flash`; `+6.51 pts [+3.71, +10.10]` DiD on `Hydrogen`)**!
+  - **Open-Weight Turn-Completion Fragility on `gemma-4-31b-it`:** While `Flash` and `Hydrogen` had `0` runner interventions across `2,880` sessions, `gemma-4-31b-it` incurred **`11` runner interventions (`Intv=11` across 30 reversal episodes, stalling at `36.5%` on `s502`)** under unguided `Factual-Ledger` vs. **`1` intervention** under `Directive-SGEH` (`+34.33 pts` rescue on `s502`).
+- **3. Updated `AlphaDesk-v0.3` Partial-Return Flag Audit (`4/6` True Partial Returns):** Per Codex's trace audit (`s401` ep 75 & `s404` ep 31), `4` of the `6` `partial_recurrence_caught` flags in `alphadesk_v3_multishift_n4` matched the `4` true partial returns (`A'`/`B'`), while `2` rejected false/collision shelf recalls (`Shelf-On − Shelf-Off = +3.66 pts` on partial returns vs. `-1.98 pts` on full returns).
+
+### 3.0a Multi-Shift Stateful `AlphaDesk-v0.3` (`alphadesk_v3_multishift_n4`, `5` Shifts / `6` Windows, `H=84`) & 6-Window External `ServeLearnBench L3` (`slb_banking_l3_6win`)
+- **`AlphaDesk-v0.3` Multi-Shift Stateful Matrix (`alphadesk_v3_multishift_n4`, `5,040` Episodes across 20 `<$1.95` Shards, `$21.9273`):**
+  - Full report: [summary.md](file:///home/xz479/llm-time/results/runs/alphadesk_v3_multishift_n4/summary.md) | JSON: [alphadesk_v3_report.json](file:///home/xz479/llm-time/results/runs/alphadesk_v3_multishift_n4/alphadesk_v3_report.json) (`gemini-3.8-flash`, `6` Latin-square strategies `STRAT_S1..STRAT_S6`, `w_i <= 0.55`, persistent `current_holdings` $\mathbf{w}_{t-1}$ + `4.0 pt` L1 turnover slippage normalized against exact backward-induction Bellman DP oracle).
+  - **Track 1 (`multi_abrupt_recurrence`, $2\times2$ Seed-Randomized Full `A`/`B` & Partial `A'`/`B'` Recurrences, `Seeds 401–404`):**
+    - **`SGEH-Surprise+Shelf (Ours — No-Hazard Abl)`:** **`83.2%`** `W2–W6` (`62.8%` CalmOpt, **`6.2` ref calls**, **`$0.323`/lifetime**)
+    - **`SGEH+Hazard-NoShelf (Ours — No-Shelf Abl)`:** **`81.9%`** `W2–W6` (`63.8%` CalmOpt, `7.8` ref calls, `$0.352`)
+    - **`SGEH+Hazard+Shelf (Ours — Full)`:** **`81.7%`** `W2–W6` (**`64.2%` CalmOpt**, `7.2` ref calls, `$0.356`; `TrueRec = 2`, `PartCatch = 6`)
+    - vs. **`SRN (Baseline)` `54.7%`** (`12.0%` CalmOpt, `42.0` ref calls, `$0.418`), **`SkillBook (Baseline)` `49.9%`** (`0.0%` CalmOpt, `42.0` ref calls, `$0.467`), **`ScopedCardBook (Baseline)` `45.6%`** (`0.0%` CalmOpt, `28.0` ref calls, `$0.407`).
+    - **Paired Contrasts (`4/4` Seeds Positive vs. Every Baseline):** **`Ours − SkillBook = +31.84 pts [+30.15, +33.20]`**; **`Ours − SRN = +27.02 pts [+16.10, +33.27]`**; **`Ours − ScopedCardBook = +36.12 pts [+31.27, +40.97]`**.
+  - **Track 2 (`mixed_decay_opportunity`, Repeated Type-II Silent Opportunity Rises + Smooth 8-Step Crowding Decays, `Seeds 401–404`):**
+    - **`SGEH+Hazard-NoShelf (Ours — No-Shelf Abl)`:** **`82.5%`** `W2–W6` (`40.8%` CalmOpt, `6.2` ref calls, `$0.330`)
+    - **`SGEH+Hazard+Shelf (Ours — Full)`:** **`82.2%`** `W2–W6` (`40.3%` CalmOpt, `6.2` ref calls, **`$0.321`**; `W4=81%, W5=93%`)
+    - **`SGEH-Surprise+Shelf (Ours — No-Hazard Abl)`:** **`80.0%`** `W2–W6` (`37.4%` CalmOpt, `5.0` ref calls, `$0.297`)
+    - vs. **`SkillBook (Baseline)` `68.5%`** (`$0.421`), **`SRN (Baseline)` `65.9%`** (`$0.329`), **`ScopedCardBook (Baseline)` `60.7%`** (`$0.395`).
+    - **Paired Contrasts (`4/4` Seeds Positive vs. Every Baseline):** **`Ours − SkillBook = +13.74 pts [+3.41, +24.08]`**; **`Ours − SRN = +16.33 pts [+11.46, +19.95]`**; **`Ours − ScopedCardBook = +21.50 pts [+14.76, +28.24]`**; **`Ours − SurpriseOnly = +2.21 pts [-0.82, +4.08]`** (`3/4` seeds positive: `+3.09, -2.12, +5.08, +2.77`).
+  - **Matched `Stationary` Control (`H=84`, `Seeds 401–402`):** `SGEH-Surprise+Shelf (Ours)` **`98.7%`** & `SGEH+Hazard+Shelf (Ours)` **`97.0%`** (**`100.0%` CalmOpt**, `2.0` ref calls, `-1.62 pts` hazard-insurance cost) vs. `SRN` `77.0%`, `ScopedCardBook` `62.4%`, `SkillBook` `58.2%`.
+  - **Candid Internal Ablation Insights (`Hazard` & `Shelf`):** (1) `Hazard` shows the exact theoretical symmetry across multi-shift tracks (`-1.48 pts` on pure Type-I Track 1 & `-1.62 pts` on Stationary vs. **`+2.21 pts`** on Type-II-rich Track 2). (2) `Shelf` vs. `NoShelf` was net-neutral (`-0.15 pts [-1.26, +0.88]` on Track 1): `Shelf-Match` worked mechanically (`2` full 1-probe restorations + `6` partial `A'`/`B'` recurrences caught immediately via linear runner-up attribution), but on `A'` windows the 1-session `0.55*92 + 0.45*18 = 58.7` verification cost (`~-28 pts`) offsets the `1–2` probe fees (`10–20 pts`) saved on full `A` windows—confirming Codex's mathematical prediction!
+- **External 6-Window `ServeLearnBench L3` (`slb_banking_l3_6win` on `banking_l3`, `W0..W5` = 5 Non-Monotonic Shifts, `$5.4152` across 4 `<$1.95` Shards):**
+  - Full report: [summary.md](file:///home/xz479/llm-time/results/runs/slb_banking_l3_6win/summary.md) | JSON: [slb_mini_report.json](file:///home/xz479/llm-time/results/runs/slb_banking_l3_6win/slb_mini_report.json).
+  - **`Oracle (Upper Bound)`:** **`100.0%`** across all 6 windows (`100.0%` `Adapt`, `100.0%` `General`).
+  - **`ScopedSGEH+Shelf (Ours)` (`sgeh_slb`):** **`70.0%` Post-Shift Overall (`W1–W5`)** (**`60.0%` `Adapt`**, **`86.7%` `General`**, **`18` reflection calls**) — beating **`SRN (Baseline)` `62.5%`** (`52.0%` `Adapt`, `80.0%` `General`, `36` calls) by **`+7.5 pts` at half the reflection calls**, **`Blind (Baseline)` `60.0%`** (`40.0%` `Adapt`) by **`+10.0 pts` (`+20.0 pts` on shifted `Adapt`)**, and **`SkillBook (Baseline)` `45.0%`** (`36.0%` `Adapt`, `60.0%` `General`, `36` calls) by **`+25.0 pts`**! Workflow-scoped contrastive memory resolved the earlier un-scoped `SGEH-v1` (`35.7%`) bottleneck while preventing `SkillBook`'s `-33.3 pt` `General` doc-compliance collapse.
+
+### 3.0b Iteration 2d Shared-Checkpoint Post-Shift Adaptation Test (`iter2d_shared_fork_n4`, Spend: `$1.8402` across 2 `<$1.95` batches) + Act 3 `144/144` Schema Fix
+Full report: [summary.md](file:///home/xz479/llm-time/results/runs/iter2d_shared_fork_n4/summary.md) | JSON: [shared_fork_report.json](file:///home/xz479/llm-time/results/runs/iter2d_shared_fork_n4/shared_fork_report.json) (`gemini-3.8-flash`, fresh Latin-square counterbalanced seeds `205–208`, `16` post-boundary sessions). Directly resolves Codex's morning audit (`Reversal − Stationary DiD = -2.48 pts` in end-to-end `iter2_frozen_n4` where `ScopedCardBook (Baseline)` had stalled during pre-shift acquisition):
+- **Protocol (`0.00 pt` Pre-Shift Gap):** One shared acquisition prefix (`0 .. t*-1`) per seed initializes **`ScopedCardBook (Baseline)`**, **`SGEH-SurpriseOnly (Ours — Ablation)`**, and **`SGEH+Hazard (Ours — Full)`** with the **exact same** acquired calm & elevated-vol weights, `uses`, `mean_score`, and history at $t^*$.
+- **Decomposing Acquisition vs. Pure Post-Shift Adaptation:**
+  - **`stationary`:** `ScopedCardBook (Baseline)` = **`95.88%`** (`0.0` probes, `5.0` curator calls) vs. `SGEH-SurpriseOnly (Ours — Ablation)` = **`95.88%`** (`0.0` probes, **`0.0` curator calls** — **`0.00 pt` stationary difference & 100% reflection-tax elimination**) vs. `SGEH+Hazard (Ours — Full)` = **`94.41%`** (`4.75` hazard probes, `-1.46 pts` hazard-insurance cost).
+  - **`abrupt_reversal`:** **`SGEH-SurpriseOnly (Ours — Ablation)`** reached **`86.85%`** (`62.5%` CalmOpt, `2.25` probes, `1.0` curator call) vs. **`ScopedCardBook (Baseline)`** **`80.08%`** (`39.6%` CalmOpt, `1.25` probes, `5.0` curator calls) $\implies$ **Pure Post-Shift Reversal DiD = `+6.77 pts [+1.60, +12.03]` (`4/4` seeds positive: `[+2.41, +8.66, +0.79, +15.23]`; `83.3%` vs. `0.0%` CalmOpt on non-hedge-overlap Seed 208)**.
+  - **Candid Type-I vs. Type-II Hazard Trade-Off Isolated:** On `abrupt_reversal`, unconditional `staleness >= 8` **`SGEH+Hazard (Ours — Full)`** scored **`78.15%`** (`48.7%` CalmOpt, `6.50` probes $\implies$ `Reversal DiD = -0.46 pts [-5.79, +3.87]`, while reaching **`88.96%` / `65.0%` CalmOpt / `+3.96 pts` DiD** on `gradual_decay`) because after recovering at `t*+1..t*+2`, its fixed clock bought **`4.25` extra `-12 pt` hazard probes** re-testing abandoned pre-shift arms mid-window—empirically motivating **Act 3 learned selective probing** and **`AlphaDesk-v0.3` covariate-rich real-market alpha discovery**.
+- **Act 3 Training Export Verified (`144/144` Live Tool Execution):** Fixed both placeholder tool names in [act3_lodo.py](file:///home/xz479/llm-time/src/training/act3_lodo.py) (`search_catalog`, `audit_counterparty` with live `active_counterparty`), re-exported [results/act3_lodo/datasets/](file:///home/xz479/llm-time/results/act3_lodo/datasets), and verified 100% live `env.step_tool()` execution across all 144 rows in [test_core_and_security.py](file:///home/xz479/llm-time/tests/test_core_and_security.py) (`22/22` `pytest` passing).
+
+### 3.1 Iteration 2 Frozen `N=4` Latin-Square Counterbalanced Online Matrix (`iter2_frozen_n4`, Spend: `$5.9439` across 4 `<$1.95` seed runs)
+Full report: [summary.md](file:///home/xz479/llm-time/results/runs/iter2_frozen_n4/summary.md) | Matrix JSON: [iter2_matrix_report.json](file:///home/xz479/llm-time/results/runs/iter2_frozen_n4/iter2_matrix_report.json) (`gemini-3.8-flash`, seeds `201–204` with `1:1:1:1` strategy-name Latin-square rotation + `50/50` hedge-overlap counterbalancing, `96` post-boundary branches = `4` methods × `6` regimes × `4` seeds, `16` post-boundary sessions).
+
+- **Decisive Multi-Seed Gains Across All 6 Regimes (`4/4` Seeds Positive in Every Regime):**
+  - **`abrupt_reversal`:** `SGEH+Hazard` **`84.70%`** (`54.5%` CalmOpt) & `SGEH-SurpriseOnly` **`86.91%`** (`43.6%` CalmOpt, `1.0` reflection call) vs. `Periodic-Probe` `64.58%` (`11.4%` CalmOpt) & `ScopedCardBook` `57.25%` (`0.0%` CalmOpt) $\implies$ **`SGEH+Hazard − ScopedCardBook = +27.45 pts [+20.02, +34.88]`** (`+20.13 pts [+12.34, +27.92]` over `Periodic-Probe`).
+  - **`gradual_decay`:** `SGEH-SurpriseOnly` **`91.91%`** & `SGEH+Hazard` **`89.33%`** (`66.3%` CalmOpt) vs. `Periodic-Probe` `71.27%` & `ScopedCardBook` `68.34%` (`0.0%` CalmOpt) $\implies$ **`+21.00 pts [+16.94, +23.78]`** over `ScopedCardBook`.
+  - **`opportunity_rise` (Type-II Silent Opportunity Shift — Clean Hazard Ablation):**
+    - `SGEH-SurpriseOnly` (`enable_hazard=False`): `84.62%`, **`0.0%` CalmOpt** (`0.0` alarms — downward surprise never fires when incumbent stays flat at `72/66`).
+    - **`SGEH+Hazard` (`enable_hazard=True`):** **`92.89%`**, **`79.5%` CalmOpt** $\implies$ **`SGEH+Hazard − SGEH-SurpriseOnly = +8.28 pts [+5.69, +10.34]`** (`4/4` seeds positive: `[+4.65, +10.86, +8.80, +8.80]`), and **`+19.89 pts [+14.77, +26.16]`** over `ScopedCardBook` (`73.00%`, `0.0%` CalmOpt).
+  - **`off_scope_shock` (2-Day Acute Liquidity Freeze):** Both `SGEH-SurpriseOnly` (**`98.83%`**) and `SGEH+Hazard` (**`96.67%`**) fired **`0.0` false alarms** and **`0.0` reflection calls** (`100.0%` CalmOpt preserved post-shock; **`+28.12 pts [+18.22, +35.59]`** over `ScopedCardBook`).
+  - **`stationary` & `opportunity_stationary` Controls:** `SGEH-SurpriseOnly` **`98.83%`** (`0.0` probes, `0.0` reflection calls, fixed-target `Brier = 0.055` vs. `ScopedCardBook` `0.777`) and `SGEH+Hazard` **`96.45%`** (`-2.37 pt` hazard-check insurance cost, `100.0%` CalmOpt, **`+29.93 pts [+19.11, +37.58]`** over `ScopedCardBook`). Counterbalancing also proved `ScopedCardBook` only reached `83.1%` stationary on Seed 204 (`inc_1 = STRAT_ALPHA`) while dropping to `~61%` on Seeds 201–203 (`inc_1 != STRAT_ALPHA`).
+
+### 3.2 Multi-Domain `H=21` Replication (`multidomain_h21_s301..s303`) & External `ServeLearnBench-Mini` (`slb_banking_card_complete`)
+- **`LifeCompanion` (`N=3` Fresh Seeds `301–303`, `H=21`):**
+  - `life_companion:lifecycle`: **`SGEH` `91.60%` `[88.47, 97.60]`** (`7.1%` stale lock-in, `0.0%` safety violations, `2.0` reflection calls = `2.8%` tax, **`$0.0801` mean USD — lowest total cost of all 4 methods**) vs. `SRN` `87.64%` (`10.0` calls, `$0.1063`) vs. `SkillBook` **`40.46%` `[39.99, 40.92]`** (`92.9%` stale lock-in, `$0.1047`) $\implies$ **`Paired SGEH − SkillBook = +51.14 pts [+48.27, +56.68]`**.
+  - `life_companion:stationary`: All 4 methods achieved **`100.0%`** post-shift utility; `SGEH` had the lowest end-to-end cost (`$0.0732` vs. `$0.0848–$0.1184`, `1.0` reflection call vs. `10.0`).
+- **`CoalitionOps` (`N=3` Fresh Seeds `301–303`, `H=21` — Scope-Bucketing Diagnostic):**
+  - Un-scoped scalar `SGEH-v1` matched `SkillBook`/`SRN` on `reversal` (`77.59%` vs. `77.12%`, `+0.48 pts [-0.79, +2.22]` at `1.7` vs. `10.0` reflection calls) while `SRN` (`88.46%`) edged scalar `SGEH-v1` (`78.17%`) on `stationary` because rotating 3 heterogeneous partners (`VANGUARD`, `MERIDIAN`, `HELIOS`) requires per-partner scope bucketing (`ScopedSGEHHardened`).
+- **External `ServeLearnBench-Mini` (`slb_banking_card_complete` on `banking_l2`, `$1.6166`):**
+  - Full report: [summary.md](file:///home/xz479/llm-time/results/runs/slb_banking_card_complete/summary.md). `Oracle` achieved **`100.0%`** across `W0, W1, W2` (verifying pure-Python `ServeLearnBench` integration).
+  - **Candid Negative Finding on Ultra-Sparse `8`-Task Binary-Feedback Streams:** With only `8` binary `0/1` serving tasks per window and no diagnostic probe tool, prompt-only reflection overfit `0/1` failures (`Blind` `64.3%` > `SkillBook` `57.1%` [`25.0%` Adapt] > un-scoped `SGEH-v1` `35.7%` [`66.7%` General]), showing that full `100`-task/window streams (Tier 2) and structured Act 3 policy learning ([train_act3_lodo.py](file:///home/xz479/llm-time/scripts/train_act3_lodo.py)) are required when feedback is unlabelled binary `0/1`.
+
+### 3.3 Iteration 1c Saved-Checkpoint Score-Visibility Factorial (`iter1c_score_anchor_n4`, Spend: `$1.2951` / Cap `$1.95`)
+Full report: [summary.md](file:///home/xz479/llm-time/results/runs/iter1c_score_anchor_n4/summary.md) | Raw JSON: [causal_fork_report.json](file:///home/xz479/llm-time/results/runs/iter1c_score_anchor_n4/causal_fork_report.json) | Offline `0-char` diff check: [iter1c_prompt_check_offline.md](file:///home/xz479/llm-time/results/runs/iter1c_prompt_check_offline.md) (`gemini-3.8-flash`, forked from saved `iter1b_clean_fork_n4` checkpoints at `$0.00` pre-shift variance, `1`-probe-per-session limit disclosed equally, requested `thinking_budget=0` / observed `91,350` thinking tokens, seeds `101–104`, `16` post-boundary sessions).
+
+- **Exact Single-Variable Isolation Verified:**
+  - `Score-Shown` (`weights=null, n=uses, mean_portfolio_score=70.8..74.2`) vs. `Score-Hidden` (`weights=null, n=uses, mean_portfolio_score=null`) had **`+0` character length difference** on all 4 seeds (`2126 vs 2126`, `2348 vs 2348`, `2067 vs 2067`, `2356 vs 2356`), identical `scope_condition`s, `5/5` reflection calls per branch, and **`0` rejected second-probe attempts** across all 24 branches (`9 -> 0`).
+- **Primary & Factorial Contrasts (Historical Calm-Portfolio Score Does NOT Improve Recovery):**
+  - **`abrupt_reversal: Score-Shown − Score-Hidden`** = **`-5.10 pts` (`95% CI [-17.16, +7.88]` net; `-6.17 pts [-18.01, +6.18]` pre-fee; per-seed `-2.9, -19.1, +16.9, -15.3`)**.
+  - **`stationary: Score-Shown − Score-Hidden`** = **`-0.78 pts` (`[-3.84, +1.19]`)**; Diff-in-Diffs = **`-4.32 pts` (`[-16.21, +7.24]`)**.
+  - **`abrupt_reversal: Score-Shown − Ranking-Retained`** = **`-3.84 pts` (`[-11.16, +3.21]`)**; **`Score-Hidden − Ranking-Retained`** = **`+1.26 pts` (`[-11.07, +13.60]`)**.
+- **Secondary Probe-Selection Diagnostic & Synthesis Across `1b` + `1c`:**
+  1. **Unattributed Historical Portfolio Score Is Not Useful:** Showing `mean_portfolio_score ≈ 73` alongside `weights=null` neither increased informative probing (`2` total drift probes in `Score-Shown` vs. `7` in `Score-Hidden`) nor unlocked optimal recovery (`0/44` calm optimal sessions in `Score-Shown` and `Ranking-Retained`). Per our pre-run criterion with Codex, unattributed scalar portfolio score history does **not** earn a spot in the small-model state.
+  2. **Observation Count `n` Explains the `1b` vs. `1c` Probe Shift:** Holding `n = 9..10` visible in `Score-Hidden` suppressed the immediate `t*` probe burst seen when `n = 0` in `iter1b Excised` (`19` probes $\to$ `7` probes), bringing `Score-Hidden` (`61.0%`) in line with `Ranking-Retained` (`59.7%`).
+  3. **Core Bottleneck Isolated — Non-Discriminative First Probes (`STRAT_ALPHA` Fixation):** Even after poor calm outcomes (`<50`), **4/4 first post-drop probes in `Score-Hidden` (`Ep21, Ep21, Ep22, Ep16`) and 2/2 in `Ranking-Retained` still tested `STRAT_ALPHA`** (`1/2` in `Score-Shown` tested `STRAT_ALPHA`, `1/2` `STRAT_BETA`). Across all 384 post-reversal episodes in `iter1b + iter1c`, `STRAT_GAMMA` was probed **once** (`Seed 102 Score-Hidden` second probe)—and on that single branch, calm recovery jumped to **`6/11` optimal sessions (`71.6%` net utility)**.
+  4. **Next Milestone (Awaiting PI/Codex Review & `GO`):** Passive memory edits (`Retained`, `Sham`, `Excised`, `Score-Shown`, `Score-Hidden`) all stall around `51%–61%` vs. `86.5%` Stationary because none solves **action-attributed falsification + informative first-probe selection over untested arms**—the exact target for **Iteration 2 (`SGEH+Hazard` vs. `Periodic-Probe` vs. `ScopedCardBook`)** and **Act 3 trainable probe/revision policies**.
+
+### 3.2 Iteration 1b Single-Variable Causal Fork (`iter1b_clean_fork_n4`, Spend: `$1.5130` / Cap `$1.95`)
+Full report: [summary.md](file:///home/xz479/llm-time/results/runs/iter1b_clean_fork_n4/summary.md) | Raw JSON: [causal_fork_report.json](file:///home/xz479/llm-time/results/runs/iter1b_clean_fork_n4/causal_fork_report.json) | Offline prompt check: [iter1b_prompt_check_offline.md](file:///home/xz479/llm-time/results/runs/iter1b_prompt_check_offline.md) (`gemini-3.8-flash`, requested `thinking_budget=0` / observed `103,384` thinking tokens, seeds `101–104`, `16` post-boundary sessions).
+
+- **Single-Variable Isolation & Controls Verified (`100%` Clean):**
+  - Actor prompt lengths at fork matched within `1–6` chars (`1966 vs 1967`, `2195 vs 2201`, `1905 vs 1907`, `2214 vs 2216`); zero `"probe"` strings in any card; identical `_history` lengths; `5/5` reflection calls across all 24 branches (`t*+2, t*+5, t*+8, t*+11, t*+14`).
+  - `Stationary: Retained − Sham-Edited` = **`+0.00 pts` (`[0.00, 0.00]`)** across all 4 seeds.
+  - `Stationary: Utility-Excised − Sham-Edited` = **`+0.82 pts` (`[-1.73, +5.25]` net; `+3.20 pts [+0.44, +7.41]` pre-fee)**.
+- **Primary Drift Contrast — Naive Memory Deletion Falsified (`< +8.0 pt` Criterion):**
+  - `abrupt_reversal: Utility-Excised − Sham-Edited` = **`-10.42 pts` (`95% CI [-19.86, -1.67]` net; `-6.81 pts [-14.13, +0.04]` pre-fee; `-6.03 pts [-16.48, +8.99]` vs. untouched `Retained`; Diff-in-Diffs `-11.25 pts [-20.45, -0.86]`)**.
+  - Confirms Codex's audit of `iter1`: removing the bundled `"without probing"` vs. `"or probe"` asymmetry reversed `Excised − Sham` from `+2.78 pts` to **`-10.42 pts`**.
+- **Mechanistic Trace Findings (Why Deleting Memory Hurt AND Why All 3 Arms Achieved `0/44` Optimal Calm Recovery):**
+  1. **Reference-Point Blindness + Lexical Probing Bias in `Excised`:** Setting calm `recommended_weights = null` and `mean_score = null` erased the pre-shift expectation anchor (`~73/100`). Across 64 drift sessions, `Excised` bought `19` paid probes—**`18/19` on first-listed `STRAT_ALPHA`** (`1` on `STRAT_BETA`, `0` on `STRAT_GAMMA`/`STRAT_DELTA`)—treated `14.6–19.0` as *"strong positive yield"*, and **re-crystallized `STRAT_ALPHA = 0.65`** (`31.25%` stale lock-in on Seeds 101–102 vs. `0.0%` in `Sham`).
+  2. **Satisficing / Cross-Scope Masking Ratchet Across ALL Three Arms (`0/44` Optimal Calm Sessions, `0/132` `STRAT_GAMMA` Probes):** Retaining `mean_score ≈ 73` gave `Sham`/`Retained` an immediate negative-surprise contrast (`~30` vs. `~73`) at `t*+2`, dislodging `STRAT_ALPHA` faster than `Excised`. Yet without discriminative probing across untested arms, `Sham`/`Retained` cycled on `ALPHA/BETA` (`32.8%–36.6%` calm utility on Seeds 102/104) or satisficed on `STRAT_DELTA` (`~70%`), achieving **`0/44` (`0.0%`)** optimal calm allocations and **`0` probes of optimal `STRAT_GAMMA` (`94.0`)** across all 132 calm post-reversal sessions (because `C2` had associated `STRAT_GAMMA` with `elevated_volatility`).
+  3. **Implication for Thesis & Iteration 2 (Awaiting PI/Codex Review & `GO`):** *Forgetting ≠ Adaptation.* Post-shift recovery requires **retaining** the pre-shift baseline expectation ($\hat{\mu}$) to detect surprise while pairing quarantine with **non-redundant, discriminative diagnostic probing** across untested arms (`SGEH+Hazard` / Act 3 `Epistemic+Brier-GRPO`).
+
+### 3.3 Earlier Iteration 1 Bundled Pilot (`iter1_causal_fork_n4`, Spend: `$1.4392` / Cap `$1.95`)
+Full report: [summary.md](file:///home/xz479/llm-time/results/runs/iter1_causal_fork_n4/summary.md) | Raw JSON: [causal_fork_report.json](file:///home/xz479/llm-time/results/runs/iter1_causal_fork_n4/causal_fork_report.json) (`gemini-3.8-flash`, `thinking_budget=0`, seeds `101–104`, `16` post-boundary sessions).
+
+- **Controls Passed Cleanly:**
+  - `Stationary: Retained − Sham-Edited` = **`+0.34 pts` (`[0.00, +1.02]`)** — zero sham-rewrite artifact; matched context lengths (`~630–680` chars).
+  - `Stationary: Utility-Excised − Sham-Edited` = **`-2.41 pts` (`[-3.40, -1.60]`, `<0` on 4/4 seeds)** — retaining valid cards saves probes (`0` vs. `3–5`) and preserves `86.3%–88.8%` utility; high-volatility `invariant_or_hedge` rules held steady at `82%–90%` across all branches.
+- **Primary Drift Contrast (`abrupt_reversal: Utility-Excised − Sham-Edited`):**
+  - **`+2.78 pts` (`95% CI [-2.74, +10.68]`; `-0.71 pts` vs. untouched `Retained`; Diff-in-Diffs `+5.18 pts [-1.15, +14.08]`)** — **inconclusive / below pre-registered `+8.0 pt` bar**.
+- **Post-Run Audit Findings (Codex Review + Ledger Verification):**
+  1. **Correction on Thinking Tokens:** Although `--thinking-budget 0` was requested, `api_ledger.jsonl` records `95,283` actual thinking tokens (`34,424` on `Excised` acting calls); the earlier zero-reasoning attribution is withdrawn.
+  2. **Bundled Intervention Confounders Identified:** `make_utility_excised_copy()` simultaneously removed `"without probing"` from `Retained`/`Sham`, added `"or probe"` to `Excised`'s notice, cleared `_history` only in `Excised`, and shifted the modulo-3 curation clock when $t^* \not\equiv 0 \pmod 3$. Stationary loss (`-2.41 pts`) was fully accounted for by `Excised`'s 15 probe fees (`+0.82 pts` before fees).
+  - **Queued Next Step (`Iteration 1b`, awaiting PI `GO`):** Re-run the exact 4 seeds (`101–104`, `16` post-boundary sessions, fixed config, `<$1.95`) varying **only** the calm allocation ranking/counters—holding probing instructions, recent-evidence window, and post-fork curation schedule (`t*+2, t*+5, ...`) 100% identical across all three arms after offline rendered-prompt inspection.
+
+### 3.4 Earlier Exploratory M1 Observations (`m1_pilot_flash38`, Spend: `$0.9123`)
+Executed 16-cell single-seed (`seed=42`, `horizon=15`, `gemini-3.8-flash`, `thinking_budget=256`) exploratory sweep ([summary.md](file:///home/xz479/llm-time/results/runs/m1_pilot_flash38/summary.md)):
+
+1. **Preliminary Stale-Playbook Signal:**
+   - **`life_companion:lifecycle`:** Counter-validated `SkillBook` locked onto Stage-1 preferences (`90.0%` stale lock-in, `41.4%` post-shift utility) despite spending `10.4%` reflection calls, whereas **`SGEH` reached `82.7%` post-shift utility (`+41.3 pts`)** with only `2` reflection calls (`3.6%` tax) and `0.0%` invariant constraint violations.
+   - **`alpha_desk:gradual_decay`:** `SkillBook` (`46.2%` post-shift) performed **worse than memoryless `Blind` (`59.5%`)**—direct proof that accumulated early win-counts actively harm adaptation under continuous alpha decay. `SGEH` recovered to `65.6%` (`+19.4 pts` over `SkillBook`) at `6.7%` reflection tax (`2` calls vs. `7` for `SRN`/`SkillBook`).
+2. **Simultaneous Win on Reversal AND Stationary Control (Solving the Sept Trade-Off):**
+   - **`coalition_ops:reversal` & `coalition_ops:stationary`:** `SGEH` achieved the highest utility on **both** the silent foe$\leftrightarrow$friend reversal (`79.2%`) **and** the matched stationary control (`82.0%` vs. `79.8%` `Blind`/`SRN` and `76.0%` `SkillBook`), firing **zero false alarms** (`1` acquisition consolidation call = `2.2%` tax vs. `13.5%` for `SRN`/`SkillBook`).
+3. **Next Technical Refinement Identified for Act 2 (`SGEH-v2`):**
+   - On `alpha_desk:gradual_decay`, `SRN` (`70.4%` at `18.9%` tax / 7 reflection calls) edged `SGEH-v1` (`65.6%` at `6.7%` tax / 2 calls) because pure level-CUSUM waits ~2 extra steps on slow linear slopes. Adding a **dual level + EWMA-slope residual trigger** to `SGEH-v2` will catch gradual alpha decay earlier without increasing stationary false alarms.
+
+---
+
+## 4. Next Queued Milestone (`Awaiting Explicit PI GO`) & Low-Priority Backlog
+
+### 4.1 Next Benchmark Refinement & Deferred Candidates (`Awaiting Explicit PI GO`)
+
+The [23 November group meeting brief](setup-debates/2026-11-22-group-meeting-brief.md) records the baseline comparisons, the source of each harness instruction, and the proposed editable-versus-frozen procedure test. The immediate experimental queue below still starts with benchmark refinement.
+
+The cross-model guidance comparison (`autonomy_cross_model_n6` across `gemini-3.8-flash`, `gemini-4-hydrogen`, and `gemma-4-31b-it`) is complete ([discussion & table](setup-debates/2026-11-21-alphadesk-v03-multishift-spec.md#completed-cross-model-epistemic-autonomy-fork-autonomy_cross_model_n6--2026-11-21)). Next concrete target for discussion before `GO`:
+- **Partially Observed Ambiguity Case (`AlphaDesk` Next Refinement):** Because `freeze_matched_loss` exposed `liquidity_status == "acute_liquidity_freeze"` on the free public tape, `Factual-Ledger` resolved the `~19.0` loss at `99.9%–100.0%` without needing a paid probe. A sharper next case matches the `~19.0` apparent portfolio loss under **identical public macro covariates** (`orderly_normal`), where **only a `-10 pt` single-strategy probe** distinguishes a 2-session factor correlation dip from a permanent reversal—testing autonomous Value-of-Information (VOI) probing directly.
+
+Earlier deferred proposals (held until PI re-opens):
+
+1. **Option A — Act 3 On-Policy Weight Internalization (`train_act3_lodo.py` Smoke Test on Local RTX 8000 $\to$ CSD3 3-Fold LODO):** Run the local 8B LoRA SFT $\to$ Outcome-GRPO vs. Epistemic+Brier-GRPO smoke test (`Qwen3-8B`) on our 48 GB Quadro RTX 8000 (100% on-policy Python verifiers, zero Gemini distillation), then package the 3-Fold Leave-One-Domain-Out + frozen `AlphaDesk-v0.3` / `ServeLearnBench L3` zero-shot transfer job for CSD3.
+2. **Option B — External `ServeLearnBench retail_l3` (`8` Windows / `7` Shifts) Replication:** Replicate `ScopedSGEH+Shelf (Ours)` vs. `SkillBook`, `SRN`, `Blind`, and `Oracle` on `retail_l3` (`8` chronological windows = `7` shifts) to complete both `ServeLearnBench` multi-turn domains (`Banking` + `Retail`) at `L3`.
+
+### 4.2 Low-Priority Future TODO Backlog
+- **Real-World Anonymized S&P 500 Open-Alpha Sandbox (`v0.4` / Camera-Ready Optional Split):** Inherit `Microsoft Qlib (Alpha158/Alpha360)` + `RD-Agent(Q)` / `AlphaAgent` formulaic factor expressions under `FINSABER` ticker/date stripping (`ASSET_001..500`, weekly rebalances). Deferred to low priority per PI instruction so multi-shift evaluation and Act 3 LoRA GRPO stay unblocked.
+

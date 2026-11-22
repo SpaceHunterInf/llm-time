@@ -1,0 +1,150 @@
+{
+  "kind": "task007_commander_offline_audit",
+  "tests": "155 passed",
+  "independent_product_kernel_max_abs": 1.1102230246251565e-16,
+  "independent_filter_checks": {
+    "previous_max_abs": 3.3306690738754696e-16,
+    "current_max_abs": 2.220446049250313e-16,
+    "r_max_abs": 7.771561172376096e-16,
+    "d_max_abs": 7.91033905045424e-16,
+    "ll_max_abs": 3.552713678800501e-15
+  },
+  "reproduction_matches": {
+    "solver_inputs.json": true,
+    "evaluator.json": true,
+    "algebra": true,
+    "coverage": true,
+    "probes_train": true,
+    "probes_test": true,
+    "showcase": true
+  },
+  "reproduction_runtime_s": 4.155732818995602,
+  "pairs_by_split": {
+    "train": 96,
+    "dev": 16,
+    "test": 16
+  },
+  "clean_individual_counts": {
+    "train": {
+      "rows": 192,
+      "unique": 112
+    },
+    "dev": {
+      "rows": 32,
+      "unique": 20
+    },
+    "test": {
+      "rows": 32,
+      "unique": 24
+    }
+  },
+  "evidence_sequences_across_splits_ignoring_hazard": [
+    [
+      [
+        "test",
+        "X00",
+        0.03
+      ],
+      [
+        "train",
+        "T00",
+        0.0
+      ]
+    ]
+  ],
+  "general_non_equivalence_example": {
+    "same_bias": {
+      "L_base": 0.08164398904051035,
+      "L_pair": 0.0,
+      "L_mse": 0.00999999999999999,
+      "L_cross": 0.00999999999999999,
+      "L_kl": 0.08164398904051035,
+      "L_kl_mse": 0.09164398904051034,
+      "L_kl_pair": 0.08164398904051035,
+      "pair_minus_twice_mse_plus_cross": 0.0
+    },
+    "opposite_bias": {
+      "L_base": 0.08164398904051035,
+      "L_pair": 0.039999999999999966,
+      "L_mse": 0.009999999999999992,
+      "L_cross": -0.009999999999999992,
+      "L_kl": 0.08164398904051035,
+      "L_kl_mse": 0.09164398904051034,
+      "L_kl_pair": 0.12164398904051031,
+      "pair_minus_twice_mse_plus_cross": 0.0
+    }
+  },
+  "recorded_coverage": {
+    "by_split": {
+      "dev": 16,
+      "test": 16,
+      "train": 96
+    },
+    "enumerated": true,
+    "families": {
+      "dev": [
+        "D00",
+        "D01",
+        "D02",
+        "D03"
+      ],
+      "test": [
+        "X00",
+        "X01",
+        "X02",
+        "X03"
+      ],
+      "train": [
+        "T00",
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T09",
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15"
+      ]
+    },
+    "log_likelihood_max": -1.3489091776748807,
+    "log_likelihood_min": -5.920149041691388,
+    "max_unobserved_related_gap": 0.16706576287368213,
+    "n_pairs": 128,
+    "n_pairs_with_related_gap": 60,
+    "n_previous_states_differ": 96,
+    "topology_types": {
+      "dev": [
+        "four_singletons",
+        "one_pair"
+      ],
+      "test": [
+        "triple",
+        "two_pairs"
+      ],
+      "train": [
+        "four_singletons",
+        "one_pair"
+      ]
+    }
+  },
+  "solver_metadata_fields": [
+    "pair_id",
+    "side",
+    "family_id",
+    "split",
+    "topology_type"
+  ],
+  "brute_reference_shares_redraw_helper": true,
+  "source_hashes": {
+    "llm_rl_engine/analysis/paired_revision.py": "38276a4bbce1b2e7e925787b977b24a1c7bc08d48f705dc5020d09087dbe0ee3",
+    "scripts/paired_revision_feasibility.py": "e6f8b0b5cb9cb515b16676eb21a17f6e8966c6ae056a2fdd2788b48425a1fb6f",
+    "tests/test_paired_revision.py": "5f9527f04f7c899cbcb556a26aa37478eb6af231567dbb06ddfb179e930b63a3"
+  }
+}

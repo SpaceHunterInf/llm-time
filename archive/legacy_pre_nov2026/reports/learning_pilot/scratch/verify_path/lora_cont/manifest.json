@@ -1,0 +1,92 @@
+{
+  "heldout_evaluated": false,
+  "identity": {
+    "adapter_seed": 10007,
+    "code_hashes": {
+      "llm_rl_engine/analysis/learning_pilot.py": "a64af20e386d0dc8863c63c8e3df3d8bd37eb4426b404687a4361f68e3365411",
+      "llm_rl_engine/analysis/posterior_baseline.py": "3ac9ea1ae373114297e382fdb89ce52813e9fb435c9aba9c699d0a209fb7f3a5",
+      "llm_rl_engine/analysis/posterior_baseline_model.py": "ce3590973afbbd3bcc3e1c9823202a649c0227af8a8ae739a59a0f9761164468",
+      "llm_rl_engine/configs/learning_pilot.yaml": "e4fffb9cbac866a06154ba51d35aefcb65e24fbb94d3e12c59e972f2ae78dcc0",
+      "scripts/learning_pilot.py": "311d4ed054ee26a2fd024ba7b6610ef60a7d2c1922c0e20209ad7c3a35f15e87"
+    },
+    "data_hashes": {
+      "dev_audit": "1792dbb441cf41ee0db4e7fa3521f926aa84474cd6470a930b5f8ee2213cb8ce",
+      "dev_model": "3bab5667c4e57e297cacec9e6b69eab4b36956ee3ac95ad877141db8b4475750",
+      "train_audit": "33348693d3cf412b993ef113e05429f973fe72e16838e75c77d4691c1d71fc6e",
+      "train_model": "f4b859acfb5b6c0a9e13849251134b8690a524611e1be6feba69ace9099685aa"
+    },
+    "device": "cpu",
+    "dtype": "float32",
+    "effective_batch": 2,
+    "epochs": 1,
+    "head_seed": 0,
+    "heldout_read": false,
+    "kind": "ordinary_posterior_kl_pilot",
+    "lex_keys": [
+      "0000",
+      "0001",
+      "0010",
+      "0011",
+      "0100",
+      "0101",
+      "0110",
+      "0111",
+      "1000",
+      "1001",
+      "1010",
+      "1011",
+      "1100",
+      "1101",
+      "1110",
+      "1111"
+    ],
+    "lora": {
+      "alpha": 16,
+      "dropout": 0.0,
+      "r": 8,
+      "targets": [
+        "q_proj",
+        "v_proj"
+      ]
+    },
+    "microbatch": 1,
+    "mlp_seed": null,
+    "mode": "lora",
+    "model_id": "Qwen/Qwen3-0.6B-Base",
+    "model_revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+    "numeric_encoder_version": "v1",
+    "optimizer": {
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "grad_clip": 1.0,
+      "head_lr": 0.001,
+      "lora_lr": 0.0001,
+      "mlp_lr": 0.001,
+      "name": "AdamW",
+      "warmup_ratio": 0.1,
+      "weight_decay": 0.01,
+      "weight_decay_bias": 0.0
+    },
+    "renderer_version": "v2",
+    "seed": 0,
+    "torch": "2.14.0+cpu",
+    "trainable_parameter_count": 1163280,
+    "version": "learning_pilot_v1"
+  },
+  "n_train": 8,
+  "train_state": {
+    "best": {
+      "dev_kl": Infinity,
+      "epoch": -1,
+      "step": -1
+    },
+    "cursor": 4,
+    "epoch": 0,
+    "last_dev_epoch": -1,
+    "optimizer_updates": 2,
+    "step": 2
+  }
+}

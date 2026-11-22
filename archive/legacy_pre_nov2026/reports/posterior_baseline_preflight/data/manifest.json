@@ -1,0 +1,141 @@
+{
+  "coverage": {
+    "dev": {
+      "actions": {
+        "choose_linked": 178,
+        "choose_safe": 7,
+        "diagnose_linked": 71
+      },
+      "hazards": {
+        "0.0": 64,
+        "0.03": 192
+      },
+      "n": 256,
+      "n_families": 256,
+      "n_unique_inputs": 256,
+      "n_with_observed": 256,
+      "n_with_related_unobserved": 75,
+      "n_with_unrelated": 231,
+      "topology_types": {
+        "four_singletons": 128,
+        "one_pair": 128
+      }
+    },
+    "family_split_collisions": 0,
+    "same_topology": {
+      "actions": {
+        "choose_linked": 187,
+        "choose_safe": 8,
+        "diagnose_linked": 61
+      },
+      "hazards": {
+        "0.0": 64,
+        "0.03": 192
+      },
+      "n": 256,
+      "n_families": 256,
+      "n_unique_inputs": 256,
+      "n_with_observed": 256,
+      "n_with_related_unobserved": 70,
+      "n_with_unrelated": 229,
+      "topology_types": {
+        "four_singletons": 128,
+        "one_pair": 128
+      }
+    },
+    "structural": {
+      "actions": {
+        "choose_linked": 195,
+        "choose_safe": 2,
+        "diagnose_linked": 59
+      },
+      "hazards": {
+        "0.0": 64,
+        "0.03": 192
+      },
+      "n": 256,
+      "n_families": 256,
+      "n_unique_inputs": 256,
+      "n_with_observed": 256,
+      "n_with_related_unobserved": 199,
+      "n_with_unrelated": 139,
+      "topology_types": {
+        "triple": 128,
+        "two_pairs": 128
+      }
+    },
+    "train": {
+      "actions": {
+        "choose_linked": 1545,
+        "choose_safe": 36,
+        "diagnose_linked": 467
+      },
+      "hazards": {
+        "0.0": 512,
+        "0.03": 1536
+      },
+      "n": 2048,
+      "n_families": 2030,
+      "n_unique_inputs": 2048,
+      "n_with_observed": 2048,
+      "n_with_related_unobserved": 556,
+      "n_with_unrelated": 1890,
+      "topology_types": {
+        "four_singletons": 1024,
+        "one_pair": 1024
+      }
+    }
+  },
+  "file_hashes": {
+    "dev_audit": "e701950c673bb20259210cbb9846be51d8a1978d1718fd048df9d9ef51d43503",
+    "dev_model": "d1e9e67a8c724dbc2b1997acbba27439200535bd6f5db6d87fc5f77460fff432",
+    "same_topology_audit": "da3ec89e561507536e3d532494062aaf41b2fc739a47fa32898c644339cbe72c",
+    "same_topology_model": "0893eeefca3b0fba3f4f0b047c8a3d2fa53a8e8438a5c27c85ad211ba7dbcdc1",
+    "structural_audit": "fb7907634ef4f1770e0fe295f9c324d38f6dadc7364f30c7ec9301603a5caf63",
+    "structural_model": "8b85d11deeb3c4e199b4521e852bc593c5bdc826f598da1a26441e985b1277e1",
+    "train_audit": "8d8dd5763c5f1ae50923c0ba339a260e53906c523ebb14dc6306929397d7a734",
+    "train_model": "12fea13909664efe0110eb8b646d80e4555ede0ca7d7a083098236259e6cd25f"
+  },
+  "lex_keys": [
+    "0000",
+    "0001",
+    "0010",
+    "0011",
+    "0100",
+    "0101",
+    "0110",
+    "0111",
+    "1000",
+    "1001",
+    "1010",
+    "1011",
+    "1100",
+    "1101",
+    "1110",
+    "1111"
+  ],
+  "max_input_tokens": 1024,
+  "n": {
+    "dev": 256,
+    "same_topology": 256,
+    "structural": 256,
+    "train": 2048
+  },
+  "note": "Pilot data, not a sealed publication test. Do not train on 007 pair fixtures.",
+  "sampling": {
+    "enumerated": false,
+    "h0_fraction": 0.25,
+    "observation_component": "uniform independent of hidden state",
+    "outcomes": "Bernoulli from latent rate after group resets",
+    "prefix_len": [
+      4,
+      8
+    ],
+    "suffix_len": [
+      1,
+      4
+    ]
+  },
+  "seed": 808,
+  "version": "posterior_baseline_v1"
+}

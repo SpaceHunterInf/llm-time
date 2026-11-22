@@ -1,0 +1,130 @@
+{
+  "date": "2026-09-15",
+  "tests": "183 passed",
+  "new_research_fitting": false,
+  "runs": {
+    "0": {
+      "updates": 1920,
+      "dev_evaluations": 30,
+      "recorded_hashes_match": true,
+      "first_192_batches_match_009": true,
+      "best_step": 1920,
+      "splits": {
+        "train": {
+          "n": 2048,
+          "kl": 0.09737140100089754,
+          "mae": 0.04476329172689014,
+          "regret": 0.0030213927040809935,
+          "max_probability_sum_error": 1.9100207282463089e-07
+        },
+        "dev": {
+          "n": 256,
+          "kl": 0.11684911901105635,
+          "mae": 0.049150491247019604,
+          "regret": 0.003635601048741048,
+          "max_probability_sum_error": 1.6294069382638554e-07
+        }
+      }
+    },
+    "1": {
+      "updates": 1920,
+      "dev_evaluations": 30,
+      "recorded_hashes_match": true,
+      "first_192_batches_match_009": true,
+      "best_step": 1920,
+      "splits": {
+        "train": {
+          "n": 2048,
+          "kl": 0.10704067462204163,
+          "mae": 0.04864091632205071,
+          "regret": 0.003558466471093319,
+          "max_probability_sum_error": 2.1146070139366202e-07
+        },
+        "dev": {
+          "n": 256,
+          "kl": 0.12524770816279945,
+          "mae": 0.05293719553339211,
+          "regret": 0.004163290005820652,
+          "max_probability_sum_error": 2.0206130102451425e-07
+        }
+      }
+    },
+    "2": {
+      "updates": 1920,
+      "dev_evaluations": 30,
+      "recorded_hashes_match": true,
+      "first_192_batches_match_009": true,
+      "best_step": 1920,
+      "splits": {
+        "train": {
+          "n": 2048,
+          "kl": 0.10983852658336227,
+          "mae": 0.04914214250197245,
+          "regret": 0.003611159463369448,
+          "max_probability_sum_error": 2.16779881156981e-07
+        },
+        "dev": {
+          "n": 256,
+          "kl": 0.12974090883303058,
+          "mae": 0.05477205171126773,
+          "regret": 0.0040429322663143585,
+          "max_probability_sum_error": 1.8115360944648273e-07
+        }
+      }
+    }
+  },
+  "checks": {
+    "saved_joint_scoring_max_abs_error": 4.440892098500626e-16,
+    "all_5760_updates_accounted": true,
+    "holdout_prediction_files": 0,
+    "max_effect_of_float32_joint_renormalization": 2.1677990465374282e-07
+  },
+  "reported_resources": {
+    "device": "cpu",
+    "rss_mb": 431.7578125,
+    "runs": [
+      {
+        "best": {
+          "dev_kl": 0.11684912163764238,
+          "epoch": 29,
+          "step": 1920
+        },
+        "incomplete": false,
+        "out": "runs/numeric_fit_diagnosis/mlp_s0",
+        "seed": 0,
+        "step": 1920,
+        "stop_reason": "completed",
+        "updates": 1920
+      },
+      {
+        "best": {
+          "dev_kl": 0.12524770852178335,
+          "epoch": 29,
+          "step": 1920
+        },
+        "incomplete": false,
+        "out": "runs/numeric_fit_diagnosis/mlp_s1",
+        "seed": 1,
+        "step": 1920,
+        "stop_reason": "completed",
+        "updates": 1920
+      },
+      {
+        "best": {
+          "dev_kl": 0.12974091805517673,
+          "epoch": 29,
+          "step": 1920
+        },
+        "incomplete": false,
+        "out": "runs/numeric_fit_diagnosis/mlp_s2",
+        "seed": 2,
+        "step": 1920,
+        "stop_reason": "completed",
+        "updates": 1920
+      }
+    ],
+    "threads": 4,
+    "wall_budget_s": 600.0,
+    "wall_s": 74.82498600898543
+  }
+}

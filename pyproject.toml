@@ -3,27 +3,29 @@ requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "llm-rl-engine"
+name = "rsi-paradigm-shift"
 version = "0.1.0"
-description = "RL engine for benchmarking frozen LLM agents"
+description = "Self-improvement and epistemic plasticity under non-stationary reward paradigms"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     "pyyaml>=6.0",
     "google-genai>=2.10.0",
+    "httpx>=0.28.0",
     "matplotlib>=3.8.0",
     "tqdm>=4.66.0",
 ]
 
-[project.scripts]
-llm-rl-benchmark = "llm_rl_engine.cli:main"
-
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["llm_rl_engine*"]
+include = ["src*"]
+
+[tool.setuptools.package-data]
+"src.dashboard" = ["meeting.html", "static/styles.css", "static/app.js", "static/roadmap_dashboard.html"]
 
 [dependency-groups]
 dev = ["pytest>=8.0"]
 
 [tool.pytest.ini_options]
+pythonpath = ["."]
 testpaths = ["tests"]
