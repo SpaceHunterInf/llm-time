@@ -70,6 +70,9 @@ class SRNHarness(EpistemicHarness):
             return ""
         return f"\nPERSISTENT STRATEGY NOTE (bounded):\n{self.note[: self.max_chars]}\n"
 
+    def snapshot_state(self) -> dict[str, Any]:
+        return {"harness_name": self.name, "active_note": self.note[: self.max_chars]}
+
     def on_episode_complete(self, record: PublicEpisodeRecord, client: MeteredLLMClient) -> dict[str, Any]:
         self._buffer.append(summarize_public_record(record))
         if record.timestamp % self.reflect_every != 0:

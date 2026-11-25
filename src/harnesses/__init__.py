@@ -9,6 +9,11 @@ from src.harnesses.baselines import (
     SlidingWindowHarness,
     SRNHarness,
 )
+from src.harnesses.procedure_harness import (
+    SLBFactualLogHarness,
+    SLBTransferredProcedureHarness,
+    SelfAuthoredProcedureHarness,
+)
 from src.harnesses.scoped_cards import ScopedCardBookHarness
 from src.harnesses.sgeh import SurpriseGatedEpistemicHarness
 from src.harnesses.sgeh_v2 import PeriodicProbeHarness, ScopedSGEHHardened
@@ -30,10 +35,14 @@ def make_harness(name: str) -> EpistemicHarness:
         "scoped_cards": ScopedCardBookHarness,
         "scoped_cards_v3": ScopedCardBookV3Harness,
         "factual_ledger_v3": FactualLedgerV3Harness,
+        "editable_proc_v3": lambda: SelfAuthoredProcedureHarness(mode="editable"),
+        "frozen_proc_v3": lambda: SelfAuthoredProcedureHarness(mode="frozen"),
         "sgeh_directive_v3": DirectiveSGEHV3Harness,
         "periodic_probe": PeriodicProbeHarness,
         "sgeh": SurpriseGatedEpistemicHarness,
         "sgeh_slb": ScopedSLBHarness,
+        "factual_slb": SLBFactualLogHarness,
+        "transferred_proc_slb": SLBTransferredProcedureHarness,
         "sgeh_surprise": lambda: ScopedSGEHHardened(enable_hazard=False),
         "sgeh_surprise_shelf": lambda: ScopedSGEHV3(enable_hazard=False, enable_shelf=True),
         "sgeh_hazard": lambda: ScopedSGEHHardened(enable_hazard=True),

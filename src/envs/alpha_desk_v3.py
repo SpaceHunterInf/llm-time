@@ -562,27 +562,31 @@ class AlphaDeskV3Env(ParadigmEnv):
 
 
 class AlphaDeskV3ForkEnv(AlphaDeskV3Env):
-    """Controlled 2-Window (`W1` Shared Prefix -> `W2` Fork) `AlphaDesk-v0.3` Environment for Autonomy Audits.
+    """Controlled 2-Window (`W1` Shared Prefix -> `W2` Fork) `AlphaDesk-v0.3` Environment for Autonomy & VOI Audits.
 
-    Supports 5 post-fork worlds across two bit-identical `W1` prefix families (`t_fork = 14`, `H_post = 16`):
+    Supports 6 post-fork worlds across two bit-identical `W1` prefix families (`t_fork = 14`, `H_post = 16`):
       - Family A (`high_a`: `r0=92, r1=80, r2=22, r3=20, r4=24, r5=18`):
         1. `stationary`: `W2` stays at `A` under `orderly_normal`.
         2. `abrupt_reversal`: `W2` shifts permanently to `B = (18, 20, 93, 81, 24, 20)` under `orderly_normal`
            (incumbent `0.55 r0 + 0.45 r1` suffers an immediate `86.6 -> 18.9` apparent loss; optimal response is to
-           probe untested strategies and reallocate).
-        3. `freeze_matched_loss`: First 2 sessions of `W2` (`t_fork, t_fork+1`) enter observable `acute_liquidity_freeze`
-           (`bid_ask_spread_bps >= 40`) where ALL 6 strategies yield `19.0` (matching `abrupt_reversal`'s `~18.9`
-           apparent loss to within `0.1` pts!), followed by `14` sessions returning to `orderly_normal` with `A` intact
-           (Bellman DP optimal response: hold `current_holdings` with `0.0` turnover and `0` probes!).
+           probe and reallocate).
+        3. `hidden_transient_dip`: First 2 sessions of `W2` (`t_fork, t_fork+1`) enter an UNANNOUNCED broad calm factor
+           dip (`r0=18, r1=20, r2..r5=19`) under `orderly_normal` (`vol_index` & `bid_ask_spread_bps` 100% identical to
+           `stationary` and `abrupt_reversal`!), matching `abrupt_reversal`'s `18.9` apparent loss and `t_fork` realized
+           gross/net/NAV bit-for-bit (`0.0` free bits of separation!). Only paying `-10.0` pts for
+           `probe_strategy_execution` separates them (`desk_best_yield_estimate ~ 21` vs `~ 93`), followed by `14`
+           sessions returning to `A` (Bellman DP optimal policy holds `current_holdings` with `0.0` turnover!).
+        4. `freeze_matched_loss`: Observable `acute_liquidity_freeze` control (`bid_ask_spread_bps >= 40` on free brief).
       - Family B (`opp_a`: `r0=64, r1=58, r2=26, r3=22, r4=24, r5=22`):
-        4. `opportunity_stationary`: `W2` stays at `A_opp` (`~61.3` calm gross).
-        5. `opportunity_rise`: `W2` keeps `r0=64, r1=58` 100% flat (zero downward surprise!) while `r2=96, r5=86`
+        5. `opportunity_stationary`: `W2` stays at `A_opp` (`~61.3` calm gross).
+        6. `opportunity_rise`: `W2` keeps `r0=64, r1=58` 100% flat (zero downward surprise!) while `r2=96, r5=86`
            (`91.5` gross, `+30.2 pts/session`) emerge silently among long-unprobed strategies.
     """
 
     VALID_FORK_MODES = (
         "stationary",
         "abrupt_reversal",
+        "hidden_transient_dip",
         "freeze_matched_loss",
         "opportunity_stationary",
         "opportunity_rise",
@@ -613,9 +617,9 @@ class AlphaDeskV3ForkEnv(AlphaDeskV3Env):
         self.shift_boundaries = [self.t_fork]
         self.window_ranges = [(0, self.t_fork), (self.t_fork, total_h)]
 
-        # Guarantee `t_fork - 1` (pre-fork holdings), `t_fork`, and `t_fork + 1` are calm_volatility
-        # so fork holdings are always the calm incumbent pair and apparent loss at `t_fork` is cleanly matched!
-        for boundary_ep in (self.t_fork - 1, self.t_fork, self.t_fork + 1):
+        # Guarantee `t_fork - 1` (pre-fork holdings), `t_fork`, `t_fork + 1`, and `t_fork + 2` are calm_volatility
+        # so fork holdings are always the calm incumbent pair and apparent loss + immediate post-dip rebound are clean!
+        for boundary_ep in (self.t_fork - 1, self.t_fork, self.t_fork + 1, self.t_fork + 2):
             if 0 <= boundary_ep < total_h:
                 self._episodes[boundary_ep]["is_high_vol"] = False
                 self._episodes[boundary_ep]["vol_index"] = round(
@@ -636,9 +640,15 @@ class AlphaDeskV3ForkEnv(AlphaDeskV3Env):
             return ep in (self.t_fork, self.t_fork + 1)
         return False
 
+    def _is_hidden_transient_dip(self, ep: int) -> bool:
+        if self.fork_mode == "hidden_transient_dip":
+            return ep in (self.t_fork, self.t_fork + 1)
+        return False
+
     def _calm_role_means_and_label(self, ep: int) -> tuple[dict[str, float], str]:
         reg_a = self._role_vec(92.0, 80.0, 22.0, 20.0, 24.0, 18.0)
         reg_b = self._role_vec(18.0, 20.0, 93.0, 81.0, 24.0, 20.0)
+        dip_role = self._role_vec(18.0, 20.0, 19.0, 19.0, 19.0, 19.0)
         a_opp = self._role_vec(64.0, 58.0, 26.0, 22.0, 24.0, 22.0)
         b_opp = self._role_vec(64.0, 58.0, 96.0, 22.0, 24.0, 86.0)
 
@@ -650,6 +660,10 @@ class AlphaDeskV3ForkEnv(AlphaDeskV3Env):
             return reg_a, "W2_stat_A"
         if self.fork_mode == "abrupt_reversal":
             return reg_b, "W2_rev_B"
+        if self.fork_mode == "hidden_transient_dip":
+            if self._is_hidden_transient_dip(ep):
+                return dip_role, "hidden_calm_factor_dip_19"
+            return reg_a, "W2_post_dip_A"
         if self.fork_mode == "freeze_matched_loss":
             return reg_a, "W2_post_freeze_A"
         if self.fork_mode == "opportunity_stationary":
@@ -663,7 +677,6 @@ class AlphaDeskV3ForkEnv(AlphaDeskV3Env):
         hv_role = self._role_vec(20.0, 22.0, 24.0, 26.0, 80.0, 92.0)
 
         if self._is_liquidity_freeze(ep):
-            # Exact `19.0` yield across all strategies matches `0.55*18 + 0.45*20 = 18.9` apparent loss of `abrupt_reversal`!
             freeze_m = {s: 19.0 for s in STRATEGIES_V3}
             stale_m = {r_map[rk]: v for rk, v in w1_role.items()}
             return freeze_m, stale_m, "acute_liquidity_freeze_19"
@@ -676,6 +689,58 @@ class AlphaDeskV3ForkEnv(AlphaDeskV3Env):
         active_m = {r_map[rk]: v for rk, v in calm_role.items()}
         stale_m = {r_map[rk]: v for rk, v in w1_role.items()}
         return active_m, stale_m, tag
+
+    def start_episode(self, episode_idx: int) -> PublicTaskSpec:
+        spec = super().start_episode(episode_idx)
+        updated_tools = []
+        for t in spec.tool_schemas:
+            if t["name"] == "probe_strategy_execution":
+                t = {
+                    **t,
+                    "description": (
+                        f"Optional paid diagnostic (-{PROBE_FEE_V3:.0f} pts; max 1 per session): observe noisy live "
+                        "gross yield for one strategy plus anonymized desk-wide mean and max strategy yields today."
+                    ),
+                }
+            updated_tools.append(t)
+        return PublicTaskSpec(
+            env_name=spec.env_name,
+            episode_idx=spec.episode_idx,
+            timestamp=spec.timestamp,
+            domain_prompt=spec.domain_prompt,
+            task_prompt=spec.task_prompt,
+            tool_schemas=updated_tools,
+        )
+
+    def step_tool(self, tool_name: str, tool_args: dict[str, Any]) -> StepOutcome:
+        if tool_name == "probe_strategy_execution" and not self._done:
+            strat = str(tool_args.get("strategy", "")).strip().upper()
+            if strat not in STRATEGIES_V3:
+                return StepOutcome({"error": f"Unknown strategy '{strat}'. Valid: {list(STRATEGIES_V3)}"}, done=False)
+            if len(self._probed) >= 1:
+                return StepOutcome({"error": "Probe limit (1 per session) already reached."}, done=False)
+            self._probed.add(strat)
+            ctx = self._episodes[self._cur_ep]
+            means, _, _ = self._expected_payoffs(self._cur_ep)
+            all_noisy = {
+                s: round(max(0.0, min(100.0, means[s] + 0.65 * ctx["noise"][s])), 1)
+                for s in STRATEGIES_V3
+            }
+            return StepOutcome(
+                observation={
+                    "strategy": strat,
+                    "probe_fee_deducted": PROBE_FEE_V3,
+                    "live_net_yield_estimate": all_noisy[strat],
+                    "desk_mean_yield_estimate": round(sum(all_noisy.values()) / len(STRATEGIES_V3), 1),
+                    "desk_best_yield_estimate": round(max(all_noisy.values()), 1),
+                },
+                done=False,
+            )
+
+        out = super().step_tool(tool_name, tool_args)
+        if tool_name == "submit_allocation" and out.private_eval:
+            out.private_eval["is_hidden_transient_dip"] = self._is_hidden_transient_dip(self._cur_ep)
+        return out
 
     def _compute_post_fork_bellman_oracle(self, start_holdings: dict[str, float]) -> dict[str, Any]:
         """Exact backward-induction Bellman DP over `ep = t_fork .. H-1` starting from `start_holdings`."""
@@ -741,3 +806,130 @@ class AlphaDeskV3ForkEnv(AlphaDeskV3Env):
         for ep, w_s in self._post_dp_oracle["weights_by_ep"].items():
             self._dp_oracle["weights"][ep] = w_s
             self._dp_oracle["step_net"][ep] = self._post_dp_oracle["step_net_by_ep"][ep]
+
+
+class AlphaDeskV3ThreeWindowEnv(AlphaDeskV3ForkEnv):
+    """Controlled 3-Window (`W1 -> W2 -> W3`) Multi-Shift & Stationary Stream for Editable-Procedure Evaluation.
+
+    Starts from a shared live-acquired `W1` (`0 .. w1_len-1`) checkpoint and runs `w2_len + w3_len` post-checkpoint
+    episodes across two unannounced post-checkpoint windows (`W2` and `W3`):
+      - Family A (`high_a`: `W1` has `A = (92, 80, 22, 20, 24, 18)`):
+        1. `stationary_3w`: `W2 = A`, `W3 = A` (stationary VOI control: procedures should keep their points!).
+        2. `dip_then_reversal_3w`: `W2` opens with a 2-session `hidden_transient_dip` (`18, 20, 19..19`) then returns
+           to `A` for the remainder of `W2`; `W3` shifts permanently to `B = (18, 20, 93, 81, 24, 20)`.
+        3. `double_reversal_3w`: `W2 = B = (18, 20, 93, 81, 24, 20)`, `W3 = C = (78, 18, 16, 20, 94, 22)`.
+      - Family B (`opp_3w`: `W1` has `A_opp3 = (56, 52, 24, 20, 22, 20)`):
+        4. `opp_stationary_3w`: `W2 = A_opp3`, `W3 = A_opp3` (stationary VOI control for Type-II family).
+        5. `opp_double_rise_3w`: `W2 = B_opp3 = (56, 52, 78, 20, 22, 72)` (+21.1 pts/ep Type-II rise, 0 downward
+           surprise), `W3 = D_opp3 = (56, 52, 78, 96, 90, 72)` (+18.0 pts/ep second Type-II rise, 0 downward surprise).
+    """
+
+    VALID_STREAM_MODES = (
+        "stationary_3w",
+        "dip_then_reversal_3w",
+        "double_reversal_3w",
+        "opp_stationary_3w",
+        "opp_double_rise_3w",
+    )
+
+    def __init__(
+        self,
+        *,
+        stream_mode: str = "dip_then_reversal_3w",
+        seed: int = 601,
+        w1_len: int = 12,
+        w2_len: int = 14,
+        w3_len: int = 14,
+        initial_post_holdings: dict[str, float] | None = None,
+    ) -> None:
+        if stream_mode not in self.VALID_STREAM_MODES:
+            raise ValueError(f"Unsupported stream_mode '{stream_mode}'. Valid: {self.VALID_STREAM_MODES}")
+        self.stream_mode = stream_mode
+        self.w1_len = int(w1_len)
+        self.w2_len = int(w2_len)
+        self.w3_len = int(w3_len)
+        self.t_w3 = self.w1_len + self.w2_len
+
+        super().__init__(
+            fork_mode="stationary",
+            seed=seed,
+            t_fork=self.w1_len,
+            h_post=self.w2_len + self.w3_len,
+            initial_post_holdings=initial_post_holdings,
+        )
+        self.mode = stream_mode
+        self.window_lengths = [self.w1_len, self.w2_len, self.w3_len]
+        self.shift_boundaries = [self.w1_len, self.t_w3]
+        self.window_ranges = [
+            (0, self.w1_len),
+            (self.w1_len, self.t_w3),
+            (self.t_w3, self.horizon),
+        ]
+
+        # Ensure clean calm_volatility transitions around both W1->W2 and W2->W3 boundaries
+        for boundary_ep in (
+            self.w1_len - 1,
+            self.w1_len,
+            self.w1_len + 1,
+            self.w1_len + 2,
+            self.t_w3 - 1,
+            self.t_w3,
+            self.t_w3 + 1,
+        ):
+            if 0 <= boundary_ep < self.horizon:
+                self._episodes[boundary_ep]["is_high_vol"] = False
+                self._episodes[boundary_ep]["vol_index"] = round(
+                    13.5 + (self._episodes[boundary_ep]["vol_index"] % 5.0), 1
+                )
+
+        self._dp_oracle = self._compute_bellman_oracle_trajectory()
+        self._post_dp_oracle = self._compute_post_fork_bellman_oracle(
+            self._fork_holdings_override or self._dp_oracle["weights"][max(0, self.t_fork - 1)]
+        )
+        for ep, w_s in self._post_dp_oracle["weights_by_ep"].items():
+            self._dp_oracle["weights"][ep] = w_s
+            self._dp_oracle["step_net"][ep] = self._post_dp_oracle["step_net_by_ep"][ep]
+
+    def window_index(self, ep: int) -> int:
+        if ep < self.w1_len:
+            return 0
+        if ep < self.t_w3:
+            return 1
+        return 2
+
+    def _is_liquidity_freeze(self, ep: int) -> bool:
+        return False
+
+    def _is_hidden_transient_dip(self, ep: int) -> bool:
+        if self.stream_mode == "dip_then_reversal_3w":
+            return ep in (self.w1_len, self.w1_len + 1)
+        return False
+
+    def _calm_role_means_and_label(self, ep: int) -> tuple[dict[str, float], str]:
+        reg_a = self._role_vec(92.0, 80.0, 22.0, 20.0, 24.0, 18.0)
+        reg_b = self._role_vec(18.0, 20.0, 93.0, 81.0, 24.0, 20.0)
+        reg_c = self._role_vec(78.0, 18.0, 16.0, 20.0, 94.0, 22.0)
+        dip_role = self._role_vec(18.0, 20.0, 19.0, 19.0, 19.0, 19.0)
+
+        a_opp3 = self._role_vec(56.0, 52.0, 24.0, 20.0, 22.0, 20.0)
+        b_opp3 = self._role_vec(56.0, 52.0, 78.0, 20.0, 22.0, 72.0)
+        d_opp3 = self._role_vec(56.0, 52.0, 78.0, 96.0, 90.0, 72.0)
+
+        is_opp = self.stream_mode in ("opp_stationary_3w", "opp_double_rise_3w")
+        w_idx = self.window_index(ep)
+        if w_idx == 0:
+            return (a_opp3, "W1_acq_A_opp3") if is_opp else (reg_a, "W1_acq_A")
+
+        if self.stream_mode == "stationary_3w":
+            return reg_a, f"W{w_idx + 1}_stat_A"
+        if self.stream_mode == "dip_then_reversal_3w":
+            if w_idx == 1:
+                if self._is_hidden_transient_dip(ep):
+                    return dip_role, "hidden_calm_factor_dip_19"
+                return reg_a, "W2_post_dip_A"
+            return reg_b, "W3_rev_B"
+        if self.stream_mode == "double_reversal_3w":
+            return (reg_b, "W2_rev_B") if w_idx == 1 else (reg_c, "W3_rev_C")
+        if self.stream_mode == "opp_stationary_3w":
+            return a_opp3, f"W{w_idx + 1}_opp_stat_A3"
+        return (b_opp3, "W2_opp_rise_B3") if w_idx == 1 else (d_opp3, "W3_opp_rise_D3")

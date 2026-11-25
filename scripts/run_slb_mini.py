@@ -179,6 +179,16 @@ def run_single_slb_task(
     }
 
 
+def _snapshot_slb_harness(harness: Any) -> dict[str, Any]:
+    if harness is None:
+        return {}
+    if hasattr(harness, "snapshot_state"):
+        return harness.snapshot_state()
+    if hasattr(harness, "rules"):
+        return {"harness_name": getattr(harness, "name", ""), "rules": list(getattr(harness, "rules", []))}
+    return {"harness_name": getattr(harness, "name", "")}
+
+
 def evaluate_slb_method(
     *,
     scenario: str,
@@ -191,6 +201,7 @@ def evaluate_slb_method(
     client: MeteredLLMClient,
     workers: int,
     allowed_families: set[str] | None = None,
+    frozen_procedure_payload: dict[str, Any] | None = None,
     on_task_done: Any = None,
 ) -> dict[str, Any]:
     bundle = get_bundle(scenario, fresh=True)
@@ -198,6 +209,8 @@ def evaluate_slb_method(
     all_serving = list(bundle["serving"])
     learns = method_name not in ("blind", "oracle")
     harness = make_harness(method_name) if learns else None
+    if method_name == "transferred_proc_slb" and harness is not None and frozen_procedure_payload:
+        harness.set_frozen_procedure(str(frozen_procedure_payload.get("domain_agnostic_procedure", "")))
     if method_name == "sgeh" and harness is not None:
         # Calibrate SGEH for 0/100 discrete SLB cases: acquire across initial W0 serving stream, alarm on >=2 misses
         harness.state.probing_steps_remaining = serve_adapt + serve_general
@@ -209,6 +222,7 @@ def evaluate_slb_method(
     per_window: list[dict[str, Any]] = []
     curve_test_scores: list[float] = []
     stitched_test_logs: list[dict[str, Any]] = []
+    stitched_serve_logs: list[dict[str, Any]] = []
     total_acting_calls = 0
     total_ref_calls = 0
     total_usd = 0.0
@@ -231,6 +245,7 @@ def evaluate_slb_method(
                     task_prompt=str(blk[0].instruction) if blk else "",
                     tool_schemas=[],
                 )
+                pre_blk_state = _snapshot_slb_harness(harness)
                 frozen_ctx = harness.build_context(dummy_spec)
                 with ThreadPoolExecutor(max_workers=max(1, min(workers, len(blk)))) as pool:
                     blk_rows = list(
@@ -262,12 +277,28 @@ def evaluate_slb_method(
                     total_usd += float(h_meta.get("reflection_usd", 0.0))
                     if h_meta.get("alarm_fired"):
                         alarms_windows.append(w)
+                    stitched_serve_logs.append(
+                        {
+                            "serving_episode": ep_global,
+                            "window": w,
+                            "task_id": r["task_id"],
+                            "slice": r["slice"],
+                            "family": r["family"],
+                            "pre_episode_harness_state": pre_blk_state,
+                            "pre_episode_harness_context": frozen_ctx,
+                            "public_score": r["public_score"],
+                            "post_episode_harness_meta": h_meta,
+                            "post_episode_harness_state": _snapshot_slb_harness(harness),
+                            "steps": r["steps"],
+                        }
+                    )
                     if on_task_done:
                         on_task_done()
 
         # 2. Held-out test evaluation at end of window `w` (frozen memory; outcomes NEVER fed to `harness`!)
         w_test_all = list(bundle["test_set"](w))
         w_test = stratified_window_tasks(w_test_all, test_adapt, test_general, allowed_families)
+        frozen_test_state = _snapshot_slb_harness(harness)
 
         def _ctx_for_test_task(t_obj: Any) -> str:
             if method_name == "oracle":
@@ -287,17 +318,20 @@ def evaluate_slb_method(
         with ThreadPoolExecutor(max_workers=max(1, min(workers, len(w_test)))) as pool:
             test_rows = list(
                 pool.map(
-                    lambda t: run_single_slb_task(
-                        bundle=bundle,
-                        task=t,
-                        extra_context=_ctx_for_test_task(t),
-                        client=client,
-                        method_tag=f"slb_{method_name}_test",
+                    lambda t: (
+                        _ctx_for_test_task(t),
+                        run_single_slb_task(
+                            bundle=bundle,
+                            task=t,
+                            extra_context=_ctx_for_test_task(t),
+                            client=client,
+                            method_tag=f"slb_{method_name}_test",
+                        ),
                     ),
                     w_test,
                 )
             )
-        for tr in test_rows:
+        for used_ctx, tr in test_rows:
             total_acting_calls += int(tr["calls"])
             total_usd += float(tr["usd"])
             curve_test_scores.append(float(tr["public_score"]))
@@ -305,22 +339,26 @@ def evaluate_slb_method(
                 {
                     "episode": len(stitched_test_logs) + 1,
                     "window": w,
+                    "task_id": tr["task_id"],
+                    "slice": tr["slice"],
+                    "family": tr["family"],
+                    "pre_episode_harness_state": frozen_test_state,
+                    "pre_episode_harness_context": used_ctx,
                     "public_score": tr["public_score"],
                     "normalized_utility": tr["reward"],
                     "stale_policy_match": (w > 0 and tr["slice"] == "adapt" and tr["reward"] == 0.0),
                     "optimal_policy_match": tr["reward"] >= 1.0,
                     "invariant_violation": (tr["slice"] == "general" and tr["reward"] == 0.0),
                     "regime": f"W{w}_{tr['slice']}",
-                    "harness_meta": {},
                     "steps": tr["steps"],
                 }
             )
             if on_task_done:
                 on_task_done()
 
-        adapt_rows = [r for r in test_rows if r["slice"] == "adapt"]
-        gen_rows = [r for r in test_rows if r["slice"] == "general"]
-        w_all = round(sum(r["public_score"] for r in test_rows) / max(1, len(test_rows)), 2)
+        adapt_rows = [r for _, r in test_rows if r["slice"] == "adapt"]
+        gen_rows = [r for _, r in test_rows if r["slice"] == "general"]
+        w_all = round(sum(r["public_score"] for _, r in test_rows) / max(1, len(test_rows)), 2)
         w_adp = round(sum(r["public_score"] for r in adapt_rows) / max(1, len(adapt_rows)), 2)
         w_gen = round(sum(r["public_score"] for r in gen_rows) / max(1, len(gen_rows)), 2)
         per_window.append(
@@ -330,10 +368,11 @@ def evaluate_slb_method(
                 "adapt_pct": w_adp,
                 "general_pct": w_gen,
                 "n_test": len(test_rows),
+                "frozen_harness_state_at_test": frozen_test_state,
             }
         )
         print(
-            f"  [{scenario} | {method_name:10s} | W{w}] Test Overall={w_all:5.1f}% "
+            f"  [{scenario} | {method_name:18s} | W{w}] Test Overall={w_all:5.1f}% "
             f"(Adapt={w_adp:5.1f}%, General={w_gen:5.1f}%) | USD=${total_usd:.4f}",
             flush=True,
         )
@@ -358,6 +397,7 @@ def evaluate_slb_method(
         "usd": round(total_usd, 6),
         "curve_test_scores": curve_test_scores,
         "logs": stitched_test_logs,
+        "serve_logs": stitched_serve_logs,
     }
 
 
@@ -377,8 +417,11 @@ def run_slb_mini_suite(
     test_general: int = 4,
     num_windows: int = 3,
     allowed_families: set[str] | None = None,
+    frozen_procedure_payload: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     ledger = CostLedger(results_root=results_root, run_id=run_id, phase="dev", max_usd=max_usd)
+    if frozen_procedure_payload:
+        atomic_write_json(ledger.run_dir / "frozen_transferred_procedure.json", frozen_procedure_payload)
     total_avail_w = len(get_bundle(scenario, fresh=True)["rules"].WINDOW_STARTS)
     windows = list(range(total_avail_w if num_windows <= 0 else min(total_avail_w, num_windows)))
     est_tasks = sum(
@@ -414,7 +457,7 @@ def run_slb_mini_suite(
 
     results_by_method: dict[str, Any] = {}
     for m_name in methods:
-        print(f"\n[SLB-MINI {scenario}] Evaluating method `{m_name}` across W0 -> W1 -> W2...", flush=True)
+        print(f"\n[SLB-MINI {scenario}] Evaluating method `{m_name}` across {len(windows)} windows...", flush=True)
         res = evaluate_slb_method(
             scenario=scenario,
             method_name=m_name,
@@ -426,14 +469,19 @@ def run_slb_mini_suite(
             client=client,
             workers=workers,
             allowed_families=allowed_families,
+            frozen_procedure_payload=frozen_procedure_payload,
             on_task_done=lambda mn=m_name: _tick(f"{scenario}:{mn}"),
         )
-        results_by_method[m_name] = {k: v for k, v in res.items() if k != "logs"}
+        results_by_method[m_name] = {k: v for k, v in res.items() if k not in ("logs", "serve_logs")}
 
         cell_slug = f"slb_{scenario}__{m_name}__{model.replace('/', '_')}_s1"
         with open(traces_dir / f"{cell_slug}.jsonl", "w", encoding="utf-8") as fh:
             for row in res["logs"]:
                 fh.write(json.dumps(row) + "\n")
+        if res.get("serve_logs"):
+            with open(traces_dir / f"{cell_slug}__serve.jsonl", "w", encoding="utf-8") as fh_s:
+                for row_s in res["serve_logs"]:
+                    fh_s.write(json.dumps(row_s) + "\n")
 
         tot_c = res["acting_calls"] + res["reflection_calls"]
         cell_summary = {
@@ -525,6 +573,7 @@ def main() -> None:
     parser.add_argument("--test-adapt", type=int, default=5, help="Test adapt tasks per window")
     parser.add_argument("--test-general", type=int, default=3, help="Test general tasks per window")
     parser.add_argument("--num-windows", type=int, default=3, help="Number of chronological windows (0 = all scenario windows)")
+    parser.add_argument("--frozen-procedure-file", default="", help="Path to frozen domain-agnostic procedure JSON for `transferred_proc_slb`")
     parser.add_argument("--aggregate-runs", default="", help="Comma-separated SLB run IDs to merge into one report")
     parser.add_argument("--email-on-finish", action="store_true", help="Email milestone report")
     args = parser.parse_args()
@@ -566,6 +615,11 @@ def main() -> None:
 
     meths = [x.strip() for x in args.methods.split(",") if x.strip()]
     fams = {x.strip() for x in args.families.split(",") if x.strip()} or None
+    frozen_proc_obj = (
+        json.loads(Path(args.frozen_procedure_file).read_text(encoding="utf-8"))
+        if args.frozen_procedure_file and Path(args.frozen_procedure_file).is_file()
+        else None
+    )
     try:
         rep = run_slb_mini_suite(
             run_id=args.run_id,
@@ -582,6 +636,7 @@ def main() -> None:
             test_general=args.test_general,
             num_windows=args.num_windows,
             allowed_families=fams,
+            frozen_procedure_payload=frozen_proc_obj,
         )
     except BudgetExceededError as exc:
         print(f"[BUDGET GUARDRAIL HALT] {exc}", flush=True)

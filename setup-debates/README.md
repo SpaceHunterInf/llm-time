@@ -6,6 +6,8 @@ When a discussion leads to a decision, record the choice, the evidence behind it
 
 ## Discussions
 
+- **[2026-11-25 · Post-Meeting Execution: Unscripted Hidden-Ambiguity VOI, `Editable` vs. `Frozen` Self-Authored Procedures (`proc3w_flash_n4`), and `ServeLearnBench L3` Transfer](2026-11-25-hidden-ambiguity-and-editable-procedure.md)** — Live-rollout `W1` hidden-ambiguity VOI (`Flash` `N=6` + `Hydrogen` `N=3`) shows `Editable-Procedure` (`83.6%`/`96.0%` dip, `0%` false abandonment) & `Factual-Ledger` (`+28.3`/`+25.1 pts` over `ScopedCardBook` on reversal) resolve paid diagnostics cleanly; 3-window `Editable` beats `Frozen` by `+10.12 pts` (`4/4` seeds) on `double_reversal_3w` (`A->B->C`), exposes endogenous lesson over-generalization (`-15.19 pts` vs. `Factual-Ledger`) on `dip_then_reversal_3w`, and takes `0.0` non-incumbent probes on Type-II `opp_double_rise_3w` (`Directive-SGEH` `+13.09 pts`, `4/4` seeds).
+
 - [2026-11-22 · Group meeting brief for 23 November](2026-11-22-group-meeting-brief.md) — What changed after the pivot, the comparisons and negative results, who supplied the guidance, and the proposed held-out test.
 
 - [2026-11-22 · What was supplied by the harness and what did the agent infer?](2026-11-19-learning-to-revise-heuristics.md#codex-audit-of-what-the-harness-was-told--2026-11-22) — Audit of oracle access, domain-specific instructions, permitted feedback and the three-case banking margin.

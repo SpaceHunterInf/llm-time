@@ -74,6 +74,15 @@ class ScopedSLBHarness(EpistemicHarness):
             self.scopes[name] = SLBScopeState(scope_name=name)
         return self.scopes[name]
 
+    def snapshot_state(self) -> dict[str, Any]:
+        """Return verbatim active & shelved per-scope rules BEFORE an episode executes."""
+        return {
+            "harness_name": self.name,
+            "active_rules": {k: v.active_rule for k, v in self.scopes.items() if v.active_rule},
+            "shelved_rules": {k: list(v.shelf) for k, v in self.scopes.items() if v.shelf},
+            "alarms_by_scope": {k: v.alarms_fired for k, v in self.scopes.items() if v.alarms_fired},
+        }
+
     def build_context(self, spec: PublicTaskSpec) -> str:
         active_rules = [
             f"- [{sc.scope_name}]: {sc.active_rule}"

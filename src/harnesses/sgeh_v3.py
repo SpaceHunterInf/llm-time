@@ -82,6 +82,7 @@ def inspect_public_signals_v3(record: PublicEpisodeRecord) -> dict[str, Any]:
     scope = "calm_volatility"
     off_scope_anomaly = False
     probed: dict[str, float] = {}
+    probe_desk_stats: dict[str, dict[str, float]] = {}
     turnover_fee = 0.0
     gross_from_obs: float | None = None
 
@@ -99,6 +100,12 @@ def inspect_public_signals_v3(record: PublicEpisodeRecord) -> dict[str, Any]:
             if strat in STRATEGIES_V3:
                 try:
                     probed[strat] = float(obs["live_net_yield_estimate"])
+                    if "desk_best_yield_estimate" in obs or "desk_mean_yield_estimate" in obs:
+                        probe_desk_stats[strat] = {
+                            k: float(obs[k])
+                            for k in ("desk_mean_yield_estimate", "desk_best_yield_estimate")
+                            if k in obs
+                        }
                 except (TypeError, ValueError):
                     pass
         if st.get("tool") == "submit_allocation" and obs.get("status") == "submitted":
@@ -119,6 +126,7 @@ def inspect_public_signals_v3(record: PublicEpisodeRecord) -> dict[str, Any]:
         "scope": scope,
         "off_scope_anomaly": off_scope_anomaly,
         "probed": probed,
+        "probe_desk_stats": probe_desk_stats,
         "weights": weights,
         "turnover_fee": turnover_fee,
         "gross_portfolio_score": gross_est,
@@ -600,6 +608,31 @@ class ScopedSGEHV3(EpistemicHarness):
 
         # Case 1: Acquisition or post-alarm diagnostic probing mode
         if b.probing_steps_remaining > 0:
+            # Paid-probe cross-sectional check: if a paid probe after an alarm observes `desk_best_yield_estimate <= 32`,
+            # no strategy rotated into leadership (broad calm factor dip) -> restore pre-alarm shelved pair with 0 churn!
+            desk_bests = [
+                float(ds["desk_best_yield_estimate"])
+                for ds in sig.get("probe_desk_stats", {}).values()
+                if "desk_best_yield_estimate" in ds
+            ]
+            if desk_bests and max(desk_bests) <= 32.0 and b.shelf:
+                prior = b.shelf[-1]
+                b.active_weights = copy.deepcopy(prior["weights"])
+                b.primary_strategy = str(prior["primary"])
+                b.secondary_strategy = str(prior["secondary"])
+                b.expected_mean = float(prior.get("expected_mean", 84.0))
+                b.quarantined_strategies = []
+                b.probing_steps_remaining = 0
+                b.cusum_stat = 0.0
+                b.ewma_resid = 0.0
+                b.post_shift_n = max(2, int(prior.get("validated_n", 2)))
+                return {
+                    "reflection_calls": 0,
+                    "reflection_usd": 0.0,
+                    "alarm_fired": False,
+                    "paid_probe_confirmed_broad_dip": True,
+                }
+
             # Check if a Shelf-Match probe just succeeded!
             if shelf_cand is not None and shelf_cand["primary"] in sig["probed"]:
                 b.shelf_probes_triggered += 1
@@ -807,11 +840,21 @@ def build_factual_ledger_text_v3(history: list[PublicEpisodeRecord], recent_k: i
                 if float(w_val) >= 0.25:
                     held_gross_hist[sc][s].append(round(float(sig["gross_portfolio_score"]), 1))
 
-        prb_txt = (
-            ", ".join(f"{k}:{v:.1f}" for k, v in sig["probed"].items())
-            if sig["probed"]
-            else "none"
-        )
+        desk_st = sig.get("probe_desk_stats", {})
+        if sig["probed"]:
+            prb_parts = []
+            for k, v in sig["probed"].items():
+                ds = desk_st.get(k, {})
+                if ds:
+                    dm = ds.get("desk_mean_yield_estimate")
+                    db = ds.get("desk_best_yield_estimate")
+                    extra = f"[desk_mean={dm:.1f},desk_max={db:.1f}]" if (dm is not None and db is not None) else ""
+                    prb_parts.append(f"{k}:{v:.1f}{extra}")
+                else:
+                    prb_parts.append(f"{k}:{v:.1f}")
+            prb_txt = ", ".join(prb_parts)
+        else:
+            prb_txt = "none"
         nonzero_w = {k: round(float(v), 2) for k, v in sig["weights"].items() if float(v) >= 0.05}
         sp_txt = f" ({spread_bps} bps)" if spread_bps is not None else ""
         parsed_rows.append(
