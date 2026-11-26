@@ -59,13 +59,39 @@ def _convert_slb_tools(tools_info: list[dict[str, Any]], domain: str) -> list[di
     return out
 
 
+def _even_stride_slice(items: list[Any], k: int) -> list[Any]:
+    if k <= 0 or not items:
+        return []
+    if len(items) <= k:
+        return list(items)
+    n = len(items)
+    indices = sorted({min(n - 1, int(i * n / k)) for i in range(k)})
+    # Fill any rounding collision sequentially so exact `k` items are selected
+    if len(indices) < k:
+        chosen = set(indices)
+        for idx in range(n):
+            if idx not in chosen:
+                indices.append(idx)
+                chosen.add(idx)
+                if len(indices) == k:
+                    break
+        indices.sort()
+    return [items[i] for i in indices[:k]]
+
+
 def stratified_window_tasks(
-    tasks: list[Any], n_adapt: int, n_general: int, allowed_families: set[str] | None = None
+    tasks: list[Any],
+    n_adapt: int,
+    n_general: int,
+    allowed_families: set[str] | None = None,
+    even_stride: bool = False,
 ) -> list[Any]:
     """Select deterministic chronological slice balancing `adapt` (shifted rules) and `general` (unchanged rules)."""
     pool = [t for t in tasks if (not allowed_families or str(t.z.get("family", "")) in allowed_families)]
-    adapt = [t for t in pool if t.z.get("slice") == "adapt"][:n_adapt]
-    general = [t for t in pool if t.z.get("slice") == "general"][:n_general]
+    adapt_all = [t for t in pool if t.z.get("slice") == "adapt"]
+    gen_all = [t for t in pool if t.z.get("slice") == "general"]
+    adapt = _even_stride_slice(adapt_all, n_adapt) if even_stride else adapt_all[:n_adapt]
+    general = _even_stride_slice(gen_all, n_general) if even_stride else gen_all[:n_general]
     picked = adapt + general
     if len(picked) < (n_adapt + n_general):
         seen_ids = {t.task_id for t in picked}
@@ -202,6 +228,8 @@ def evaluate_slb_method(
     workers: int,
     allowed_families: set[str] | None = None,
     frozen_procedure_payload: dict[str, Any] | None = None,
+    max_turns: int = 8,
+    even_stride: bool = False,
     on_task_done: Any = None,
 ) -> dict[str, Any]:
     bundle = get_bundle(scenario, fresh=True)
@@ -233,34 +261,41 @@ def evaluate_slb_method(
         # 1. Serving stream (strictly learner-public feedback ONLY; zero `window` or `z` leakage!)
         if learns and harness is not None:
             w_serv_all = [t for t in all_serving if t.z.get("window") == w]
-            w_serv = stratified_window_tasks(w_serv_all, serve_adapt, serve_general, allowed_families)
+            w_serv = stratified_window_tasks(w_serv_all, serve_adapt, serve_general, allowed_families, even_stride=even_stride)
             block_sz = 3
             for i in range(0, len(w_serv), block_sz):
                 blk = w_serv[i : i + block_sz]
-                dummy_spec = PublicTaskSpec(
-                    env_name=f"slb_{scenario.split('_')[0]}",
-                    episode_idx=ep_global,
-                    timestamp=ep_global + 1,
-                    domain_prompt="",
-                    task_prompt=str(blk[0].instruction) if blk else "",
-                    tool_schemas=[],
-                )
                 pre_blk_state = _snapshot_slb_harness(harness)
-                frozen_ctx = harness.build_context(dummy_spec)
+
+                def _serve_ctx_for(t_obj: Any) -> str:
+                    sp = PublicTaskSpec(
+                        env_name=f"slb_{scenario.split('_')[0]}",
+                        episode_idx=ep_global,
+                        timestamp=ep_global + 1,
+                        domain_prompt="",
+                        task_prompt=str(t_obj.instruction),
+                        tool_schemas=[],
+                    )
+                    return harness.build_context(sp)
+
                 with ThreadPoolExecutor(max_workers=max(1, min(workers, len(blk)))) as pool:
                     blk_rows = list(
                         pool.map(
-                            lambda t: run_single_slb_task(
-                                bundle=bundle,
-                                task=t,
-                                extra_context=frozen_ctx,
-                                client=client,
-                                method_tag=f"slb_{method_name}_serve",
+                            lambda t: (
+                                _serve_ctx_for(t),
+                                run_single_slb_task(
+                                    bundle=bundle,
+                                    task=t,
+                                    extra_context=_serve_ctx_for(t),
+                                    client=client,
+                                    method_tag=f"slb_{method_name}_serve",
+                                    max_turns=max_turns,
+                                ),
                             ),
                             blk,
                         )
                     )
-                for r in blk_rows:
+                for used_s_ctx, r in blk_rows:
                     ep_global += 1
                     total_acting_calls += int(r["calls"])
                     total_usd += float(r["usd"])
@@ -285,7 +320,7 @@ def evaluate_slb_method(
                             "slice": r["slice"],
                             "family": r["family"],
                             "pre_episode_harness_state": pre_blk_state,
-                            "pre_episode_harness_context": frozen_ctx,
+                            "pre_episode_harness_context": used_s_ctx,
                             "public_score": r["public_score"],
                             "post_episode_harness_meta": h_meta,
                             "post_episode_harness_state": _snapshot_slb_harness(harness),
@@ -297,7 +332,7 @@ def evaluate_slb_method(
 
         # 2. Held-out test evaluation at end of window `w` (frozen memory; outcomes NEVER fed to `harness`!)
         w_test_all = list(bundle["test_set"](w))
-        w_test = stratified_window_tasks(w_test_all, test_adapt, test_general, allowed_families)
+        w_test = stratified_window_tasks(w_test_all, test_adapt, test_general, allowed_families, even_stride=even_stride)
         frozen_test_state = _snapshot_slb_harness(harness)
 
         def _ctx_for_test_task(t_obj: Any) -> str:
@@ -326,6 +361,7 @@ def evaluate_slb_method(
                             extra_context=_ctx_for_test_task(t),
                             client=client,
                             method_tag=f"slb_{method_name}_test",
+                            max_turns=max_turns,
                         ),
                     ),
                     w_test,
@@ -418,6 +454,8 @@ def run_slb_mini_suite(
     num_windows: int = 3,
     allowed_families: set[str] | None = None,
     frozen_procedure_payload: dict[str, Any] | None = None,
+    max_turns: int = 8,
+    even_stride: bool = False,
 ) -> dict[str, Any]:
     ledger = CostLedger(results_root=results_root, run_id=run_id, phase="dev", max_usd=max_usd)
     if frozen_procedure_payload:
@@ -470,6 +508,8 @@ def run_slb_mini_suite(
             workers=workers,
             allowed_families=allowed_families,
             frozen_procedure_payload=frozen_procedure_payload,
+            max_turns=max_turns,
+            even_stride=even_stride,
             on_task_done=lambda mn=m_name: _tick(f"{scenario}:{mn}"),
         )
         results_by_method[m_name] = {k: v for k, v in res.items() if k not in ("logs", "serve_logs")}
@@ -573,6 +613,8 @@ def main() -> None:
     parser.add_argument("--test-adapt", type=int, default=5, help="Test adapt tasks per window")
     parser.add_argument("--test-general", type=int, default=3, help="Test general tasks per window")
     parser.add_argument("--num-windows", type=int, default=3, help="Number of chronological windows (0 = all scenario windows)")
+    parser.add_argument("--max-turns", type=int, default=8, help="Max tool turns per SLB episode (e.g. 14 for retail_l3)")
+    parser.add_argument("--even-stride", action="store_true", help="Subsample window tasks with even chronological stride")
     parser.add_argument("--frozen-procedure-file", default="", help="Path to frozen domain-agnostic procedure JSON for `transferred_proc_slb`")
     parser.add_argument("--aggregate-runs", default="", help="Comma-separated SLB run IDs to merge into one report")
     parser.add_argument("--email-on-finish", action="store_true", help="Email milestone report")
@@ -637,6 +679,8 @@ def main() -> None:
             num_windows=args.num_windows,
             allowed_families=fams,
             frozen_procedure_payload=frozen_proc_obj,
+            max_turns=args.max_turns,
+            even_stride=args.even_stride,
         )
     except BudgetExceededError as exc:
         print(f"[BUDGET GUARDRAIL HALT] {exc}", flush=True)

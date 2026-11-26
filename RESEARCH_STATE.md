@@ -1,6 +1,6 @@
 # Research State & 1-Month Submission Plan
 
-**Last Updated:** 2026-11-25  
+**Last Updated:** 2026-11-26  
 **Target Venues:** **ACL (January 2027)** / **ICML 2027** (internal draft milestone: mid-Dec 2026; Act 3 open-weight backbone deferred to pick best available e.g. upcoming `Qwen4-27B` / `Qwen3` / `Gemma-3`)  
 **Available Gemini Models Verified on `.env` Key:**
 - *Lightweight Dev:* `gemini-3.5-flash-lite`, `gemini-3.5-flash`, `gemini-3.8-flash`, `gemini-4-hydrogen`
@@ -39,7 +39,17 @@ Self-evolving harnesses (`SkillOpt`, `Continual Harness`, `ACE`, `GEPA`, `SRN`) 
 
 ---
 
-## 3. Live Empirical Record (Cumulative Spend: `$112.49` / `$70,000+` Pool; `99.839%` Remaining)
+## 3. Live Empirical Record (Cumulative Spend: `$162.83` / `$70,000+` Pool; `99.767%` Remaining)
+
+### 3.000 Mechanistic Resolution (`2026-11-26`): `Decomposed-Procedure` & `Verify-Before-Quarantine SGEH-VBQ` Across `Flash` & `Hydrogen` + Even-Stride `ServeLearnBench L3`
+Full write-up: [2026-11-26-decomposed-procedure-and-vbq-resolution.md](file:///home/xz479/llm-time/setup-debates/2026-11-26-decomposed-procedure-and-vbq-resolution.md).
+1. **Action-Agnostic Schema Separation (`Decomposed-Editable-Proc`) Eliminates Lesson Over-Generalization Across Both Models** ([proc3w_complete_n4/summary.md](file:///home/xz479/llm-time/results/runs/proc3w_complete_n4/summary.md), [proc3w_hydrogen_n3/summary.md](file:///home/xz479/llm-time/results/runs/proc3w_hydrogen_n3/summary.md)):
+   - Prohibiting concrete strategy IDs (`STRAT_S1..S6`) inside `self_procedure` (separating procedural meta-rules from factual ledger evidence) rescued `dip_then_reversal_3w` on `gemini-3.8-flash` from **`68.4%` (`W3=50.7%`) $\to$ `83.3%` (`W3=77.5%`, `+14.93 pts [+0.80, +29.05]`; DiD `+14.74 pts [+1.49, +27.99]`)**, matching `Factual-Ledger` (`83.6%`), AND replicated on `gemini-4-hydrogen` across **`3/3` seeds (`+3.56 pts [+1.49, +7.48]`, `0.0% -> 16.7%` CalmOpt)**.
+   - Removing `W1` strategy IDs from `Frozen-Decomposed-Proc` simultaneously shrank `Editable − Frozen` on `double_reversal_3w` from **`+10.12 pts` down to `+1.27 pts`**, proving causally that `Frozen-Procedure`'s (`arXiv:2611.23219`) failure under drift comes from object-level action bindings leaking into frozen procedural text.
+2. **`Verify-Before-Quarantine` (`Directive-SGEH-VBQ`) Solves All 4 Regimes Simultaneously** ([voi_hidden_ambiguity_complete_n6/summary.md](file:///home/xz479/llm-time/results/runs/voi_hidden_ambiguity_complete_n6/summary.md), [proc3w_complete_n4/summary.md](file:///home/xz479/llm-time/results/runs/proc3w_complete_n4/summary.md)):
+   - Verifying the calm incumbent on the first post-alarm `-10 pt` probe before quarantining jumped `hidden_transient_dip` from **`59.0%` (`100%` false abandonment) $\to$ `87.7%` (`88.4%` CalmOpt, `+28.64 pts [+12.26, +42.96]`; DiD `+29.59 pts`)**, ranking **#1 overall across all 5 three-window `Flash` streams (`85.6%` mean: `94.4%` stationary, `83.1%` dip->rev [`82.0%` CalmOpt], `73.7%` #1 double-rev [`+9.32 pts` over `Decomposed-Proc`, `4/4` seeds], `92.9%` opp-stat, `83.9%` Type-II opp-rise [`+11.75 pts` over `Decomposed-Proc`, which still took `0.0` non-incumbent probes])** and **#1 on `Hydrogen` `double_reversal_3w` (`68.8%`, `50.0%` CalmOpt, `+7.27 pts [+2.66, +13.25]` across `3/3` seeds)**.
+3. **Even-Stride `ServeLearnBench L3` Scope Fix & Tier-2 Gate** ([slb_banking_l3_evenstride_6win/summary.md](file:///home/xz479/llm-time/results/runs/slb_banking_l3_evenstride_6win/summary.md)):
+   - Fixing public `TXN-/LIM-/TRF-` workflow prefix routing lifted `Transferred-Procedure` `General` compliance to **`93.3%`** (`45.0%` overall vs. `42.5%` `Blind`, `16` vs. `33` ref calls) and lifted `ScopedSGEH+Shelf` `Adapt` to **`32.0%` (`2×` `Blind`'s `16.0%`)** at `17` ref calls, while showing that `<12` binary `0/1` cases/window across `15–28` families hits a statistical identifiability ceiling requiring **Tier-2 (`50–100` cases/window)** evaluation.
 
 ### 3.00 Post-Meeting Priorities 1–3: Unscripted Hidden-Ambiguity VOI, `Editable` vs. `Frozen` Self-Authored Procedures, & Zero-Shot Transfer (`2026-11-25`, `$25.06` across 4 Aggregated Studies)
 Full write-up & mechanistic trace analysis: [2026-11-25-hidden-ambiguity-and-editable-procedure.md](file:///home/xz479/llm-time/setup-debates/2026-11-25-hidden-ambiguity-and-editable-procedure.md).

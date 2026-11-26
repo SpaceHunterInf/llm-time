@@ -216,7 +216,12 @@ def collect_dashboard_telemetry(workspace_root: Path) -> dict[str, Any]:
         for d in runs_dir.iterdir():
             if d.is_dir() and (d.name.startswith("autonomy_s") or d.name.startswith("autonomy_gemma")):
                 superseded_shards.add(d.name)
-    if (runs_dir / "voi_hidden_ambiguity_flash_n6").is_dir() and runs_dir.is_dir():
+    if (runs_dir / "voi_hidden_ambiguity_complete_n6").is_dir() and runs_dir.is_dir():
+        superseded_shards.add("voi_hidden_ambiguity_flash_n6")
+        for d in runs_dir.iterdir():
+            if d.is_dir() and (d.name.startswith("voi_ha_flash_") or d.name.startswith("voi_vbq_dec_")):
+                superseded_shards.add(d.name)
+    elif (runs_dir / "voi_hidden_ambiguity_flash_n6").is_dir() and runs_dir.is_dir():
         for d in runs_dir.iterdir():
             if d.is_dir() and d.name.startswith("voi_ha_flash_"):
                 superseded_shards.add(d.name)
@@ -224,13 +229,31 @@ def collect_dashboard_telemetry(workspace_root: Path) -> dict[str, Any]:
         for d in runs_dir.iterdir():
             if d.is_dir() and d.name.startswith("voi_ha_hydro_"):
                 superseded_shards.add(d.name)
-    if (runs_dir / "proc3w_flash_n4").is_dir() and runs_dir.is_dir():
+    if (runs_dir / "proc3w_complete_n4").is_dir() and runs_dir.is_dir():
+        superseded_shards.add("proc3w_flash_n4")
+        for d in runs_dir.iterdir():
+            if d.is_dir() and (
+                d.name.startswith("proc3w_high_")
+                or d.name.startswith("proc3w_opp_")
+                or d.name.startswith("proc3w_dv_")
+                or d.name == "proc3w_w1_ckpt"
+            ):
+                superseded_shards.add(d.name)
+    elif (runs_dir / "proc3w_flash_n4").is_dir() and runs_dir.is_dir():
         for d in runs_dir.iterdir():
             if d.is_dir() and (d.name.startswith("proc3w_high_") or d.name.startswith("proc3w_opp_") or d.name == "proc3w_w1_ckpt"):
+                superseded_shards.add(d.name)
+    if (runs_dir / "proc3w_hydrogen_n3").is_dir() and runs_dir.is_dir():
+        for d in runs_dir.iterdir():
+            if d.is_dir() and d.name.startswith("proc3w_hy_"):
                 superseded_shards.add(d.name)
     if (runs_dir / "slb_banking_l3_transfer_6win").is_dir() and runs_dir.is_dir():
         for d in runs_dir.iterdir():
             if d.is_dir() and d.name.startswith("slb_xtransfer_"):
+                superseded_shards.add(d.name)
+    if (runs_dir / "slb_banking_l3_evenstride_6win").is_dir() and runs_dir.is_dir():
+        for d in runs_dir.iterdir():
+            if d.is_dir() and (d.name.startswith("slb_es_") or d.name.startswith("slb_es9_")):
                 superseded_shards.add(d.name)
 
     if runs_dir.is_dir():

@@ -40,11 +40,21 @@ from src.harnesses.sgeh_slb import infer_public_slb_scope
 from src.harnesses.sgeh_v3 import FactualLedgerV3Harness
 
 _CTRL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+_ACTION_BINDING_RE = re.compile(r"\bSTRAT_S[1-6]\b|\bS[1-6]\b", re.IGNORECASE)
+_SESSION_BINDING_RE = re.compile(r"\b[Ss]essions?\s*#?\s*\d+(?:\s*[-–]\s*#?\s*\d+)?\b")
 
 
-def sanitize_procedure_text(raw: Any, max_words: int = 140, max_chars: int = 960) -> str:
+def sanitize_procedure_text(
+    raw: Any,
+    max_words: int = 140,
+    max_chars: int = 960,
+    strip_action_bindings: bool = False,
+) -> str:
     """Strip ASCII control chars and enforce bounded word/character budgets on self-authored procedures."""
     txt = _CTRL_RE.sub(" ", str(raw or "")).strip()
+    if strip_action_bindings:
+        txt = _ACTION_BINDING_RE.sub("an observed strategy", txt)
+        txt = _SESSION_BINDING_RE.sub("recent sessions", txt)
     words = txt.split()
     if len(words) > max_words:
         txt = " ".join(words[:max_words])
@@ -52,12 +62,13 @@ def sanitize_procedure_text(raw: Any, max_words: int = 140, max_chars: int = 960
 
 
 class SelfAuthoredProcedureHarness(EpistemicHarness):
-    """Factual-Ledger + Self-Authored `self_procedure` (`editable` vs matched-budget `frozen` control)."""
+    """Factual-Ledger + Self-Authored `self_procedure` (`editable` vs `frozen`, free-form vs `action_agnostic_schema`)."""
 
     def __init__(
         self,
         *,
         mode: str = "editable",
+        action_agnostic_schema: bool = False,
         review_cadence: int = 4,
         recent_k: int = 8,
         max_words: int = 140,
@@ -66,11 +77,19 @@ class SelfAuthoredProcedureHarness(EpistemicHarness):
         if mode not in ("editable", "frozen"):
             raise ValueError(f"Unsupported procedure mode '{mode}'. Expected 'editable' or 'frozen'.")
         self.mode = mode
-        self.name = "editable_proc_v3" if mode == "editable" else "frozen_proc_v3"
+        self.action_agnostic_schema = bool(action_agnostic_schema)
+        if self.action_agnostic_schema:
+            self.name = "decomposed_proc_v3" if mode == "editable" else "frozen_decomposed_proc_v3"
+        else:
+            self.name = "editable_proc_v3" if mode == "editable" else "frozen_proc_v3"
         self.review_cadence = max(1, int(review_cadence))
         self.max_words = max(40, int(max_words))
         self.factual = FactualLedgerV3Harness(recent_k=recent_k)
-        self.self_procedure: str = sanitize_procedure_text(initial_procedure, max_words=self.max_words)
+        self.self_procedure: str = sanitize_procedure_text(
+            initial_procedure,
+            max_words=self.max_words,
+            strip_action_bindings=self.action_agnostic_schema,
+        )
         self.procedure_version: int = 1 if self.self_procedure else 0
         self.procedure_history: list[dict[str, Any]] = []
 
@@ -78,13 +97,17 @@ class SelfAuthoredProcedureHarness(EpistemicHarness):
         if mode not in ("editable", "frozen"):
             raise ValueError(f"Unsupported procedure mode '{mode}'.")
         self.mode = mode
-        self.name = "editable_proc_v3" if mode == "editable" else "frozen_proc_v3"
+        if self.action_agnostic_schema:
+            self.name = "decomposed_proc_v3" if mode == "editable" else "frozen_decomposed_proc_v3"
+        else:
+            self.name = "editable_proc_v3" if mode == "editable" else "frozen_proc_v3"
 
     def snapshot_state(self) -> dict[str, Any]:
         """Return verbatim active procedure state BEFORE an episode executes."""
         return {
             "harness_name": self.name,
             "mode": self.mode,
+            "action_agnostic_schema": self.action_agnostic_schema,
             "procedure_version": self.procedure_version,
             "active_self_procedure": self.self_procedure,
             "n_reviews_logged": len(self.procedure_history),
@@ -114,6 +137,15 @@ class SelfAuthoredProcedureHarness(EpistemicHarness):
                 tool_schemas=[],
             )
         )
+        schema_rule = (
+            "\nSCHEMA SEPARATION RULE: Keep `self_procedure` strictly action-agnostic — do NOT write concrete "
+            "strategy IDs (`STRAT_S1..STRAT_S6` or `S1..S6`) or specific session numbers into `self_procedure`. "
+            "All strategy-specific facts already live in the `Factual Observation Ledger`; `self_procedure` must "
+            "express only general decision principles for how to read the ledger and manage holding, rebalancing, "
+            "and paid probing.\n"
+            if self.action_agnostic_schema
+            else ""
+        )
         sys_p = (
             "You are reviewing your own decision-making on AlphaDesk-v3.\n"
             "Public environment mechanics:\n"
@@ -121,8 +153,9 @@ class SelfAuthoredProcedureHarness(EpistemicHarness):
             f"- Compliance: non-negative weights across {', '.join(STRATEGIES_V3)} summing to 1.0, each <= {MAX_WEIGHT_V3}.\n"
             f"- Costs: rebalancing pays {TURNOVER_FULL_FLIP_PTS_V3:.1f} * 0.5 * L1_turnover pts; "
             f"`probe_strategy_execution` is optional (max 1/session, -{PROBE_FEE_V3:.1f} pts) and reports the probed "
-            "strategy's live yield plus anonymized desk-wide mean and max strategy yields.\n\n"
-            f"Write or revise `self_procedure` (<= {self.max_words} words) as an operating note to your future self "
+            "strategy's live yield plus anonymized desk-wide mean and max strategy yields.\n"
+            + schema_rule
+            + f"\nWrite or revise `self_procedure` (<= {self.max_words} words) as an operating note to your future self "
             "for upcoming sessions (covering when to hold, rebalance, or pay -10 pts to probe, and when to keep your points).\n"
             'Respond ONLY with JSON: {"self_procedure": "...", "edit_rationale": "..."}.'
         )
@@ -139,14 +172,18 @@ class SelfAuthoredProcedureHarness(EpistemicHarness):
             method=f"{self.name}_review",
             mock_responder=lambda _s, _u: {
                 "self_procedure": (
-                    f"Mock procedure after session {episode_idx + 1}: check brief, hold verified winners when calm, "
+                    f"Mock procedure (step {episode_idx + 1}): check brief, hold verified winners when calm, "
                     "and probe selectively when outcomes change."
                 ),
                 "edit_rationale": "Mock periodic procedure review.",
             },
         )
         parsed = resp.parsed_json or {}
-        proposed = sanitize_procedure_text(parsed.get("self_procedure", ""), max_words=self.max_words)
+        proposed = sanitize_procedure_text(
+            parsed.get("self_procedure", ""),
+            max_words=self.max_words,
+            strip_action_bindings=self.action_agnostic_schema,
+        )
         rationale = sanitize_procedure_text(parsed.get("edit_rationale", ""), max_words=60, max_chars=360)
 
         applied = False

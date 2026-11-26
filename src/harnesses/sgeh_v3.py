@@ -272,6 +272,8 @@ class ScopeBucketV3:
     shelf: list[dict[str, Any]] = field(default_factory=list)
     checked_shelf_ids: list[int] = field(default_factory=list)
     pending_runnerup_verify: dict[str, Any] | None = None
+    pending_incumbent_verify: str | None = None
+    suspect_strategies: list[str] = field(default_factory=list)
     alarms_fired: int = 0
     hazard_probes_triggered: int = 0
     shelf_probes_triggered: int = 0
@@ -281,13 +283,14 @@ class ScopeBucketV3:
 
 
 class ScopedSGEHV3(EpistemicHarness):
-    """`SGEH-v0.3 (Ours)` with clean flags for `enable_hazard` and `enable_shelf` on 6-strategy `AlphaDesk-v0.3`."""
+    """`SGEH-v0.3 (Ours)` with clean flags for `enable_hazard`, `enable_shelf`, and `verify_before_quarantine`."""
 
     def __init__(
         self,
         *,
         enable_hazard: bool = True,
         enable_shelf: bool = True,
+        verify_before_quarantine: bool = False,
         drift_slack: float = 8.5,
         alarm_threshold: float = 18.0,
         ewma_alpha: float = 0.42,
@@ -297,7 +300,10 @@ class ScopedSGEHV3(EpistemicHarness):
     ) -> None:
         self.enable_hazard = bool(enable_hazard)
         self.enable_shelf = bool(enable_shelf)
-        if self.enable_hazard and self.enable_shelf:
+        self.verify_before_quarantine = bool(verify_before_quarantine)
+        if self.verify_before_quarantine:
+            self.name = "sgeh_vbq_v3"
+        elif self.enable_hazard and self.enable_shelf:
             self.name = "sgeh_hazard_shelf"
         elif self.enable_hazard and not self.enable_shelf:
             self.name = "sgeh_hazard_noshelf"
@@ -333,6 +339,9 @@ class ScopedSGEHV3(EpistemicHarness):
         return None
 
     def _next_diagnostic_probe(self, b: ScopeBucketV3) -> str:
+        if b.pending_incumbent_verify and b.pending_incumbent_verify in STRATEGIES_V3:
+            return b.pending_incumbent_verify
+
         shelf_cand = self._candidate_shelf_entry(b)
         if shelf_cand is not None:
             return str(shelf_cand["primary"])
@@ -394,7 +403,16 @@ class ScopedSGEHV3(EpistemicHarness):
                 shelf_cand = self._candidate_shelf_entry(b)
                 quar_txt = f" | Quarantined: {b.quarantined_strategies}" if b.quarantined_strategies else ""
                 est_txt = f" | Probed yields: {json.dumps(b.probe_estimates)}" if b.probe_estimates else ""
-                if shelf_cand is not None and nxt == shelf_cand["primary"]:
+                if b.pending_incumbent_verify and nxt == b.pending_incumbent_verify and b.shelf:
+                    prior_w = json.dumps(b.shelf[-1]["weights"])
+                    lines.append(
+                        f"- IF `volatility_regime_hint == '{sc_name}'` and `liquidity_status == 'orderly_normal'` -> "
+                        f"[VERIFY-BEFORE-QUARANTINE CHECK]: Call `probe_strategy_execution` on incumbent `{nxt}` once today "
+                        f"to separate a desk-wide dip from a permanent reversal. If `{nxt}` live yield >= 65.0 OR "
+                        f"`desk_best_yield_estimate <= 32.0`, hold `current_holdings` ({prior_w}, 0 turnover!); "
+                        f"otherwise `{nxt}` is falsified — reallocate 0.55 / 0.45 to untested strategies outside {b.suspect_strategies}."
+                    )
+                elif shelf_cand is not None and nxt == shelf_cand["primary"]:
                     s2 = shelf_cand["secondary"]
                     mu1 = shelf_cand["strategy_means"].get(nxt, 90.0)
                     w_restore = json.dumps(shelf_cand["weights"])
@@ -608,13 +626,44 @@ class ScopedSGEHV3(EpistemicHarness):
 
         # Case 1: Acquisition or post-alarm diagnostic probing mode
         if b.probing_steps_remaining > 0:
-            # Paid-probe cross-sectional check: if a paid probe after an alarm observes `desk_best_yield_estimate <= 32`,
-            # no strategy rotated into leadership (broad calm factor dip) -> restore pre-alarm shelved pair with 0 churn!
             desk_bests = [
                 float(ds["desk_best_yield_estimate"])
                 for ds in sig.get("probe_desk_stats", {}).values()
                 if "desk_best_yield_estimate" in ds
             ]
+            # Verify-Before-Quarantine resolution on the first post-alarm probe:
+            if b.pending_incumbent_verify and sig["probed"] and b.shelf:
+                p_inc = b.pending_incumbent_verify
+                b.pending_incumbent_verify = None
+                y_inc = sig["probed"].get(p_inc)
+                is_broad_dip = bool(desk_bests and max(desk_bests) <= 32.0)
+                inc_rebounded = bool(y_inc is not None and float(y_inc) >= 65.0)
+                if is_broad_dip or inc_rebounded:
+                    prior = b.shelf[-1]
+                    b.active_weights = copy.deepcopy(prior["weights"])
+                    b.primary_strategy = str(prior["primary"])
+                    b.secondary_strategy = str(prior["secondary"])
+                    b.expected_mean = float(prior.get("expected_mean", 84.0))
+                    b.quarantined_strategies = []
+                    b.suspect_strategies = []
+                    b.probing_steps_remaining = 0
+                    b.cusum_stat = 0.0
+                    b.ewma_resid = 0.0
+                    b.post_shift_n = max(2, int(prior.get("validated_n", 2)))
+                    return {
+                        "reflection_calls": 0,
+                        "reflection_usd": 0.0,
+                        "alarm_fired": False,
+                        "vbq_incumbent_retained": True,
+                    }
+                # Otherwise incumbent collapse is verified by direct paid check -> quarantine suspect incumbents now!
+                b.quarantined_strategies = list(b.suspect_strategies)
+                for f_s in b.quarantined_strategies:
+                    b.last_tested_ep[f_s] = cur_sc_ep
+                    if f_s not in b.probe_estimates:
+                        b.probe_estimates[f_s] = round(float(y_inc if y_inc is not None else 20.0), 1)
+                b.suspect_strategies = []
+
             if desk_bests and max(desk_bests) <= 32.0 and b.shelf:
                 prior = b.shelf[-1]
                 b.active_weights = copy.deepcopy(prior["weights"])
@@ -622,6 +671,7 @@ class ScopedSGEHV3(EpistemicHarness):
                 b.secondary_strategy = str(prior["secondary"])
                 b.expected_mean = float(prior.get("expected_mean", 84.0))
                 b.quarantined_strategies = []
+                b.suspect_strategies = []
                 b.probing_steps_remaining = 0
                 b.cusum_stat = 0.0
                 b.ewma_resid = 0.0
@@ -727,6 +777,13 @@ class ScopedSGEHV3(EpistemicHarness):
         if sig["probed"]:
             b.hazard_probes_triggered += 1
             b.last_any_hazard_ep = cur_sc_ep
+            desk_bests_h = [
+                float(ds["desk_best_yield_estimate"])
+                for ds in sig.get("probe_desk_stats", {}).values()
+                if "desk_best_yield_estimate" in ds
+            ]
+            if self.verify_before_quarantine and desk_bests_h and max(desk_bests_h) <= 32.0:
+                return {"reflection_calls": 0, "reflection_usd": 0.0, "alarm_fired": False, "hazard_saw_broad_dip": True}
             best_s, best_v = max(sig["probed"].items(), key=lambda kv: kv[1])
             cand_w = self._best_weights_from_estimates(b)
             port_gain = 0.0
@@ -736,7 +793,6 @@ class ScopedSGEHV3(EpistemicHarness):
                 port_gain = cand_exp - cur_exp
             if (best_v > b.expected_mean + 8.0 and b.active_weights.get(best_s, 0.0) < 0.25) or port_gain > 7.5:
                 self._archive_current_to_shelf(b)
-                # Enter a 1-step follow-up probe to check if a second co-winner also rose alongside `best_s`!
                 if b.primary_strategy and b.primary_strategy not in b.probe_estimates:
                     b.probe_estimates[b.primary_strategy] = b.expected_mean
                 ref_c, ref_u = self._consolidate_bucket(b, record.env_name, client)
@@ -746,7 +802,10 @@ class ScopedSGEHV3(EpistemicHarness):
                     "alarm_fired": True,
                     "hazard_upgrade": best_s,
                 }
-            return {"reflection_calls": 0, "reflection_usd": 0.0, "alarm_fired": False, "hazard_checked": True}
+            # If verify_before_quarantine is enabled and incumbent portfolio simultaneously crashed (e.g. reversal on a hazard step),
+            # fall through to Case 3 instead of masking the crash!
+            if not (self.verify_before_quarantine and gross_y < b.expected_mean - 24.0):
+                return {"reflection_calls": 0, "reflection_usd": 0.0, "alarm_fired": False, "hazard_checked": True}
 
         # Case 3: Exploitation — evaluate scope-conditioned Level-CUSUM + EWMA-Slope residual
         if b.primary_strategy and sig["weights"].get(b.primary_strategy, 0.0) < 0.30:
@@ -759,13 +818,21 @@ class ScopedSGEHV3(EpistemicHarness):
 
         slope_alarm = (b.post_shift_n >= 2) and (b.ewma_resid >= self.ewma_threshold)
         if b.cusum_stat >= self.alarm_threshold or slope_alarm:
+            prev_primary = b.primary_strategy
             self._archive_current_to_shelf(b)
             falsified = [s for s, w in b.active_weights.items() if w >= 0.30]
-            b.quarantined_strategies = list(falsified)
-            # Reset `last_tested_ep` on falsified arms (`staleness = 0`) without a window-blocking 16-step cooldown!
-            for f_s in falsified:
-                b.last_tested_ep[f_s] = cur_sc_ep
-            b.probe_estimates = {s: round(gross_y, 1) for s in falsified}
+            if self.verify_before_quarantine and prev_primary:
+                b.quarantined_strategies = []
+                b.suspect_strategies = list(falsified)
+                b.pending_incumbent_verify = str(prev_primary)
+                b.probe_estimates = {}
+            else:
+                b.quarantined_strategies = list(falsified)
+                b.suspect_strategies = []
+                b.pending_incumbent_verify = None
+                for f_s in falsified:
+                    b.last_tested_ep[f_s] = cur_sc_ep
+                b.probe_estimates = {s: round(gross_y, 1) for s in falsified}
             b.active_weights = {}
             b.primary_strategy = None
             b.secondary_strategy = None
@@ -915,13 +982,24 @@ class FactualLedgerV3Harness(EpistemicHarness):
 
 
 class DirectiveSGEHV3Harness(EpistemicHarness):
-    """Strict-Superset Controller Arm (`sgeh_directive_v3`): Identical `FactualLedgerV3` + `SGEH` action prescriptions."""
+    """Strict-Superset Controller Arm (`sgeh_directive_v3` / `sgeh_vbq_v3`): `FactualLedgerV3` + `SGEH` prescriptions."""
 
     name = "sgeh_directive_v3"
 
-    def __init__(self, recent_k: int = 8, enable_hazard: bool = True) -> None:
+    def __init__(
+        self,
+        recent_k: int = 8,
+        enable_hazard: bool = True,
+        verify_before_quarantine: bool = False,
+    ) -> None:
         self.factual = FactualLedgerV3Harness(recent_k=recent_k)
-        self.controller = ScopedSGEHV3(enable_hazard=enable_hazard, enable_shelf=False)
+        self.controller = ScopedSGEHV3(
+            enable_hazard=enable_hazard,
+            enable_shelf=False,
+            verify_before_quarantine=verify_before_quarantine,
+        )
+        if verify_before_quarantine:
+            self.name = "sgeh_vbq_v3"
 
     def build_context(self, spec: PublicTaskSpec) -> str:
         fact_block = self.factual.build_context(spec)

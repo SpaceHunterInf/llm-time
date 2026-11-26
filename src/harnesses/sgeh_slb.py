@@ -23,23 +23,57 @@ from src.harnesses.baselines import summarize_public_record
 
 
 def infer_public_slb_scope(task_prompt: str, steps: list[dict[str, Any]] | None = None) -> str:
-    """Infer coarse workflow scope strictly from public task prompt & public tool names."""
+    """Infer coarse workflow scope strictly from public task prompt & public tool calls/observations."""
     txt = str(task_prompt or "").lower()
     if steps:
-        txt += " " + " ".join(str(s.get("tool", "")).lower() for s in steps)
+        txt += " " + " ".join(
+            f"{str(s.get('tool', '')).lower()} {str(s.get('obs', ''))[:160].lower()}"
+            for s in steps
+        )
 
-    # Banking workflows
-    if "decide_batch" in txt or "payment batch" in txt or "batch of" in txt:
+    # Banking workflows (public case ID prefixes TXN-/LIM-/TRF- and public `get_case_details` `kind`)
+    if (
+        "decide_batch" in txt
+        or "payment_batch" in txt
+        or "payment batch" in txt
+        or "lines totalling" in txt
+        or "batch of" in txt
+    ):
         return "banking_batch"
-    if "credit limit" in txt or "limit increase" in txt or "credit-limit" in txt:
+    if (
+        "lim-" in txt
+        or "limit_increase" in txt
+        or "credit limit" in txt
+        or "limit increase" in txt
+        or "credit request" in txt
+        or "credit desk" in txt
+    ):
         return "banking_limit"
-    if "outbound transfer" in txt or "wire" in txt or "payee" in txt or "transfer request" in txt:
+    if (
+        "trf-" in txt
+        or "outbound_transfer" in txt
+        or "outbound transfer" in txt
+        or "wire" in txt
+        or "payee" in txt
+        or "transfer desk" in txt
+        or "transfer request" in txt
+    ):
         return "banking_transfer"
-    if "card transaction" in txt or "merchant" in txt or "pending card" in txt or "authorization" in txt:
+    if (
+        "txn-" in txt
+        or "card_transaction" in txt
+        or "card transaction" in txt
+        or "card item" in txt
+        or "card event" in txt
+        or "card review" in txt
+        or "merchant" in txt
+        or "pending card" in txt
+        or "authorization" in txt
+    ):
         return "banking_card_txn"
 
     # Retail workflows
-    if "exchange" in txt or "return" in txt or "refund" in txt:
+    if "exchange" in txt or "swap" in txt or "return" in txt or "refund" in txt:
         return "retail_return_exchange"
     if "cancel" in txt or "modify" in txt or "shipping address" in txt or "payment method" in txt:
         return "retail_cancel_modify"
@@ -84,23 +118,24 @@ class ScopedSLBHarness(EpistemicHarness):
         }
 
     def build_context(self, spec: PublicTaskSpec) -> str:
-        active_rules = [
-            f"- [{sc.scope_name}]: {sc.active_rule}"
-            for sc in self.scopes.values()
-            if sc.active_rule.strip()
-        ]
-        if not active_rules:
-            return ""
-        # If `spec.task_prompt` is non-empty, prioritize matching scope first while showing concise cross-scope overrides
         req_scope = infer_public_slb_scope(spec.task_prompt) if spec.task_prompt else ""
-        ordered_rules = sorted(
-            active_rules,
-            key=lambda ln: (0 if (req_scope and f"[{req_scope}]" in ln) else 1, ln),
-        )
+        if req_scope and req_scope != "general_workflow":
+            sc_obj = self.scopes.get(req_scope)
+            if sc_obj is None or not sc_obj.active_rule.strip():
+                return ""
+            selected = [f"- [{sc_obj.scope_name}]: {sc_obj.active_rule}"]
+        else:
+            selected = [
+                f"- [{sc.scope_name}]: {sc.active_rule}"
+                for sc in self.scopes.values()
+                if sc.active_rule.strip()
+            ][:4]
+            if not selected:
+                return ""
         return (
-            "\nEMPIRICAL SERVING POLICY REFINEMENTS (Scoped by workflow — ALWAYS call `read_docs` and obey standard "
-            "documented rules on everything NOT explicitly overridden by a matching empirical observation below):\n"
-            + "\n".join(ordered_rules[:6])
+            "\nEMPIRICAL SERVING POLICY REFINEMENTS (Scoped strictly to this workflow — ALWAYS call `read_docs` and obey "
+            "standard documented rules on every detail NOT explicitly overridden by this workflow's empirical rule):\n"
+            + "\n".join(selected)
             + "\n"
         )
 

@@ -438,6 +438,7 @@ def instantiate_arm_from_live_checkpoint(
         mode = "editable" if arm_name == "editable_proc_v3" else "frozen"
         h_p = SelfAuthoredProcedureHarness(
             mode=mode,
+            action_agnostic_schema=False,
             review_cadence=4,
             recent_k=8,
             initial_procedure=ckpt.get("acquired_self_procedure", ""),
@@ -448,19 +449,47 @@ def instantiate_arm_from_live_checkpoint(
             h_p.factual.on_episode_complete(r, client)
         return h_p
 
+    if arm_name in ("decomposed_proc_v3", "frozen_decomposed_proc_v3"):
+        if "acquired_decomposed_procedure" not in ckpt:
+            tmp_dec = SelfAuthoredProcedureHarness(
+                mode="editable",
+                action_agnostic_schema=True,
+                review_cadence=4,
+                recent_k=8,
+            )
+            for rec in records:
+                tmp_dec.on_episode_complete(rec, client)
+            ckpt["acquired_decomposed_procedure"] = tmp_dec.self_procedure
+            ckpt["acquired_decomposed_v"] = tmp_dec.procedure_version
+            ckpt["acquired_decomposed_history"] = copy.deepcopy(tmp_dec.procedure_history)
+        mode_d = "editable" if arm_name == "decomposed_proc_v3" else "frozen"
+        h_dec = SelfAuthoredProcedureHarness(
+            mode=mode_d,
+            action_agnostic_schema=True,
+            review_cadence=4,
+            recent_k=8,
+            initial_procedure=ckpt.get("acquired_decomposed_procedure", ""),
+        )
+        h_dec.procedure_version = int(ckpt.get("acquired_decomposed_v", 1 if h_dec.self_procedure else 0))
+        h_dec.procedure_history = copy.deepcopy(ckpt.get("acquired_decomposed_history", []))
+        for r in records:
+            h_dec.factual.on_episode_complete(r, client)
+        return h_dec
+
     if arm_name == "scoped_cards_v3":
         h_c = ScopedCardBookV3Harness(reflect_every=3)
         h_c._history = list(records)
         h_c.cards = copy.deepcopy(ckpt.get("acquired_cards", []))
         return h_c
 
-    if arm_name == "sgeh_directive_v3":
+    if arm_name in ("sgeh_directive_v3", "sgeh_vbq_v3"):
         import tempfile
 
+        is_vbq = arm_name == "sgeh_vbq_v3"
         with tempfile.TemporaryDirectory() as tmp_d:
             dummy_ledger = CostLedger(results_root=Path(tmp_d), run_id="_tmp_offline", phase="dev", max_usd=0.01)
             mock_c = MeteredLLMClient(model="mock", ledger=dummy_ledger, thinking_budget=0)
-            h_d = DirectiveSGEHV3Harness(recent_k=8, enable_hazard=True)
+            h_d = DirectiveSGEHV3Harness(recent_k=8, enable_hazard=True, verify_before_quarantine=is_vbq)
             for r in records:
                 h_d.on_episode_complete(r, mock_c)
         return h_d
@@ -594,7 +623,7 @@ def evaluate_post_checkpoint_branch(
         "reflection_calls": out["reflection_calls"],
         "thinking_tokens": out["thinking_tokens"],
         "usd": round(out["acting_usd"] + out["reflection_usd"], 6),
-        "initial_self_procedure": ckpt.get("acquired_self_procedure", ""),
+        "initial_self_procedure": getattr(base_harness, "self_procedure", ""),
         "final_self_procedure": final_proc,
         "final_procedure_version": final_proc_v,
         "procedure_history": proc_history,
@@ -643,9 +672,16 @@ def summarize_suite_report(
 
     contrast_specs = [
         ("editable_proc_v3", "frozen_proc_v3", "editable_minus_frozen_proc"),
+        ("decomposed_proc_v3", "frozen_decomposed_proc_v3", "decomposed_editable_minus_frozen"),
+        ("decomposed_proc_v3", "editable_proc_v3", "decomposed_minus_freeform_editable"),
+        ("frozen_decomposed_proc_v3", "frozen_proc_v3", "decomposed_minus_freeform_frozen"),
+        ("decomposed_proc_v3", "factual_ledger_v3", "decomposed_proc_minus_no_proc"),
         ("editable_proc_v3", "factual_ledger_v3", "editable_proc_minus_no_proc"),
         ("frozen_proc_v3", "factual_ledger_v3", "frozen_proc_minus_no_proc"),
         ("factual_ledger_v3", "scoped_cards_v3", "factual_minus_cardbook"),
+        ("sgeh_vbq_v3", "sgeh_directive_v3", "vbq_minus_naive_directive"),
+        ("sgeh_vbq_v3", "decomposed_proc_v3", "vbq_minus_decomposed_proc"),
+        ("sgeh_vbq_v3", "factual_ledger_v3", "vbq_minus_factual"),
         ("sgeh_directive_v3", "editable_proc_v3", "directive_minus_editable_proc"),
         ("sgeh_directive_v3", "factual_ledger_v3", "directive_minus_factual"),
     ]
@@ -754,9 +790,12 @@ def render_suite_markdown(rep: dict[str, Any]) -> str:
     arm_labels = {
         "scoped_cards_v3": "ScopedCardBook (Baseline)",
         "factual_ledger_v3": "**No-Procedure / Factual-Ledger (Ours — Autonomy Baseline)**",
-        "frozen_proc_v3": "Frozen-Procedure (Matched-Budget Checkpoint Control)",
-        "editable_proc_v3": "**Editable-Procedure (Ours — Self-Revising Procedure)**",
-        "sgeh_directive_v3": "**Directive-SGEH (Ours — Engineered Controller Reference)**",
+        "frozen_proc_v3": "Frozen-Procedure (Free-Form Checkpoint Control)",
+        "editable_proc_v3": "Editable-Procedure (Free-Form Self-Revising)",
+        "frozen_decomposed_proc_v3": "Frozen-Decomposed-Proc (Action-Agnostic Frozen Control)",
+        "decomposed_proc_v3": "**Decomposed-Editable-Proc (Ours — Action-Agnostic Procedure)**",
+        "sgeh_directive_v3": "Directive-SGEH-v3.0 (Naive Quarantine Controller)",
+        "sgeh_vbq_v3": "**Directive-SGEH-VBQ (Ours — Verify-Before-Quarantine + Hazard)**",
     }
     title = (
         "Hidden-Ambiguity VOI Fork (`hidden_transient_dip` vs `abrupt_reversal`, Unscripted Live `W1`)"
@@ -1014,7 +1053,7 @@ def run_suite_batch(
             "procedure_history": r["procedure_history"],
         }
         for r in sorted(raw_results, key=lambda x: (x["model"], x["world_mode"], x["seed"], x["arm"]))
-        if r["arm"] in ("editable_proc_v3", "frozen_proc_v3")
+        if r["arm"] in ("editable_proc_v3", "frozen_proc_v3", "decomposed_proc_v3", "frozen_decomposed_proc_v3")
     ]
     if proc_audit:
         atomic_write_json(ledger.run_dir / "procedure_versions_audit.json", proc_audit)
@@ -1096,7 +1135,20 @@ def aggregate_suite_runs(run_ids: list[str], out_run_id: str, results_root: Path
 
     dedup = {(r["model"], r["arm"], r["world_mode"], int(r["seed"])): r for r in all_records}
     merged = sorted(dedup.values(), key=lambda r: (r["model"], r["world_mode"], int(r["seed"]), r["arm"]))
-    std_arms = [a for a in ("scoped_cards_v3", "factual_ledger_v3", "frozen_proc_v3", "editable_proc_v3", "sgeh_directive_v3") if a in arms_seen]
+    std_arms = [
+        a
+        for a in (
+            "scoped_cards_v3",
+            "factual_ledger_v3",
+            "frozen_proc_v3",
+            "editable_proc_v3",
+            "frozen_decomposed_proc_v3",
+            "decomposed_proc_v3",
+            "sgeh_directive_v3",
+            "sgeh_vbq_v3",
+        )
+        if a in arms_seen
+    ]
     std_modes = [m for m in (list(VOI_FORK_MODES) + list(PROC_3W_MODES)) if m in modes_seen]
 
     rep = summarize_suite_report(

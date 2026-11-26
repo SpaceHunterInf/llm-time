@@ -103,7 +103,7 @@ def test_editable_vs_frozen_procedure_harness_matched_budget_and_snapshots() -> 
         assert m["reflection_calls"] == 1
         assert edit_h.procedure_version == 1
         ckpt_proc = edit_h.self_procedure
-        assert "session 2" in ckpt_proc
+        assert "(step 2)" in ckpt_proc
 
         # Fork into Frozen-Procedure at checkpoint!
         froz_h = SelfAuthoredProcedureHarness(mode="frozen", review_cadence=2, initial_procedure=ckpt_proc)
@@ -172,9 +172,111 @@ def test_three_window_streams_and_cross_domain_transfer_harnesses() -> None:
         assert "TRANSFERRED EPISTEMIC ADAPTATION PROCEDURE" in ctx
         assert "AGENT-MAINTAINED EMPIRICAL NOTEBOOK" in ctx
 
-    for reg_name in ("editable_proc_v3", "frozen_proc_v3", "factual_slb", "transferred_proc_slb"):
+    for reg_name in (
+        "editable_proc_v3",
+        "frozen_proc_v3",
+        "decomposed_proc_v3",
+        "frozen_decomposed_proc_v3",
+        "sgeh_vbq_v3",
+        "factual_slb",
+        "transferred_proc_slb",
+    ):
         h = make_harness(reg_name)
         assert h is not None
+
+
+def test_decomposed_procedure_scrubbing_and_vbq_incumbent_verification() -> None:
+    """Verify action-agnostic scrubbing strips STRAT_S1..S6 and VBQ verifies incumbent before quarantining."""
+    from src.harnesses.procedure_harness import sanitize_procedure_text
+    from src.harnesses.sgeh_v3 import DirectiveSGEHV3Harness
+
+    scrubbed = sanitize_procedure_text(
+        "In Session #16, hold STRAT_S2 and S3 at 0.55/0.45.",
+        strip_action_bindings=True,
+    )
+    assert "STRAT_S2" not in scrubbed
+    assert " S3 " not in f" {scrubbed} "
+    assert "Session #16" not in scrubbed
+
+    with tempfile.TemporaryDirectory() as tmp:
+        ledger = CostLedger(results_root=Path(tmp), run_id="test_vbq", phase="dev", max_usd=0.05)
+        mock_c = MeteredLLMClient(model="mock", ledger=ledger, thinking_budget=0)
+        vbq = DirectiveSGEHV3Harness(verify_before_quarantine=True)
+        w_inc = normalize_weights_v3({}, "STRAT_S1", "STRAT_S2")
+
+        # Establish calm W1 baseline on STRAT_S1 + STRAT_S2
+        for ep in range(5):
+            rec = PublicEpisodeRecord(
+                env_name="alpha_desk_v3",
+                episode_idx=ep,
+                timestamp=ep + 1,
+                task_prompt="Session",
+                steps=[
+                    {"turn": 1, "tool": "inspect_desk_brief", "args": {}, "obs": {"volatility_regime_hint": "calm_volatility", "liquidity_status": "orderly_normal"}},
+                    {"turn": 2, "tool": "probe_strategy_execution", "args": {"strategy": "STRAT_S1" if ep == 0 else "STRAT_S2"}, "obs": {"strategy": "STRAT_S1" if ep == 0 else "STRAT_S2", "live_net_yield_estimate": 91.0 if ep == 0 else 81.0}},
+                    {"turn": 3, "tool": "submit_allocation", "args": {"weights": w_inc}, "obs": {"status": "submitted", "gross_score": 86.5, "turnover_fee_deducted": 0.0}},
+                ] if ep < 2 else [
+                    {"turn": 1, "tool": "inspect_desk_brief", "args": {}, "obs": {"volatility_regime_hint": "calm_volatility", "liquidity_status": "orderly_normal"}},
+                    {"turn": 2, "tool": "submit_allocation", "args": {"weights": w_inc}, "obs": {"status": "submitted", "gross_score": 86.5, "turnover_fee_deducted": 0.0}},
+                ],
+                public_score=86.5,
+            )
+            vbq.on_episode_complete(rec, mock_c)
+
+        b = vbq.controller.buckets["calm_volatility"]
+        assert b.primary_strategy == "STRAT_S1"
+
+        # Unannounced calm drop (gross=18.9): VBQ must NOT quarantine immediately; it schedules pending_incumbent_verify!
+        drop_rec = PublicEpisodeRecord(
+            env_name="alpha_desk_v3",
+            episode_idx=5,
+            timestamp=6,
+            task_prompt="Session",
+            steps=[
+                {"turn": 1, "tool": "inspect_desk_brief", "args": {}, "obs": {"volatility_regime_hint": "calm_volatility", "liquidity_status": "orderly_normal"}},
+                {"turn": 2, "tool": "submit_allocation", "args": {"weights": w_inc}, "obs": {"status": "submitted", "gross_score": 18.9, "turnover_fee_deducted": 0.0}},
+            ],
+            public_score=18.9,
+        )
+        vbq.on_episode_complete(drop_rec, mock_c)
+        assert b.quarantined_strategies == []
+        assert b.pending_incumbent_verify == "STRAT_S1"
+
+        # Case A: Post-dip rebound where STRAT_S1 probes at 91.5 -> immediately retained with 0 quarantine!
+        import copy as _cp
+        vbq_rebound = _cp.deepcopy(vbq)
+        reb_rec = PublicEpisodeRecord(
+            env_name="alpha_desk_v3",
+            episode_idx=6,
+            timestamp=7,
+            task_prompt="Session",
+            steps=[
+                {"turn": 1, "tool": "inspect_desk_brief", "args": {}, "obs": {"volatility_regime_hint": "calm_volatility", "liquidity_status": "orderly_normal"}},
+                {"turn": 2, "tool": "probe_strategy_execution", "args": {"strategy": "STRAT_S1"}, "obs": {"strategy": "STRAT_S1", "live_net_yield_estimate": 91.5, "desk_best_yield_estimate": 91.5}},
+                {"turn": 3, "tool": "submit_allocation", "args": {"weights": w_inc}, "obs": {"status": "submitted", "gross_score": 86.6, "turnover_fee_deducted": 0.0}},
+            ],
+            public_score=76.6,
+        )
+        m_reb = vbq_rebound.on_episode_complete(reb_rec, mock_c)
+        assert m_reb.get("vbq_incumbent_retained") is True
+        assert vbq_rebound.controller.buckets["calm_volatility"].quarantined_strategies == []
+        assert vbq_rebound.controller.buckets["calm_volatility"].probing_steps_remaining == 0
+
+        # Case B: True reversal where STRAT_S1 probes at 18.2 while desk_best is 93.0 -> now quarantined!
+        rev_rec = PublicEpisodeRecord(
+            env_name="alpha_desk_v3",
+            episode_idx=6,
+            timestamp=7,
+            task_prompt="Session",
+            steps=[
+                {"turn": 1, "tool": "inspect_desk_brief", "args": {}, "obs": {"volatility_regime_hint": "calm_volatility", "liquidity_status": "orderly_normal"}},
+                {"turn": 2, "tool": "probe_strategy_execution", "args": {"strategy": "STRAT_S1"}, "obs": {"strategy": "STRAT_S1", "live_net_yield_estimate": 18.2, "desk_best_yield_estimate": 93.0}},
+                {"turn": 3, "tool": "submit_allocation", "args": {"weights": normalize_weights_v3({}, "STRAT_S3", "STRAT_S4")}, "obs": {"status": "submitted", "gross_score": 85.0, "turnover_fee_deducted": 4.0}},
+            ],
+            public_score=71.0,
+        )
+        vbq.on_episode_complete(rev_rec, mock_c)
+        assert "STRAT_S1" in b.quarantined_strategies
 
 
 def test_new_modules_security_hygiene() -> None:
@@ -191,3 +293,22 @@ def test_new_modules_security_hygiene() -> None:
         assert "shell=True" not in txt
         assert not re.search(r"AIza[0-9A-Za-z\-_]{20,}", txt)
         assert not re.search(r"\bsk-[0-9A-Za-z]{16,}", txt)
+
+
+def test_public_slb_scope_partitioning_covers_all_banking_l3_prefixes() -> None:
+    """Verify 100% of public banking_l3 instructions map to distinct non-general workflow scopes."""
+    from src.harnesses.sgeh_slb import ScopedSLBHarness, infer_public_slb_scope
+
+    assert infer_public_slb_scope("Credit desk item LIM-711012 proposes a $3805.69 ceiling") == "banking_limit"
+    assert infer_public_slb_scope("Work item LIM-871849: ACC-774095 would take $4307.35") == "banking_limit"
+    assert infer_public_slb_scope("Adjudicate card event TXN-824136: Lumen Setting Group") == "banking_card_txn"
+    assert infer_public_slb_scope("Payment file TRF-798725 on account ACC-875599: 4 lines totalling $19910") == "banking_batch"
+    assert infer_public_slb_scope("Transfer desk item TRF-763157 covers $8033.73") == "banking_transfer"
+
+    h = ScopedSLBHarness()
+    h._get_scope("banking_limit").active_rule = "Basic verification max limit is $4000."
+    # A card-txn task must NOT receive the banking_limit override!
+    ctx_txn = h.build_context(PublicTaskSpec("slb_banking", 1, 1, "", "Adjudicate card event TXN-824136", []))
+    assert ctx_txn == ""
+    ctx_lim = h.build_context(PublicTaskSpec("slb_banking", 1, 1, "", "Credit desk item LIM-711012", []))
+    assert "[banking_limit]" in ctx_lim
