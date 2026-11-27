@@ -227,6 +227,242 @@ class SelfAuthoredProcedureHarness(EpistemicHarness):
         return self._run_procedure_review(record.env_name, record.episode_idx, client)
 
 
+class TwoLevelReviewerHarness(EpistemicHarness):
+    """Two-Level Single-Lifetime Self-Improving Reviewer Harness (`editable_reviewer_v3` vs `frozen_reviewer_v3`).
+
+    Splits self-authored state into two initially blank (`""`) channels with ZERO researcher-written hints, regex
+    scrubbers, or schema constraints (`setup-debates/2026-11-26-decomposed-procedure-and-vbq-resolution.md`):
+      1. `task_note` (`<= 120` words): Visible to BOTH actor and reviewer; rewritten every `review_cadence` sessions in
+         both `editable_rule` and `frozen_rule`.
+      2. `review_rule` (`<= 100` words): Visible ONLY to the reviewer (strictly excluded from `build_context(spec)` so
+         the actor never sees it!). Under `editable_rule`, proposed changes to `review_rule` take effect; under
+         `frozen_rule`, `review_rule` stays locked at `R_ckpt` while executing the exact same review schedule & budget.
+    """
+
+    def __init__(
+        self,
+        *,
+        mode: str = "editable_rule",
+        review_cadence: int = 4,
+        recent_k: int = 8,
+        max_note_words: int = 120,
+        max_rule_words: int = 100,
+        initial_task_note: str = "",
+        initial_review_rule: str = "",
+    ) -> None:
+        if mode not in ("editable_rule", "frozen_rule"):
+            raise ValueError(f"Unsupported reviewer mode '{mode}'. Expected 'editable_rule' or 'frozen_rule'.")
+        self.mode = mode
+        self.name = "editable_reviewer_v3" if mode == "editable_rule" else "frozen_reviewer_v3"
+        self.review_cadence = max(1, int(review_cadence))
+        self.max_note_words = max(40, int(max_note_words))
+        self.max_rule_words = max(30, int(max_rule_words))
+        self.factual = FactualLedgerV3Harness(recent_k=recent_k)
+        self.task_note: str = sanitize_procedure_text(
+            initial_task_note,
+            max_words=self.max_note_words,
+            max_chars=860,
+            strip_action_bindings=False,
+        )
+        self.review_rule: str = sanitize_procedure_text(
+            initial_review_rule,
+            max_words=self.max_rule_words,
+            max_chars=720,
+            strip_action_bindings=False,
+        )
+        self.note_version: int = 1 if self.task_note else 0
+        self.rule_version: int = 1 if self.review_rule else 0
+        self.review_history: list[dict[str, Any]] = []
+
+    def set_mode(self, mode: str) -> None:
+        if mode not in ("editable_rule", "frozen_rule"):
+            raise ValueError(f"Unsupported reviewer mode '{mode}'.")
+        self.mode = mode
+        self.name = "editable_reviewer_v3" if mode == "editable_rule" else "frozen_reviewer_v3"
+
+    def snapshot_state(self) -> dict[str, Any]:
+        """Return verbatim active `task_note` and reviewer-only `review_rule` BEFORE an episode executes."""
+        return {
+            "harness_name": self.name,
+            "mode": self.mode,
+            "note_version": self.note_version,
+            "rule_version": self.rule_version,
+            "active_task_note": self.task_note,
+            "active_review_rule": self.review_rule,
+            "n_reviews_logged": len(self.review_history),
+        }
+
+    def build_context(self, spec: PublicTaskSpec) -> str:
+        """Render ONLY factual ledger + `task_note` for the actor (`review_rule` is strictly reviewer-only!)."""
+        fact_block = self.factual.build_context(spec)
+        note_body = (
+            self.task_note
+            if self.task_note.strip()
+            else "(Blank — no task note written yet; rely on public rules and factual observations.)"
+        )
+        note_block = (
+            f"\nREVIEWER TASK NOTE FOR ACTOR (version v{self.note_version}):\n"
+            f"{note_body}\n"
+        )
+        return fact_block + note_block
+
+    def counterfactual_review(
+        self,
+        *,
+        env_name: str,
+        episode_idx: int,
+        override_review_rule: str,
+        override_rule_version: int,
+        client: MeteredLLMClient,
+        method_suffix: str = "review",
+    ) -> dict[str, Any]:
+        """Execute a pure (non-mutating) reviewer call on current `(factual, task_note)` under `override_review_rule`."""
+        fact_txt = self.factual.build_context(
+            PublicTaskSpec(
+                env_name=env_name,
+                episode_idx=episode_idx,
+                timestamp=episode_idx + 1,
+                domain_prompt="",
+                task_prompt="",
+                tool_schemas=[],
+            )
+        )
+        sys_p = (
+            "You are the periodic reviewer for an AlphaDesk-v3 portfolio agent.\n"
+            "Public environment mechanics:\n"
+            "- Objective: maximize cumulative net session score across sessions.\n"
+            f"- Compliance: non-negative weights across {', '.join(STRATEGIES_V3)} summing to 1.0, each <= {MAX_WEIGHT_V3}.\n"
+            f"- Costs: rebalancing pays {TURNOVER_FULL_FLIP_PTS_V3:.1f} * 0.5 * L1_turnover pts; "
+            f"`probe_strategy_execution` is optional (max 1/session, -{PROBE_FEE_V3:.1f} pts) and reports the probed "
+            "strategy's live yield plus anonymized desk-wide mean and max strategy yields.\n\n"
+            "You maintain two short text fields:\n"
+            f"1. `task_note` (<= {self.max_note_words} words): shown to the actor in upcoming sessions alongside the "
+            "factual observation ledger.\n"
+            f"2. `review_rule` (<= {self.max_rule_words} words): shown ONLY to your future reviewer (never shown to "
+            "the actor), specifying how the next reviewer should evaluate observations and revise `task_note`.\n"
+            "Follow your current `review_rule` (if non-blank) when revising `task_note`, and write or revise "
+            "`review_rule` however you judge best for future reviews.\n"
+            'Respond ONLY with JSON: {"task_note": "...", "review_rule": "...", "edit_rationale": "..."}.'
+        )
+        usr_p = (
+            f"Current `review_rule` (reviewer-only, version v{override_rule_version}):\n"
+            f"{override_review_rule or '(blank)'}\n\n"
+            f"Current `task_note` (actor-visible, version v{self.note_version}):\n"
+            f"{self.task_note or '(blank)'}\n\n"
+            f"{fact_txt}\n"
+            "Return JSON with `task_note`, `review_rule`, and `edit_rationale`."
+        )
+        rule_tag = hashlib.sha256((override_review_rule or "").encode("utf-8")).hexdigest()[:6]
+        resp = client.generate_json(
+            system_prompt=sys_p,
+            user_prompt=usr_p,
+            environment=env_name,
+            method=f"{self.name}_{method_suffix}",
+            mock_responder=lambda _s, _u, rt=rule_tag, ep_i=episode_idx: {
+                "task_note": (
+                    f"Mock task_note (step {ep_i + 1}, guided_by={rt}): inspect brief, hold verified calm winners, "
+                    "and probe when scores drop."
+                ),
+                "review_rule": (
+                    f"Mock review_rule (step {ep_i + 1}): compare recent calm outcomes against desk_best before "
+                    "locking or discarding prior advice."
+                ),
+                "edit_rationale": "Mock two-level periodic review.",
+            },
+        )
+        parsed = resp.parsed_json or {}
+        prop_note = sanitize_procedure_text(
+            parsed.get("task_note", ""),
+            max_words=self.max_note_words,
+            max_chars=860,
+            strip_action_bindings=False,
+        )
+        prop_rule = sanitize_procedure_text(
+            parsed.get("review_rule", ""),
+            max_words=self.max_rule_words,
+            max_chars=720,
+            strip_action_bindings=False,
+        )
+        rationale = sanitize_procedure_text(parsed.get("edit_rationale", ""), max_words=60, max_chars=360)
+        return {
+            "proposed_task_note": prop_note,
+            "proposed_review_rule": prop_rule,
+            "edit_rationale": rationale,
+            "usd": resp.usd,
+        }
+
+    def _run_two_level_review(self, env_name: str, episode_idx: int, client: MeteredLLMClient) -> dict[str, Any]:
+        out = self.counterfactual_review(
+            env_name=env_name,
+            episode_idx=episode_idx,
+            override_review_rule=self.review_rule,
+            override_rule_version=self.rule_version,
+            client=client,
+            method_suffix="review",
+        )
+        prop_note = out["proposed_task_note"]
+        prop_rule = out["proposed_review_rule"]
+        rationale = out["edit_rationale"]
+
+        # BOTH `editable_rule` and `frozen_rule` apply revisions to `task_note`!
+        note_applied = False
+        if prop_note:
+            if prop_note != self.task_note:
+                self.task_note = prop_note
+                self.note_version += 1
+                note_applied = True
+            elif self.note_version == 0:
+                self.task_note = prop_note
+                self.note_version = 1
+                note_applied = True
+
+        # ONLY `editable_rule` applies revisions to reviewer-only `review_rule`!
+        rule_applied = False
+        if self.mode == "editable_rule" and prop_rule:
+            if prop_rule != self.review_rule:
+                self.review_rule = prop_rule
+                self.rule_version += 1
+                rule_applied = True
+            elif self.rule_version == 0:
+                self.review_rule = prop_rule
+                self.rule_version = 1
+                rule_applied = True
+
+        entry = {
+            "after_episode": episode_idx + 1,
+            "mode": self.mode,
+            "note_applied": note_applied,
+            "rule_applied": rule_applied,
+            "active_note_version": self.note_version,
+            "active_rule_version": self.rule_version,
+            "active_task_note": self.task_note,
+            "active_review_rule": self.review_rule,
+            "proposed_task_note": prop_note,
+            "proposed_review_rule": prop_rule,
+            "edit_rationale": rationale,
+            "usd": round(float(out["usd"]), 6),
+        }
+        self.review_history.append(entry)
+        return {
+            "reflection_calls": 1,
+            "reflection_usd": float(out["usd"]),
+            "alarm_fired": rule_applied or note_applied,
+            "two_level_review": entry,
+        }
+
+    def on_episode_complete(self, record: PublicEpisodeRecord, client: MeteredLLMClient) -> dict[str, Any]:
+        self.factual.on_episode_complete(record, client)
+        if len(self.factual.history) % self.review_cadence != 0:
+            return {
+                "reflection_calls": 0,
+                "reflection_usd": 0.0,
+                "alarm_fired": False,
+                "active_note_version": self.note_version,
+                "active_rule_version": self.rule_version,
+            }
+        return self._run_two_level_review(record.env_name, record.episode_idx, client)
+
+
 def distill_domain_agnostic_procedure(
     *,
     client: MeteredLLMClient,

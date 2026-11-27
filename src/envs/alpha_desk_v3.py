@@ -933,3 +933,145 @@ class AlphaDeskV3ThreeWindowEnv(AlphaDeskV3ForkEnv):
         if self.stream_mode == "opp_stationary_3w":
             return a_opp3, f"W{w_idx + 1}_opp_stat_A3"
         return (b_opp3, "W2_opp_rise_B3") if w_idx == 1 else (d_opp3, "W3_opp_rise_D3")
+
+
+class AlphaDeskV3MetaHorizonEnv(AlphaDeskV3ForkEnv):
+    """Single-Lifetime `H=60` 4-Window Private-Schedule Environment for Two-Level Reviewer Evaluation.
+
+    Implements the pre-registered `H=60` protocol (`setup-debates/2026-11-26-decomposed-procedure-and-vbq-resolution.md`):
+      - Seed-jittered private window boundaries (`w1_len = 12 +- 1`, `w2_len = 14 +- 2`, `w3_len = 16 +- 2`,
+        `w4_len = H - (w1 + w2 + w3) >= 13` for `H = 60`), identical between `drift_meta_60` and `stationary_meta_60`
+        for each seed so `W1` (`0 .. w1_len - 1`) and all observable context/noise vectors match bit-for-bit.
+      - Modes:
+        1. `stationary_meta_60`: Stays at `A = (92, 80, 22, 20, 24, 18)` across all 60 sessions.
+        2. `drift_meta_60`:
+           - `W1` (`Calm Acquisition`): `A = (92, 80, 22, 20, 24, 18)`.
+           - `W2` (`Temporary Loss`): First 2 sessions (`t_w2, t_w2 + 1`) enter an unannounced `hidden_transient_dip`
+             (`18, 20, 19..19` under `orderly_normal`, separable only via `-10 pt` `probe_strategy_execution`), then
+             return to `A` for the remainder of `W2`.
+           - `W3` (`Lasting Change`): Permanent shift to `B = (18, 20, 93, 81, 24, 20)` (penalizing sticky `W2` advice).
+           - `W4` (`Later Surprise — Reuse + Revision`): Shifts to Partial Recurrence `A' = (92, 18, 81, 20, 24, 18)`,
+             where `W3`'s runner-up (`r3=20`) breaks (`87.6 -> 53.6`), `W3`'s winner (`r2=81`) stays optimal runner-up,
+             and `W1`'s winner (`r0=92`) returns.
+        3. `drift_dip_c_60` (optional sensitivity stream): Same `W1..W3`, then `W4` opens with a 2-session calm dip on
+           `B` before shifting to `C = (78, 18, 16, 20, 94, 22)`.
+    """
+
+    VALID_META_MODES = (
+        "stationary_meta_60",
+        "drift_meta_60",
+        "drift_dip_c_60",
+    )
+
+    def __init__(
+        self,
+        *,
+        meta_mode: str = "drift_meta_60",
+        seed: int = 701,
+        horizon: int = 60,
+        initial_post_holdings: dict[str, float] | None = None,
+    ) -> None:
+        if meta_mode not in self.VALID_META_MODES:
+            raise ValueError(f"Unsupported meta_mode '{meta_mode}'. Valid: {self.VALID_META_MODES}")
+        if horizon < 32:
+            raise ValueError(f"AlphaDeskV3MetaHorizonEnv requires horizon >= 32 (got {horizon}).")
+
+        self.meta_mode = meta_mode
+        win_rng = random.Random(int(seed) * 97_103 + 17)
+        if horizon >= 52:
+            w1_len = 12 + win_rng.choice((-1, 0, 1))
+            w2_len = 14 + win_rng.choice((-2, -1, 0, 1, 2))
+            w3_len = 16 + win_rng.choice((-2, -1, 0, 1, 2))
+            w4_len = int(horizon) - (w1_len + w2_len + w3_len)
+        else:
+            q = int(horizon) // 4
+            w1_len = q
+            w2_len = q
+            w3_len = q
+            w4_len = int(horizon) - 3 * q
+
+        self.w1_len = w1_len
+        self.w2_len = w2_len
+        self.w3_len = w3_len
+        self.w4_len = w4_len
+        self.t_w2 = w1_len
+        self.t_w3 = w1_len + w2_len
+        self.t_w4 = w1_len + w2_len + w3_len
+
+        super().__init__(
+            fork_mode="stationary",
+            seed=seed,
+            t_fork=self.w1_len,
+            h_post=int(horizon) - self.w1_len,
+            initial_post_holdings=initial_post_holdings,
+        )
+        self.mode = meta_mode
+        self.window_lengths = [self.w1_len, self.w2_len, self.w3_len, self.w4_len]
+        self.shift_boundaries = [self.t_w2, self.t_w3, self.t_w4]
+        self.window_ranges = [
+            (0, self.t_w2),
+            (self.t_w2, self.t_w3),
+            (self.t_w3, self.t_w4),
+            (self.t_w4, self.horizon),
+        ]
+
+        # Enforce calm_volatility transitions around every private window boundary identically across meta_modes
+        for b in (self.t_w2, self.t_w3, self.t_w4):
+            for boundary_ep in (b - 1, b, b + 1, b + 2):
+                if 0 <= boundary_ep < self.horizon:
+                    self._episodes[boundary_ep]["is_high_vol"] = False
+                    self._episodes[boundary_ep]["vol_index"] = round(
+                        13.5 + (self._episodes[boundary_ep]["vol_index"] % 5.0), 1
+                    )
+
+        self._dp_oracle = self._compute_bellman_oracle_trajectory()
+        self._post_dp_oracle = self._compute_post_fork_bellman_oracle(
+            self._fork_holdings_override or self._dp_oracle["weights"][max(0, self.t_fork - 1)]
+        )
+        for ep, w_s in self._post_dp_oracle["weights_by_ep"].items():
+            self._dp_oracle["weights"][ep] = w_s
+            self._dp_oracle["step_net"][ep] = self._post_dp_oracle["step_net_by_ep"][ep]
+
+    def window_index(self, ep: int) -> int:
+        if ep < self.t_w2:
+            return 0
+        if ep < self.t_w3:
+            return 1
+        if ep < self.t_w4:
+            return 2
+        return 3
+
+    def _is_liquidity_freeze(self, ep: int) -> bool:
+        return False
+
+    def _is_hidden_transient_dip(self, ep: int) -> bool:
+        if self.meta_mode in ("drift_meta_60", "drift_dip_c_60") and ep in (self.t_w2, self.t_w2 + 1):
+            return True
+        if self.meta_mode == "drift_dip_c_60" and ep in (self.t_w4, self.t_w4 + 1):
+            return True
+        return False
+
+    def _calm_role_means_and_label(self, ep: int) -> tuple[dict[str, float], str]:
+        reg_a = self._role_vec(92.0, 80.0, 22.0, 20.0, 24.0, 18.0)
+        reg_b = self._role_vec(18.0, 20.0, 93.0, 81.0, 24.0, 20.0)
+        reg_a_prime = self._role_vec(92.0, 18.0, 81.0, 20.0, 24.0, 18.0)
+        reg_c = self._role_vec(78.0, 18.0, 16.0, 20.0, 94.0, 22.0)
+        dip_role = self._role_vec(18.0, 20.0, 19.0, 19.0, 19.0, 19.0)
+        dip_b_role = self._role_vec(19.0, 19.0, 18.0, 20.0, 19.0, 19.0)
+
+        w_idx = self.window_index(ep)
+        if w_idx == 0:
+            return reg_a, "W1_acq_A"
+        if self.meta_mode == "stationary_meta_60":
+            return reg_a, f"W{w_idx + 1}_stat_A"
+        if w_idx == 1:
+            if ep in (self.t_w2, self.t_w2 + 1):
+                return dip_role, "W2_hidden_calm_dip_19"
+            return reg_a, "W2_post_dip_A"
+        if w_idx == 2:
+            return reg_b, "W3_lasting_B"
+        if self.meta_mode == "drift_dip_c_60":
+            if ep in (self.t_w4, self.t_w4 + 1):
+                return dip_b_role, "W4_hidden_calm_dip_19"
+            return reg_c, "W4_surprise_C"
+        return reg_a_prime, "W4_surprise_partial_A_prime"

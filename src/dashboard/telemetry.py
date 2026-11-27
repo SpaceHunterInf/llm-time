@@ -255,6 +255,18 @@ def collect_dashboard_telemetry(workspace_root: Path) -> dict[str, Any]:
         for d in runs_dir.iterdir():
             if d.is_dir() and (d.name.startswith("slb_es_") or d.name.startswith("slb_es9_")):
                 superseded_shards.add(d.name)
+    if (runs_dir / "meta_reviewer_h60_flash_n6").is_dir() and runs_dir.is_dir():
+        for d in runs_dir.iterdir():
+            if d.is_dir() and (
+                d.name.startswith("meta60_drift_s")
+                or d.name.startswith("meta60_stat_s")
+                or d.name == "meta60_w1_ckpt_flash"
+            ):
+                superseded_shards.add(d.name)
+    if (runs_dir / "meta_reviewer_h60_hydrogen_n3").is_dir() and runs_dir.is_dir():
+        for d in runs_dir.iterdir():
+            if d.is_dir() and (d.name.startswith("meta60_hy_") or d.name == "meta60_w1_ckpt_hydro"):
+                superseded_shards.add(d.name)
 
     if runs_dir.is_dir():
         for run_subdir in sorted(runs_dir.iterdir()):
@@ -310,7 +322,16 @@ def collect_dashboard_telemetry(workspace_root: Path) -> dict[str, Any]:
             for jfile in sorted(run_subdir.glob("*.json")):
                 jname = jfile.name
                 if (
-                    jname in ("progress.json", "causal_fork_report.json", "shared_fork_report.json")
+                    jname
+                    in (
+                        "progress.json",
+                        "causal_fork_report.json",
+                        "shared_fork_report.json",
+                        "w1_live_checkpoints.json",
+                        "procedure_versions_audit.json",
+                        "reviewer_versions_audit.json",
+                        "counterfactual_w4_replay.json",
+                    )
                     or jname.startswith("checkpoint_")
                 ):
                     continue

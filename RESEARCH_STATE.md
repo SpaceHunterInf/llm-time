@@ -1,6 +1,7 @@
 # Research State & 1-Month Submission Plan
 
-**Last Updated:** 2026-11-26  
+**Last Updated:** 2026-11-27
+
 **Target Venues:** **ACL (January 2027)** / **ICML 2027** (internal draft milestone: mid-Dec 2026; Act 3 open-weight backbone deferred to pick best available e.g. upcoming `Qwen4-27B` / `Qwen3` / `Gemma-3`)  
 **Available Gemini Models Verified on `.env` Key:**
 - *Lightweight Dev:* `gemini-3.5-flash-lite`, `gemini-3.5-flash`, `gemini-3.8-flash`, `gemini-4-hydrogen`
@@ -39,7 +40,17 @@ Self-evolving harnesses (`SkillOpt`, `Continual Harness`, `ACE`, `GEPA`, `SRN`) 
 
 ---
 
-## 3. Live Empirical Record (Cumulative Spend: `$162.83` / `$70,000+` Pool; `99.767%` Remaining)
+## 3. Live Empirical Record (Cumulative Spend: `$185.15` / `$70,000+` Pool; `99.735%` Remaining)
+
+### 3.0000 Single-Lifetime `H = 60` Two-Level Reviewer Self-Improvement & Paired `W4` Counterfactual Replay (`2026-11-27`, `$29.48` Across `Flash N=6` & `Hydrogen N=3`)
+Full write-up & verbatim `review_rule` audit: [2026-11-27-h60-reviewer-self-improvement.md](file:///home/xz479/llm-time/setup-debates/2026-11-27-h60-reviewer-self-improvement.md).
+1. **Experimental Design (`AlphaDeskV3MetaHorizonEnv`, `H = 60`, `Seeds 701–706`, Zero Researcher Hints/Regex):**
+   - Split self-authored memory into actor-visible `task_note` $N_t$ (`<= 120` words) and **reviewer-only `review_rule` $R_t$ (`<= 100` words, strictly invisible to the actor)**, both initialized blank (`""`) at Episode 1. Forked at `t_ckpt = 12 ± 1` across `drift_meta_60` (`W1[A]` $\to$ `W2[2-day hidden dip + A]` $\to$ `W3[lasting B]` $\to$ `W4[partial recurrence A']`) and matched `stationary_meta_60`, where **both** `Editable-Reviewer` and `Frozen-Reviewer` rewrite `task_note` every `4` sessions (`11–12` post-fork reviews) and **only `Editable-Reviewer` updates `review_rule`**.
+2. **Candid Negative Result on Untuned `gemini-3.8-flash` (`N = 6`, [summary.md](file:///home/xz479/llm-time/results/runs/meta_reviewer_h60_flash_n6/summary.md)):**
+   - Live `Editable-Reviewer` (`69.5%` `W4`, `66.3%` Post-Ckpt) **tied `Frozen-Reviewer`** (`70.7%` `W4`, `68.3%` Post; `W4` diff **`-1.23 pts [-14.08, +11.62]`**, DiD **`+0.83 pts`**) and **trailed `Facts-Only` (`72.7%` `W4`, `75.1%` Post; Post diff `-8.84 pts [-14.84, -2.85]`, DiD `-7.79 pts`)** due to `W3` satisficing collapse (`54.6%` vs. `75.6%` `Facts-Only` and `83.8%` `Directive-SGEH-VBQ`).
+   - **Paired `W4` Counterfactual Replay (`+13.48 pts [+0.00, +30.86]` mean 4-ep DP gain, `0/6` negative):** On `2/6` seeds (`704` & `705`), `Flash` *did* replace a passive `R_ckpt` (`"probe=none"`) with a quantitative yield-drop falsification rule, firing the complete causal chain (`ΔR -> Δtask_note -> Step+1 Δaction -> +52.15% [+177.15 pts] on s704 and +28.73% [+100.05 pts] on s705`, and beating `Frozen-Reviewer` by `+22.08 pts` and `Facts-Only` by `+14.02 pts` live in `W4` on `s705`). On the other `4/6` seeds, `Flash` wrote concrete strategy weights + `"zero probing"` into `review_rule` and lowered its subjective yield anchor (`~29–35 pts` labeled `"high"`).
+3. **Model-Capability Dichotomy on `gemini-4-hydrogen` (`N = 3`, [summary.md](file:///home/xz479/llm-time/results/runs/meta_reviewer_h60_hydrogen_n3/summary.md)):**
+   - `Hydrogen` spontaneously kept `review_rule` **100% strategy-agnostic across `3/3` seeds** and made `1.3` surgical rule edits/life (`ep 28` `W3` onset). Live `Editable-Reviewer` ranked **`#1` (`84.0%` `W4` [`53.9%` CalmOpt], `84.3%` Post-Ckpt)**, beating **`Facts-Only` (`73.1%` `W4`, `80.2%` Post; `+10.94 pts` `W4` / `+18.15 pts` DiD)**, edging `Frozen-Reviewer` (`80.3%` `W4`, `80.8%` Post; **`+3.55 pts [+0.54, +8.62]` Post DiD, `3/3` seeds**; `0.00 pts` stationary diff), and beating **`Directive-SGEH-VBQ` (`61.9%` `W4`; `+22.09 pts` across `3/3` seeds, where `VBQ` spent `9.7` `W4` probes on Partial Recurrence `A'` vs. `2.7` for `Editable-Reviewer`)**—though `Hydrogen`'s `W4` counterfactual replay (`-3.09 pts [-4.74, +0.00]`) shows `R_ckpt` already flagged the `W4` drop (`Old = 82.5%` vs. `New = 79.4%` 4-ep DP).
 
 ### 3.000 Mechanistic Resolution (`2026-11-26`): `Decomposed-Procedure` & `Verify-Before-Quarantine SGEH-VBQ` Across `Flash` & `Hydrogen` + Even-Stride `ServeLearnBench L3`
 Full write-up: [2026-11-26-decomposed-procedure-and-vbq-resolution.md](file:///home/xz479/llm-time/setup-debates/2026-11-26-decomposed-procedure-and-vbq-resolution.md).
@@ -191,10 +202,13 @@ Executed 16-cell single-seed (`seed=42`, `horizon=15`, `gemini-3.8-flash`, `thin
 
 ### 4.1 Next Benchmark Refinement & Deferred Candidates (`Awaiting Explicit PI GO`)
 
-The [23 November group meeting brief](setup-debates/2026-11-22-group-meeting-brief.md) records the baseline comparisons, the source of each harness instruction, and the proposed editable-versus-frozen procedure test. The immediate experimental queue below still starts with benchmark refinement.
+The [23 November group meeting brief](setup-debates/2026-11-22-group-meeting-brief.md) records the baseline comparisons, the source of each harness instruction, and the proposed editable-versus-frozen procedure test.
 
-The cross-model guidance comparison (`autonomy_cross_model_n6` across `gemini-3.8-flash`, `gemini-4-hydrogen`, and `gemma-4-31b-it`) is complete ([discussion & table](setup-debates/2026-11-21-alphadesk-v03-multishift-spec.md#completed-cross-model-epistemic-autonomy-fork-autonomy_cross_model_n6--2026-11-21)). Next concrete target for discussion before `GO`:
-- **Partially Observed Ambiguity Case (`AlphaDesk` Next Refinement):** Because `freeze_matched_loss` exposed `liquidity_status == "acute_liquidity_freeze"` on the free public tape, `Factual-Ledger` resolved the `~19.0` loss at `99.9%–100.0%` without needing a paid probe. A sharper next case matches the `~19.0` apparent portfolio loss under **identical public macro covariates** (`orderly_normal`), where **only a `-10 pt` single-strategy probe** distinguishes a 2-session factor correlation dip from a permanent reversal—testing autonomous Value-of-Information (VOI) probing directly.
+The cross-model guidance comparison (`autonomy_cross_model_n6` across `gemini-3.8-flash`, `gemini-4-hydrogen`, and `gemma-4-31b-it`) is complete. [Discussion and results](setup-debates/2026-11-21-alphadesk-v03-multishift-spec.md#completed-cross-model-epistemic-autonomy-fork-autonomy_cross_model_n6--2026-11-21)
+
+**Completed on 25–26 November.** AlphaDesk now tests a temporary dip and a lasting reversal with matching initial public signals. The team also ran the editable-versus-frozen procedure comparison over three windows. [Hidden-ambiguity results](results/runs/voi_hidden_ambiguity_complete_n6/summary.md) · [Editable-procedure results](results/runs/proc3w_complete_n4/summary.md)
+
+**Completed on 27 November (`meta_reviewer_h60_flash_n6` & `meta_reviewer_h60_hydrogen_n3`, Stopped at Next `GO` Gate).** Executed the pre-registered `H = 60` two-level (`task_note` + reviewer-only `review_rule`) single-lifetime experiment + paired `W4` counterfactual replay (`Seeds 701–706` on `Flash`, `Seeds 701–703` on `Hydrogen`). Untuned `Flash` (`69.5%` `W4`, `66.3%` Post) ties `Frozen-Reviewer` (`-1.23 pts` `W4`) and trails `Facts-Only` (`75.1%` Post, `-8.84 pts`) due to strategy-bound passive `review_rule`s on `4/6` seeds—yet achieves `+52.15%` and `+28.73%` counterfactual `W4` replay gains on the `2/6` seeds (`704, 705`) that evolve falsification rules, while `Hydrogen` spontaneously writes strategy-agnostic `review_rule`s and hits **`84.0%` `W4` / `84.3%` Post (`#1`)**, beating both `Facts-Only` (`+10.94 pts` `W4`) and `Directive-SGEH-VBQ` (`+22.09 pts` `W4`). **Next Decision (`Awaiting Explicit PI GO`):** Launch **Act 3 Cross-Lifetime `8B` Reviewer Training** (`Qwen3-8B` LoRA trained across lifetimes in two setups, evaluated frozen from empty notes in the held-out third setup against the untuned `8B` reviewer). [Full write-up](setup-debates/2026-11-27-h60-reviewer-self-improvement.md) · [Flash N=6 summary](results/runs/meta_reviewer_h60_flash_n6/summary.md) · [Hydrogen N=3 summary](results/runs/meta_reviewer_h60_hydrogen_n3/summary.md)
 
 Earlier deferred proposals (held until PI re-opens):
 

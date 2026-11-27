@@ -1964,6 +1964,126 @@ def _render_autonomy_fork_card(mrep: dict[str, Any]) -> str:
     )
 
 
+def _render_meta_reviewer_h60_card(mrep: dict[str, Any]) -> str:
+    """Render Single-Lifetime `H=60` Two-Level Reviewer Self-Improvement & Paired `W4` Replay Bento Card."""
+    run_id = str(mrep.get("run_id", "meta_reviewer_h60"))
+    horizon = int(mrep.get("horizon", 60))
+    seeds = mrep.get("seeds", [])
+    usd = float(mrep.get("total_run_usd", 0.0))
+    p_vers = mrep.get("provider_model_versions", {})
+    bmm = mrep.get("by_model_mode", {})
+    pcon = mrep.get("paired_contrasts", {})
+    replays_map = mrep.get("counterfactual_w4_replays", {})
+
+    arm_meta = [
+        ("factual_ledger_v3", "Facts-Only (No Notes)", "AUTONOMY BASELINE", "neutral"),
+        ("frozen_reviewer_v3", "Frozen-Reviewer (Task-Note Editable, Rule Frozen)", "CONTROL", "accent"),
+        ("editable_reviewer_v3", "Editable-Reviewer (Both Note & Rule Editable)", "OURS", "emerald"),
+        ("sgeh_vbq_v3", "Directive-SGEH-VBQ (Verify-Before-Quarantine)", "REF CONTROLLER", "neutral"),
+    ]
+
+    panels: list[str] = []
+    for mdl in mrep.get("models", []):
+        ver_lbl = ", ".join(p_vers.get(mdl, [mdl]))
+        mbk = bmm.get(mdl, {})
+        mpc = pcon.get(mdl, {})
+
+        for wm in ("drift_meta_60", "stationary_meta_60", "drift_dip_c_60"):
+            if wm not in mbk or not mbk[wm]:
+                continue
+            am = mbk[wm]
+            rows: list[str] = []
+            for ak, albl, btxt, btone in arm_meta:
+                if ak not in am:
+                    continue
+                d = am[ak]
+                hl = ' class="row-highlight"' if ak == "editable_reviewer_v3" else ""
+                rows.append(
+                    f"<tr{hl}>"
+                    f'<td><strong>{esc(albl)}</strong> <span class="badge badge-{btone}">{esc(btxt)}</span></td>'
+                    f'<td class="num mono"><strong>{float(d.get("w4_dp_utility_pct", 0.0)):.1f}%</strong></td>'
+                    f'<td class="num mono">{float(d.get("post_dp_utility_pct", 0.0)):.1f}%</td>'
+                    f'<td class="num mono">{float(d.get("w2_dp_utility_pct", 0.0)):.1f}% / {float(d.get("w3_dp_utility_pct", 0.0)):.1f}%</td>'
+                    f'<td class="num mono">{float(d.get("w4_calm_optimal_pct", 0.0)):.1f}%</td>'
+                    f'<td class="num mono">{float(d.get("mean_probes", 0.0)):.1f} <span class="table-sub">(W4={float(d.get("mean_w4_probes", 0.0)):.1f})</span></td>'
+                    f'<td class="num mono">{float(d.get("mean_note_edits_post", 0.0)):.1f} / {float(d.get("mean_rule_edits_post", 0.0)):.1f}</td>'
+                    f'<td class="num mono">${float(d.get("mean_usd", 0.0)):.3f}</td>'
+                    f"</tr>"
+                )
+            c_w4 = mpc.get(wm, {}).get("w4__editable_minus_frozen_reviewer", {})
+            c_post = mpc.get(wm, {}).get("post__editable_minus_frozen_reviewer", {})
+            c_fact = mpc.get(wm, {}).get("w4__editable_reviewer_minus_facts_only", {})
+            con_summary = ""
+            if c_w4:
+                ci_w4 = c_w4.get("ci95", [0.0, 0.0])
+                con_summary += (
+                    f' · <strong>W4 Editable − Frozen: {_fmt_signed(float(c_w4.get("mean", 0.0)), 2)} pts '
+                    f'[{_fmt_signed(float(ci_w4[0]), 1)}, {_fmt_signed(float(ci_w4[1]), 1)}]</strong>'
+                )
+            if c_post:
+                con_summary += f' · Post-Ckpt Editable − Frozen: {_fmt_signed(float(c_post.get("mean", 0.0)), 2)} pts'
+            if c_fact:
+                con_summary += f' · W4 Editable − Facts: {_fmt_signed(float(c_fact.get("mean", 0.0)), 2)} pts'
+
+            panels.append(
+                f'<div class="chart-panel">'
+                f'<div class="chart-panel-title">Model: <code>{esc(mdl)}</code> (<code>{esc(ver_lbl)}</code>) · Stream: <code>{esc(wm)}</code>{con_summary}</div>'
+                f'<div class="table-wrap"><table class="data-table compact-table">'
+                f'<thead><tr><th>Arm</th><th class="num">W4 Surprise DP (%)</th><th class="num">Post-Ckpt DP (%)</th>'
+                f'<th class="num">W2 / W3 DP (%)</th><th class="num">W4 CalmOpt</th><th class="num">Probes</th>'
+                f'<th class="num">Note / Rule Edits</th><th class="num">USD</th></tr></thead>'
+                f'<tbody>{"".join(rows)}</tbody></table></div>'
+                f"</div>"
+            )
+
+        replays = replays_map.get(mdl, [])
+        if replays:
+            rp_rows = []
+            for rp in replays:
+                rp_rows.append(
+                    f"<tr>"
+                    f'<td class="mono">{esc(rp.get("seed", ""))}</td>'
+                    f'<td class="mono">{esc(rp.get("w4_start_session", ""))} / {esc(rp.get("replay_after_episode", ""))}</td>'
+                    f'<td class="mono">{esc(rp.get("rule_changed_before_w4", False))}</td>'
+                    f'<td class="mono">{esc(rp.get("note_revision_changed", False))}</td>'
+                    f'<td class="mono">{esc(rp.get("step1_action_changed", False))}</td>'
+                    f'<td class="num mono">{float(rp.get("old_block_dp_pct", 0.0)):.1f}%</td>'
+                    f'<td class="num mono">{float(rp.get("new_block_dp_pct", 0.0)):.1f}%</td>'
+                    f'<td class="num mono"><strong>{_fmt_signed(float(rp.get("delta_block_dp_pct", 0.0)), 2)}%</strong></td>'
+                    f"</tr>"
+                )
+            panels.append(
+                f'<div class="chart-panel">'
+                f'<div class="chart-panel-title">Paired Counterfactual <code>W4</code> Review Replay (<code>R_ckpt</code> Old Rule vs. <code>R_pre_W4</code> New Rule · <code>{esc(mdl)}</code>)</div>'
+                f'<div class="table-wrap"><table class="data-table compact-table">'
+                f'<thead><tr><th>Seed</th><th>W4 Start / Replay Ep</th><th>ΔRule?</th><th>ΔTaskNote?</th>'
+                f'<th>Step+1 ΔAction?</th><th class="num">Old 4-Ep DP</th><th class="num">New 4-Ep DP</th>'
+                f'<th class="num">New − Old (4-Ep)</th></tr></thead>'
+                f'<tbody>{"".join(rp_rows)}</tbody></table></div>'
+                f"</div>"
+            )
+
+    return (
+        f'<article id="run-{esc(run_id)}" class="bento-card bento-12 causal-run-card">'
+        f'<div class="pill-strip">'
+        f'<span class="badge badge-emerald">H = {horizon} SINGLE-LIFETIME · TWO-LEVEL REVIEWER SELF-IMPROVEMENT</span>'
+        f'<span class="badge badge-neutral mono">run: {esc(run_id)}</span>'
+        f'<span class="badge badge-neutral mono">N = {len(seeds)} Private Schedules {esc(seeds)}</span>'
+        f'<span class="badge badge-neutral mono">reviewer-only rule · spend: ${usd:.4f}</span>'
+        f"</div>"
+        f'<h3 class="card-title">Single-Lifetime Two-Level Reviewer Self-Improvement &amp; Counterfactual <code>W4</code> Replay (<code>{esc(run_id)}</code>)</h3>'
+        f'<p class="card-prose">'
+        f"Tests whether an agent can improve how its reviewer revises advice within one <code>{horizon}</code>-session life "
+        f"(temporary loss <code>W2</code> → lasting change <code>W3</code> → partial-recurrence surprise <code>W4</code>). "
+        f"Both <strong>Editable-Reviewer (Ours)</strong> and <strong>Frozen-Reviewer (Control)</strong> rewrite actor-visible "
+        f"<code>task_note</code> every 4 sessions under identical budgets; only <strong>Editable-Reviewer</strong> applies updates "
+        f"to reviewer-only <code>review_rule</code> (strictly hidden from the actor)."
+        f"</p>"
+        + "".join(panels)
+        + "</article>"
+    )
+
+
 def _render_matrix_reports(
     matrix_reports: list[dict[str, Any]], run_summaries: list[dict[str, str]]
 ) -> tuple[str, str]:
@@ -1976,6 +2096,10 @@ def _render_matrix_reports(
         run_id = str(mrep.get("run_id", "matrix_run"))
         rfile = str(mrep.get("report_file", "report.json"))
         by_mode = mrep.get("by_mode_summary")
+        if str(mrep.get("experiment_type", "")) == "meta_reviewer_h60":
+            rendered_matrix_ids.add(run_id)
+            top_blocks.insert(0, _render_meta_reviewer_h60_card(mrep))
+            continue
         if str(mrep.get("experiment_type", "")) == "cross_model_autonomy_fork_v3":
             rendered_matrix_ids.add(run_id)
             top_blocks.insert(0, _render_autonomy_fork_card(mrep))

@@ -13,6 +13,7 @@ from src.harnesses.procedure_harness import (
     SLBFactualLogHarness,
     SLBTransferredProcedureHarness,
     SelfAuthoredProcedureHarness,
+    TwoLevelReviewerHarness,
 )
 from src.harnesses.scoped_cards import ScopedCardBookHarness
 from src.harnesses.sgeh import SurpriseGatedEpistemicHarness
@@ -39,6 +40,8 @@ def make_harness(name: str) -> EpistemicHarness:
         "frozen_proc_v3": lambda: SelfAuthoredProcedureHarness(mode="frozen"),
         "decomposed_proc_v3": lambda: SelfAuthoredProcedureHarness(mode="editable", action_agnostic_schema=True),
         "frozen_decomposed_proc_v3": lambda: SelfAuthoredProcedureHarness(mode="frozen", action_agnostic_schema=True),
+        "editable_reviewer_v3": lambda: TwoLevelReviewerHarness(mode="editable_rule"),
+        "frozen_reviewer_v3": lambda: TwoLevelReviewerHarness(mode="frozen_rule"),
         "sgeh_directive_v3": DirectiveSGEHV3Harness,
         "sgeh_vbq_v3": lambda: DirectiveSGEHV3Harness(verify_before_quarantine=True),
         "periodic_probe": PeriodicProbeHarness,

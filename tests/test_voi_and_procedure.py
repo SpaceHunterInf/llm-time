@@ -286,6 +286,7 @@ def test_new_modules_security_hygiene() -> None:
     checked = [
         ROOT / "src" / "harnesses" / "procedure_harness.py",
         ROOT / "scripts" / "run_editable_procedure_experiment.py",
+        ROOT / "scripts" / "run_meta_reviewer_h60.py",
     ]
     for path in checked:
         txt = path.read_text(encoding="utf-8")
@@ -293,6 +294,101 @@ def test_new_modules_security_hygiene() -> None:
         assert "shell=True" not in txt
         assert not re.search(r"AIza[0-9A-Za-z\-_]{20,}", txt)
         assert not re.search(r"\bsk-[0-9A-Za-z]{16,}", txt)
+
+
+def test_two_level_reviewer_actor_isolation_and_frozen_rule_invariance() -> None:
+    """Verify `review_rule` NEVER leaks into actor `build_context`, while `Frozen-Reviewer` edits `task_note` only."""
+    from src.harnesses.procedure_harness import TwoLevelReviewerHarness
+
+    with tempfile.TemporaryDirectory() as tmp:
+        ledger = CostLedger(results_root=Path(tmp), run_id="test_two_level", phase="dev", max_usd=0.05)
+        mock_c = MeteredLLMClient(model="mock", ledger=ledger, thinking_budget=0)
+
+        edit_r = TwoLevelReviewerHarness(mode="editable_rule", review_cadence=2)
+        assert edit_r.task_note == ""
+        assert edit_r.review_rule == ""
+
+        for ep in range(2):
+            rec = PublicEpisodeRecord("alpha_desk_v3", ep, ep + 1, "Session", [], 85.0)
+            m = edit_r.on_episode_complete(rec, mock_c)
+
+        assert m["reflection_calls"] == 1
+        ckpt_note = edit_r.task_note
+        ckpt_rule = edit_r.review_rule
+        assert ckpt_note != ""
+        assert ckpt_rule != ""
+
+        # CRITICAL INVARIANT: `review_rule` must NEVER appear anywhere in actor `build_context`!
+        actor_ctx = edit_r.build_context(PublicTaskSpec("alpha_desk_v3", 2, 3, "", "Session #3", []))
+        assert ckpt_note in actor_ctx
+        assert ckpt_rule not in actor_ctx
+        assert "review_rule" not in actor_ctx
+
+        # Fork into `Frozen-Reviewer` at checkpoint: both update `task_note`, ONLY `Editable-Reviewer` updates `review_rule`!
+        froz_r = TwoLevelReviewerHarness(
+            mode="frozen_rule",
+            review_cadence=2,
+            initial_task_note=ckpt_note,
+            initial_review_rule=ckpt_rule,
+        )
+        for ep in range(2, 4):
+            rec = PublicEpisodeRecord("alpha_desk_v3", ep, ep + 1, "Session", [], 22.0)
+            mf = froz_r.on_episode_complete(rec, mock_c)
+            me = edit_r.on_episode_complete(rec, mock_c)
+
+        assert mf["reflection_calls"] == me["reflection_calls"] == 1
+        assert froz_r.task_note != ckpt_note
+        assert edit_r.task_note != ckpt_note
+        assert froz_r.review_rule == ckpt_rule
+        assert edit_r.review_rule != ckpt_rule
+        assert edit_r.review_rule not in edit_r.build_context(PublicTaskSpec("alpha_desk_v3", 4, 5, "", "Session #5", []))
+
+
+def test_meta_horizon_h60_env_and_offline_runner_with_w4_replay() -> None:
+    """Verify `AlphaDeskV3MetaHorizonEnv` private jittered schedule, prefix match, and offline `mock` W4 replay."""
+    from scripts.run_meta_reviewer_h60 import run_meta_batch
+    from src.envs.alpha_desk_v3 import AlphaDeskV3MetaHorizonEnv
+
+    w1_seen = set()
+    for sd in (701, 702, 703, 704, 705, 706):
+        e_drift = AlphaDeskV3MetaHorizonEnv(meta_mode="drift_meta_60", seed=sd, horizon=60)
+        e_stat = AlphaDeskV3MetaHorizonEnv(meta_mode="stationary_meta_60", seed=sd, horizon=60)
+        assert e_drift.window_ranges == e_stat.window_ranges
+        assert 11 <= e_drift.w1_len <= 13
+        assert e_drift.w4_len >= 13
+        w1_seen.add(e_drift.w1_len)
+
+        # Bit-identical W1 episodes & calm boundary transitions
+        for ep in range(e_drift.w1_len):
+            e_drift.start_episode(ep)
+            e_stat.start_episode(ep)
+            assert e_drift.step_tool("inspect_desk_brief", {}).observation == e_stat.step_tool("inspect_desk_brief", {}).observation
+        for b in (e_drift.t_w2, e_drift.t_w3, e_drift.t_w4):
+            assert e_drift._episodes[b]["is_high_vol"] is False
+    assert len(w1_seen) >= 2  # Private window timing varies across seeds!
+
+    with tempfile.TemporaryDirectory() as tmp:
+        rep = run_meta_batch(
+            run_id="mock_meta60",
+            models=["mock"],
+            arms=["factual_ledger_v3", "frozen_reviewer_v3", "editable_reviewer_v3", "sgeh_vbq_v3"],
+            world_modes=["drift_meta_60", "stationary_meta_60"],
+            seeds=[701],
+            horizon=60,
+            max_usd=0.05,
+            workers=2,
+            thinking_budget=0,
+            checkpoint_file=Path(tmp) / "w1_ckpts.json",
+            acquire_checkpoints_only=False,
+            enable_w4_replay=True,
+            results_root=Path(tmp),
+            dotenv_path=None,
+        )
+        assert rep["total_run_usd"] == 0.0
+        replays = rep["counterfactual_w4_replays"]["mock"]
+        assert len(replays) == 1
+        assert replays[0]["rule_changed_before_w4"] is True
+        assert replays[0]["note_revision_changed"] is True
 
 
 def test_public_slb_scope_partitioning_covers_all_banking_l3_prefixes() -> None:
