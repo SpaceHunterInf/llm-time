@@ -16,13 +16,14 @@ THESIS_EVOLUTION: dict[str, Any] = {
         "deleting stale utility rules at the boundary t* should immediately restore adaptation."
     ),
     "sharpened_thesis": (
-        "Sharpened Thesis ('Forgetting != Adaptation -> Scope-Conditioned Surprise + Non-Redundant Hazard Probing'): "
-        "Iterations 1b & 1c proved ALL passive card-surgery edits stall at 51%-61% vs. 86.5% Stationary: wiping weights+score "
-        "hurt by -10.42 pts [-19.86, -1.67] (18/19 probes hit STRAT_ALPHA), and showing unattributed calm score (~73) yielded "
-        "-5.10 pts [-17.16, +7.88] at 0-char diff. In Iteration 2 (`iter2_frozen_n4`, 96 counterbalanced branches across Seeds 201-204), "
-        "scope-conditioned `SGEH+Hazard` beat `ScopedCardBook` by +27.45 pts [+20.02, +34.88] on Abrupt Reversal, +21.00 pts on "
-        "Gradual Decay, +28.12 pts on Off-Scope Shock (0 false alarms), and beat `SGEH-SurpriseOnly` by +8.28 pts [+5.69, +10.34] "
-        "(79.5% vs 0.0% CalmOpt) on Type-II Opportunity Rise—while beating `SkillBook` by +51.14 pts [+48.27, +56.68] on `LifeCompanion` (H=21, N=3) at the lowest total API cost."
+        "Sharpened Thesis ('Forgetting != Adaptation -> Verify-Before-Quarantine + Selective Reviewer Meta-Plasticity'): "
+        "(1) Iterations 1b/1c falsified naive memory wiping (-10.42 pts [-19.86, -1.67]), and 3-model `autonomy_cross_model_n6` proved objective "
+        "factual ledgers solve visible reversals (15/15 seeds) while taking 0.0 checks across 192 silent-opportunity sessions. "
+        "(2) Under unlabelled equal-loss hidden dips vs. reversals, `Verify-Before-Quarantine (Directive-SGEH-VBQ)` rescued post-dip abandonment "
+        "by +28.64 pts (59.0% -> 87.7%) and ranked #1 across all five 3-window streams (85.6% mean). "
+        "(3) In `H=60` two-level reviewer runs + `K=8` strategy-anonymized replays, self-written meta-rules causally shift 4-session net returns in "
+        "BOTH directions (+27.41 pts p=0.0068 on s704 & +21.12 pts p=0.0003 on s709 vs. -19.95 pts p=0.0078 rule erasure on s711), while untuned "
+        "`Qwen/Qwen3-8B` rubber-stamps 93.3% of its own rewrites (Oracle - Keep = +0.17 pts)—pinpointing joint proposer + gatekeeper RL for Act 3."
     ),
     "key_pillars": [
         "Zero Tool-Error Non-Stationarity (Latent R_t Shifts Only)",
@@ -107,33 +108,33 @@ DECISIONS_D1_D7: list[dict[str, str]] = [
 OPEN_SUPERVISOR_QUESTIONS: list[dict[str, str]] = [
     {
         "id": "Q1",
-        "title": "Structured Scoped Cards vs. Open-Ended Self-Authored Meta-Principles",
-        "current_choice": "Structured Scoped Heuristic Cards ({scope_condition, recommended_weights, uses, mean_score})",
+        "title": "Second Setting (`LifeCompanion`) & Joint Proposer + Gatekeeper `Qwen3-8B` Training",
+        "current_choice": "Untuned Qwen/Qwen3-8B baseline completed on AlphaDesk (`CoalitionOps` 100% untouched for 3-fold transfer)",
         "discussion_prompt": (
-            "Cards permit clean single-variable causal surgery (Iter 1b/1c) and exact attribution, yet in Iter 1b "
-            "associating STRAT_GAMMA with elevated_volatility (Card C2) contributed to cross-scope masking in calm "
-            "sessions. Should v0.3 / Act 3 relax the schema so the agent can author free-form epistemic meta-policies "
-            "(e.g., 'run non-redundant round-robin probes across untested strategies whenever score drops >25 pts below mu_hat')?"
+            "On 8 fresh AlphaDesk streams (`qwen8b_keep_or_apply_n8`), untuned Qwen3-8B accepted 93.3% (28/30) of distinct rewrites "
+            "and 3/3 harmful edits (-6.79, -3.09, -2.52 pts), while its own T=0.6 proposals had only +0.17 pts Oracle - Keep headroom "
+            "(max +1.53 pts vs. +21 to +27 pts on Flash falsification rules). Confirm running the same preselected Keep-or-Apply check "
+            "on LifeCompanion next, and training BOTH candidate proposal and KEEP/APPLY gatekeeping jointly via multi-rollout GRPO."
         ),
     },
     {
         "id": "Q2",
-        "title": "Completed AlphaDesk-v0.3 (N=4) & 6-Window ServeLearnBench L3; Real S&P 500 Kept Low Priority",
-        "current_choice": "Completed: AlphaDesk-v0.3 (+13.7 to +36.1 pts vs Baselines) & SLB banking_l3 (70.0% Ours vs 45.0% SkillBook / 62.5% SRN)",
+        "title": "Dated Real-Data Financial Slice (`Kenneth French 10-Industry Portfolios`)",
+        "current_choice": "Queued per PI & Codex 28 Nov priority list (strict decision-date cutoff + held-out evaluation era)",
         "discussion_prompt": (
-            "Multi-shift stateful AlphaDesk-v0.3 (H=84, 5 shifts / 6 windows, 6 strategies + 4.0 pt L1 turnover) and 6-window "
-            "ServeLearnBench banking_l3 both delivered clear multi-shift wins across all baselines. Notably, Shelf vs. NoShelf "
-            "was net-neutral (-0.15 pts) because 1-session runner-up falsification on Partial Recurrence (A') balances 1-probe "
-            "savings on Full Recurrence (A)—highlighting a crisp target for Act 3 RL policy optimization. Real S&P 500 stays low-priority backlog."
+            "Replay chronological Kenneth French 10-Industry Portfolio returns inside AlphaDesk so the reviewer observes only returns "
+            "available up to decision date t and period t+1 realized returns score the allocation, reserving a later historical era "
+            "strictly for evaluation."
         ),
     },
     {
         "id": "Q3",
-        "title": "How can the next AlphaDesk case test the value of a paid check?",
-        "current_choice": "Refine the benchmark first. Training and a retail replication are deferred.",
+        "title": "External Benchmark Scale-Up (`ServeLearnBench` -> `ReScopeBench`) & ICML Jan 2027 Audit",
+        "current_choice": "ICML 2027 Abstract due 14 Jan 2027, Full Paper due 22 Jan 2027 AoE; mid-Dec human coauthor trace verification",
         "discussion_prompt": (
-            "Match the initial loss and observable market conditions for a short dip and a lasting reversal. "
-            "Then test whether the agent buys a diagnostic before the two worlds diverge visibly."
+            "Small <12-case dev slices on ServeLearnBench hit a binary-feedback identifiability floor (45.0% overall, 93.3% General). "
+            "Decide scope/budget for full-protocol ServeLearnBench (vs. 73.4 Continual Harness reference) and ReScopeBench (vs. 60.19 "
+            "overall / 81.12 task performance reference), alongside human verification of saved win/reversal traces."
         ),
     },
 ]
@@ -141,38 +142,38 @@ OPEN_SUPERVISOR_QUESTIONS: list[dict[str, str]] = [
 MILESTONES_TIMELINE: list[dict[str, str]] = [
     {
         "week": "Week 1 (Nov 17 - Nov 23, 2026)",
-        "phase": "Causal Mechanism & Testbed Hardening",
+        "phase": "Causal Surgery, Multi-Shift v0.3 & 3-Model Autonomy",
+        "status": "completed",
+        "deliverables": (
+            "Iter 1b/1c single-variable card surgery (-10.42 pts naive wipe); Iter 2/2d counterbalanced matrices (+8.28 pts Type-II hazard); "
+            "5-shift AlphaDesk-v0.3 (5,040 eps), 6-window SLB banking_l3 (70.0%), and 3-model autonomy fork (Flash, Hydrogen, Gemma 4 31B)."
+        ),
+    },
+    {
+        "week": "Week 2 (Nov 24 - Nov 28, 2026)",
+        "phase": "Hidden-Ambiguity VBQ, H=60 Reviewer Replays & Untuned 8B Gate",
+        "status": "completed",
+        "deliverables": (
+            "Unscripted Hidden-Ambiguity VOI + Verify-Before-Quarantine (+28.64 pts dip rescue, #1 across 5 streams); H=60 two-level reviewer "
+            "across 2 endings + K=8 strategy-anonymized replays (+27.41 / +21.12 vs. -19.95 pts); local FP16 Qwen/Qwen3-8B Keep-or-Apply baseline (N=8, M=32)."
+        ),
+    },
+    {
+        "week": "Week 3 (Nov 29 - Dec 7, 2026)",
+        "phase": "Second Setting (`LifeCompanion`), Real-Data Slice & Joint 8B Training",
         "status": "active",
         "deliverables": (
-            "ParadigmBench 3 domains + AlphaDesk-v0.2 (19/19 leak/isolation tests); M1 16-cell exploratory sweep "
-            "($0.91); Iter 1 ($1.44), Iter 1b single-variable surgery ($1.51), and Iter 1c score-anchor factorial."
+            "Awaiting 29 Nov Group Meeting GO: LifeCompanion Keep-or-Apply baseline (CoalitionOps untouched for 3-fold held-out transfer), "
+            "Kenneth French 10-Industry dated slice, and joint proposer+gatekeeper Qwen3-8B LoRA RL on RTX 8000 / CSD3."
         ),
     },
     {
-        "week": "Week 2 (Nov 24 - Nov 30, 2026)",
-        "phase": "Act 1 Multi-Seed Proof & Act 2 SGEH+Hazard Matrix",
-        "status": "upcoming",
-        "deliverables": (
-            "N=10 fresh-seed causal fork; SGEH-v2 (level CUSUM + EWMA slope + staleness hazard clock + non-redundant "
-            "probing) vs. SRN, Periodic-Probe, SGEH-NoReset across all 5 regimes + ServeLearnBench Mini (Retail/Banking L3)."
-        ),
-    },
-    {
-        "week": "Week 3 (Dec 1 - Dec 7, 2026)",
-        "phase": "Act 3 Turnkey CSD3 LoRA SFT + Multi-Turn GRPO",
+        "week": "Week 4 (Dec 8 - Jan 22, 2027)",
+        "phase": "Full-Protocol External Benchmarks, Human Audit & ICML Submission",
         "status": "planned",
         "deliverables": (
-            "8B smoke test on local RTX 8000 (48 GB); full 8B/27B LoRA SFT -> Outcome-GRPO vs. Epistemic+Brier-GRPO "
-            "across 3 leave-one-domain-out folds on Cambridge CSD3 & collaborator GPUs."
-        ),
-    },
-    {
-        "week": "Week 4 (Dec 8 - Mid-Dec 2026 -> Jan 2027)",
-        "phase": "Tier-3 Frozen Cross-Lab Evaluation & Paper Draft",
-        "status": "planned",
-        "deliverables": (
-            "One-shot frozen evaluation across Gemini 4 Argon/Carbon, DeepSeek, and full ServeLearnBench L1-L3; "
-            "complete camera-quality ACL (Jan 2027) / ICML 2027 manuscript, figures, and reproducibility artifact."
+            "Full-protocol ServeLearnBench & ReScopeBench evaluation; mid-December human coauthor trace audit & AI disclosure statement; "
+            "ICML 2027 abstract (14 Jan 2027) and full paper (22 Jan 2027 AoE)."
         ),
     },
 ]
@@ -1252,6 +1253,74 @@ CHRONOLOGICAL_DEBATE_LOG: list[dict[str, str]] = [
             "equal-loss `~19.0` `freeze_matched_loss` trap—proving reactive adaptation is unlocked by preserving per-strategy facts! "
             "(2) Conversely, on Type-II `opportunity_rise`, `Factual-Ledger` took **`0.0` probes across all 12/12 `Flash`+`Hydrogen` branches**, "
             "whereas `Directive-SGEH` won `+6.34` and `+6.51 pts` DiD (and cut `Gemma 4 31B` turn-limit fallbacks from `11 -> 1`, `+9.97 pts`)."
+        ),
+    },
+    {
+        "step": "Round 12 · Unscripted Hidden-Ambiguity VOI & Self-Authored `Editable` vs. `Frozen` Procedures",
+        "timestamp": "2026-11-25 (22:15 UTC)",
+        "focus": "Equal-Loss Hidden Dip vs. Reversal (`-10 pt` Diagnostic VOI) & Endogenous Lesson Over-Generalization",
+        "critique": (
+            "Following the 23 Nov group meeting, PI & Codex prioritized removing the public liquidity-freeze label so a 2-session desk-wide dip "
+            "and a lasting reversal share identical initial losses (`~18.9`) and calm brief covariates, separable only via a `-10 pt` paid check, "
+            "and testing whether a frozen LLM can author and edit its own blank procedure (`Editable` vs. `Frozen`)."
+        ),
+        "resolution": (
+            "Ran live-rollout W1 Hidden-Ambiguity VOI (`Flash N=6`, `Hydrogen N=3`) and 3-window `proc3w_flash_n4`: "
+            "(1) `ScopedCardBook` survived dips (`84.6%`) only by collapsing on reversals (`49.7%`, `-28.34 pts`), while rigid CUSUM `Directive-SGEH` "
+            "falsely abandoned winners on dips (`59.0%`); `Editable-Procedure` (`83.6%`/`96.0%` dip, `77.3%`/`78.7%` rev) bought 1 diagnostic probe on Dip Day 2 "
+            "and held calm winners cleanly. (2) On `double_reversal_3w`, `Editable` beat `Frozen` by `+10.12 pts [4/4 seeds]`, but on `dip_then_reversal_3w` "
+            "`Editable` over-generalized its dip lesson (`68.4%` vs `83.6%` `Factual-Ledger`, `-15.19 pts`) and took `0.0` probes on Type-II `opp_double_rise_3w`."
+        ),
+    },
+    {
+        "step": "Round 13 · `Verify-Before-Quarantine (SGEH-VBQ)` (`+28.6 pts` Dip Rescue) & Action-Agnostic Procedures",
+        "timestamp": "2026-11-26 (21:40 UTC)",
+        "focus": "Solving Dip-vs-Reversal Without Abandonment & Isolating Object-Level Strategy Leakage in Frozen Procedures",
+        "critique": (
+            "We hypothesized that rigid CUSUM failed on hidden dips because it quarantined the calm incumbent before checking `desk_best`, "
+            "and that `Editable` vs. `Frozen` divergence came from concrete strategy IDs (`STRAT_S1..S6`) leaking into procedural text. "
+            "Codex audited the follow-up and noted that regenerating checkpoints alongside action-scrubbing bundled two changes."
+        ),
+        "resolution": (
+            "(1) `Directive-SGEH-VBQ` (verifying the incumbent on the first post-alarm probe before quarantining) jumped `hidden_transient_dip` from "
+            "`59.0% -> 87.7%` (`+28.64 pts [+12.26, +42.96]`, `88.4%` CalmOpt) and ranked **`#1` overall across all five 3-window streams (`85.6%` mean)**! "
+            "(2) Scrubbing strategy IDs rescued `dip_then_reversal_3w` (`68.4% -> 83.3%`, `+14.93 pts` on Flash; `+3.56 pts` on Hydrogen) and shrank "
+            "`Editable - Frozen` on `double_reversal_3w` from `+10.12 -> +1.27 pts`; conceded Codex's bundling catch and designed the unbundled `H=60` two-level test."
+        ),
+    },
+    {
+        "step": "Round 14 · `H=60` Two-Level Reviewer (`task_note` + Hidden `review_rule`) & `K=8` Strategy-Anonymized Replays",
+        "timestamp": "2026-11-28 (16:20 UTC)",
+        "focus": "Isolating Reviewer Self-Modification Across Two Endings (`A'` & `Dip->C`) and Auditing Single-Rollout Noise",
+        "critique": (
+            "Codex audited our initial `H=60` runs (`Flash N=6`, `Hydrogen N=3`), catching a displayed version-header mismatch (`v3` vs `v11`) in single-draw "
+            "replays, named-strategy recurrence in `s705`, and asking whether rule changes beat `K=8` within-rule rerun noise when strategy names are mechanically "
+            "stripped and when `W4` ends on a recurrence-free `2-day dip -> C` shift (`Seeds 707-712`)."
+        ),
+        "resolution": (
+            "Executed `repeated_rule_replay_stage1_k8` (`224` constant-header rollouts) + fresh-seed `meta_dip_c_h60_flash_n6`: "
+            "(1) `Flash s704` repeated cleanly (`+35.74 pts` verbatim `p=0.0003`; **`+27.41 pts` strategy-anonymized `p=0.0068`**), while `s705`'s single-draw `+28.73` "
+            "**reversed to `-22.36 pts` (`p=0.0078`)** once `W1 S4` recurrence was isolated! "
+            "(2) On `drift_dip_c_60`, live `Flash Editable - Frozen = -2.05 pts` (`Directive-SGEH-VBQ` `#1` at `88.2%` `W4`, `6/6` seeds) because symmetric helpful upgrades "
+            "(`s709`: **`+21.12 pts` anonymized `p=0.0003`**) and harmful rule erasures (`s711`: **`-19.95 pts` anonymized `p=0.0078`**) canceled out; meanwhile `Hydrogen` "
+            "wrote 100% strategy-free rules and ranked `#1` (`84.0%` `W4`, `+3.55 pts` Post DiD)."
+        ),
+    },
+    {
+        "step": "Round 15 · Untuned Local `Qwen/Qwen3-8B` Preselected Keep-or-Apply Baseline (`N=8`, `M=32`) & ICML 2027 Plan",
+        "timestamp": "2026-11-28 (19:30 UTC)",
+        "focus": "Measuring Pre-Outcome Edit Selectivity & Proposal Ceiling on Untuned `8B` Before Fitting Weights (`CoalitionOps` Held Out)",
+        "critique": (
+            "Codex noted that comparing `R_ckpt` vs `R_pre_W4` misattributes multi-step edits (e.g. `s709` already introduced `<45` at session 36 before session 40), "
+            "and proposed evaluating an untuned `8B` reviewer (`Qwen/Qwen3-8B` FP16 on local RTX 8000) on fresh preselected review steps (`Keep` vs `Apply` chosen "
+            "before the next outcome, scored 4 sessions later after fees), leaving `CoalitionOps` untouched for 3-fold transfer."
+        ),
+        "resolution": (
+            "Ran `qwen8b_keep_or_apply_n8` (`Seeds 731-738`, `M=32` opportunities at `16, 28, 36, 44`, `K=6` trials/version, `$10.87` + `735` `$0.00` local GPU calls): "
+            "(1) Separating note revision (`T=0.0`), replacement proposal (`T=0.6`), and `KEEP/APPLY` gatekeeping (`T=0.0`) fixed `87.5%` joint-call copy inertia (`30/32` distinct). "
+            "(2) Untuned `Qwen3-8B` exhibited a **`93.3%` (`28/30`) rubber-stamp `APPLY` bias**, matching `Always-Apply` (`64.14%`) to **`+0.00 pts` on all `8/8` seeds**, "
+            "trailing `Always-Keep` (`64.51%`; `-0.82 pts [-1.82, -0.04]` on `drift_meta_60`), and accepting **`3/3` harmful material edits** (`-6.79, -3.09, -2.52 pts`). "
+            "(3) Critically, `Oracle - Keep` on untuned `8B` proposals was only **`+0.17 pts`** (`0/32` proposals `>= +2.0 pts`), proving `Act 3` must jointly train **candidate rule proposal + gatekeeping**."
         ),
     },
 ]

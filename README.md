@@ -2,7 +2,7 @@
 
 Investigating how self-evolving LLM agents behave—and how they can adapt without paying a prohibitive verification token tax—when the underlying **reward/utility paradigm** shifts silently over a single continuous lifetime (e.g., decaying market alpha, utility reversal, evolving user lifecycle needs).
 
-For the 23 November group meeting, open the [offline meeting website](results/supervisor_dashboard.html). Gemini’s [original six-section roadmap dashboard](results/roadmap_dashboard.html) is preserved as it appeared on 21 November. The [discussion record](setup-debates/2026-11-22-group-meeting-brief.md) links the claims to the original runs and access audit.
+For the **29 November 2026 group meeting**, read the [29 November Executive Summary](setup-debates/2026-11-29-group-meeting-executive-summary.md) or open the updated [offline meeting website & slide deck](results/supervisor_dashboard.html) (click **Present ↗** for slides). Earlier milestones remain preserved in the [23 November discussion brief](setup-debates/2026-11-22-group-meeting-brief.md) and the byte-frozen 21 November [original roadmap dashboard](results/roadmap_dashboard.html).
 
 ## Core Thesis
 Modern non-parametric self-improvement methods (`GEPA`, `ACE`, `Meta-Harness`, `ReasoningBank`, `SRN`) crystallize past successes into persistent rules, prompts, or historical scores. When the **reward paradigm** shifts silently (without tool crashes or syntax errors), self-improvement turns into an **anti-adaptation ratchet**: self-authored rules and accumulated win-counts talk the agent back into stale policies ("hypothesis resurrection").

@@ -1,23 +1,23 @@
 <section class="brief-slide brief-cover" id="brief" data-slide="The question" aria-labelledby="brief-title">
   <div class="cover-copy">
-    <p class="brief-kicker"><span class="kicker-rule"></span>Group meeting <span aria-hidden="true">/</span> 23 November 2026</p>
-    <h1 id="brief-title">When should an AI question a strategy that still works?</h1>
-    <p class="cover-lead">An agent can notice when its usual choice starts failing. What tells it to look elsewhere while that choice still pays off?</p>
-    <p class="brief-body">Our project follows a language model across many decisions. Its tools keep working, its memory persists, and what earns a reward can change without warning. We varied what the model remembers and who decides when to check.</p>
-    <a class="brief-link reading-only" href="#experiment">See how we tested it <span aria-hidden="true">↓</span></a>
+    <p class="brief-kicker"><span class="kicker-rule"></span>Group meeting <span aria-hidden="true">/</span> 29 November 2026</p>
+    <h1 id="brief-title">Can an agent rewrite its own learning rule without erasing what works?</h1>
+    <p class="cover-lead">Over the past week we moved from hand-written checking controllers to agents that edit their own reviewer rules—and tested an untuned local 8B reviewer before weight training.</p>
+    <p class="brief-body">Across 95,718 metered calls ($$215.00 of $$70,000 spent), we isolated when factual memory suffices, when paid verification beats rigid alarms, why zero-shot self-editing nets ~0 on average despite +21 to +27 pt wins on individual rules, and what an 8B model must learn.</p>
+    <a class="brief-link reading-only" href="#experiment">Walk through the evidence <span aria-hidden="true">↓</span></a>
   </div>
   <figure class="probe-figure">
-    <figcaption><span class="figure-kicker">An observation from AlphaDesk</span><strong>One check, two possible worlds</strong></figcaption>
-    <p>In our simulated investment desk, the same agent spent 10 points to check strategy S1 in each world.</p>
-    <div class="probe-reading"><div><span>Unused strategy improved</span><strong>82.1</strong></div><span class="yield-track" aria-hidden="true"><i></i></span></div>
-    <div class="probe-reading probe-stable"><div><span>Payoffs stayed stable</span><strong>18.1</strong></div><span class="yield-track" aria-hidden="true"><i></i></span></div>
-    <div class="probe-scale" aria-hidden="true"><span>0</span><span>Yield estimate</span><span>100</span></div>
-    <p class="figure-source">Gemini 3.8 Flash · seed 505 · session 15<br>First directed check in each matched world.</p>
+    <figcaption><span class="figure-kicker">Eight-trial counterfactual replay</span><strong>Self-written rules cut both ways</strong></figcaption>
+    <p>Swapping only the hidden reviewer rule on identical saved history (strategy names stripped, 8 trials/arm):</p>
+    <div class="probe-reading"><div><span>Seed 704 falsification upgrade</span><strong>+27.4 pts</strong></div><span class="yield-track" aria-hidden="true"><i></i></span></div>
+    <div class="probe-reading probe-stable"><div><span>Seed 711 rule-erasure regression</span><strong>−20.0 pts</strong></div><span class="yield-track" aria-hidden="true"><i></i></span></div>
+    <div class="probe-scale" aria-hidden="true"><span>−25</span><span>4-session net DP Δ</span><span>+35</span></div>
+    <p class="figure-source">Gemini 3.8 Flash · K = 8 trials · constant version header<br>Permutation p = 0.0068 (+27.4) and p = 0.0078 (−20.0).</p>
   </figure>
 </section>
 
-<section class="brief-slide" id="experiment" data-slide="The experiment" aria-labelledby="experiment-title">
-  <p class="brief-kicker">Experiment design</p>
+<section class="brief-slide" id="experiment" data-slide="Baseline decomposition" aria-labelledby="experiment-title">
+  <p class="brief-kicker">Foundation · 23 Nov baseline</p>
   <h2 id="experiment-title">Same model, same history.<br>Three ways to use experience.</h2>
   <p class="brief-deck">In AlphaDesk v0.3 the model allocates a portfolio across six anonymous strategies. It sees the market brief and its own results. Checking one strategy’s current yield costs 10 points. Moving money also costs points.</p>
   <div class="arm-grid">
@@ -28,57 +28,72 @@
   <p class="brief-note"><strong>What is a harness?</strong> The software that supplies memory and instructions between decisions. We changed the harness and kept each model’s weights fixed. The evaluation branches start from the same public history and holdings.</p>
 </section>
 
-<section class="brief-slide" id="reversal" data-slide="A visible reversal" aria-labelledby="reversal-title">
-  <p class="brief-kicker">AlphaDesk · abrupt reversal</p>
-  <h2 id="reversal-title">When the old choice failed,<br>the factual ledger helped.</h2>
+<section class="brief-slide" id="reversal" data-slide="Visible reversal &amp; silent opportunity" aria-labelledby="reversal-title">
+  <p class="brief-kicker">Three-model baseline · reversal vs. silent opportunity</p>
+  <h2 id="reversal-title">Facts solve visible drops;<br>silent gains require scheduled checks.</h2>
   <div class="results-layout">
-    <div class="brief-stat"><strong>$reversal_tally</strong><span>model–seed pairs recovered better with the ledger than with rule cards.</span></div>
+    <div class="brief-stat"><strong>$reversal_tally</strong><span>reversal pairs won by ledger over cards — yet <strong>$opportunity_checks</strong> spontaneous checks across $opportunity_sessions silent-opportunity sessions.</span></div>
     <div><div class="brief-table-wrap">$reversal_table</div>
-    <p class="figure-note">Higher is better. Scores are relative to a reference that knows the payoffs and pays switching costs. Flash and Hydrogen saw six generated markets each. Gemma saw three of the same markets. <a class="reading-only" href="#score-guide">Scoring equation</a></p></div>
+    <div class="brief-table-wrap">$opportunity_table</div>
+    <p class="figure-note">Top: abrupt reversal DP utility (%). Bottom: net effect of adding scheduled checking directions on silent opportunity vs. stable twin. <a class="reading-only" href="#score-guide">Scoring equation</a></p></div>
   </div>
-  <p class="brief-note"><strong>Did explicit directions help further?</strong> Flash lost ground with directions, Hydrogen changed little, and Gemma improved on average. Gemma had only three shorter runs and needed fewer fallback actions with directions. Its estimated additional gain is uncertain.</p>
+  <p class="brief-note"><strong>Takeaway entering Week 2.</strong> Objective per-strategy facts unlock reactive recovery across Gemini Flash, Hydrogen and Gemma 4 31B, while zero-surprise opportunity shifts need explicit exploration triggers.</p>
 </section>
 
-<section class="brief-slide" id="opportunities" data-slide="A silent opportunity" aria-labelledby="opportunities-title">
-  <p class="brief-kicker">AlphaDesk · silent opportunity</p>
-  <h2 id="opportunities-title">What if the old choice<br>keeps paying?</h2>
-  <p class="brief-deck">An unused strategy improves while the current holding looks fine. A second world stays stable. The agent sees the same evidence at the start and pays the same price to look.</p>
+<section class="brief-slide" id="voi-ambiguity" data-slide="Hidden dip vs. lasting reversal" aria-labelledby="voi-title">
+  <p class="brief-kicker">Nov 25–26 · Hidden-ambiguity VOI &amp; VBQ</p>
+  <h2 id="voi-title">When a temporary dip looks identical<br>to a permanent collapse.</h2>
+  <p class="brief-deck">Per last week’s meeting, we removed the public freeze label and matched the initial loss (~18.9) and calm brief signals across a 2-session desk-wide dip and a permanent reversal. Only a −10 pt paid check reveals whether alternatives also dropped.</p>
   <div class="results-layout">
-    <div class="brief-stat"><strong>$opportunity_checks</strong><span>paid checks across $opportunity_sessions sessions with the factual ledger alone. Two Gemini models, $opportunity_branches branches.</span></div>
-    <div><div class="brief-table-wrap">$opportunity_table</div><p class="figure-note">Difference in percentage points of reference utility, after checking and switching costs. Each model averaged three directed checks per branch in both worlds. Gemma was evaluated on reversal and stability only.</p></div>
+    <div class="brief-stat"><strong>+28.6 <small>pts</small></strong><span>dip rescue from Verify-Before-Quarantine (59.0% → 87.7% on Flash, 88.4% calm optimal).</span></div>
+    <div><div class="brief-table-wrap">$voi_table</div><p class="figure-note">Live-rollout W1 acquisition (zero scripted role maps). Rule cards survive the dip only by collapsing to 49.7% on true reversals.</p></div>
   </div>
-  <p class="brief-note"><strong>The trade-off.</strong> The extra instruction bought information the models otherwise passed up. That information paid for itself when the alternative improved. The stable comparison shows what unnecessary checking cost.</p>
+  <p class="brief-note"><strong>Why rigid CUSUM failed and VBQ won.</strong> Rigid quarantine abandoned valid winners on Dip Day 1. Verifying the incumbent on the first paid check retained holdings on dips (0 turnover) and ranked #1 across all five 3-window Flash streams (85.6% mean).</p>
 </section>
 
-<section class="brief-slide" id="banking" data-slide="External banking test" aria-labelledby="banking-title">
-  <p class="brief-kicker">External benchmark · ServeLearnBench</p>
-  <h2 id="banking-title">Does the idea travel to a bank?</h2>
-  <p class="brief-deck">A customer-service agent handles transfers, cards and credit requests as bank policy changes. It learns from feedback on earlier cases. Its memory is then frozen while it handles the test cases in that window.</p>
+<section class="brief-slide" id="h60-reviewer" data-slide="Two-level reviewer &amp; K=8 replay" aria-labelledby="h60-title">
+  <p class="brief-kicker">Nov 27–28 · 60-session reviewer self-improvement</p>
+  <h2 id="h60-title">Separating actor advice from<br>the hidden reviewer rule.</h2>
+  <p class="brief-deck">Each agent starts with blank notes and updates actor-visible <code>task_note</code> plus a reviewer-only <code>review_rule</code> (hidden from the actor) every 4 sessions across W1 → W2 dip → W3 shift → W4 surprise.</p>
   <div class="results-layout">
-    <div class="brief-stat"><strong>3 <small>cases</small></strong><span>ahead of the strongest baseline on 40 post-change cases. Eight passed only with our harness and five only with the baseline.</span></div>
-    <div><div class="brief-table-wrap">$banking_table</div><p class="figure-note">Gemini 3.8 Flash · one six-window banking stream. Reflection calls are extra calls used to revise memory. Acting calls are counted separately.</p></div>
+    <div class="brief-stat"><strong>−1.2 / −2.1</strong><span>pts live Flash Editable − Frozen across 12 streams (two W4 endings), while Hydrogen ranked #1 at 84.0%.</span></div>
+    <div><div class="brief-table-wrap">$h60_table</div>
+    <div class="brief-table-wrap">$k8_table</div>
+    <p class="figure-note">Bottom: 8-trial replays from identical saved states with constant version headers. Single-trial Seed 705 (+28.73) reversed to −22.36 at K=8.</p></div>
   </div>
-  <p class="brief-note"><strong>What transferred?</strong> The idea of revisiting advice within the relevant workflow. Banking used its own grouping and review rules. A simpler earlier banking variant scored 5/14 against 9/14 for the memoryless baseline on a different stream. An unchanged harness still needs a held-out test.</p>
+  <p class="brief-note"><strong>Why live Flash netted ~0.</strong> Untuned Flash writes genuine strategy-free falsification upgrades (+27.41 pts on 704, +21.12 pts on 709) at roughly the same rate it overwrites working checks (−19.95 pts on 711).</p>
 </section>
 
-<section class="brief-slide" id="guidance" data-slide="Who supplied the guidance?" aria-labelledby="guidance-title">
-  <p class="brief-kicker">Interpreting the evidence</p>
-  <h2 id="guidance-title">Who told the agent to check?</h2>
-  <div class="audit-grid">
-    <article><h3>We wrote the AlphaDesk rule.</h3><p>In calm conditions, check a lightly held strategy if it has gone at least seven calm sessions without a check and the cooldown has passed. The instruction names the strategy. If its measured yield clears the expected portfolio mean by more than eight points, shift 55% to it.</p></article>
-    <article><h3>The banking model wrote the advice.</h3><p>It drafted rules from public outcomes on earlier serving cases. We supplied the workflow categories, failure threshold and prompt to reconsider archived rules. Only a separate reference agent received the active bank policy.</p></article>
+<section class="brief-slide" id="qwen8b-gate" data-slide="Untuned Qwen3-8B gatekeeper" aria-labelledby="qwen-title">
+  <p class="brief-kicker">Nov 28 · Local Qwen/Qwen3-8B pre-training baseline</p>
+  <h2 id="qwen-title">Can an untuned 8B reviewer filter<br>its own rule edits before outcomes?</h2>
+  <p class="brief-deck">On 8 fresh AlphaDesk streams (Seeds 731–738, CoalitionOps untouched), local FP16 <code>Qwen/Qwen3-8B</code> chose <code>KEEP</code> vs. <code>APPLY</code> at preselected steps (16, 28, 36, 44) strictly before the next episode, scored 4 sessions later over K = 6 Flash rollouts.</p>
+  <div class="results-layout">
+    <div class="brief-stat"><strong>$qwen_apply_rate</strong><span>distinct edits accepted by untuned Qwen3-8B — matching Always-Apply to 0.00 pts on all 8/8 seeds.</span></div>
+    <div><div class="brief-table-wrap">$qwen_table</div><p class="figure-note">All 3 material proposals (|Δ| ≥ 2 pts: −6.79, −3.09, −2.52 pts) were harmful and accepted 3/3. Local Qwen3-8B ran at $$0.00 on RTX 8000.</p></div>
   </div>
-  <div class="audit-verdict"><h3>Did the harness see the future?</h3><p>The paths we traced pass public observations to the acting harness. Researchers did use private strategy roles to build AlphaDesk’s common starting history and private labels to select the banking slice. A public freeze label also made one AlphaDesk case easy. These choices limit what the gains tell us about independent discovery.</p></div>
+  <p class="brief-note"><strong>Critical catch before GPU training.</strong> Oracle − Always-Keep on untuned 8B proposals was only +0.17 pts (max +1.53 pts, 0 proposals ≥ +2 pts): untuned 8B writes generic weighting tweaks rather than paid-check falsification rules. Act 3 must train <em>both</em> rule proposal and gatekeeping.</p>
 </section>
 
-<section class="brief-slide" id="next-study" data-slide="The next test" aria-labelledby="next-title">
-  <p class="brief-kicker">Group discussion · proposed work</p>
-  <h2 id="next-title">Can the agent write a checking rule worth keeping?</h2>
+<section class="brief-slide" id="banking" data-slide="External benchmarks &amp; ICML bar" aria-labelledby="banking-title">
+  <p class="brief-kicker">External anchor &amp; venue readiness</p>
+  <h2 id="banking-title">Where we stand on banking<br>and the ICML 2027 bar.</h2>
+  <p class="brief-deck">ICML 2027 abstracts are due 14 January 2027 (full paper 22 January, AoE). Our strongest current contribution is causal evaluation of self-modifying reviewers under non-stationary rewards; external scale-up remains ahead.</p>
+  <div class="results-layout">
+    <div class="brief-stat"><strong>28 / 40</strong><span>post-shift banking cases passed with ScopedSGEH (70.0% vs. 62.5% SRN, 45.0% SkillBook) on our 6-window slice.</span></div>
+    <div><div class="brief-table-wrap">$banking_table</div><p class="figure-note">Even-stride transferred procedure pilot scored 45.0% (93.3% General compliance) on a sparse 9-case/window slice, hitting binary-feedback sample limits.</p></div>
+  </div>
+  <p class="brief-note"><strong>External reference targets.</strong> Full-protocol reference bars are 73.4 average hidden reward across 9 ServeLearnBench settings (Continual Harness) and 60.19 overall / 81.12 task performance on ReScopeBench.</p>
+</section>
+
+<section class="brief-slide" id="next-study" data-slide="Tomorrow's group decisions" aria-labelledby="next-title">
+  <p class="brief-kicker">29 November meeting · decisions needed</p>
+  <h2 id="next-title">Three decisions for Week 3</h2>
   <ol class="next-steps">
-    <li><div><h3>Make the benchmark harder to guess.</h3><p>Give a temporary dip and a lasting reversal the same visible loss and market signals. A paid check can distinguish them. This is the next benchmark change.</p></div></li>
-    <li><div><h3>Let the agent write the procedure.</h3><p>Start with blank memory and ordinary task instructions. At a shared checkpoint, apply later self-authored edits in one branch and freeze the procedure in the other. Give both the same review budget and fresh feedback.</p></div></li>
-    <li><div><h3>Test the next change and an unfamiliar setup.</h3><p>Measure later reward after fees on changing and stable streams. Then freeze the method and start with empty memory in a held-out task. A recursive improvement claim needs an edit that improves how the agent makes subsequent edits.</p></div></li>
+    <li><div><h3>1. Second setting (LifeCompanion) → Joint 8B proposer + gatekeeper training.</h3><p>Run the preselected Keep-or-Apply baseline on LifeCompanion (keeping CoalitionOps 100% untouched for 3-fold held-out transfer), and train Qwen3-8B via multi-candidate rollout GRPO so it learns to <em>propose</em> falsification rules as well as reject bad rewrites.</p></div></li>
+    <li><div><h3>2. Dated real-data slice in AlphaDesk.</h3><p>Replay chronological Kenneth French 10-Industry Portfolio returns under strict decision-date causality (reviewer sees only history up to date t; period t+1 scores the allocation; later era held out).</p></div></li>
+    <li><div><h3>3. Full-protocol ServeLearnBench → ReScopeBench &amp; human audit.</h3><p>Scale ServeLearnBench beyond <12-case dev slices under matched actor/budget, evaluate ReScopeBench, and schedule the mid-December human coauthor trace verification required for ICML disclosure.</p></div></li>
   </ol>
-  <p class="brief-note"><strong>Question for the group.</strong> What would persuade us that the agent learned when a check is worth its price? We can test this with frozen models. Training stays deferred.</p>
-  <a class="brief-link reading-only" href="#meeting-evidence">Questions and source tables <span aria-hidden="true">↓</span></a>
+  <p class="brief-note"><strong>Budget &amp; status.</strong> All runs stopped cleanly. Cumulative spend: <strong>$$215.00 / $$70,000.00 (99.69% remaining)</strong>. Ready to execute whichever track the group prioritizes.</p>
+  <a class="brief-link reading-only" href="#meeting-evidence">Executive Q&amp;A and full run notebook <span aria-hidden="true">↓</span></a>
 </section>
