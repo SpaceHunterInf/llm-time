@@ -287,6 +287,7 @@ def test_new_modules_security_hygiene() -> None:
         ROOT / "src" / "harnesses" / "procedure_harness.py",
         ROOT / "scripts" / "run_editable_procedure_experiment.py",
         ROOT / "scripts" / "run_meta_reviewer_h60.py",
+        ROOT / "scripts" / "run_repeated_rule_replay.py",
     ]
     for path in checked:
         txt = path.read_text(encoding="utf-8")
@@ -389,6 +390,47 @@ def test_meta_horizon_h60_env_and_offline_runner_with_w4_replay() -> None:
         assert len(replays) == 1
         assert replays[0]["rule_changed_before_w4"] is True
         assert replays[0]["note_revision_changed"] is True
+
+
+def test_anonymize_rule_strategies_and_saved_checkpoint_repeated_replay_offline() -> None:
+    """Verify 100% strategy-ID removal while keeping numeric thresholds, and verify exact saved-state replay."""
+    import re
+    from scripts.run_repeated_rule_replay import (
+        PRESET_CHECKPOINTS,
+        reconstruct_saved_review_checkpoint,
+        run_repeated_replay_batch,
+    )
+    from src.harnesses.procedure_harness import anonymize_rule_strategies
+
+    s705_rule = (
+        "Maintain current allocations (calm: S1=0.55/S6=0.45; elevated: S3=0.55/S6=0.45) as long as session gross "
+        "remains >= 55. If calm gross drops below 45, probe S2 or S3. If elevated gross drops below 45, probe S1 or S2."
+    )
+    anon_705 = anonymize_rule_strategies(s705_rule)
+    assert not re.search(r"\b(?:STRAT_)?S[1-6]\b", anon_705, flags=re.IGNORECASE)
+    assert "55" in anon_705 and "45" in anon_705
+
+    # Verify bit-exact saved checkpoint reconstruction across all 6 Stage-1 presets!
+    for pk, cfg in PRESET_CHECKPOINTS.items():
+        bundle = reconstruct_saved_review_checkpoint(cfg, ROOT)
+        assert bundle["displayed_rule_version"] >= 1
+        for k_anon in ("initial_anonymized", "revised_anonymized"):
+            assert not re.search(r"\b(?:STRAT_)?S[1-6]\b", bundle["rules_map"][k_anon], flags=re.IGNORECASE)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        rep = run_repeated_replay_batch(
+            run_id="mock_rep_stage1",
+            preset_keys=["flash_s704_w4_ep48", "hydro_s702_froz_w3_ep32"],
+            arms=["initial_verbatim", "revised_verbatim", "initial_anonymized", "revised_anonymized"],
+            k_trials=2,
+            workers=2,
+            max_usd=0.05,
+            use_mock=True,
+            results_root=Path(tmp),
+            dotenv_path=None,
+        )
+        assert rep["total_run_usd"] == 0.0
+        assert len(rep["checkpoints"]) == 2
 
 
 def test_public_slb_scope_partitioning_covers_all_banking_l3_prefixes() -> None:

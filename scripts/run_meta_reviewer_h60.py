@@ -247,11 +247,13 @@ def _run_counterfactual_w4_replay(
     snap_h.factual.on_episode_complete(pub_rec, client)
     pre_review_note = snap_h.task_note
 
+    # Hold the displayed version label identical across both counterfactual branches (`snap_h.rule_version`)
+    shared_disp_ver = int(new_rule_version)
     rev_old = snap_h.counterfactual_review(
         env_name=pub_rec.env_name,
         episode_idx=ep,
         override_review_rule=old_rule,
-        override_rule_version=old_rule_version,
+        override_rule_version=shared_disp_ver,
         client=client,
         method_suffix="cf_old_rule",
     )
@@ -259,7 +261,7 @@ def _run_counterfactual_w4_replay(
         env_name=pub_rec.env_name,
         episode_idx=ep,
         override_review_rule=new_rule,
-        override_rule_version=new_rule_version,
+        override_rule_version=shared_disp_ver,
         client=client,
         method_suffix="cf_new_rule",
     )

@@ -61,6 +61,46 @@ def sanitize_procedure_text(
     return txt[:max_chars].strip()
 
 
+def anonymize_rule_strategies(rule_text: str) -> str:
+    """Deterministically strip concrete strategy IDs/allocations from a `review_rule` while keeping thresholds intact."""
+    txt = _CTRL_RE.sub(" ", str(rule_text or "")).strip()
+    if not txt:
+        return ""
+    # 1. Braced weight dicts containing S1..S6 -> "the current target allocation"
+    txt = re.sub(r"\{[^}]*\b(?:STRAT_)?S[1-6]\b[^}]*\}", "the current target allocation", txt, flags=re.IGNORECASE)
+    # 2. Parenthesized per-regime weight maps -> "(per-regime target weights)"
+    txt = re.sub(
+        r"\([^)]*\b(?:STRAT_)?S[1-6]\s*[:=]\s*0\.\d+[^)]*\)",
+        "(per-regime target weights)",
+        txt,
+        flags=re.IGNORECASE,
+    )
+    # 3. Inline weight pairs like `0.55 S4 / 0.45 S5` or `S5: 0.55 and S6: 0.45`
+    txt = re.sub(
+        r"\b0\.\d+\s+(?:STRAT_)?S[1-6](?:\s*(?:/|and|,)\s*0\.\d+\s+(?:STRAT_)?S[1-6])*",
+        "the current target weights",
+        txt,
+        flags=re.IGNORECASE,
+    )
+    txt = re.sub(
+        r"\b(?:STRAT_)?S[1-6]\s*[:=]\s*0\.\d+(?:\s*(?:,|/|and)\s*(?:STRAT_)?S[1-6]\s*[:=]\s*0\.\d+)*",
+        "the current target weights",
+        txt,
+        flags=re.IGNORECASE,
+    )
+    # 4. Multi-strategy lists (`STRAT_S3 or S4`, `S1/S2`, `S1 and S2`) -> "candidate strategies"
+    txt = re.sub(
+        r"\b(?:STRAT_)?S[1-6](?:\s*(?:/|or|and|,)\s*(?:STRAT_)?S[1-6])+",
+        "candidate strategies",
+        txt,
+        flags=re.IGNORECASE,
+    )
+    # 5. Any remaining single strategy ID (`STRAT_S1..S6` or `S1..S6`) -> "a candidate strategy"
+    txt = re.sub(r"\b(?:STRAT_)?S[1-6]\b", "a candidate strategy", txt, flags=re.IGNORECASE)
+    txt = re.sub(r"\s+", " ", txt).strip()
+    return txt
+
+
 class SelfAuthoredProcedureHarness(EpistemicHarness):
     """Factual-Ledger + Self-Authored `self_procedure` (`editable` vs `frozen`, free-form vs `action_agnostic_schema`)."""
 

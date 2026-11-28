@@ -267,6 +267,18 @@ def collect_dashboard_telemetry(workspace_root: Path) -> dict[str, Any]:
         for d in runs_dir.iterdir():
             if d.is_dir() and (d.name.startswith("meta60_hy_") or d.name == "meta60_w1_ckpt_hydro"):
                 superseded_shards.add(d.name)
+    if (runs_dir / "repeated_rule_replay_stage1_k8").is_dir() and runs_dir.is_dir():
+        for d in runs_dir.iterdir():
+            if d.is_dir() and d.name.startswith("rep_stage1_"):
+                superseded_shards.add(d.name)
+    if (runs_dir / "meta_dip_c_h60_flash_n6").is_dir() and runs_dir.is_dir():
+        for d in runs_dir.iterdir():
+            if d.is_dir() and (
+                d.name.startswith("meta60_dipc_")
+                or d.name.startswith("meta60_s2_stat_")
+                or d.name == "meta60_s2_w1_ckpt_flash"
+            ):
+                superseded_shards.add(d.name)
 
     if runs_dir.is_dir():
         for run_subdir in sorted(runs_dir.iterdir()):
@@ -331,6 +343,7 @@ def collect_dashboard_telemetry(workspace_root: Path) -> dict[str, Any]:
                         "procedure_versions_audit.json",
                         "reviewer_versions_audit.json",
                         "counterfactual_w4_replay.json",
+                        "repeated_replay_trials_full.json",
                     )
                     or jname.startswith("checkpoint_")
                 ):

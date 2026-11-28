@@ -1,18 +1,18 @@
 {
   "by_model": {
     "gemini-3.8-flash": {
-      "calls": 74051,
-      "input_tokens": 131002009,
-      "output_tokens": 6250434,
-      "thinking_tokens": 5530331,
-      "usd": 142.080437
+      "calls": 80959,
+      "input_tokens": 146710572,
+      "output_tokens": 6954861,
+      "thinking_tokens": 5926055,
+      "usd": 157.950725
     },
     "gemini-4-hydrogen": {
-      "calls": 7547,
-      "input_tokens": 15915334,
-      "output_tokens": 810432,
-      "thinking_tokens": 1582588,
-      "usd": 41.712802
+      "calls": 7795,
+      "input_tokens": 16502032,
+      "output_tokens": 842815,
+      "thinking_tokens": 1634031,
+      "usd": 43.221549
     },
     "gemma-4-26b-a4b-it": {
       "calls": 16,
@@ -37,15 +37,15 @@
     }
   },
   "by_phase": {
-    "dev": 185.154364
+    "dev": 202.533409
   },
   "credit_pool_usd": 70000.0,
   "monitor_contact_masked": "gs***@gmail.com",
-  "remaining_credit_pool_usd": 69814.8456,
-  "total_calls": 82542,
-  "total_input_tokens": 148343635,
-  "total_output_tokens": 7118829,
-  "total_thinking_tokens": 7753782,
-  "total_usd": 185.154364,
-  "updated_at_utc": "2026-11-27T23:19:50.042193+00:00"
+  "remaining_credit_pool_usd": 69797.4666,
+  "total_calls": 89698,
+  "total_input_tokens": 164638896,
+  "total_output_tokens": 7855639,
+  "total_thinking_tokens": 8200949,
+  "total_usd": 202.533409,
+  "updated_at_utc": "2026-11-28T16:21:17.114765+00:00"
 }

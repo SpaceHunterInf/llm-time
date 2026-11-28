@@ -2084,6 +2084,79 @@ def _render_meta_reviewer_h60_card(mrep: dict[str, Any]) -> str:
     )
 
 
+def _render_repeated_replay_stage1_card(mrep: dict[str, Any]) -> str:
+    """Render Stage-1 K=8 Repeated-Trial Rule Replay & Mechanical Strategy De-Binding Bento Card."""
+    run_id = str(mrep.get("run_id", "repeated_rule_replay_stage1"))
+    k_trials = int(mrep.get("k_trials", 8))
+    usd = float(mrep.get("total_run_usd", 0.0))
+
+    panels: list[str] = []
+    for ck in mrep.get("checkpoints", []):
+        lbl = str(ck.get("label", ck.get("preset_key", "")))
+        live_dp = float(ck.get("live_4ep_dp_pct", 0.0))
+        disp_v = ck.get("displayed_rule_version_held_constant", 1)
+        amap = ck.get("arm_summaries", {})
+        con = ck.get("contrasts", {})
+
+        rows: list[str] = []
+        for ak in ("initial_verbatim", "revised_verbatim", "initial_anonymized", "revised_anonymized"):
+            if ak not in amap:
+                continue
+            s = amap[ak]
+            hl = ' class="row-highlight"' if ak in ("revised_verbatim", "revised_anonymized") else ""
+            rows.append(
+                f"<tr{hl}>"
+                f'<td class="mono"><strong>{esc(ak)}</strong></td>'
+                f'<td class="num mono"><strong>{float(s.get("mean_dp_pct", 0.0)):.2f}%</strong></td>'
+                f'<td class="num mono">{float(s.get("sd_within_dp_pct", 0.0)):.2f}</td>'
+                f'<td class="num mono">{float(s.get("min_dp_pct", 0.0)):.1f}–{float(s.get("max_dp_pct", 0.0)):.1f}%</td>'
+                f'<td class="num mono">{float(s.get("mean_probes", 0.0)):.2f} <span class="table-sub">({float(s.get("step1_probe_rate_pct", 0.0)):.0f}% step+1)</span></td>'
+                f'<td class="num mono">{esc(s.get("unique_notes_count", 0))}/{esc(s.get("k_trials", k_trials))}</td>'
+                f"</tr>"
+            )
+
+        c_verb = con.get("revised_minus_initial_verbatim", {})
+        c_anon = con.get("revised_minus_initial_anonymized", {})
+        c_txt = ""
+        if c_verb:
+            c_txt += (
+                f' · <strong>Verbatim Δ: {_fmt_signed(float(c_verb.get("diff_mean", 0.0)), 2)} pts '
+                f'(p={float(c_verb.get("perm_p_two_sided", 1.0)):.4f})</strong>'
+            )
+        if c_anon:
+            c_txt += (
+                f' · <strong>Anonymized Δ: {_fmt_signed(float(c_anon.get("diff_mean", 0.0)), 2)} pts '
+                f'(p={float(c_anon.get("perm_p_two_sided", 1.0)):.4f})</strong>'
+            )
+
+        panels.append(
+            f'<div class="chart-panel">'
+            f'<div class="chart-panel-title">{esc(lbl)} · Constant Header <code>v{esc(disp_v)}</code> · Live 4-Ep = <code>{live_dp:.2f}%</code>{c_txt}</div>'
+            f'<div class="table-wrap"><table class="data-table compact-table">'
+            f'<thead><tr><th>Rule Arm</th><th class="num">Mean 4-Ep DP</th><th class="num">Within-Rule SD</th>'
+            f'<th class="num">Range</th><th class="num">Mean Probes</th><th class="num">Unique Notes</th></tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table></div>'
+            f"</div>"
+        )
+
+    return (
+        f'<article id="run-{esc(run_id)}" class="bento-card bento-12 causal-run-card">'
+        f'<div class="pill-strip">'
+        f'<span class="badge badge-emerald">STAGE 1 · K = {k_trials} REPEATED-TRIAL REPLAY &amp; STRATEGY DE-BINDING</span>'
+        f'<span class="badge badge-neutral mono">run: {esc(run_id)}</span>'
+        f'<span class="badge badge-neutral mono">matched version labels · spend: ${usd:.4f}</span>'
+        f"</div>"
+        f'<h3 class="card-title">Repeated-Trial Rule Reliability &amp; Strategy De-Binding Audit (<code>{esc(run_id)}</code>)</h3>'
+        f'<p class="card-prose">'
+        f"Measures between-rule net-of-fee DP return differences against within-rule rerun noise across <code>K = {k_trials}</code> "
+        f"independent <code>(1 review + 4 actor sessions)</code> trials per arm under identical displayed version labels, "
+        f"separating general falsification rules (<code>revised_anonymized</code>) from named strategies (<code>revised_verbatim</code>)."
+        f"</p>"
+        + "".join(panels)
+        + "</article>"
+    )
+
+
 def _render_matrix_reports(
     matrix_reports: list[dict[str, Any]], run_summaries: list[dict[str, str]]
 ) -> tuple[str, str]:
@@ -2096,6 +2169,10 @@ def _render_matrix_reports(
         run_id = str(mrep.get("run_id", "matrix_run"))
         rfile = str(mrep.get("report_file", "report.json"))
         by_mode = mrep.get("by_mode_summary")
+        if str(mrep.get("experiment_type", "")) == "repeated_rule_replay_stage1":
+            rendered_matrix_ids.add(run_id)
+            top_blocks.insert(0, _render_repeated_replay_stage1_card(mrep))
+            continue
         if str(mrep.get("experiment_type", "")) == "meta_reviewer_h60":
             rendered_matrix_ids.add(run_id)
             top_blocks.insert(0, _render_meta_reviewer_h60_card(mrep))
