@@ -20,6 +20,8 @@ class ModelRate:
 STATIC_MODEL_RATES: dict[str, ModelRate] = {
     "mock": ModelRate(0.0, 0.0, 0.0, "offline", 0, True),
     "local-vllm": ModelRate(0.0, 0.0, 0.0, "open-weight", 4, True),
+    "Qwen/Qwen3-8B": ModelRate(0.0, 0.0, 0.0, "local-open-weight", 4, True),
+    "qwen/qwen3-8b": ModelRate(0.0, 0.0, 0.0, "local-open-weight", 4, True),
     "gemini-3.1-flash-lite": ModelRate(0.25, 1.50, 0.025, "flash-lite", 1, True),
     "gemini-3.5-flash-lite": ModelRate(0.30, 2.50, 0.030, "flash-lite", 2, True),
     "gemma-4-26b-a4b-it": ModelRate(0.25, 1.25, 0.025, "gemma-4-open", 4, True),

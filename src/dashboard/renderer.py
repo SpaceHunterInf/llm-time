@@ -2157,6 +2157,107 @@ def _render_repeated_replay_stage1_card(mrep: dict[str, Any]) -> str:
     )
 
 
+def _render_qwen8b_keep_or_apply_card(mrep: dict[str, Any]) -> str:
+    """Render Untuned `Qwen3-8B` Keep-or-Apply Reviewer Gatekeeper (`One Step Toward Option A`) Bento Card."""
+    run_id = str(mrep.get("run_id", "qwen8b_keep_or_apply_n8"))
+    rev_mdl = str(mrep.get("reviewer_model", "Qwen/Qwen3-8B"))
+    act_mdl = str(mrep.get("actor_model", "gemini-3.8-flash"))
+    held_out = str(mrep.get("held_out_transfer_setup_untouched", "coalition_ops"))
+    k_trials = int(mrep.get("k_trials_per_version", 6))
+    seeds = mrep.get("seeds", [])
+    pre_eps = mrep.get("preselected_edit_episodes", [])
+    usd = float(mrep.get("total_run_usd", 0.0))
+
+    all_s = mrep.get("all_preselected_summary", {})
+    nt_s = mrep.get("distinct_proposal_summary", {})
+    cm = mrep.get("material_edit_confusion", {})
+
+    slice_rows: list[str] = []
+    slice_items = [
+        ("All Preselected Opportunities", all_s, True),
+        ("Distinct Rule Proposals (R_prop != R_cur)", nt_s, True),
+        *[(f"Mode: {m}", d, False) for m, d in mrep.get("by_meta_mode", {}).items()],
+        *[(f"Step: {st}", d, False) for st, d in mrep.get("by_edit_step", {}).items()],
+    ]
+    for lbl, sl, is_hl in slice_items:
+        if not sl or int(sl.get("n_opportunities", 0)) == 0:
+            continue
+        qk = sl.get("qwen8b_minus_keep", {"mean": 0.0, "ci95": [0.0, 0.0]})
+        qa = sl.get("qwen8b_minus_apply", {"mean": 0.0, "ci95": [0.0, 0.0]})
+        oh = sl.get("oracle_headroom_over_qwen8b", {"mean": 0.0})
+        hl = ' class="row-highlight"' if is_hl else ""
+        slice_rows.append(
+            f"<tr{hl}>"
+            f"<td><strong>{esc(lbl)}</strong></td>"
+            f'<td class="num mono">{int(sl.get("n_opportunities", 0))}</td>'
+            f'<td class="num mono">{float(sl.get("apply_rate_pct", 0.0)):.1f}%</td>'
+            f'<td class="num mono">{float(sl.get("always_keep_dp_pct", 0.0)):.2f}%</td>'
+            f'<td class="num mono">{float(sl.get("always_apply_dp_pct", 0.0)):.2f}%</td>'
+            f'<td class="num mono"><strong>{float(sl.get("qwen8b_gate_dp_pct", 0.0)):.2f}%</strong></td>'
+            f'<td class="num mono">{float(sl.get("oracle_gate_dp_pct", 0.0)):.2f}%</td>'
+            f'<td class="num mono"><strong>{_fmt_signed(float(qk.get("mean", 0.0)), 2)}</strong> '
+            f'<span class="table-sub">[{_fmt_signed(float(qk.get("ci95", [0.0, 0.0])[0]), 1)}, {_fmt_signed(float(qk.get("ci95", [0.0, 0.0])[1]), 1)}]</span></td>'
+            f'<td class="num mono"><strong>{_fmt_signed(float(qa.get("mean", 0.0)), 2)}</strong> '
+            f'<span class="table-sub">[{_fmt_signed(float(qa.get("ci95", [0.0, 0.0])[0]), 1)}, {_fmt_signed(float(qa.get("ci95", [0.0, 0.0])[1]), 1)}]</span></td>'
+            f'<td class="num mono">+{float(oh.get("mean", 0.0)):.2f} pts</td>'
+            f"</tr>"
+        )
+
+    opp_rows: list[str] = []
+    for o in mrep.get("opportunities", []):
+        opp_rows.append(
+            f"<tr>"
+            f'<td class="mono">{esc(o.get("seed", ""))}</td>'
+            f'<td class="mono">{esc(o.get("meta_mode", ""))}</td>'
+            f'<td class="mono">{esc(o.get("t_edit_episode", ""))} → {esc(o.get("t_use_episode", ""))}</td>'
+            f'<td class="mono"><strong>{esc(o.get("qwen8b_decision", ""))}</strong></td>'
+            f'<td class="num mono">{float(o.get("v_keep_dp_pct", 0.0)):.1f}% <span class="table-sub">(σ={float(o.get("keep_sd", 0.0)):.1f})</span></td>'
+            f'<td class="num mono">{float(o.get("v_apply_dp_pct", 0.0)):.1f}% <span class="table-sub">(σ={float(o.get("apply_sd", 0.0)):.1f})</span></td>'
+            f'<td class="num mono"><strong>{_fmt_signed(float(o.get("apply_minus_keep_dp_pct", 0.0)), 2)}</strong></td>'
+            f'<td class="num mono">{float(o.get("v_qwen8b_dp_pct", 0.0)):.1f}%</td>'
+            f'<td class="mono">{esc(not bool(o.get("identical_rule_text", False)))}</td>'
+            f"</tr>"
+        )
+
+    return (
+        f'<article id="run-{esc(run_id)}" class="bento-card bento-12 causal-run-card">'
+        f'<div class="pill-strip">'
+        f'<span class="badge badge-emerald">UNTUNED 8B REVIEWER GATEKEEPER · KEEP OR APPLY</span>'
+        f'<span class="badge badge-neutral mono">reviewer: {esc(rev_mdl)} ($0 local GPU)</span>'
+        f'<span class="badge badge-neutral mono">actor: {esc(act_mdl)}</span>'
+        f'<span class="badge badge-neutral mono">held-out untouched: {esc(held_out)}</span>'
+        f'<span class="badge badge-neutral mono">K = {k_trials} trials · spend: ${usd:.4f}</span>'
+        f"</div>"
+        f'<h3 class="card-title">Untuned <code>{esc(rev_mdl)}</code> Keep-or-Apply Reviewer Policy on Preselected Fresh Streams (<code>{esc(run_id)}</code>)</h3>'
+        f'<p class="card-prose">'
+        f"On fresh streams <code>{esc(seeds)}</code> at preselected review steps <code>{esc(pre_eps)}</code>, "
+        f"untuned <code>{esc(rev_mdl)}</code> chooses <code>KEEP</code> (current rule) vs. <code>APPLY</code> (proposed rule) "
+        f"strictly before the next episode outcome. At the next review <code>t_use = t_edit + 4</code>, both rule versions are "
+        f"scored on the exact same history across <code>K = {k_trials}</code> after-fee trials under fixed <code>{esc(act_mdl)}</code>. "
+        f'Material edits (<code>|Δ| ≥ 2.0 pts</code>): <strong>{int(cm.get("n_material", 0))}</strong> '
+        f'(accuracy <strong>{float(cm.get("accuracy_pct", 0.0)):.1f}%</strong>; '
+        f'TP={int(cm.get("true_positive_apply_helpful", 0))}, TN={int(cm.get("true_negative_keep_harmful", 0))}, '
+        f'FP={int(cm.get("false_positive_apply_harmful", 0))}, FN={int(cm.get("false_negative_keep_helpful", 0))}).'
+        f"</p>"
+        f'<div class="chart-panel">'
+        f'<div class="chart-panel-title">Policy Comparison Under Identical History, Actor, &amp; 4-Session After-Fee Budget</div>'
+        f'<div class="table-wrap"><table class="data-table compact-table">'
+        f'<thead><tr><th>Slice</th><th class="num">M</th><th class="num">8B Apply%</th><th class="num">Always-Keep</th>'
+        f'<th class="num">Always-Apply</th><th class="num">Untuned 8B</th><th class="num">Oracle</th>'
+        f'<th class="num">8B − Keep</th><th class="num">8B − Apply</th><th class="num">Oracle − 8B</th></tr></thead>'
+        f'<tbody>{"".join(slice_rows)}</tbody></table></div>'
+        f"</div>"
+        f'<div class="chart-panel">'
+        f'<div class="chart-panel-title">Pre-Outcome Keep-or-Apply Decisions &amp; Next-Review (<code>t_use</code>) Scores</div>'
+        f'<div class="table-wrap"><table class="data-table compact-table">'
+        f'<thead><tr><th>Seed</th><th>Mode</th><th>t_edit → t_use</th><th>8B Choice</th><th class="num">Keep DP</th>'
+        f'<th class="num">Apply DP</th><th class="num">Apply − Keep</th><th class="num">8B Achieved</th><th>Distinct?</th></tr></thead>'
+        f'<tbody>{"".join(opp_rows)}</tbody></table></div>'
+        f"</div>"
+        f"</article>"
+    )
+
+
 def _render_matrix_reports(
     matrix_reports: list[dict[str, Any]], run_summaries: list[dict[str, str]]
 ) -> tuple[str, str]:
@@ -2169,6 +2270,10 @@ def _render_matrix_reports(
         run_id = str(mrep.get("run_id", "matrix_run"))
         rfile = str(mrep.get("report_file", "report.json"))
         by_mode = mrep.get("by_mode_summary")
+        if str(mrep.get("experiment_type", "")) == "qwen8b_keep_or_apply_gate":
+            rendered_matrix_ids.add(run_id)
+            top_blocks.insert(0, _render_qwen8b_keep_or_apply_card(mrep))
+            continue
         if str(mrep.get("experiment_type", "")) == "repeated_rule_replay_stage1":
             rendered_matrix_ids.add(run_id)
             top_blocks.insert(0, _render_repeated_replay_stage1_card(mrep))

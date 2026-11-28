@@ -431,6 +431,219 @@ class TwoLevelReviewerHarness(EpistemicHarness):
             "usd": resp.usd,
         }
 
+    def revise_task_note_from_rule(
+        self,
+        *,
+        env_name: str,
+        episode_idx: int,
+        active_review_rule: str,
+        active_rule_version: int,
+        client: Any,
+        method_suffix: str = "revise_note",
+    ) -> dict[str, Any]:
+        """Follow `active_review_rule` to revise actor-visible `task_note` without simultaneously rewriting the rule."""
+        fact_txt = self.factual.build_context(
+            PublicTaskSpec(
+                env_name=env_name,
+                episode_idx=episode_idx,
+                timestamp=episode_idx + 1,
+                domain_prompt="",
+                task_prompt="",
+                tool_schemas=[],
+            )
+        )
+        sys_p = (
+            "You are the periodic reviewer for an AlphaDesk-v3 portfolio agent.\n"
+            "Public environment mechanics:\n"
+            "- Objective: maximize cumulative net session score across sessions.\n"
+            f"- Compliance: non-negative weights across {', '.join(STRATEGIES_V3)} summing to 1.0, each <= {MAX_WEIGHT_V3}.\n"
+            f"- Costs: rebalancing pays {TURNOVER_FULL_FLIP_PTS_V3:.1f} * 0.5 * L1_turnover pts; "
+            f"`probe_strategy_execution` is optional (max 1/session, -{PROBE_FEE_V3:.1f} pts) and reports the probed "
+            "strategy's live yield plus anonymized desk-wide mean and max strategy yields.\n\n"
+            "Follow `ACTIVE_REVIEW_RULE` below (if non-blank) to evaluate the factual observation ledger and write the "
+            f"updated actor-visible `task_note` (<= {self.max_note_words} words).\n"
+            'Respond ONLY with JSON: {"task_note": "...", "rationale": "..."}.'
+        )
+        usr_p = (
+            f"ACTIVE_REVIEW_RULE (reviewer-only, version v{active_rule_version}):\n"
+            f"{active_review_rule or '(blank)'}\n\n"
+            f"Current `task_note` (actor-visible, version v{self.note_version}):\n"
+            f"{self.task_note or '(blank)'}\n\n"
+            f"{fact_txt}\n"
+            "Return JSON with updated `task_note` and `rationale`."
+        )
+        rule_tag = hashlib.sha256((active_review_rule or "").encode("utf-8")).hexdigest()[:6]
+        resp = client.generate_json(
+            system_prompt=sys_p,
+            user_prompt=usr_p,
+            environment=env_name,
+            method=f"{self.name}_{method_suffix}",
+            mock_responder=lambda _s, _u, rt=rule_tag, ep_i=episode_idx: {
+                "task_note": (
+                    f"Mock task_note (step {ep_i + 1}, guided_by={rt}): inspect brief, hold verified calm winners, "
+                    "and probe when scores drop."
+                ),
+                "rationale": "Mock rule-guided note update.",
+            },
+        )
+        parsed = resp.parsed_json or {}
+        prop_note = sanitize_procedure_text(
+            parsed.get("task_note", ""),
+            max_words=self.max_note_words,
+            max_chars=860,
+            strip_action_bindings=False,
+        )
+        rationale = sanitize_procedure_text(parsed.get("rationale", ""), max_words=60, max_chars=360)
+        return {
+            "proposed_task_note": prop_note,
+            "rationale": rationale,
+            "usd": float(resp.usd),
+        }
+
+    def propose_replacement_review_rule(
+        self,
+        *,
+        env_name: str,
+        episode_idx: int,
+        current_rule: str,
+        active_task_note: str,
+        client: Any,
+    ) -> dict[str, Any]:
+        """Propose a substantively distinct candidate replacement `review_rule` (`<= 90 words`) from public history."""
+        fact_txt = self.factual.build_context(
+            PublicTaskSpec(
+                env_name=env_name,
+                episode_idx=episode_idx,
+                timestamp=episode_idx + 1,
+                domain_prompt="",
+                task_prompt="",
+                tool_schemas=[],
+            )
+        )
+        sys_p = (
+            "You are proposing a candidate replacement `review_rule` (<= 90 words) for an AlphaDesk-v3 portfolio "
+            "agent's periodic reviewer.\n"
+            "Public environment mechanics:\n"
+            "- Objective: maximize cumulative net session score across sessions.\n"
+            f"- Compliance: non-negative weights across {', '.join(STRATEGIES_V3)} summing to 1.0, each <= {MAX_WEIGHT_V3}.\n"
+            f"- Costs: rebalancing pays {TURNOVER_FULL_FLIP_PTS_V3:.1f} * 0.5 * L1_turnover pts; "
+            f"`probe_strategy_execution` is optional (max 1/session, -{PROBE_FEE_V3:.1f} pts) and reports the probed "
+            "strategy's live yield plus anonymized desk-wide mean and max strategy yields.\n\n"
+            "Instructions:\n"
+            "- `review_rule` is shown ONLY to the future reviewer (never shown to the actor) and governs how the "
+            "reviewer evaluates new observations and revises `task_note`.\n"
+            "- If `CURRENT_RULE` is blank, write an initial `proposed_review_rule`. Otherwise, do NOT copy or merely "
+            "paraphrase `CURRENT_RULE`: propose a substantively different `proposed_review_rule` reflecting an "
+            "alternative way future reviews could evaluate the observed public history and revise `task_note`. "
+            "A separate gatekeeper will decide whether to KEEP `CURRENT_RULE` or APPLY your `proposed_review_rule`.\n"
+            'Respond ONLY with JSON: {"proposed_review_rule": "...", "proposal_rationale": "..."}.'
+        )
+        usr_p = (
+            f"CURRENT_RULE:\n{current_rule or '(blank)'}\n\n"
+            f"Current actor `task_note`:\n{active_task_note or '(blank)'}\n\n"
+            f"{fact_txt}\n"
+            "Return JSON with `proposed_review_rule` and `proposal_rationale`."
+        )
+        resp = client.generate_json(
+            system_prompt=sys_p,
+            user_prompt=usr_p,
+            environment=env_name,
+            method=f"{self.name}_propose_replacement_rule",
+            mock_responder=lambda _s, _u, ep_i=episode_idx: {
+                "proposed_review_rule": (
+                    f"Mock replacement review_rule (step {ep_i + 1}): compare recent session outcomes against "
+                    "historical regime yields before changing allocations."
+                ),
+                "proposal_rationale": "Mock distinct replacement proposal.",
+            },
+        )
+        parsed = resp.parsed_json or {}
+        prop_rule = sanitize_procedure_text(
+            parsed.get("proposed_review_rule", ""),
+            max_words=self.max_rule_words,
+            max_chars=720,
+            strip_action_bindings=False,
+        )
+        rationale = sanitize_procedure_text(parsed.get("proposal_rationale", ""), max_words=60, max_chars=360)
+        return {
+            "proposed_review_rule": prop_rule,
+            "proposal_rationale": rationale,
+            "usd": float(resp.usd),
+        }
+
+    def choose_keep_or_apply_rule(
+        self,
+        *,
+        env_name: str,
+        episode_idx: int,
+        current_rule: str,
+        proposed_rule: str,
+        active_task_note: str,
+        client: Any,
+    ) -> dict[str, Any]:
+        """Ask a reviewer gatekeeper to choose KEEP (`current_rule`) vs APPLY (`proposed_rule`) BEFORE next outcome."""
+        fact_txt = self.factual.build_context(
+            PublicTaskSpec(
+                env_name=env_name,
+                episode_idx=episode_idx,
+                timestamp=episode_idx + 1,
+                domain_prompt="",
+                task_prompt="",
+                tool_schemas=[],
+            )
+        )
+        sys_p = (
+            "You are the review-rule gatekeeper for an AlphaDesk-v3 portfolio agent.\n"
+            "Public environment mechanics:\n"
+            "- Objective: maximize cumulative net session score across sessions.\n"
+            f"- Compliance: non-negative weights across {', '.join(STRATEGIES_V3)} summing to 1.0, each <= {MAX_WEIGHT_V3}.\n"
+            f"- Costs: rebalancing pays {TURNOVER_FULL_FLIP_PTS_V3:.1f} * 0.5 * L1_turnover pts; "
+            f"`probe_strategy_execution` is optional (max 1/session, -{PROBE_FEE_V3:.1f} pts) and reports the probed "
+            "strategy's live yield plus anonymized desk-wide mean and max strategy yields.\n\n"
+            "Role of `review_rule`:\n"
+            "- `review_rule` is shown ONLY to your future reviewer (never shown to the actor) and governs how the "
+            "next reviewer evaluates new observations and revises `task_note`.\n"
+            "- Compare `CURRENT_RULE` (option `KEEP`) against `PROPOSED_RULE` (option `APPLY`) using the public "
+            "observations available so far, and choose whichever rule will help future reviews make better "
+            "`task_note` revisions.\n"
+            'Respond ONLY with JSON: {"decision": "KEEP" | "APPLY", "rationale": "..."}.'
+        )
+        usr_p = (
+            f"CURRENT_RULE (choose `KEEP` to retain this rule):\n{current_rule or '(blank)'}\n\n"
+            f"PROPOSED_RULE (choose `APPLY` to switch to this rule):\n{proposed_rule or '(blank)'}\n\n"
+            f"Current actor `task_note`:\n{active_task_note or '(blank)'}\n\n"
+            f"{fact_txt}\n"
+            'Return JSON with `decision` ("KEEP" or "APPLY") and `rationale`.'
+        )
+        resp = client.generate_json(
+            system_prompt=sys_p,
+            user_prompt=usr_p,
+            environment=env_name,
+            method=f"{self.name}_keep_or_apply_gate",
+            mock_responder=lambda _s, _u: {
+                "decision": "APPLY" if (episode_idx % 8 == 3) else "KEEP",
+                "rationale": "Mock pre-outcome keep-or-apply choice.",
+            },
+        )
+        parsed = resp.parsed_json or {}
+        raw_dec = str(parsed.get("decision", "")).strip().upper()
+        if "APPLY" in raw_dec and "KEEP" not in raw_dec:
+            decision = "APPLY"
+        elif "KEEP" in raw_dec and "APPLY" not in raw_dec:
+            decision = "KEEP"
+        else:
+            # Fallback parse on raw text if model output non-standard casing
+            up_txt = resp.text.upper()
+            decision = "APPLY" if ('"APPLY"' in up_txt and '"KEEP"' not in up_txt) else "KEEP"
+        rationale = sanitize_procedure_text(parsed.get("rationale", ""), max_words=60, max_chars=360)
+        return {
+            "decision": decision,
+            "raw_decision_field": raw_dec,
+            "rationale": rationale,
+            "decided_at_utc": datetime.now(timezone.utc).isoformat(),
+            "usd": float(resp.usd),
+        }
+
     def _run_two_level_review(self, env_name: str, episode_idx: int, client: MeteredLLMClient) -> dict[str, Any]:
         out = self.counterfactual_review(
             env_name=env_name,

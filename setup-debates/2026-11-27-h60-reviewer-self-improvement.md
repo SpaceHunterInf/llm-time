@@ -162,3 +162,73 @@ In `drift_dip_c_60`, `W4` opens with a **2-session hidden calm dip on `B` (`19`)
 2. **Awaiting Explicit `GO` (and/or Astra's Review) on Next Step:**
    - **Option A — Build & Smoke-Test the Dedicated `8B` Reviewer Trainer (`Act 3`):** Replace the `train_act3_lodo.py` stub with a genuine **reviewer-only** trainer (`Qwen3-8B` LoRA on our 48 GB RTX 8000 $\to$ CSD3) using multi-trial counterfactual 4-session net-of-fee return as the edit-value signal across two setups, evaluated frozen with empty notes in the held-out third setup against the untuned `8B` reviewer.
    - **Option B — Scale External `ServeLearnBench L3` (`banking_l3` + `retail_l3` Tier-2) & Synthesize Paper Draft:** Freeze the `AlphaDesk` empirical arc (`Act 1` causal surgery + `Act 2` `Directive-SGEH-VBQ` + `H=60` bidirectional self-editing audit) and run Tier-2 external `ServeLearnBench L3` evaluation.
+
+## 2026-11-28 Codex review of the repeated trials and alternate ending
+
+**My reading.** The repeatability check answered the question we raised. A frozen Flash agent can write a rule during one lifetime that helps its future self act. It can also erase a useful rule. The live results still leave open how the agent should choose which changes to keep.
+
+| Flash checkpoint | Change in four-session score with the revised rule | Change after removing strategy names from both rules |
+|---|---:|---:|
+| 704, original ending | +35.74 points | +27.41 points |
+| 705, original ending | −22.36 points | −4.65 points |
+| 709, fresh ending | +19.63 points | +21.12 points |
+| 711, fresh ending | −19.77 points | −19.95 points |
+
+These are means over eight trials per rule, conditional on the same saved history. The single replay had put 705 at **+28.73**. The reversal matters when deciding whether one rollout is a good training label. On 711 the starting rule called for a check after a sharp drop. The later rule discouraged checking, and all eight verbatim revised-rule trials made zero paid checks. On Hydrogen 702, changing the rule added zero on the already-recovered history. The estimated +11.09 points on the stalled history is suggestive with a reported permutation p-value of 0.115. [Saved trial scores and rule texts](../results/runs/repeated_rule_replay_stage1_k8/summary.md) · [Original single replays](../results/runs/meta_reviewer_h60_flash_n6/summary.md)
+
+**What generalizes so far.** Across all six fresh Flash streams, the final-window score was 64.62% with an editable reviewer, 66.67% with a frozen reviewer, 56.66% with facts alone and 88.19% with the hand-written controller. Editable minus frozen was −2.05 points, with a reported interval from −14.90 to +10.08. The fresh ending has a new best strategy, while the first window’s winner still ranks second. Each agent wrote a new rule within AlphaDesk. The repeated 709 and 711 checkpoints were selected after their outcomes were known. They establish examples of both directions and leave the frequency of each uncertain. The earlier progression criterion called for 704 and 705 both to improve. Only 704 did, so I would describe the second stage as a follow-up. [Fresh-seed results](../results/runs/meta_dip_c_h60_flash_n6/summary.md) · [Payoff schedules](../src/envs/alpha_desk_v3.py) · [Checkpoint selection](../scripts/run_repeated_rule_replay.py)
+
+**Why I would change the training target.** The evaluator compares the first-window rule with the latest rule. On 709, the reviewer already wrote “below 45” for two consecutive sessions at session 36 and retained it in different wording at 40. The +19.63 points compare the session-40 rule with the starting rule when both are read at 44. Assigning that gain to the 36-to-40 rewrite would credit the later wording for a test already in place. On 704 the reviewer saw four consecutive calm returns below 25, and the benefit survived removal of strategy names. Other instructions also changed, so attributing the entire gain to that single clause would require a clause-only comparison. [709 rule history](../results/runs/meta60_dipc_s709/reviewer_versions_audit.json) · [704 public outcomes](../results/raw/meta60_drift_s704/meta60_drift_meta_60__editable_reviewer_v3__gemini-3.8-flash_s704.jsonl) · [Replay inputs](../scripts/run_repeated_rule_replay.py)
+
+**One step toward Option A.** On fresh, preselected review opportunities, give an untuned 8B reviewer its current rule, its proposed replacement and the public evidence available when it must choose. Record its keep-or-apply choice before the next outcome. At the next review that can use the rule, compare the two versions on the same history and score the following actions after fees. Compare the 8B policy with always keeping and always applying under the same actor and budget. This would measure the skill we want to train, give us suitable examples for later weight updates, and leave a third setup available for the eventual transfer test. The existing results can already support the benchmark and failure-analysis sections of the paper.
+
+---
+
+## 2026-11-28 Completed Untuned `Qwen/Qwen3-8B` Keep-or-Apply Reviewer Gatekeeper Baseline (`qwen8b_keep_or_apply_n8`)
+
+**Author:** Gemini Co-Lead (`Antigravity`)  
+**Status:** Completed (`$10.87` across `8` single-seed shards `<$1.42` each + `$1.75` Pair-1 joint-call pilot; `735` local `Qwen/Qwen3-8B` FP16 GPU calls at `$0.00`; **`CoalitionOps` 100% untouched**; stopped at next `GO` gate)  
+**Artifacts:** [qwen8b_keep_or_apply_n8/summary.md](../results/runs/qwen8b_keep_or_apply_n8/summary.md) · [keep_or_apply_report.json](../results/runs/qwen8b_keep_or_apply_n8/keep_or_apply_report.json) · [reviewer_gate_examples.jsonl](../results/runs/qwen8b_keep_or_apply_n8/reviewer_gate_examples.jsonl) · [Runner](../scripts/run_qwen8b_keep_or_apply.py) · [Local HF Client](../src/core/local_hf_client.py)
+
+---
+
+### 1. Protocol & Pre-Scaling Diagnostic Catch (`Pair 1: gate8b_s721–722`)
+
+1. **Exact Causal Setup:**
+   - **Untuned `8B` Reviewer & Gatekeeper:** Local **`Qwen/Qwen3-8B`** (`torch.float16` on Quadro RTX 8000, `enable_thinking=False`, `$0.00` API cost).
+   - **Fixed Actor & Budget:** `gemini-3.8-flash` (`same tools, same 4-session review cadence, scored after -10 pt probe and 4.0 pt L1 turnover fees`).
+   - **Held-Out Third Setup Untouched:** Evaluated strictly on fresh `AlphaDesk` streams (`Seeds 731–734` on `drift_meta_60` and `Seeds 735–738` on `drift_dip_c_60`), leaving **`CoalitionOps` 100% untouched** for eventual cross-setup transfer.
+   - **Preselected Review Opportunities (`t_edit ∈ {16, 28, 36, 44}` $\to$ `t_use ∈ {20, 32, 40, 48}`):** Fixed *a priori* before running any stream (`t_use = 48 > max_possible(t_w4) = 47` guarantees `W4` coverage across all seeds). Because `review_rule` is invisible to the actor, `Keep` (`current_rule`) and `Apply` (`proposed_rule`) share **100% identical history** from `t_edit + 1 .. t_use`. Every `KEEP`/`APPLY` decision timestamp (`decided_before_next_ep_utc`) is verified strictly `<=` episode `t_edit + 1` completion (`first_post_choice_outcome_utc`). At `t_use`, both rule versions are scored over `K = 6` repeated `(1 Qwen3-8B note-revision + 4 Flash actor sessions)` trials.
+2. **Pre-Scaling Diagnostic Catch (`gate8b_s721` & `gate8b_s722`, `$1.75`):**
+   - When untuned `Qwen/Qwen3-8B` (`T = 0.0`) was initially asked to update `task_note` and `"write or revise review_rule however you judge best"` in a **single joint JSON call**, it copied `current_rule` **word-for-word on `7/8` (`87.5%`) opportunities**—even across `18` consecutive degraded sessions (`s721` `gross = 31–35`) and `W4` partial-recurrence drops (`s722` `gross = 48.9–55.9`), collapsing `Always-Apply` onto `Always-Keep`.
+   - Separating each periodic review into **(a) `revise_task_note_from_rule`** (`T = 0.0`), **(b) `propose_replacement_review_rule`** (`T = 0.6` seeded candidate proposer with zero domain/researcher hints), and **(c) `choose_keep_or_apply_rule`** (`T = 0.0` pre-outcome gatekeeper) raised distinct proposals on fresh unseen `Seeds 731–738` to **`30/32` (`93.8%`)**, of which **`28/30` (`93.3%`) produced distinct `task_note`s at `t_use`**.
+
+---
+
+### 2. Main Results Across `N = 8` Fresh Streams (`M = 32` Preselected Opportunities, `Seeds 731–738`)
+
+| Slice | Opportunities (`M`) | `8B` Apply Rate | `Always-Keep` DP (%) | `Always-Apply` DP (%) | **Untuned `8B` Policy DP (%)** | `Oracle` Ceiling (%) | `8B − Keep` (95% CI) | `8B − Apply` (95% CI) | `Oracle − 8B` Headroom |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **All Preselected Opportunities** | `32` | `87.5%` | **64.51%** | 64.14% | **64.14%** | 64.68% | **`-0.37`** `[-0.93, +0.09]` | **`+0.00`** `[+0.00, +0.00]` | `+0.54 pts` |
+| **Non-Identical Proposals (`R_prop != R_cur`)** | `30` | **`93.3%`** | **64.06%** | 63.66% | **63.66%** | 64.25% | **`-0.39`** `[-1.00, +0.09]` | **`+0.00`** `[+0.00, +0.00]` | `+0.58 pts` |
+| Mode: `drift_meta_60` (`Seeds 731–734`) | `16` | `87.5%` | **65.28%** | 64.46% | **64.46%** | 65.37% | **`-0.82`** `[-1.82, -0.04]` | **`+0.00`** `[+0.00, +0.00]` | `+0.91 pts` |
+| Mode: `drift_dip_c_60` (`Seeds 735–738`) | `16` | `87.5%` | 63.73% | **63.82%** | **63.82%** | 64.00% | **`+0.09`** `[-0.28, +0.41]` | **`+0.00`** `[+0.00, +0.00]` | `+0.18 pts` |
+| Step: `ep_16_to_20` | `8` | `100.0%` | 74.56% | 73.98% | **73.98%** | 74.68% | `-0.58` `[-1.53, +0.18]` | `+0.00` `[+0.00, +0.00]` | `+0.70 pts` |
+| Step: `ep_28_to_32` | `8` | `87.5%` | 57.16% | 57.07% | **57.07%** | 57.56% | `-0.09` `[-0.85, +0.62]` | `+0.00` `[+0.00, +0.00]` | `+0.50 pts` |
+| Step: `ep_36_to_40` | `8` | `75.0%` | 64.59% | 63.74% | **63.74%** | 64.59% | `-0.85` `[-2.55, +0.00]` | `+0.00` `[+0.00, +0.00]` | `+0.85 pts` |
+| Step: `ep_44_to_48` | `8` | `87.5%` | 61.71% | 61.77% | **61.77%** | 61.90% | `+0.06` `[-0.33, +0.55]` | `+0.00` `[+0.00, +0.00]` | `+0.13 pts` |
+
+### 3. Two Sharp Findings That Directly Shape `8B` Reviewer Training
+
+1. **Untuned `Qwen/Qwen3-8B` Exhibits a `93.3%` Rubber-Stamp `APPLY` Bias (`8B − Always-Apply = +0.00 pts` Across All `8/8` Seeds):**
+   - Untuned `Qwen/Qwen3-8B` accepted **`28/30` (`93.3%`)** distinct replacement proposals—and on the only `2` distinct proposals it rejected (`s736@ep44` and `s738@ep36`), `Apply` and `Keep` had exact `0.00 pt` difference. Thus **on all `8/8` seeds, untuned `Qwen/Qwen3-8B` (`64.14%`) matched `Always-Apply` (`64.14%`) to two decimal places (`+0.00 pts [0.00, 0.00]`)**, underperforming `Always-Keep` (`64.51%`; `-0.82 pts [-1.82, -0.04]` on `drift_meta_60`).
+   - Across all `3` material edits (`|V_apply − V_keep| >= 2.0 pts`: `s731@ep36->40` **`-6.79 pts`**, `s732@ep16->20` **`-3.09 pts`**, `s731@ep16->20` **`-2.52 pts`**), all `3` were harmful and **untuned `Qwen/Qwen3-8B` accepted `3/3` (`0.0%` accuracy, `FP_apply_harmful = 3`)**. For example, on `s731@ep36->40`, `PROPOSED_RULE` merged separate `calm` and `elevated` volatility tracking into `"a weighted average of calm and elevated volatility performance"`, costing `-6.79 pts` while `Qwen3-8B` praised it as *"more comprehensive than focusing only on calm volatility"*.
+2. **Candidate-Proposal Quality Bottleneck (`Oracle − Keep = +0.17 pts` on Untuned `8B` Proposals vs. `+21–27 pts` on `Flash` Falsification Rules):**
+   - Although `28/30` distinct `Qwen3-8B` proposals altered the `t_use` `task_note`, the **maximum positive gain among all `32` `Qwen3-8B`-authored replacements was `+1.53 pts` (`s734@ep44->48`), with `0/32` proposals reaching `>= +2.0 pts`** (`6` mildly positive `+0.46` to `+1.53 pts`, `10` negative `-0.07` to `-6.79 pts`, `14` within `±0.05 pts`).
+   - Inspection of [reviewer_gate_examples.jsonl](../results/runs/qwen8b_keep_or_apply_n8/reviewer_gate_examples.jsonl) explains why: even during severe `W3/W4` collapses (`s731@ep44`: `35.8%`, `s735@ep28`: `36.4%`, `s738@ep28`: `35.4%`), untuned `Qwen/Qwen3-8B` (`T = 0.6`) proposes generic portfolio-weighting platitudes (*"prioritize consistent returns / adjust rebalance threshold 12% -> 10%"*) rather than inventing quantitative yield-drop diagnostic checks (`probe_strategy_execution` when calm gross drops) like `Flash` did on `s704` (`+27.41 pts`) and `s709` (`+21.12 pts`).
+   - **Implication for `Act 3` Weight Updates:** Training *only* a binary `KEEP/APPLY` classifier over single untuned `8B` proposals has limited ceiling (`Oracle − 8B = +0.54 pts`); `Act 3` LoRA RL (`GRPO` / preference optimization) must jointly train **both candidate `review_rule` generation and `KEEP/APPLY` gatekeeping** under counterfactual 4-session net-of-fee rollout rewards so the `8B` reviewer learns *what* falsification rules to propose as well as *when* to reject scope-collapsing / rule-erasing edits.
+
+### 4. Next Queued Step (`Stopped at Explicit PI GO`)
+Aligned with [2026-11-28 PI priorities for the 8B reviewer](2026-11-19-learning-to-revise-heuristics.md#2026-11-28-pi-priorities-for-the-8b-reviewer) and [ICML submission readiness](2026-11-28-icml-submission-readiness.md):
+1. **Second Development Setting (`LifeCompanion` Preselected Keep-or-Apply Baseline):** Run the exact same untuned `Qwen/Qwen3-8B` Keep-or-Apply protocol on fresh `LifeCompanion` streams (checking both gatekeeper selectivity and proposal headroom in a non-financial domain while keeping **`CoalitionOps` 100% untouched** for 3-fold held-out transfer).
+2. **Dated Real-Data `AlphaDesk` Slice (Kenneth French 10-Industry Portfolios)** and **Full-Protocol `ServeLearnBench` $\to$ `ReScopeBench` Evaluation** (awaiting PI `GO` on priority ordering).

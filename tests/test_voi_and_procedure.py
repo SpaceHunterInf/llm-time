@@ -285,9 +285,11 @@ def test_new_modules_security_hygiene() -> None:
 
     checked = [
         ROOT / "src" / "harnesses" / "procedure_harness.py",
+        ROOT / "src" / "core" / "local_hf_client.py",
         ROOT / "scripts" / "run_editable_procedure_experiment.py",
         ROOT / "scripts" / "run_meta_reviewer_h60.py",
         ROOT / "scripts" / "run_repeated_rule_replay.py",
+        ROOT / "scripts" / "run_qwen8b_keep_or_apply.py",
     ]
     for path in checked:
         txt = path.read_text(encoding="utf-8")
@@ -431,6 +433,35 @@ def test_anonymize_rule_strategies_and_saved_checkpoint_repeated_replay_offline(
         )
         assert rep["total_run_usd"] == 0.0
         assert len(rep["checkpoints"]) == 2
+
+
+def test_qwen8b_keep_or_apply_pre_outcome_ordering_and_mock_pipeline() -> None:
+    """Verify pre-outcome timestamp ordering, CoalitionOps holdout untouched, and JSONL example export."""
+    import json
+    from scripts.run_qwen8b_keep_or_apply import run_keep_or_apply_batch
+
+    with tempfile.TemporaryDirectory() as tmp:
+        rep = run_keep_or_apply_batch(
+            run_id="mock_gate8b",
+            reviewer_model_id="mock",
+            actor_model_id="mock",
+            seeds=[721],
+            meta_mode="drift_meta_60",
+            horizon=60,
+            preselected_eps=(16, 28),
+            k_trials=2,
+            workers=2,
+            max_usd=0.05,
+            results_root=Path(tmp),
+            dotenv_path=None,
+        )
+        assert rep["total_run_usd"] == 0.0
+        assert rep["held_out_transfer_setup_untouched"] == "coalition_ops"
+        assert rep["all_preselected_summary"]["n_opportunities"] == 2
+        ex_file = Path(tmp) / "runs" / "mock_gate8b" / "reviewer_gate_examples.jsonl"
+        rows = [json.loads(line) for line in ex_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+        assert len(rows) == 2
+        assert all(r["untuned_qwen8b_decision"] in ("KEEP", "APPLY") for r in rows)
 
 
 def test_public_slb_scope_partitioning_covers_all_banking_l3_prefixes() -> None:

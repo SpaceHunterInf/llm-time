@@ -279,6 +279,10 @@ def collect_dashboard_telemetry(workspace_root: Path) -> dict[str, Any]:
                 or d.name == "meta60_s2_w1_ckpt_flash"
             ):
                 superseded_shards.add(d.name)
+    if (runs_dir / "qwen8b_keep_or_apply_n8").is_dir() and runs_dir.is_dir():
+        for d in runs_dir.iterdir():
+            if d.is_dir() and d.name.startswith("gate8b_s"):
+                superseded_shards.add(d.name)
 
     if runs_dir.is_dir():
         for run_subdir in sorted(runs_dir.iterdir()):
@@ -344,6 +348,7 @@ def collect_dashboard_telemetry(workspace_root: Path) -> dict[str, Any]:
                         "reviewer_versions_audit.json",
                         "counterfactual_w4_replay.json",
                         "repeated_replay_trials_full.json",
+                        "keep_or_apply_streams_full.json",
                     )
                     or jname.startswith("checkpoint_")
                 ):
